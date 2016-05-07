@@ -1,5 +1,32 @@
 angular.module('starter.services', [])
 
+.factory('RandomWord', function($http){
+  return {
+    word : function(callback){
+      return $http.get('data/words.json').then(function(response) {
+          //TODO add try/catch block
+          var data = response.data;
+
+          var position = Math.floor((Math.random() * data.words.length));
+          return callback(data.words[position]);
+      });
+    }
+  };
+})
+
+.factory('RandomLetters', function($http){
+  return {
+    letters : function(cant, diff){
+      diff = diff.split("");
+      var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+      alphabet = _.difference(alphabet, diff);
+
+      return _.sample(alphabet, cant);
+
+    }
+  };
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
