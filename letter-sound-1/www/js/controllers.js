@@ -2,11 +2,9 @@ angular.module('starter.controllers', [])
 
 
 .controller('DashCtrl', function($scope, RandomWord) {
-  $scope.word = "";
-  RandomWord.word(function(r){
-    $scope.word = r;
+  RandomWord.word().then(function(data) {
+    $scope.word = data;
   });
-
 })
 
 .controller('ChatsCtrl', function($scope, Chats, RandomWord) {
