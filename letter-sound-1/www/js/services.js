@@ -16,14 +16,22 @@ angular.module('starter.services', [])
 
 .factory('RandomLetters', function($http){
   return {
-    letters : function(cant, diff){
-      diff = diff.split("");
+    letters : function(cant, word){
+      var different_letters = [];
+      var cant_letters = 24;
+      if (word) {
+        different_letters = word.split("");        
+      }
+      if (cant > 0) {
+          cant_letters = cant;
+      }
       var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-      alphabet = _.difference(alphabet, diff);
 
-      return _.sample(alphabet, cant);
-
-    }
+      return _.chain(alphabet)
+      .difference(different_letters) // Remove from alphabet letters in word
+      .sample(cant)
+      .value();
+    },
   };
 })
 
