@@ -1,13 +1,12 @@
 angular.module('starter.controllers', [])
 
 
-<<<<<<< HEAD
 .controller('DashCtrl', function($scope, RandomWord, RandomLetters) {
   $scope.word = "";
   $scope.letters = [];
   $scope.dashBoard = [];
 
-  RandomWord.word(function(word){  
+  RandomWord.word(function(word){
     $scope.word = word;
     var letters = word.split("");
     var src = [];
@@ -17,11 +16,6 @@ angular.module('starter.controllers', [])
       src.push(_.shuffle(l));
     });
     $scope.dashBoard = src;
-=======
-.controller('DashCtrl', function($scope, RandomWord) {
-  RandomWord.word().then(function(data) {
-    $scope.word = data;
->>>>>>> dev
   });
 })
 
