@@ -20,14 +20,21 @@ angular.module('starter.services', [])
 
 .factory('RandomLetters', function($http){
   return {
-    letters : function(cant, diff){
-      diff = diff.split("");
+    letters : function(cant, word){
+      var differentLetters = [];
+      var cantLetters = 24;
+      if (word) {
+        differentLetters = word.split("");
+      }
+      if (cant > 0) {
+          cantLetters = cant;
+      }
       var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-      alphabet = _.difference(alphabet, diff);
-
-      return _.sample(alphabet, cant);
-
-    }
+      return _.chain(alphabet)
+      .difference(differentLetters) // Remove from alphabet letters in word
+      .sample(cantLetters)
+      .value();
+    },
   };
 })
 
