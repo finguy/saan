@@ -17,19 +17,18 @@ angular.module('starter.services', [])
 .factory('RandomLetters', function($http){
   return {
     letters : function(cant, word){
-      var different_letters = [];
-      var cant_letters = 24;
+      var differentLetters = [];
+      var cantLetters = 24;
       if (word) {
-        different_letters = word.split("");        
+        differentLetters = word.split("");
       }
       if (cant > 0) {
-          cant_letters = cant;
+          cantLetters = cant;
       }
       var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-
       return _.chain(alphabet)
-      .difference(different_letters) // Remove from alphabet letters in word
-      .sample(cant)
+      .difference(differentLetters) // Remove from alphabet letters in word
+      .sample(cantLetters)
       .value();
     },
   };
