@@ -6,17 +6,22 @@ angular.module('starter.controllers', [])
   $scope.letters = [];
   $scope.dashBoard = [];
 
-  RandomWord.word(function(word){
-    $scope.word = word;
-    var letters = word.split("");
-    var src = [];
-    _.each(letters, function(letter, key){
-      var l  = RandomLetters.letters(letters.length, letter);
-      l.push(letter);
-      src.push(_.shuffle(l));
-    });
-    $scope.dashBoard = src;
-  });
+  RandomWord.word().then(
+    function success(word){
+      $scope.word = word;
+      var letters = word.split("");
+      var src = [];
+      _.each(letters, function(letter, key){
+        var l  = RandomLetters.letters(letters.length, letter);
+        l.push(letter);
+        src.push(_.shuffle(l));
+      });
+      $scope.dashBoard = src;
+    },
+    function error(error){
+      console.log(error);
+    }
+  );
 })
 
 .controller('ChatsCtrl', function($scope, Chats, RandomWord) {
