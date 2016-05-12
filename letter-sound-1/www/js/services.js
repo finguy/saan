@@ -2,14 +2,18 @@ angular.module('starter.services', [])
 
 .factory('RandomWord', function($http){
   return {
-    word : function(callback){
-      return $http.get('data/words.json').then(function(response) {
-          //TODO add try/catch block
+    word : function(){
+      return $http.get('data/words.json').then(
+        function success(response) {
           var data = response.data;
-
           var position = Math.floor((Math.random() * data.words.length));
-          return callback(data.words[position]);
-      });
+          return data.words[position];
+        },
+        function error(){
+          //TODO: handle errors for real
+          console.log("error");
+        }
+      );
     }
   };
 })
