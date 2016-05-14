@@ -5,6 +5,7 @@ angular.module('starter.controllers', [])
   $scope.word = "";
   $scope.letters = [];
   $scope.dashBoard = [];
+  $scope.selectedLetters = [];
 
   RandomWord.word().then(
     function success(word){
@@ -22,6 +23,16 @@ angular.module('starter.controllers', [])
       console.log(error);
     }
   );
+
+  $scope.checkWord = function(){
+    var builtWord = $scope.selectedLetters.join("");
+    if (builtWord == $scope.word){
+      console.log("success!!!");
+    }
+    else{
+      console.log("nooope");
+    }
+  };
 })
 
 .controller('ChatsCtrl', function($scope, Chats, RandomWord) {

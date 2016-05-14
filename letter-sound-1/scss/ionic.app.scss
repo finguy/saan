@@ -21,8 +21,20 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+// radio button customization
+.item-radio input:checked + .radio-content .item-content{
+    background: $positive;
+}
+
+.letter-button.item.item-radio.activated{
+  color: $dark;
+}
+
 // Dashboard letters one activity
-.dashboardLettersOne button {
-   clear:both;
-   float:left;
+.letter-button {
+  clear: both;
+  float: left;
+  color: $dark;
+  width: 100px;
+  padding: 0px;
 }

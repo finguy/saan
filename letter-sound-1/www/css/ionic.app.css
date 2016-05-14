@@ -9789,6 +9789,15 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.dashboardLettersOne button {
+.item-radio input:checked + .radio-content .item-content {
+  background: #387ef5; }
+
+.letter-button.item.item-radio.activated {
+  color: #444; }
+
+.letter-button {
   clear: both;
-  float: left; }
+  float: left;
+  color: #444;
+  width: 100px;
+  padding: 0px; }

@@ -1,6 +1,13 @@
 angular.module('starter.directives', [])
 .directive('dashboardLettersOne', function() {
     return {
-        templateUrl: "templates/dashboardLettersOne.html"
+        restrict: "E",
+        templateUrl: "templates/dashboardLettersOne.html",
+        scope: 'true',
+        link: function(scope){
+          scope.selectLetter = function(position, letter){
+            scope.selectedLetters.splice(position, 0, letter);
+          };
+        }
       };
 });
