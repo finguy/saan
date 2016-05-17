@@ -1,5 +1,75 @@
-angular.module('starter.services', [])
+angular.module('saan.services', ['underscore'])
 
+.factory('Config', ['$http', '_', '$q', function($http, _, $q) {
+  // Might use a resource here that returns a JSON array
+  var get = function(){
+    var deferred = $q.defer();
+    if(this.config){
+      deferred.resolve(this.config);
+      return deferred;
+    }
+    else
+
+    return $http({
+      method : 'GET',
+      url: 'config.json'
+    }).then(function successCallback(response){
+      this.config = response.data;
+      return response.data;
+
+    },function errorCallback(){
+
+    });
+
+  };
+
+
+  return {
+    get : get
+  };
+}])
+.factory('ActividadesFinalizadasService', ['$window', function($window) {
+
+  var FINISHED_ACTIVITIES = "finishedActivities";
+
+  var marcarComoFinalizada = function (activityId) {
+    var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+    finishedActivities.push(activityId);
+    $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+  },
+  getActividadesFinalizadas = function () {
+    return JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+  };
+
+
+  return {
+    add : marcarComoFinalizada,
+    get : getActividadesFinalizadas
+  };
+}])
+.factory('TTSService', ['$q', function($q) {
+
+  var speak = function(word){
+    var deferred = $q.defer();
+    if(cordova && cordova.plugins.TTS){
+      cordova.plugins.TTS.speak(word, function(){
+        deferred.resolve();
+      },function(error){
+        deferred.reject("Error using cordova TTS plugin");
+        console.error(error);
+      });
+    }else{
+        deferred.reject("Error using cordova TTS plugin");
+        console.error("Cordova TTS plugin is not loaded");
+    }
+    return deferred.promise;
+  };
+
+
+  return {
+    speak : speak
+  };
+}])
 .factory('RandomWord', function($http){
   return {
     word : function(){
@@ -35,54 +105,5 @@ angular.module('starter.services', [])
       .sample(cantLetters)
       .value();
     },
-  };
-})
-
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
   };
 });
