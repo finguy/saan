@@ -6,8 +6,8 @@ angular.module('starter.controllers', [])
   $scope.letters = [];
   $scope.dashBoard = [];
   $scope.selectedLetters = [];
-
-  RandomWord.word().then(
+  $scope.level = $scope.level || '1';
+  RandomWord.word($scope.level).then(
     function success(word){
       $scope.word = word;
       var letters = word.split("");
