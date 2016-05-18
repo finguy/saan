@@ -38,7 +38,7 @@ angular.module('starter.services', [])
       },
     };
   })
-  .factory('Levels', function($http) {
+  .factory('Levels', function() {
     return {
       getSrcData: function(level) {
         var src = '';
