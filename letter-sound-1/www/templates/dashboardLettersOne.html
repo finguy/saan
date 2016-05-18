@@ -1,7 +1,17 @@
 <div class="row" >
-  <div class="col dashboardLettersOne" ng-repeat="row in dashBoard">
-    <button  ng-repeat="letter in row" class="button  button-outline button-stable">
+  <div class="col" radio-group  ng-repeat="row in dashBoard">
+    <ion-radio ng-repeat="letter in row"
+        ng-attr-name={{$parent.$index}}
+        icon="none"
+        class="button button-outline button-dark letter-button"
+        ng-click="selectLetter($parent.$index, letter)">
       {{letter}}
-    </button>
-    </div>
+    </ion-radio>
+  </div>
+</div>
+<div>
+  <button class="button block-button button-balanced send-button"
+      ng-click="checkWord()">
+    Send!
+  </button>
 </div>
