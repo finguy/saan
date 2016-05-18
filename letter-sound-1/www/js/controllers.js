@@ -26,7 +26,7 @@ angular.module('starter.controllers', [])
 
   $scope.checkWord = function(){
     var builtWord = $scope.selectedLetters.join("");
-    if (builtWord == $scope.word){
+    if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
       console.log("success!!!");
     }
     else{

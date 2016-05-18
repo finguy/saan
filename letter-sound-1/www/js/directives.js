@@ -6,7 +6,7 @@ angular.module('starter.directives', [])
         scope: 'true',
         link: function(scope){
           scope.selectLetter = function(position, letter){
-            scope.selectedLetters.splice(position, 0, letter);
+            scope.selectedLetters.splice(position, 1, letter);
           };
         }
       };
