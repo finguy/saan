@@ -1,6 +1,6 @@
 angular.module('saan.services', ['underscore'])
 
-.factory('Config', ['$http', '_', '$q', function($http, _, $q) {
+.factory('Config', ['$http', '$q', function($http, $q) {
   // Might use a resource here that returns a JSON array
   var get = function(){
     var deferred = $q.defer();

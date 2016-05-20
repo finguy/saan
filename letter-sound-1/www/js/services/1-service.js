@@ -1,4 +1,4 @@
-angular.module('saan.1-service', [])
+angular.module('saan.services')
 
 .factory('RandomWord', function($http){
   return {

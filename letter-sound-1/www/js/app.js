@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-angular.module('saan', ['ionic', 'saan.controllers', 'saan.services'])
+angular.module('saan', ['ionic', 'saan.controllers', 'saan.services', 'saan.directives'])
 
 .run(function($ionicPlatform, _) {
 
@@ -51,7 +51,7 @@ angular.module('saan', ['ionic', 'saan.controllers', 'saan.services'])
         return Config.get();
       }
     }
-  });  
+  });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/lobby');
