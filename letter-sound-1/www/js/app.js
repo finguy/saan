@@ -1,6 +1,7 @@
 // Ionic Starter App
 
-angular.module('saan', ['ionic', 'saan.controllers', 'saan.services', 'saan.directives'])
+angular.module('saan', ['ionic', 'saan.controllers', 'saan.services',
+                        'saan.directives', 'underscore'])
 
 .run(function($ionicPlatform, _) {
 

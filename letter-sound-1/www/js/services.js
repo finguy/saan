@@ -1,4 +1,4 @@
-angular.module('saan.services', ['underscore'])
+angular.module('saan.services', [])
 
 .factory('Config', ['$http', '$q', function($http, $q) {
   // Might use a resource here that returns a JSON array
