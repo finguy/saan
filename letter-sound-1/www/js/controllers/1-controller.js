@@ -25,10 +25,14 @@ angular.module('saan.controllers')
 	);
 
 	$scope.speak = function(text) {
-			 console.log('text');
-			 console.log(text);
-		   TTSService.speak(text);
-	}
+			 $scope.word += " invocando speak(" + text +") ...";
+		   TTSService.speak(text).then(function success() {
+				   $scope.word += " hablando";
+			 },
+		 	function error(){
+				$sope.word += " error";
+			});
+	};
 	$scope.checkWord = function(){
 		var builtWord = $scope.selectedLetters.join("");
 		if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
