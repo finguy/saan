@@ -2,13 +2,14 @@ angular.module('saan.services')
 
 .factory('RandomWord', function($http, Levels) {
   return {
-    word: function(level) {
+    word: function(level, playedWords) {
       var src = Levels.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
-          var position = Math.floor((Math.random() * data.words.length));
-          return data.words[position];
+          var wordsNotPlayed = _.difference(data.words,playedWords);          
+          var position = Math.floor((Math.random() * wordsNotPlayed.length));
+          return wordsNotPlayed[position];
         },
         function error() {
           //TODO: handle errors for real

@@ -7,6 +7,9 @@ angular.module('saan.directives', [])
         link: function(scope){
           scope.selectLetter = function(position, letter){
             scope.selectedLetters.splice(position, 0, letter);
+            if (scope.selectedLetters.length === scope.word.split("").length) {
+                scope.checkWord();
+            }
           };
         }
       };

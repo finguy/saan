@@ -69,41 +69,4 @@ angular.module('saan.services', [])
   return {
     speak : speak
   };
-}])
-.factory('RandomWord', function($http){
-  return {
-    word : function(){
-      return $http.get('data/words.json').then(
-        function success(response) {
-          var data = response.data;
-          var position = Math.floor((Math.random() * data.words.length));
-          return data.words[position];
-        },
-        function error(){
-          //TODO: handle errors for real
-          console.log("error");
-        }
-      );
-    }
-  };
-})
-
-.factory('RandomLetters', function($http){
-  return {
-    letters : function(cant, word){
-      var differentLetters = [];
-      var cantLetters = 24;
-      if (word) {
-        differentLetters = word.split("");
-      }
-      if (cant > 0) {
-          cantLetters = cant;
-      }
-      var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-      return _.chain(alphabet)
-      .difference(differentLetters) // Remove from alphabet letters in word
-      .sample(cantLetters)
-      .value();
-    },
-  };
-});
+}]);
