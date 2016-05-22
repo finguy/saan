@@ -25,7 +25,11 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "locator": "../cordova-tts-plugin",
+      "id": "com.saan.tts"
+    }
   ],
   "cordovaPlatforms": [
     "android"

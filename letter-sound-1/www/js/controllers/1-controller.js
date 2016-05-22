@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('1Ctrl', function($scope, RandomWord, RandomLetters) {
+.controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService) {
 	$scope.activityId = '1';
 	$scope.word = "";
 	$scope.letters = [];
@@ -24,6 +24,11 @@ angular.module('saan.controllers')
 		}
 	);
 
+	$scope.speak = function(text) {
+			 console.log('text');
+			 console.log(text);
+		   TTSService.speak(text);
+	}
 	$scope.checkWord = function(){
 		var builtWord = $scope.selectedLetters.join("");
 		if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
