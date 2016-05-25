@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('1Ctrl', function($scope, RandomWord, RandomLetters/*, TTSService*/) {
+.controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService) {
 	$scope.activityId = '1'; // Activity Id
 	$scope.word = ""; // Word to play in level
 	$scope.letters = []; // Word letters
@@ -31,13 +31,11 @@ angular.module('saan.controllers')
 	};
 	$scope.showDashboard();
 	$scope.speak = function(text) {
-			 /*$scope.word += " invocando speak(" + text +") ...";
-		   TTSService.speak(text).then(function success() {
-				   $scope.word += " hablando";
+		   TTSService.speak(text).then(function success() {				   
 			 },
 		 	function error(){
 				$sope.word += " error";
-			});*/
+			});
 	};
 	$scope.checkWord = function(){
 		var builtWord = $scope.selectedLetters.join("");
