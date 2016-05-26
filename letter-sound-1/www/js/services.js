@@ -47,8 +47,6 @@ angular.module('saan.services', [])
     };
   }])
   .factory('TTSService', ['$q', function($q) {
-
-
     var speak = function(word, locale, rate) {
       var deferred = $q.defer();
       if (cordova && cordova.plugins.TTS) {

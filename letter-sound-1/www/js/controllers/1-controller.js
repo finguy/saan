@@ -9,10 +9,11 @@ angular.module('saan.controllers')
 	$scope.playedWords = []; // Collects words the user played
 	$scope.level = $scope.level || 1; // Indicates activity level
 
+	/**
+	 * Shows Activity Dashboard
+	 */
 	$scope.showDashboard = function() {
-		console.log("level:" + $scope.level);
-		console.log("word:" + $scope.word);
-		RandomWord.word($scope.level, $scope.playedWords).then(
+ 		RandomWord.word($scope.level, $scope.playedWords).then(
 			function success(word){
 				$scope.word = word;
 				var letters = word.split("");
@@ -23,33 +24,57 @@ angular.module('saan.controllers')
 					src.push(_.shuffle(l));
 				});
 				$scope.dashBoard = src;
+
+				//wait for UI to load
+				setTimeout(function(){
+				$scope.speak($scope.word);
+			}, 1000);
+
 			},
 			function error(error){
 				console.log(error);
 			}
 		);
 	};
+
+	/**
+	 * Reproduces sound using TTSService
+	 */
+	$scope.speak = TTSService.speak;
+	
+	/**
+	 * Verifies selected letters and returns true if they match the word
+	 */
+	$scope.checkWord = function() {
+				var builtWord = $scope.selectedLetters.join("");
+				if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
+					$scope.playedWords.push(builtWord.toLowerCase());
+					return true;
+				} else{
+					return false;
+				}
+	};
+	/**
+	 * Advance one level
+	 */
+	$scope.levelUp = function() {
+		$scope.level++;
+		$scope.letters = [];
+		$scope.dashBoard = [];
+		$scope.selectedLetters = [];
+	};
+	/**
+	 * Goes back one level
+	 */
+	$scope.levelDown = function() {
+		$scope.level = (level > 1) ? (level - 1) : 1;
+		$scope.letters = [];
+		$scope.dashBoard = [];
+		$scope.selectedLetters = [];
+	};
+
+	//*************** ACTIONS **************************/
+	//Show Dashboard
 	$scope.showDashboard();
-	$scope.speak = function(text) {
-		   TTSService.speak(text).then(function success() {				   
-			 },
-		 	function error(){
-				$sope.word += " error";
-			});
-	};
-	$scope.checkWord = function(){
-		var builtWord = $scope.selectedLetters.join("");
-		if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
-			console.log("success!!!");
-			$scope.playedWords.push(builtWord.toLowerCase());
-			$scope.level++;
-			$scope.letters = [];
-			$scope.dashBoard = [];
-			$scope.selectedLetters = [];
-			$scope.showDashboard();
-		}
-		else{
-			console.log("nooope");
-		}
-	};
+
 });
