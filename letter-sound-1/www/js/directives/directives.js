@@ -9,7 +9,6 @@ angular.module('saan.directives', [])
           scope.selectedLetters.splice(position, 0, letter);
           var readyToCheckWord = scope.selectedLetters.length === scope.word.split("").length;
           if (readyToCheckWord && scope.checkWord()) {
-             //-------------------------
              //Reproduce letter and word
               scope.speak(letter);
               //wait for speak
@@ -22,11 +21,10 @@ angular.module('saan.directives', [])
               scope.showDashboard(); //Reload dashboard
             }, 1000);
           } else {
-            //-------------------------
             //Reproduce letter
             scope.speak(letter);
           }
-        }
+        };
       }
     };
   });

@@ -9,9 +9,8 @@ angular.module('saan.controllers')
 	$scope.playedWords = []; // Collects words the user played
 	$scope.level = $scope.level || 1; // Indicates activity level
 
-	/**
-	 * Shows Activity Dashboard
-	 */
+	
+    //Shows Activity Dashboard	 
 	$scope.showDashboard = function() {
  		RandomWord.word($scope.level, $scope.playedWords).then(
 			function success(word){
@@ -37,35 +36,30 @@ angular.module('saan.controllers')
 		);
 	};
 
-	/**
-	 * Reproduces sound using TTSService
-	 */
+	//Reproduces sound using TTSService 
 	$scope.speak = TTSService.speak;
 	
-	/**
-	 * Verifies selected letters and returns true if they match the word
-	 */
+	
+	//Verifies selected letters and returns true if they match the word 
 	$scope.checkWord = function() {
-				var builtWord = $scope.selectedLetters.join("");
-				if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
-					$scope.playedWords.push(builtWord.toLowerCase());
-					return true;
-				} else{
-					return false;
-				}
+		var builtWord = $scope.selectedLetters.join("");
+		if (builtWord.toLowerCase() === $scope.word.toLowerCase()){
+			$scope.playedWords.push(builtWord.toLowerCase());
+			return true;
+		} else {
+			return false;
+		}
 	};
-	/**
-	 * Advance one level
-	 */
+	
+	//Advance one level	 
 	$scope.levelUp = function() {
 		$scope.level++;
 		$scope.letters = [];
 		$scope.dashBoard = [];
 		$scope.selectedLetters = [];
 	};
-	/**
-	 * Goes back one level
-	 */
+	
+	// Goes back one level	 
 	$scope.levelDown = function() {
 		$scope.level = (level > 1) ? (level - 1) : 1;
 		$scope.letters = [];
