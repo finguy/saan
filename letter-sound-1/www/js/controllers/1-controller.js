@@ -4,6 +4,8 @@ angular.module('saan.controllers')
   $scope.activityId = '1'; // Activity Id
   $scope.word = ""; // Word to play in level
   $scope.instructions = ""; // Instructions to read
+  $scope.successMessages = [];
+  $scope.errorMessages  = [];
   $scope.letters = []; // Word letters
   $scope.dashBoard = []; // Dashboard letters
   $scope.selectedLetters = []; // Collects letters the user selects
@@ -18,6 +20,8 @@ angular.module('saan.controllers')
       function success(data) {
         var word = data.word;
         $scope.instructions = data.instructions;
+        $scope.successMessages = data.successMessages;
+        $scope.errorMessages = data.errorMessages;
         $scope.word = word;
         var letters = word.split("");
         var src = [];

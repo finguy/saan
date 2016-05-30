@@ -9,7 +9,7 @@ angular.module('saan.services')
           var data = response.data;
           var wordsNotPlayed = _.difference(data.words,playedWords);
           var position = Math.floor((Math.random() * wordsNotPlayed.length));
-          return { word: wordsNotPlayed[position], instructions : data.instructions}
+          return { word: wordsNotPlayed[position], instructions : data.instructions, errorMessages : data.errorMessages ,successMessages: data.successMessages}
         },
         function error() {
           //TODO: handle errors for real
