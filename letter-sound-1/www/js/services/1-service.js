@@ -7,9 +7,9 @@ angular.module('saan.services')
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
-          var wordsNotPlayed = _.difference(data.words,playedWords);          
+          var wordsNotPlayed = _.difference(data.words,playedWords);
           var position = Math.floor((Math.random() * wordsNotPlayed.length));
-          return wordsNotPlayed[position];
+          return { word: wordsNotPlayed[position], instructions : data.instructions}
         },
         function error() {
           //TODO: handle errors for real
