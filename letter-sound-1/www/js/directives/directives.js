@@ -5,7 +5,7 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/dashboardLettersOne.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectLetter = function(position, letter) {          
+        scope.selectLetter = function(position, letter) {
           scope.selectedLetters[position] = letter;
           var readyToCheckWord = scope.selectedLetters.length === scope.word.split("").length;
           if (readyToCheckWord && scope.checkWord()) {
