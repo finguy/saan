@@ -5,8 +5,8 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/dashboardLettersOne.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectLetter = function(position, letter) {
-          scope.selectedLetters.splice(position, 0, letter);
+        scope.selectLetter = function(position, letter) {          
+          scope.selectedLetters[position] = letter;
           var readyToCheckWord = scope.selectedLetters.length === scope.word.split("").length;
           if (readyToCheckWord && scope.checkWord()) {
              //Reproduce letter and word
@@ -20,6 +20,14 @@ angular.module('saan.directives', [])
               scope.levelUp(); //Advance level
               scope.showDashboard(); //Reload dashboard
             }, 1000);
+          } else if (readyToCheckWord) {
+            //Reproduce letter and word
+             scope.speak(letter);
+
+             //wait for speak
+             setTimeout(function(){
+             scope.speak(scope.selectedLetters.join(""));
+           }, 1000);
           } else {
             //Reproduce letter
             scope.speak(letter);
