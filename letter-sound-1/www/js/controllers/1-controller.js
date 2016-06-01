@@ -3,6 +3,7 @@ angular.module('saan.controllers')
 .controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService) {
   $scope.activityId = '1'; // Activity Id
   $scope.word = ""; // Word to play in level
+  $scope.instructions = ""; // Instructions to read
   $scope.letters = []; // Word letters
   $scope.dashBoard = []; // Dashboard letters
   $scope.selectedLetters = []; // Collects letters the user selects
@@ -10,10 +11,13 @@ angular.module('saan.controllers')
   $scope.level = $scope.level || 1; // Indicates activity level
 
 
+
   //Shows Activity Dashboard
-  $scope.showDashboard = function() {
+  $scope.showDashboard = function(readInstructions) {
     RandomWord.word($scope.level, $scope.playedWords).then(
-      function success(word) {
+      function success(data) {
+        var word = data.word;
+        $scope.instructions = data.instructions;
         $scope.word = word;
         var letters = word.split("");
         var src = [];
@@ -24,10 +28,18 @@ angular.module('saan.controllers')
         });
         $scope.dashBoard = src;
 
+        var readWordTimeout = (readInstructions)? 2000 : 1000;
         //wait for UI to load
         setTimeout(function() {
-          $scope.speak($scope.word);
-        }, 1000);
+          if (readInstructions){
+            $scope.speak($scope.instructions);
+              setTimeout(function() {
+                $scope.speak($scope.word);
+              }, 7000);
+          } else {
+            $scope.speak($scope.word);
+          }
+        }, readWordTimeout);
 
       },
       function error(error) {
@@ -68,7 +80,8 @@ angular.module('saan.controllers')
   };
 
   //*************** ACTIONS **************************/
-  //Show Dashboard
-  $scope.showDashboard();
+    //Show Dashboard
+    $scope.showDashboard(true);
+
 
 });
