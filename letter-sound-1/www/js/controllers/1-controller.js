@@ -12,7 +12,8 @@ angular.module('saan.controllers')
   $scope.playedWords = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
 
-
+  //Reproduces sound using TTSService
+  $scope.speak = TTSService.speak;
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
@@ -52,10 +53,6 @@ angular.module('saan.controllers')
     );
   };
 
-  //Reproduces sound using TTSService
-  $scope.speak = TTSService.speak;
-
-
   //Verifies selected letters and returns true if they match the word
   $scope.checkWord = function() {
     var builtWord = $scope.selectedLetters.join("");
@@ -84,8 +81,8 @@ angular.module('saan.controllers')
   };
 
   //*************** ACTIONS **************************/
-    //Show Dashboard
-    $scope.showDashboard(true);
+  //Show Dashboard
+  $scope.showDashboard(true);
 
 
 });
