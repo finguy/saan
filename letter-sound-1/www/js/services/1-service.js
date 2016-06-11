@@ -1,6 +1,6 @@
 angular.module('saan.services')
 
-.factory('RandomWord', function($http, Levels) {
+.factory('RandomWord', function($http, Levels, Util) {
   return {
     word: function(level, playedWords) {
       var src = Levels.getSrcData(level);
@@ -8,7 +8,7 @@ angular.module('saan.services')
         function success(response) {
           var data = response.data;
           var wordsNotPlayed = _.difference(data.words,playedWords);
-          var position = Math.floor((Math.random() * wordsNotPlayed.length));
+          var position = Util.getRandomNumber(wordsNotPlayed.length);
           return {
             word: wordsNotPlayed[position],
             instructions : data.instructions,
