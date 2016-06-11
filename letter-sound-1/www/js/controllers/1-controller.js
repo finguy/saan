@@ -7,7 +7,7 @@ angular.module('saan.controllers')
   $scope.successMessages = [];
   $scope.errorMessages  = [];
   $scope.letters = []; // Word letters
-  $scope.dashBoard = []; // Dashboard letters
+  $scope.dashboard = []; // Dashboard letters
   $scope.selectedLetters = []; // Collects letters the user selects
   $scope.playedWords = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
@@ -31,7 +31,7 @@ angular.module('saan.controllers')
           l.push(letter);
           src.push(_.shuffle(l));
         });
-        $scope.dashBoard = src;
+        $scope.dashboard = src;
 
         var readWordTimeout = (readInstructions)? 2000 : 1000;
         //wait for UI to load
@@ -68,7 +68,7 @@ angular.module('saan.controllers')
   $scope.levelUp = function() {
     $scope.level++;
     $scope.letters = [];
-    $scope.dashBoard = [];
+    $scope.dashboard = [];
     $scope.selectedLetters = [];
   };
 
@@ -76,7 +76,7 @@ angular.module('saan.controllers')
   $scope.levelDown = function() {
    $scope.level = (level > 1) ? (level - 1) : 1;
     $scope.letters = [];
-    $scope.dashBoard = [];
+    $scope.dashboard = [];
     $scope.selectedLetters = [];
   };
 

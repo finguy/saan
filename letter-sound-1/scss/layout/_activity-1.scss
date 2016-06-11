@@ -1,0 +1,25 @@
+// radio button customization
+.item-radio input:checked + .radio-content .item-content{
+    background: $positive;
+}
+
+.letter-button.item.item-radio.activated{
+  color: $dark;
+}
+
+// Dashboard letters one activity
+.letter-button {
+  clear: both;
+  float: left;
+  color: $dark;
+  width: 100px;
+  padding: 0px;
+}
+
+.center{
+  text-align: center;
+}
+
+.material-icons.btn-play-word{
+  font-size: 8em;
+}

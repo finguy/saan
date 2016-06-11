@@ -9807,3 +9807,9 @@ a.button {
 
 .material-icons.btn-play-word {
   font-size: 8em; }
+
+.item-radio input:checked + .radio-content .item-content {
+  background: #387ef5; }
+
+.letter-button.item.item-radio.activated {
+  color: #444; }

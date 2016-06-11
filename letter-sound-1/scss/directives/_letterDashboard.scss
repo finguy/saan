@@ -1,0 +1,8 @@
+// radio button customization
+.item-radio input:checked + .radio-content .item-content{
+    background: $positive;
+}
+
+.letter-button.item.item-radio.activated{
+  color: $dark;
+}

@@ -1,8 +1,8 @@
 angular.module('saan.directives', [])
-  .directive('dashboardLettersOne', function() {
+  .directive('letterDashboard', function() {
     return {
       restrict: "E",
-      templateUrl: "templates/directives/dashboardLettersOne.html",
+      templateUrl: "templates/directives/letterDashboard.html",
       scope: 'true',
       link: function(scope) {
         scope.selectLetter = function(position, letter) {
