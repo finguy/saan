@@ -1,11 +1,7 @@
-<div class="row" >
-  <div class="col" radio-group  ng-repeat="row in dashboard">
-    <ion-radio ng-repeat="letter in row"
-        ng-attr-name={{$parent.$index}}
-        icon="none"
-        class="button button-outline button-dark letter-button"
-        ng-click="selectLetter($parent.$index, letter)">
-      {{letter}}
-    </ion-radio>
+<div class="row">
+  <div class="col" radio-group  ng-repeat="row in dashboard">    
+    <img ng-repeat="letter in row" class="letter-button"
+      ng-click="selectLetter($parent.$index, letter)"
+      ng-src="img/alphabet-buttons/{{letter}}.png">
   </div>
 </div>
