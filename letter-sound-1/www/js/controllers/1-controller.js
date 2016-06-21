@@ -1,13 +1,14 @@
 angular.module('saan.controllers')
 
-.controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService) {
+.controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService,
+  Util) {
   $scope.activityId = '1'; // Activity Id
   $scope.word = ""; // Word to play in level
   $scope.instructions = ""; // Instructions to read
   $scope.successMessages = [];
   $scope.errorMessages  = [];
   $scope.letters = []; // Word letters
-  $scope.dashBoard = []; // Dashboard letters
+  $scope.dashboard = []; // Dashboard letters
   $scope.selectedLetters = []; // Collects letters the user selects
   $scope.playedWords = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
@@ -31,9 +32,9 @@ angular.module('saan.controllers')
           l.push(letter);
           src.push(_.shuffle(l));
         });
-        $scope.dashBoard = src;
+        $scope.dashboard = src;
 
-        var readWordTimeout = (readInstructions)? 2000 : 1000;
+        var readWordTimeout = (readInstructions) ? 2000 : 1000;
         //wait for UI to load
         setTimeout(function() {
           if (readInstructions){
@@ -56,11 +57,32 @@ angular.module('saan.controllers')
   //Verifies selected letters and returns true if they match the word
   $scope.checkWord = function() {
     var builtWord = $scope.selectedLetters.join("");
+
+    setTimeout(function(){
+      $scope.speak(builtWord);
+    }, 100);
+
     if (builtWord.toLowerCase() === $scope.word.toLowerCase()) {
       $scope.playedWords.push(builtWord.toLowerCase());
-      return true;
+
+        setTimeout(function() {
+          var position = Util.getRandomNumber($scope.successMessages.length);
+          var successMessage = $scope.successMessages[position];
+          $scope.speak(successMessage);
+          //wait for speak
+          setTimeout(function() {
+            $scope.levelUp(); //Advance level
+            $scope.showDashboard(); //Reload dashboard
+          }, 1000);
+        }, 1000);
+
     } else {
-      return false;
+      //wait for speak
+      setTimeout(function() {
+        var position = Util.getRandomNumber($scope.errorMessages.length);
+        var errorMessage = $scope.errorMessages[position];
+        $scope.speak(errorMessage);
+      }, 1000);
     }
   };
 
@@ -68,7 +90,7 @@ angular.module('saan.controllers')
   $scope.levelUp = function() {
     $scope.level++;
     $scope.letters = [];
-    $scope.dashBoard = [];
+    $scope.dashboard = [];
     $scope.selectedLetters = [];
   };
 
@@ -76,13 +98,11 @@ angular.module('saan.controllers')
   $scope.levelDown = function() {
    $scope.level = (level > 1) ? (level - 1) : 1;
     $scope.letters = [];
-    $scope.dashBoard = [];
+    $scope.dashboard = [];
     $scope.selectedLetters = [];
   };
 
   //*************** ACTIONS **************************/
   //Show Dashboard
   $scope.showDashboard(true);
-
-
 });
