@@ -1,16 +1,17 @@
 angular.module('saan.controllers')
 
-.controller('1Ctrl', function($scope, RandomWord, RandomLetters, TTSService,
+.controller('1Ctrl', function($scope, RandomLetter, TTSService,
   Util) {
   $scope.activityId = '1'; // Activity Id
-  $scope.word = ""; // Word to play in level
+  $scope.letter = ""; // Letter to play in level
+  $scope.imgs = [];
   $scope.instructions = ""; // Instructions to read
   $scope.successMessages = [];
   $scope.errorMessages  = [];
   $scope.letters = []; // Word letters
   $scope.dashboard = []; // Dashboard letters
-  $scope.selectedLetters = []; // Collects letters the user selects
-  $scope.playedWords = []; // Collects words the user played
+  $scope.selectedObject = ""; // Collects letters the user selects
+  $scope.playedLetters = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
 
   //Reproduces sound using TTSService
@@ -18,21 +19,15 @@ angular.module('saan.controllers')
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
-    RandomWord.word($scope.level, $scope.playedWords).then(
+    RandomLetter.letter($scope.level, $scope.playedLetters).then(
       function success(data) {
-        var word = data.word;
+        var letterJson = data.letter;
         $scope.instructions = data.instructions;
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
-        $scope.word = word;
-        var letters = word.split("");
-        var src = [];
-        _.each(letters, function(letter, key) {
-          var l = RandomLetters.letters(letters.length, letter);
-          l.push(letter);
-          src.push(_.shuffle(l));
-        });
-        $scope.dashboard = src;
+        $scope.letter = letterJson.letter;
+        $scope.imgs = letterJson.imgs;
+        $scope.dashboard = [$scope.letter];
 
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         //wait for UI to load
@@ -40,10 +35,10 @@ angular.module('saan.controllers')
           if (readInstructions){
             $scope.speak($scope.instructions);
               setTimeout(function() {
-                $scope.speak($scope.word);
+                $scope.speak($scope.letter);
               }, 7000);
           } else {
-            $scope.speak($scope.word);
+            $scope.speak($scope.letter);
           }
         }, readWordTimeout);
 
@@ -55,16 +50,11 @@ angular.module('saan.controllers')
   };
 
   //Verifies selected letters and returns true if they match the word
-  $scope.checkWord = function() {
-    var builtWord = $scope.selectedLetters.join("");
-
-    setTimeout(function(){
-      $scope.speak(builtWord);
-    }, 100);
-
-    if (builtWord.toLowerCase() === $scope.word.toLowerCase()) {
-      $scope.playedWords.push(builtWord.toLowerCase());
-
+  $scope.checkLetter = function(selectedObject) {
+    var ER = new RegExp($scope.letter,"i");
+    var name = selectedObject.toLowerCase();
+    if (ER.test(name)) {
+      $scope.playedLetters.push($scope.letter.toLowerCase());
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
           var successMessage = $scope.successMessages[position];

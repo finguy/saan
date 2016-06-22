@@ -1,16 +1,15 @@
 angular.module('saan.directives', [])
-  .directive('letterDashboard', function() {
+  .directive('objectDashboard', function() {
     return {
       restrict: "E",
-      templateUrl: "templates/directives/letterDashboard.html",
+      templateUrl: "templates/directives/objectDashboard.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectLetter = function(position, letter) {
-          scope.selectedLetters[position] = letter;
-          scope.speak(letter);
+        scope.selectLetter = function(name) {
+          scope.selectedObject= name;
+          scope.speak(name);
           setTimeout(function (){
-            if (scope.selectedLetters.length === scope.word.split("").length)
-              scope.checkWord();
+              scope.checkLetter(name);
           }, 500);
         };
       }

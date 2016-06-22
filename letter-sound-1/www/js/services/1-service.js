@@ -1,16 +1,28 @@
 angular.module('saan.services')
 
-.factory('RandomWord', function($http, Levels, Util) {
+.factory('RandomLetter', function($http, Levels, Util) {
   return {
-    word: function(level, playedWords) {
+    letter: function(level, playedLetters) {
       var src = Levels.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
-          var wordsNotPlayed = _.difference(data.words,playedWords);
-          var position = Util.getRandomNumber(wordsNotPlayed.length);
+          var lettersNotPlayed = [];
+          if (playedLetters.length === 0 ){
+            lettersNotPlayed = data.letters;
+          } else {
+            for (var i in data.letters) { //FIXME: try to use underscore
+              if (data.letters[i]) {
+                var ER = new RegExp(data.letters[i], "i");
+                if (!ER.test(playedLetters.toString())) {
+                  lettersNotPlayed.push(data.letters[i]);
+                }
+              }
+            }
+          }
+          var position = Util.getRandomNumber(lettersNotPlayed .length);
           return {
-            word: wordsNotPlayed[position],
+            letter: lettersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages
@@ -24,36 +36,16 @@ angular.module('saan.services')
     }
   };
 })
-
-.factory('RandomLetters', function($http) {
-    return {
-      letters: function(cant, word) {
-        var differentLetters = [];
-        var cantLetters = 24;
-        if (word) {
-          differentLetters = word.split("");
-        }
-        if (cant > 0) {
-          cantLetters = cant;
-        }
-        var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-        return _.chain(alphabet)
-          .difference(differentLetters) // Remove from alphabet letters in word
-          .sample(cantLetters)
-          .value();
-      },
-    };
-  })
   .factory('Levels', function() {
     return {
       getSrcData: function(level) {
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/words.json';
+            src = 'data/letters.json';
             break;
           default:
-            src = 'data/words.json';
+            src = 'data/letters.json';
         }
         return src;
       },
