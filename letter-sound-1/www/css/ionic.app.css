@@ -9789,34 +9789,23 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-<<<<<<< 6219fb5aef72d2283396b5146d41fadc414bf2bc
-.center {
-  text-align: center; }
-
 .material-icons.btn-play-word {
   font-size: 8em; }
-
-.item-radio input:checked + .radio-content .item-content {
-  background: #387ef5; }
-=======
-.material-icons.btn-play-word {
-  font-size: 8em; }
->>>>>>> add alphabet assets and some styling
 
 .dashboard-container {
   width: 80%; }
 
 .letter-button {
-<<<<<<< 6219fb5aef72d2283396b5146d41fadc414bf2bc
+  display: block;
+  margin: auto auto 25px auto;
+  width: 80px; }
+
+.letter-button {
   clear: both;
   float: left;
   color: #444;
   width: 100px;
   padding: 0px; }
-=======
-  display: block;
-  margin: auto auto 25px auto;
-  width: 80px; }
 
 .text-center {
   text-align: center; }
@@ -9824,4 +9813,3 @@ a.button {
 .align-center {
   margin-left: auto;
   margin-right: auto; }
->>>>>>> add alphabet assets and some styling
