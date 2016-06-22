@@ -36,7 +36,7 @@ angular.module('saan.controllers')
             $scope.speak($scope.instructions);
               setTimeout(function() {
                 $scope.speak($scope.number);
-              }, 7000);
+              }, 8000);
           } else {
             $scope.speak($scope.number);
           }

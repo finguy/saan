@@ -1,32 +1,64 @@
 {"numbers":
   [{"number":1,
     "imgs":[
-      {"src": "img/apple.png",
+      {"src": "img/one.png",
+        "width": "25%",
+        "height": "25%",
        "name" : 1
      },
-     {"src": "img/fish.png",
+     {"src": "img/two.png",
+       "width": "50%",
+       "height": "50%",
       "name" : 2
     },
-    {"src": "img/tree.png",
+    {"src": "img/three.png",
+      "width": "75%",
+      "height": "75%",
      "name" : 3
    }
       ]
     },
     {"number":2 ,
       "imgs":[
-        {"src": "img/apple.png",
+        {"src": "img/two_2.png",
+          "width": "50%",
+          "height": "50%",
+         "name" : 2
+       },
+        {"src": "img/one_2.png",
+         "width": "25%",
+         "height": "25%",
          "name" : 1
        },
-       {"src": "img/fish.png",
-        "name" : 2
-      },
-      {"src": "img/tree.png",
+
+      {"src": "img/three_2.png",
+        "width": "75%",
+        "height": "75%",
        "name" : 3
      }
         ]
-      }
+      },
+      {"number":3,
+        "imgs":[
+          {"src": "img/one_3.png",
+           "width": "25%",
+           "height": "25%",
+           "name" : 1
+         },
+        {"src": "img/three_3.png",
+          "width": "75%",
+          "height": "75%",
+         "name" : 3
+       },
+       {"src": "img/two_3.png",
+         "width": "50%",
+         "height": "50%",
+        "name" : 2
+       }
+          ]
+        }
   ],
-  "instructions": "Hi! Listen to the number and then select the figure having the letter in its name. Good Luck!",
+  "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]
 }

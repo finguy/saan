@@ -2,23 +2,24 @@ angular.module('saan.services')
 
 .factory('RandomNumber', function($http, Levels, Util) {
   return {
-    number: function(level, playedLetters) {
+    number: function(level, playedNumbers) {
       var src = Levels.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
           var numbersNotPlayed = [];
-          //if (playedNumbers.length === 0 ){
+          if (playedNumbers.length === 0 ){
             numbersNotPlayed = data.numbers;
-        //  } else {
-            /*for (var i in data.numbers) { //FIXME: try to use underscore
+          } else {
+            for (var i in data.numbers) { //FIXME: try to use underscore
               if (data.numbers[i]) {
-                if (data.numbers[i] !== ) {
+                  var index = _.indexOf(playedNumbers,data.numbers[i].number);
+                if (index === -1) {
                   numbersNotPlayed.push(data.numbers[i]);
                 }
               }
             }
-          }*/
+          }
           var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
             number: numbersNotPlayed[position],
