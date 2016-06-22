@@ -5,11 +5,11 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/objectDashboard.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectLetter = function(name) {
+        scope.selectNumber = function(name) {
           scope.selectedObject= name;
           scope.speak(name);
           setTimeout(function (){
-              scope.checkLetter(name);
+              scope.checkNumber(name);
           }, 500);
         };
       }

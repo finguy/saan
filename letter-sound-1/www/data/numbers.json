@@ -1,32 +1,32 @@
-{"letters":
-  [{"letter":"a" ,
+{"numbers":
+  [{"number":1,
     "imgs":[
       {"src": "img/apple.png",
-       "name" : "apple"
+       "name" : 1
      },
      {"src": "img/fish.png",
-      "name" : "fish"
+      "name" : 2
     },
     {"src": "img/tree.png",
-     "name" : "tree"
+     "name" : 3
    }
       ]
     },
-    {"letter":"i" ,
+    {"number":2 ,
       "imgs":[
         {"src": "img/apple.png",
-         "name" : "apple"
+         "name" : 1
        },
        {"src": "img/fish.png",
-        "name" : "fish"
+        "name" : 2
       },
       {"src": "img/tree.png",
-       "name" : "tree"
+       "name" : 3
      }
         ]
       }
   ],
-  "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
+  "instructions": "Hi! Listen to the number and then select the figure having the letter in its name. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]
 }

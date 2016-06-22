@@ -1,28 +1,27 @@
 angular.module('saan.services')
 
-.factory('RandomLetter', function($http, Levels, Util) {
+.factory('RandomNumber', function($http, Levels, Util) {
   return {
-    letter: function(level, playedLetters) {
+    number: function(level, playedLetters) {
       var src = Levels.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
-          var lettersNotPlayed = [];
-          if (playedLetters.length === 0 ){
-            lettersNotPlayed = data.letters;
-          } else {
-            for (var i in data.letters) { //FIXME: try to use underscore
-              if (data.letters[i]) {
-                var ER = new RegExp(data.letters[i], "i");
-                if (!ER.test(playedLetters.toString())) {
-                  lettersNotPlayed.push(data.letters[i]);
+          var numbersNotPlayed = [];
+          //if (playedNumbers.length === 0 ){
+            numbersNotPlayed = data.numbers;
+        //  } else {
+            /*for (var i in data.numbers) { //FIXME: try to use underscore
+              if (data.numbers[i]) {
+                if (data.numbers[i] !== ) {
+                  numbersNotPlayed.push(data.numbers[i]);
                 }
               }
             }
-          }
-          var position = Util.getRandomNumber(lettersNotPlayed .length);
+          }*/
+          var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
-            letter: lettersNotPlayed[position],
+            number: numbersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages
@@ -42,10 +41,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/letters.json';
+            src = 'data/numbers.json';
             break;
           default:
-            src = 'data/letters.json';
+            src = 'data/numbers.json';
         }
         return src;
       },
