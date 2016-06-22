@@ -51,7 +51,7 @@ angular.module('saan.controllers')
 
   //Verifies selected letters and returns true if they match the word
   $scope.checkNumber = function(selectedObject) {
-    if ($scope.number === Math.parseInt(selectedObject),10) {
+    if ($scope.number === parseInt(selectedObject,10)) {
       $scope.playedNumbers.push($scope.number);
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
