@@ -1,10 +1,12 @@
 <ion-view view-title="Dashboard (level: {{level}})">
   <ion-content class="padding">
-    <div class="center">
+    <div class="text-center">
       <img src="img/ic_record_voice_over.png"
         class="material-icons btn-play-word"
         ng-click="speak(word)"/>
     </div>
-    <letter-dashboard></letter-dashboard>
+    <div class="align-center dashboard-container">
+      <letter-dashboard></letter-dashboard>
+    </div>
   </ion-content>
 </ion-view>
