@@ -1,0 +1,31 @@
+$alphabet: a b c d e f g h i j k l m n o p q r s t u v w x y z;
+
+@each $letter in $alphabet {
+  .letter-#{$letter} {
+    &.item-radio {
+      background: url('/img/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+
+      input:checked + .radio-content .item-content {
+        background: url('/img/alphabet-buttons-pressed/#{$letter}.png') no-repeat center / contain;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.radio-content .item-content {
+  height: 80px;
+  width: 80px;
+}
+
+.letter-button {
+  border: 0;
+  display: block;
+  height: 80px;
+  margin: auto auto 25px;
+  width: 80px;
+
+  .radio-content {
+    visibility: collapse;
+  }
+}

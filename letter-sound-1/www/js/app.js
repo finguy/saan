@@ -1,14 +1,10 @@
 // Ionic Starter App
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
-  'underscore'])
+angular.module('saan', ['ionic', 'saan.controllers', 'saan.services',
+                        'saan.directives', 'underscore'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, _) {
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -30,57 +26,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+
   $stateProvider
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
+  // setup a dynamic route for all activities
+    .state('activity', {
+    url: '/activity/:activityId',
+    templateUrl: function ($stateParams){
+      return "templates/" + $stateParams.activityId + ".html";
+    },
+    controllerProvider : function ($stateParams){
+      return $stateParams.activityId + "Ctrl";
     }
+
+
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+  // setup a state for the lobby
+    .state('lobby', {
+    url: '/lobby',
+    templateUrl: "templates/lobby.html",
+    controller: "LobbyCtrl",
+    resolve : {
+      actividadesConfiguradas : function(Config){
+        return Config.get();
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/lobby');
 
 });

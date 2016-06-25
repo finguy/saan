@@ -1,77 +1,75 @@
-angular.module('starter.services', [])
+angular.module('saan.services', [])
 
-.factory('RandomWord', function($http){
-  return {
-    word : function(callback){
-      return $http.get('data/words.json').then(function(response) {
-          //TODO add try/catch block
-          var data = response.data;
+.factory('Config', ['$http', '$q', function($http, $q) {
+    // Might use a resource here that returns a JSON array
+    var get = function() {
+      var deferred = $q.defer();
+      if (this.config) {
+        deferred.resolve(this.config);
+        return deferred;
+      } else
 
-          var position = Math.floor((Math.random() * data.words.length));
-          return callback(data.words[position]);
+        return $http({
+        method: 'GET',
+        url: 'config.json'
+      }).then(function successCallback(response) {
+        this.config = response.data;
+        return response.data;
+
+      }, function errorCallback() {
+
       });
-    }
-  };
-})
 
-.factory('RandomLetters', function($http){
-  return {
-    letters : function(cant, diff){
-      diff = diff.split("");
-      var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-      alphabet = _.difference(alphabet, diff);
+    };
 
-      return _.sample(alphabet, cant);
 
-    }
-  };
-})
+    return {
+      get: get
+    };
+  }])
+  .factory('ActividadesFinalizadasService', ['$window', function($window) {
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+    var FINISHED_ACTIVITIES = "finishedActivities";
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+    var marcarComoFinalizada = function(activityId) {
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+        finishedActivities.push(activityId);
+        $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+      },
+      getActividadesFinalizadas = function() {
+        return JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+      };
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
+
+    return {
+      add: marcarComoFinalizada,
+      get: getActividadesFinalizadas
+    };
+  }])
+  .factory('TTSService', ['$q', function($q) {
+    var speak = function(word, locale, rate) {
+      var deferred = $q.defer();
+      if (cordova && cordova.plugins.TTS) {
+        var args = {
+          "text": word,
+          "locale": locale,
+          "rate": rate
+        };
+
+        return cordova.plugins.TTS.speak(args, function() {
+          deferred.resolve();
+        }, function(error) {
+          deferred.reject("Error using cordova TTS plugin");
+          console.error(error);
+        });
+      } else {
+        deferred.reject("Error using cordova TTS plugin");
+        console.error("Cordova TTS plugin is not loaded");
       }
-      return null;
-    }
-  };
-});
+      return deferred.promise;
+    };
+    return {
+      speak: speak
+    };
+
+  }]);
