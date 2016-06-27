@@ -22,12 +22,18 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'www/lib/ionic/scss/ionic';
 @import 'layout/activity-1';
 @import 'directives/letterDashboard';
+@import 'layout/activity-2';
 
 .text-center {
   text-align: center;
 }
 
-.align-center {
+.horizontal-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+.vertical-center {
+  margin-bottom: auto;
+  margin-top: auto;
 }

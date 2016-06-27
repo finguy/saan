@@ -1,5 +1,23 @@
 <ion-view view-title="{{activityId}}">
   <ion-content>
-    Template para {{activityId}}
+
+    <div class="row pattern-container">
+      <div class="vertical-center">{{selectedComponents}}</div>
+      <div ui-sortable="sortableOptions" class="dropzone apps-container screen connected-drop-target-sortable floatleft"
+        ng-model="selectedComponents">
+      </div>
+    </div>
+
+    <div class="row">
+        <div ui-sortable="draggableOptions" class="horizontal-center draggable-element-container"
+        ng-repeat="draggableArray in draggables track by $index"
+        ng-model="draggableArray">
+          <div ng-repeat="draggable in draggableArray" class="text-center">
+            <div class="color"></div>
+            {{draggable.color}}
+        </div>
+    </div>
+  </div>
+
   </ion-content>
 </ion-view>
