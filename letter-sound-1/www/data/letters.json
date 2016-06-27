@@ -1,27 +1,29 @@
 {"letters":
   [{"letter":"a" ,
+    "instruction":"Can you tap the letter a?",
     "imgs":[
       {"src": "img/apple.png",
-       "name" : "apple"
+       "name" : "A"
      },
      {"src": "img/fish.png",
-      "name" : "fish"
+      "name" : "b"
     },
     {"src": "img/tree.png",
-     "name" : "tree"
+     "name" : "C"
    }
       ]
     },
-    {"letter":"i" ,
+    {"letter":"i" ,    
+     "instruction":"Can you tap the letter i?",
       "imgs":[
         {"src": "img/apple.png",
-         "name" : "apple"
+         "name" : "a"
        },
        {"src": "img/fish.png",
-        "name" : "fish"
+        "name" : "f"
       },
       {"src": "img/tree.png",
-       "name" : "tree"
+       "name" : "i"
      }
         ]
       }

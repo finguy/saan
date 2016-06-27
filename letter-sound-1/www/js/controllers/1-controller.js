@@ -13,6 +13,12 @@ angular.module('saan.controllers')
   $scope.selectedObject = ""; // Collects letters the user selects
   $scope.playedLetters = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
+  $scope.upperCase = "";
+  $scope.lowercase = "";
+  $scope.isUpperCase = true;
+  $scope.isLowerCase = false;
+  $scope.isActivity = false;
+  $scope.counter = 0;
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
@@ -92,6 +98,16 @@ angular.module('saan.controllers')
     $scope.selectedLetters = [];
   };
 
+  $scope.showPage = function(){
+    $scope.counter = ($scope.counter + 1 ) % 3;
+    $scope.isUpperCase = $scope.counter == 1;
+    $scope.isLowerCase = $scope.counter == 2;
+    $scope.isActivity = $scope.counter == 0;
+
+    if ($scope.isActivity ) {
+      // read letter instruction
+    }
+  };
   //*************** ACTIONS **************************/
   //Show Dashboard
   $scope.showDashboard(true);

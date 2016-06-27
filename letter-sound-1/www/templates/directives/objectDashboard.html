@@ -1,5 +1,28 @@
-<div class="row" >
+<div class="row activityDisplay"  id="upperCase" ng-show="!isActivity">
+  <div class="col" ng-click='speak("This is uppercase {{upperCase}}")'>
+    <h1><b>{{upperCase}}  </b></h1>
+    <br/>
+    <img src="{{img.src}}" width="50%" height="50%"/>
+  </div>
+
+  <div class="col" ng-click='speak("This is lowercase {{lowercase}} ")'>
+    <h1><b>{{lowercase}} (upperCase) </b></h1>
+    <br/>
+    <img src="{{img.src}}" width="50%" height="50%"/>
+  </div>
+</div>
+
+<br/>
+<ion-radio
+    class="button button-outline button-dark letter-button" ng-click="showPage()">
+   =>
+</ion-radio>
+
+
+<div class="row activityDisplay" ng-show="isActivity" id="activity">
   <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name)">
-    <img src="{{img.src}}" width="50%" height="50%"/> <br/><b>{{img.name}} </b>
+    <h1><b>{{img.name}} </b></h1>
+    <br/>
+    <img src="{{img.src}}" width="50%" height="50%"/>
   </div>
 </div>
