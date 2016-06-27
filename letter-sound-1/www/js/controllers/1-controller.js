@@ -28,10 +28,13 @@ angular.module('saan.controllers')
     RandomLetter.letter($scope.level, $scope.playedLetters).then(
       function success(data) {
         var letterJson = data.letter;
+
         $scope.instructions = data.instructions;
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
         $scope.letter = letterJson.letter;
+        $scope.upperCase = letterJson.letter.toUpperCase();
+        $scope.lowercase = letterJson.letter.toLowerCase();
         $scope.imgs = letterJson.imgs;
         $scope.dashboard = [$scope.letter];
 
