@@ -14,12 +14,10 @@ angular.module('saan.controllers')
   $scope.selectedObject = ""; // Collects letters the user selects
   $scope.playedLetters = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
-  $scope.upperCase = "";
-  $scope.lowercase = "";
-  $scope.isUpperCase = true;
-  $scope.isLowerCase = false;
-  $scope.isActivity = false;
-  $scope.counter = 0;
+  $scope.upperCase = ""; // Lowercase version of letter
+  $scope.lowercase = ""; // Uppercase versin of letter
+  $scope.isActivity = false; // Indicates if user is playing
+
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;

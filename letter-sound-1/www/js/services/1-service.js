@@ -13,7 +13,7 @@ angular.module('saan.services')
           } else {
             for (var i in data.letters) { //FIXME: try to use underscore
               if (data.letters[i]) {
-                var ER = new RegExp(data.letters[i], "i");
+                var ER = new RegExp(data.letters[i].letter, "i");
                 if (!ER.test(playedLetters.toString())) {
                   lettersNotPlayed.push(data.letters[i]);
                 }
