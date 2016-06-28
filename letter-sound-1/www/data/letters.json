@@ -1,34 +1,38 @@
 {"letters":
   [{"letter":"a" ,
-    "instruction":"Can you tap the letter a?",
+    "upperCaseImg": "img/aUpperCase.jpg",
+    "lowerCaseImg": "img/aLowerCase.jpg",
+    "instruction":"Can you tap uppercase a?",
     "imgs":[
       {"src": "img/apple.png",
        "name" : "A"
      },
-     {"src": "img/fish.png",
-      "name" : "b"
+     {"src": "img/dog.png",
+      "name" : "d"
     },
     {"src": "img/tree.png",
-     "name" : "C"
+     "name" : "T"
    }
       ]
     },
-    {"letter":"i" ,
-     "instruction":"Can you tap the letter i?",
+    {"letter":"d" ,
+      "upperCaseImg": "img/dUpperCase.jpg",
+      "lowerCaseImg": "img/dLowerCase.jpg",
+      "instruction":"Can you tap lowercase  d?",
       "imgs":[
         {"src": "img/apple.png",
          "name" : "a"
        },
-       {"src": "img/fish.png",
-        "name" : "f"
+       {"src": "img/dog.png",
+        "name" : "d"
       },
       {"src": "img/tree.png",
-       "name" : "i"
+       "name" : "I"
      }
         ]
       }
   ],
-  "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
+  "instructions": "Hi! Let's learn letters. Click on the flash cards!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]
 }

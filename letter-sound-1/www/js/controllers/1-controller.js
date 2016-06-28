@@ -6,6 +6,7 @@ angular.module('saan.controllers')
   $scope.letter = ""; // Letter to play in level
   $scope.imgs = [];
   $scope.instructions = ""; // Instructions to read
+  $scope.letterInstructions = ""; // Instructions to read
   $scope.successMessages = [];
   $scope.errorMessages  = [];
   $scope.letters = []; // Word letters
@@ -28,13 +29,15 @@ angular.module('saan.controllers')
     RandomLetter.letter($scope.level, $scope.playedLetters).then(
       function success(data) {
         var letterJson = data.letter;
-
         $scope.instructions = data.instructions;
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
         $scope.letter = letterJson.letter;
         $scope.upperCase = letterJson.letter.toUpperCase();
-        $scope.lowercase = letterJson.letter.toLowerCase();
+        $scope.lowerCase = letterJson.letter.toLowerCase();
+        $scope.upperCaseImgSrc = letterJson.upperCaseImg;
+        $scope.lowerCaseImgSrc = letterJson.lowerCaseImg;
+        $scope.letterInstructions = letterJson.instruction;
         $scope.imgs = letterJson.imgs;
         $scope.dashboard = [$scope.letter];
 
@@ -43,11 +46,9 @@ angular.module('saan.controllers')
         setTimeout(function() {
           if (readInstructions){
             $scope.speak($scope.instructions);
-              setTimeout(function() {
-                $scope.speak($scope.letter);
-              }, 7000);
           } else {
-            $scope.speak($scope.letter);
+            $scope.instructions = $scope.letterInstructions;
+            $scope.speak($scope.letterInstructions);
           }
         }, readWordTimeout);
 
@@ -102,14 +103,12 @@ angular.module('saan.controllers')
   };
 
   $scope.showPage = function(){
-    $scope.counter = ($scope.counter + 1 ) % 3;
-    $scope.isUpperCase = $scope.counter == 1;
-    $scope.isLowerCase = $scope.counter == 2;
-    $scope.isActivity = $scope.counter == 0;
-
-    if ($scope.isActivity ) {
-      // read letter instruction
-    }
+    $scope.instructions = $scope.letterInstructions;
+    $scope.isActivity = true;
+    //wait for UI to load
+    setTimeout(function() {
+      $scope.speak($scope.instructions);
+    }, 1000);
   };
   //*************** ACTIONS **************************/
   //Show Dashboard

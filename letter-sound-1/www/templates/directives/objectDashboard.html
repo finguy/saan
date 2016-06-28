@@ -1,24 +1,18 @@
-<div class="row activityDisplay"  id="upperCase" ng-show="!isActivity">
-  <div class="col" ng-click='speak("This is uppercase {{upperCase}}")'>
-    <h1><b>{{upperCase}}  </b></h1>
-    <br/>
-    <img src="{{img.src}}" width="50%" height="50%"/>
+<div class="row activityDisplay"  ng-show="!isActivity">
+  <div class="col" ng-click="speak('This is uppercase ' + letter)">
+    <img src="{{upperCaseImgSrc}}" width="25%" height="25%"/>
   </div>
 
-  <div class="col" ng-click='speak("This is lowercase {{lowercase}} ")'>
-    <h1><b>{{lowercase}} </b></h1>
-    <br/>
-    <img src="{{img.src}}" width="50%" height="50%"/>
+  <div class="col" ng-click="speak('This is lowercase ' + letter)">
+    <img src="{{lowerCaseImgSrc}}" width="25%" height="25%"/>
   </div>
+
+<br/><br/>
+<br/><br/>
 </div>
-
-<br/>
-<ion-radio
-    class="button button-outline button-dark letter-button" ng-click="showPage()">
-   =>
-</ion-radio>
-
-
+<div class="col-80">
+<img class="material-icons" ng-click="showPage()" src="img/ic_skip_next_black_24dp.png" ng-show="!isActivity" />
+</div>
 <div class="row activityDisplay" ng-show="isActivity" id="activity">
   <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name)">
     <h1><b>{{img.name}} </b></h1>
