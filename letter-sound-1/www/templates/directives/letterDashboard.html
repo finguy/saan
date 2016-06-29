@@ -1,12 +1,10 @@
-<!-- <input name="h1" type="radio" /> -->
-
 <div class="row" >
   <div class="col" radio-group ng-repeat="row in dashboard">
     <ion-radio ng-repeat="letter in row"
         ng-attr-name={{$parent.$index}}
         icon="none"
         class="letter-button letter-{{letter}}"
-        ng-click="selectLetter($parent.$index)"
+        ng-click="selectLetter($parent.$index, letter)"
         ng-checked="">
     </ion-radio>
   </div>

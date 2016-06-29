@@ -30,7 +30,6 @@ angular.module('ui.sortable', [])
         },
         link: function(scope, element, attrs, ngModel) {
           var savedNodes;
-
           function combineCallbacks(first, second){
             var firstIsFunc = first && (typeof first === 'function');
             var secondIsFunc = second && (typeof second === 'function');
@@ -110,7 +109,7 @@ angular.module('ui.sortable', [])
                     }
                     return;
                   }
-                  
+
                   if (!defaultOptions) {
                     defaultOptions = angular.element.ui.sortable().options;
                   }
@@ -471,7 +470,7 @@ angular.module('ui.sortable', [])
               var sortableWidgetInstance = getSortableWidgetInstance(element);
               if (!!sortableWidgetInstance) {
                 var optsDiff = patchUISortableOptions(newVal, oldVal, sortableWidgetInstance);
-                
+
                 if (optsDiff) {
                   element.sortable('option', optsDiff);
                 }
@@ -487,7 +486,7 @@ angular.module('ui.sortable', [])
             } else {
               $log.info('ui.sortable: ngModel not provided!', element);
             }
-            
+
             // Create sortable
             element.sortable(opts);
           }

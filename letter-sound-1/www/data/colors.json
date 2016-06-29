@@ -1,0 +1,5 @@
+{"colors": ["red", "blue", "green", "yellow", "purple", "brown", "orange"],
+  "instructions": "Hi! Look at the color sequence and try to complete it",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"]
+}

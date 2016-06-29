@@ -7,15 +7,17 @@
      <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
     <link href="css/ionic.app.css" rel="stylesheet">
 
-
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/jquery-ui/jquery-ui.min.js"></script>
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
+
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/angular-underscore-module/angular-underscore-module.js"></script>
-    <script type="text/javascript" src="lib/angular-ui-sortable/sortable.min.js"></script>
-
+    <script src="lib/angular-ui-sortable/sortable.js"></script>
+    <script src="lib/jquery-punch/jquery.ui.touch-punch.min.js"></script>
 
     <!-- your app's js -->
   	<script src="js/services.js"></script>
@@ -23,7 +25,6 @@
   	<script src="js/app.js"></script>
   	<script src="js/controllers.js"></script>
   	<script src="js/controllers/lobby-controller.js"></script>
-
     <script src="js/directives/directives.js"></script>
 
     <!-- Letter Activity 1 -->
@@ -32,6 +33,7 @@
 
     <!-- Pattern Activity 1 -->
     <script src="js/controllers/2-controller.js"></script>
+    <script src="js/services/2-service.js"></script>
 
   </head>
   <body ng-app="saan">
