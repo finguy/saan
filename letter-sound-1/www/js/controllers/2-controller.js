@@ -1,43 +1,44 @@
 angular.module('saan.controllers')
-.controller('2Ctrl', function($scope) {
+.controller('2Ctrl', function($scope, RandomPattern) {
 	$scope.activityId = '2';
+	$scope.pattern = [];
+	$scope.repetitions = 2;
+	$scope.patternLength = 4;
 
-	$scope.availableFields = [{color: "Red"}, {color: "Blue"}, {color: "Green"}, {color: "Yellow"}, {color: "Violet"}, {color: "Orange"}];
-	
-  $scope.draggables = $scope.availableFields.map(function(x){
-  	return [x];
-  });
+	$scope.generatePattern = function(){
+		RandomPattern.pattern(4).then(function(data){
+			$scope.activityData = data;
+			$scope.pattern = data.pattern;
 
-	$scope.selectedComponents = [];
+			var readWordTimeout = 2000;
+			//wait for UI to load
+			setTimeout(function() {
+				if (readInstructions){
+					$scope.speak(data.instructions);
+				}
+			}, readWordTimeout);
 
-	$scope.pattern = function(){
-		console.log($scope.selectedComponents);
-		return $scope.selectedComponents;
+		});
 	};
 
-  $scope.draggableOptions = {
-    connectWith: ".dropzone",
-		update: function (e, ui) {
-			if (ui.item.sortable.source.hasClass('dropzone')){
-				ui.item.sortable.cancel();
-			}
-		},
-    stop: function (e, ui) {
-      // if the element is removed from the first container
-      if (ui.item.sortable.source.hasClass('draggable-element-container') &&
-          ui.item.sortable.droptarget &&
-          ui.item.sortable.droptarget != ui.item.sortable.source &&
-          ui.item.sortable.droptarget.hasClass('dropzone')) {
-        // restore the removed item
-				$scope.$apply($scope.dragging = false);
-        ui.item.sortable.sourceModel.push(ui.item.sortable.model);
-      }
-			else{
-				console.log("afuerraaa");
-			}
-    }
-  };
+	$scope.generatePattern(true);
 
-  $scope.sortableOptions = {};
+	$scope.checkLevel = function(completions){
+		if (completions == $scope.patternLength * $scope.repetitions){
+			$scope.generatePattern(false);
+			$scope.selectedComponents = [];
+			return true;
+		}
+		else {
+			return false;
+		}
+	};
 
+	$scope.successMessage = function(){
+		$scope.speak(_.sample(activityData.successMessages));
+	};
+
+	$scope.errorMessage = function(){
+		$scope.speak(activityData.errorMessages[0]);
+	};
 });

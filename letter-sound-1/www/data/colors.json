@@ -1,8 +1,5 @@
-{"words":
-  ["about", "add", "after", "ago", "an", "any", "apple", "are", "as", "ask",
-    "ate", "away", "baby", "back", "bad", "bag", "base", "bat", "bee", "been",
-    "before", "being", "best", "bike"],
-  "instructions": "Hi! Listen to the word and then select the letters from that word. Good Luck!",
+{"colors": ["red", "blue", "green", "yellow", "purple", "brown", "orange"],
+  "instructions": "Hi! Look at the color sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]
 }

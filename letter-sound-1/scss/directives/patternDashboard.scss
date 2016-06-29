@@ -1,0 +1,50 @@
+$grey: #808080;
+$red: #f44336;
+$pink: #e91e63;
+$purple: #9c27b0;
+$blue: #2196f3;
+$green: #4caf50;
+$yellow: #ffff00;
+$orange: #ff9800;
+$brown: #795548;
+
+$pattern-colors: (color-red, $red),
+                  (color-pink, $pink),
+                  (color-purple, $purple),
+                  (color-blue, $blue),
+                  (color-green, $green),
+                  (color-yellow, $yellow),
+                  (color-orange, $orange),
+                  (color-brown, $brown);
+
+
+@each $color-name, $color-code in $pattern-colors {
+  .#{$color-name} {
+    background-color: $color-code;
+  }
+}
+
+.dropzone {
+  border: 2px dashed $grey;
+  border-radius: 50%;
+  color: $grey;
+  height: 80px;
+  margin: auto 10px 10px;
+  padding: 14px;
+  width: 80px;
+}
+
+.color {
+  border-radius: 50%;
+  height: 80px;
+  margin: auto 10px 10px;
+  width: 80px;
+}
+
+.pattern-container {
+  margin-top: 5%;
+}
+
+.pattern-options {
+  margin-top: 15%;
+}
