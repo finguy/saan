@@ -4,13 +4,16 @@ angular.module('saan.controllers')
 	$scope.pattern = [];
 	$scope.repetitions = 2;
 	$scope.patternLength = 4;
+	$scope.availableFields = [{color: "red"}, {color: "purple"}, {color: "blue"},
+														{color: "green"}, {color: "yellow"}, {color: "orange"},
+														{color: "brown"}];
 
 	$scope.generatePattern = function(readInstructions){
-		RandomPattern.pattern(4).then(function(data){
+		RandomPattern.pattern($scope.patternLength).then(function(data){
 			$scope.activityData = data;
 			$scope.pattern = data.pattern;
 
-			var readWordTimeout = 2000;
+			var readWordTimeout = 1000;
 			//wait for UI to load
 			setTimeout(function() {
 				if (readInstructions){

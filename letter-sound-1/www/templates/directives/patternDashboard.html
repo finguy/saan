@@ -4,21 +4,22 @@
       ng-repeat="color in pattern track by $index">
     </div>
 
-    <div ui-sortable="sortableOptions" class="dropzone connected-drop-target-sortable"
+    <div ui-sortable="sortableOptions" class="dropzone"
       ng-model="selectedComponents">
     </div>
   </div>
 
-<div class="pattern-options">
-  <div class="row">
-    <div ui-sortable="draggableOptions" class="horizontal-center draggable-element-container"
-      ng-repeat="draggableArray in draggables track by $index"
-      ng-model="draggableArray">
-      <div ng-repeat="draggable in draggableArray" class="text-center">
-        <div class="color color-{{draggable.color}}"></div>
-        <div ng-class="{'not-sortable': item.locked}">{{draggable.color}}</div>
+  <div class="pattern-options">
+    <div class="row">
+      <div ui-sortable="draggableOptions"
+        class="horizontal-center draggable-element-container"
+        ng-repeat="draggableArray in draggables track by $index"
+        ng-model="draggableArray">
+        <div ng-repeat="draggable in draggableArray" class="text-center">
+          <div class="color color-{{draggable.color}}"></div>
+          <div ng-class="{'not-sortable': item.locked}">{{draggable.color}}</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

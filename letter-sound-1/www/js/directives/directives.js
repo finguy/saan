@@ -24,9 +24,8 @@ angular.module('saan.directives', [])
       scope: 'true',
       link: function(scope) {
         var index = 0;
-      	var availableFields = [{color: "red"}, {color: "purple"}, {color: "blue"}, {color: "green"}, {color: "yellow"}, {color: "orange"}, {color: "brown"}];
 
-        scope.draggables = availableFields.map(function(x){
+        scope.draggables = scope.availableFields.map(function(x){
         	return [x];
         });
 
