@@ -1,11 +1,11 @@
 angular.module('saan.controllers')
-.controller('2Ctrl', function($scope, RandomPattern) {
+.controller('2Ctrl', function($scope, RandomPattern, TTSService) {
 	$scope.activityId = '2';
 	$scope.pattern = [];
 	$scope.repetitions = 2;
 	$scope.patternLength = 4;
 
-	$scope.generatePattern = function(){
+	$scope.generatePattern = function(readInstructions){
 		RandomPattern.pattern(4).then(function(data){
 			$scope.activityData = data;
 			$scope.pattern = data.pattern;
@@ -14,7 +14,7 @@ angular.module('saan.controllers')
 			//wait for UI to load
 			setTimeout(function() {
 				if (readInstructions){
-					$scope.speak(data.instructions);
+					TTSService.speak(data.instructions);
 				}
 			}, readWordTimeout);
 
@@ -35,10 +35,10 @@ angular.module('saan.controllers')
 	};
 
 	$scope.successMessage = function(){
-		$scope.speak(_.sample(activityData.successMessages));
+		TTSService.speak(_.sample($scope.activityData.successMessages));
 	};
 
 	$scope.errorMessage = function(){
-		$scope.speak(activityData.errorMessages[0]);
+		TTSService.speak($scope.activityData.errorMessages[0]);
 	};
 });
