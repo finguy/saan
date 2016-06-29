@@ -24,6 +24,10 @@ $pattern-colors: (color-red, $red),
   }
 }
 
+.pattern-dashboard{
+  padding: 5%;
+}
+
 .dropzone {
   border: 2px dashed $grey;
   border-radius: 50%;
@@ -39,10 +43,6 @@ $pattern-colors: (color-red, $red),
   height: 80px;
   margin: auto 10px 10px;
   width: 80px;
-}
-
-.pattern-container {
-  margin-top: 5%;
 }
 
 .pattern-options {
