@@ -36,7 +36,7 @@ angular.module('saan.services')
     }
   };
 })
-  .factory('Levels', function() {
+.factory('Levels', function() {
     return {
       getSrcData: function(level) {
         var src = '';
@@ -50,4 +50,24 @@ angular.module('saan.services')
         return src;
       },
     };
-  });
+})
+.factory('Status', function() {
+  return {
+    save: function(params) {
+        if (typeof(Storage) !== "undefined" && params && params.key && params.value) {
+            return localStorage.setItem(params.key, params.value);
+        }
+        return null;
+    },
+    get: function(params) {
+      if (typeof(Storage) !== "undefined") {
+        localStorage.getItem(params);
+        return true;
+      }
+      return false;
+    }
+  }
+})
+.factory('getStatusActividad', function(param) {
+
+});

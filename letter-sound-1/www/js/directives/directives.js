@@ -14,4 +14,11 @@ angular.module('saan.directives', [])
         };
       }
     };
+  })
+  .directive('activityStatus', function() {
+    return {
+      restrict: "E",
+      templateUrl: "templates/directives/progress.html",
+      scope: 'true'       
+    };
   });
