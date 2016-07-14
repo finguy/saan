@@ -5,11 +5,11 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/objectDashboard.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectNumber = function(name) {
+        scope.selectNumber = function(id, name) {
           scope.selectedObject= name;
-          scope.speak(name);
+          //scope.speak(name);
           setTimeout(function (){
-              scope.checkNumber(name);
+              scope.checkNumber(name, id);
           }, 500);
         };
       }
@@ -19,6 +19,6 @@ angular.module('saan.directives', [])
     return {
       restrict: "E",
       templateUrl: "templates/directives/progress.html",
-      scope: 'true'       
+      scope: 'true'
     };
   });
