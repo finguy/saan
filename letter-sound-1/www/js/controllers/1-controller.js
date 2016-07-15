@@ -25,7 +25,8 @@ angular.module('saan.controllers')
   $scope.showDashboard = function(readInstructions) {
     var status = Status.get("nivel");
     if (status) {
-      $scope.activityProgress = 100 * ($scope.level -1 )/$scope.totalLevels; // -1 porque empieza en cero.
+      status = parseInt(status,10);
+      $scope.activityProgress = 100 * (status -1 )/$scope.totalLevels; // -1 porque empieza en cero.
     }
     RandomNumber.number($scope.level, $scope.playedNumbers).then(
       function success(data) {
