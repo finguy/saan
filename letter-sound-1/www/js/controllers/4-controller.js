@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('4Ctrl', function($scope ,RandomNumber, Status, TTSService,
+.controller('4Ctrl', function($scope ,RandomNumber, StatusFour, TTSService,
   Util) {
   $scope.activityId = '1'; // Activity Id
   $scope.number = null; // Letter to play in level
@@ -22,7 +22,7 @@ angular.module('saan.controllers')
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
-    var status = Status.get("nivel");
+    var status = StatusFour.get("nivel");
     if (status) {
       status = parseInt(status,10);
       $scope.activityProgress = 100 * (status -1 )/$scope.totalLevels; // -1 porque empieza en cero.
@@ -62,21 +62,21 @@ angular.module('saan.controllers')
   $scope.checkNumber = function(selectedObject, domId) {
     if ($scope.number === parseInt(selectedObject,10)) {
       $scope.playedNumbers.push($scope.number);
-      console.log('checking');
+
         setTimeout(function() {
-          var position = Util.getRandomNumber($scope.successMessages.length);
-          var successMessage = $scope.successMessages[position];
-          $scope.speak(successMessage);
+        //  var position = Util.getRandomNumber($scope.successMessages.length);
+        //  var successMessage = $scope.successMessages[position];
+      //    $scope.speak(successMessage);
           //wait for speak
-          setTimeout(function() {
-            Status.save({key: "nivel", value: $scope.level});
+          //setTimeout(function() {
+            StatusFour.save({key: "nivel", value: $scope.level});
             $scope.levelUp(); //Advance level
             $scope.showDashboard(); //Reload dashboard
-          }, 1000);
-        }, 1000);
+        //  }, 1000);
+      }, 4000);
 
         //Show animation
-        Util.successAnimation(domId);
+        Util.successAnimationFireworks(domId);
     } else {
       //wait for speak
       setTimeout(function() {

@@ -100,10 +100,10 @@ angular.module('saan.directives', [])
        link: function(scope) {
          scope.selectNumber = function(id, name) {
            scope.selectedObject= name;
-           scope.speak(name);
-           setTimeout(function (){
+          // scope.speak(name);
+          // setTimeout(function (){
                scope.checkNumber(name, id);
-           }, 500);
+          // }, 500);
          };
        }
      };

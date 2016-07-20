@@ -1,12 +1,13 @@
 angular.module('saan.services')
-.factory('RandomNumber', function($http, Levels, Util) {
+.factory('RandomNumber', function($http, LevelsFour, Util) {
   return {
     number: function(level, playedNumbers) {
-      var src = Levels.getSrcData(level);
+      var src = LevelsFour.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
           var numbersNotPlayed = [];
+          console.log(data);
           if (playedNumbers.length === 0 ){
             numbersNotPlayed = data.numbers;
           } else {
@@ -19,6 +20,7 @@ angular.module('saan.services')
               }
             }
           }
+          console.log(numbersNotPlayed);
           var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
             number: numbersNotPlayed[position],
@@ -35,7 +37,7 @@ angular.module('saan.services')
     }
   };
 })
-.factory('Levels', function() {
+.factory('LevelsFour', function() {
     return {
       getSrcData: function(level) {
         var src = '';
@@ -50,7 +52,7 @@ angular.module('saan.services')
       },
     };
 })
-.factory('Status', function() {
+.factory('StatusFour', function() {
   return {
     save: function(params) {
         if (typeof(Storage) !== "undefined" && params && params.key && params.value) {
