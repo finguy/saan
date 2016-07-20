@@ -1,0 +1,44 @@
+{"letters":
+  [{"letter":"a" ,
+    "imgs":[
+      {"src": "img/5-assets/apple.png",
+       "name" : "apple",
+       "width": "25%",
+       "height": "25%"
+     },
+     {"src": "img/5-assets/fish.png",
+      "name" : "fish",
+      "width": "25%",
+      "height": "25%"
+    },
+    {"src": "img/5-assets/tree.png",
+     "name" : "tree",
+     "width": "25%",
+     "height": "25%"
+   }
+      ]
+    },
+    {"letter":"i" ,
+      "imgs":[
+        {"src": "img/5-assets/apple.png",
+         "name" : "apple",
+         "width": "25%",
+         "height": "25%"
+       },
+       {"src": "img/5-assets/fish.png",
+        "name" : "fish",
+        "width": "25%",
+        "height": "25%"
+      },
+      {"src": "img/5-assets/tree.png",
+       "name" : "tree",
+       "width": "25%",
+       "height": "25%"
+     }
+        ]
+      }
+  ],
+  "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"]
+}

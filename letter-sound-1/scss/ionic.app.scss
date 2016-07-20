@@ -23,6 +23,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-1';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
+@import "directives/progressBar";
 
 .text-center {
   text-align: center;

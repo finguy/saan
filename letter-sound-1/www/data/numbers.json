@@ -1,0 +1,64 @@
+{"numbers":
+  [{"number":1,
+    "imgs":[
+      {"src": "img/4-assets/one.png",
+        "width": "25%",
+        "height": "25%",
+       "name" : 1
+     },
+     {"src": "img/4-assets/two.png",
+       "width": "50%",
+       "height": "50%",
+      "name" : 2
+    },
+    {"src": "img/4-assets/three.png",
+      "width": "75%",
+      "height": "75%",
+     "name" : 3
+   }
+      ]
+    },
+    {"number":2 ,
+      "imgs":[
+        {"src": "img/4-assets/two_2.png",
+          "width": "50%",
+          "height": "50%",
+         "name" : 2
+       },
+        {"src": "img/4-assets/one_2.png",
+         "width": "25%",
+         "height": "25%",
+         "name" : 1
+       },
+
+      {"src": "img/4-assets/three_2.png",
+        "width": "75%",
+        "height": "75%",
+       "name" : 3
+     }
+        ]
+      },
+      {"number":3,
+        "imgs":[
+          {"src": "img/4-assets/one_3.png",
+           "width": "25%",
+           "height": "25%",
+           "name" : 1
+         },
+        {"src": "img/4-assets/three_3.png",
+          "width": "75%",
+          "height": "75%",
+         "name" : 3
+       },
+       {"src": "img/4-assets/two_3.png",
+         "width": "50%",
+         "height": "50%",
+        "name" : 2
+       }
+          ]
+        }
+  ],
+  "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"]
+}

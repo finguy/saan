@@ -75,4 +75,59 @@ angular.module('saan.directives', [])
       	};
       }
     };
+  })
+  .directive('objectDashboard', function() {
+  return {
+    restrict: "E",
+    templateUrl: "templates/directives/objectDashboard.html",
+    scope: 'true',
+    link: function(scope) {
+      scope.selectLetter = function(name) {
+        scope.selectedObject= name;
+        scope.speak(name);
+        setTimeout(function (){
+            scope.checkLetter(name);
+        }, 500);
+      };
+    }
+  };
+ })
+ .directive('objectDashboardFour', function() {
+     return {
+       restrict: "E",
+       templateUrl: "templates/directives/objectDashboardFour.html",
+       scope: 'true',
+       link: function(scope) {
+         scope.selectNumber = function(id, name) {
+           scope.selectedObject= name;
+           scope.speak(name);
+           setTimeout(function (){
+               scope.checkNumber(name, id);
+           }, 500);
+         };
+       }
+     };
+   })
+   .directive('activityStatus', function() {
+     return {
+       restrict: "E",
+       templateUrl: "templates/directives/progress.html",
+       scope: 'true'
+     };
+   })
+   .directive('objectDashboardFive', function() {
+    return {
+      restrict: "E",
+      templateUrl: "templates/directives/objectDashboardFour.html",
+      scope: 'true',
+      link: function(scope) {
+        scope.selectLetter = function(name) {
+          scope.selectedObject= name;
+          scope.speak(name);
+          setTimeout(function (){
+              scope.checkLetter(name);
+          }, 500);
+        };
+      }
+    };
   });

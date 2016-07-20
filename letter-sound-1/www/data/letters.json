@@ -1,0 +1,38 @@
+{"letters":
+  [{"letter":"a" ,
+    "upperCaseImg": "img/3-assets/aUpperCase.jpg",
+    "lowerCaseImg": "img/3-assets/aLowerCase.jpg",
+    "instruction":"Can you tap uppercase a?",
+    "imgs":[
+      {"src": "img/3-assets/apple.png",
+       "name" : "A"
+     },
+     {"src": "img/3-assets/dog.png",
+      "name" : "d"
+    },
+    {"src": "img/3-assets/tree.png",
+     "name" : "T"
+   }
+      ]
+    },
+    {"letter":"d" ,
+      "upperCaseImg": "img/3-assets/3-assets/dUpperCase.jpg",
+      "lowerCaseImg": "img/3-assets/3-assets/dLowerCase.jpg",
+      "instruction":"Can you tap lowercase  d?",
+      "imgs":[
+        {"src": "img/3-assets/apple.png",
+         "name" : "a"
+       },
+       {"src": "img/3-assets/dog.png",
+        "name" : "d"
+      },
+      {"src": "img/3-assets/tree.png",
+       "name" : "I"
+     }
+        ]
+      }
+  ],
+  "instructions": "Hi! Let's learn letters. Click on the flash cards!",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"]
+}
