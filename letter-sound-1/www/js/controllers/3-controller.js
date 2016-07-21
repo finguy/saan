@@ -1,110 +1,100 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, RandomNumber, Status, TTSService,
+.controller('3Ctrl', function($scope, RandomLetterThree, StatusThree, TTSService,
   Util) {
-  $scope.activityId = '1'; // Activity Id
-  $scope.number = null; // Letter to play in level
-  $scope.imgs = [];
-  $scope.instructions = ""; // Instructions to read
-  $scope.successMessages = [];
-  $scope.errorMessages  = [];
-  $scope.numbers = []; // Word letters
-  $scope.dashboard = []; // Dashboard letters
-  $scope.selectedObject = ""; // Collects letters the user selects
-  $scope.playedNumbers = []; // Collects words the user played
-  $scope.level = $scope.level || 1; // Indicates activity level
-  $scope.totalLevels = 3;
-  $scope.activityProgress = 0;
+    $scope.activityId = '1'; // Activity Id
+    $scope.letter = ""; // Letter to play in level
+    $scope.imgs = [];
+    $scope.instructions = ""; // Instructions to read
+    $scope.successMessages = [];
+    $scope.errorMessages  = [];
+    $scope.letters = []; // Word letters
+    $scope.dashboard = []; // Dashboard letters
+    $scope.selectedObject = ""; // Collects letters the user selects
+    $scope.playedLetters = []; // Collects words the user played
+    $scope.level = $scope.level || 1; // Indicates activity level
 
-  //Reproduces sound using TTSService
-  $scope.speak = TTSService.speak;
+    //Reproduces sound using TTSService
+    $scope.speak = TTSService.speak;
 
-  $scope.showDashboard
+    //Shows Activity Dashboard
+    $scope.showDashboard = function(readInstructions) {
+      RandomLetterThree.letter($scope.level, $scope.playedLetters).then(
+        function success(data) {
+          var letterJson = data.letter;
+          $scope.instructions = data.instructions;
+          $scope.successMessages = data.successMessages;
+          $scope.errorMessages = data.errorMessages;
+          $scope.letter = letterJson.letter;
+          $scope.upperCaseImgSrc = letterJson.upperCaseImg;
+          $scope.lowerCaseImgSrc =  letterJson.lowerCaseImg;
+          $scope.imgs = letterJson.imgs;
+          $scope.dashboard = [$scope.letter];
 
-  //Shows Activity Dashboard
-  $scope.showDashboard = function(readInstructions) {
-    var status = Status.get("nivel");
-    if (status) {
-      status = parseInt(status,10);
-      $scope.activityProgress = 100 * (status -1 )/$scope.totalLevels; // -1 porque empieza en cero.
-    }
-    RandomNumber.number($scope.level, $scope.playedNumbers).then(
-      function success(data) {
-        var numberJson = data.number;
-        $scope.instructions = data.instructions;
-        $scope.successMessages = data.successMessages;
-        $scope.errorMessages = data.errorMessages;
-        $scope.number = numberJson.number;
-        $scope.imgs = numberJson.imgs;
-        $scope.dashboard = [$scope.number];
-
-        var readWordTimeout = (readInstructions) ? 2000 : 1000;
-
-        //wait for UI to load
-        setTimeout(function() {
-          if (readInstructions){
-            $scope.speak($scope.instructions);
-              setTimeout(function() {
-                $scope.speak($scope.number);
-              }, 8000);
-          } else {
-            $scope.speak($scope.number);
-          }
-        }, readWordTimeout);
-
-      },
-      function error(error) {
-        console.log(error);
-      }
-    );
-  };
-
-  //Verifies selected letters and returns true if they match the word
-  $scope.checkNumber = function(selectedObject, domId) {
-    if ($scope.number === parseInt(selectedObject,10)) {
-      $scope.playedNumbers.push($scope.number);
-      console.log('checking');
-        setTimeout(function() {
-          var position = Util.getRandomNumber($scope.successMessages.length);
-          var successMessage = $scope.successMessages[position];
-          $scope.speak(successMessage);
-          //wait for speak
+          var readWordTimeout = (readInstructions) ? 2000 : 1000;
+          //wait for UI to load
           setTimeout(function() {
-            Status.save({key: "nivel", value: $scope.level});
-            $scope.levelUp(); //Advance level
-            $scope.showDashboard(); //Reload dashboard
+            if (readInstructions){
+              $scope.speak($scope.instructions);
+                setTimeout(function() {
+                  $scope.speak($scope.letter);
+                }, 7000);
+            } else {
+              $scope.speak($scope.letter);
+            }
+          }, readWordTimeout);
+
+        },
+        function error(error) {
+          console.log(error);
+        }
+      );
+    };
+
+    //Verifies selected letters and returns true if they match the word
+    $scope.checkLetter = function(selectedObject) {
+      var ER = new RegExp($scope.letter,"i");
+      var name = selectedObject.toLowerCase();
+      if (ER.test(name)) {
+        $scope.playedLetters.push($scope.letter.toLowerCase());
+          setTimeout(function() {
+            var position = Util.getRandomNumber($scope.successMessages.length);
+            var successMessage = $scope.successMessages[position];
+            $scope.speak(successMessage);
+            //wait for speak
+            setTimeout(function() {
+              $scope.levelUp(); //Advance level
+              $scope.showDashboard(); //Reload dashboard
+            }, 1000);
           }, 1000);
+
+      } else {
+        //wait for speak
+        setTimeout(function() {
+          var position = Util.getRandomNumber($scope.errorMessages.length);
+          var errorMessage = $scope.errorMessages[position];
+          $scope.speak(errorMessage);
         }, 1000);
+      }
+    };
 
-        //Show animation
-        Util.successAnimation(domId);
-    } else {
-      //wait for speak
-      setTimeout(function() {
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
-      }, 1000);
-    }
-  };
+    //Advance one level
+    $scope.levelUp = function() {
+      $scope.level++;
+      $scope.letters = [];
+      $scope.dashboard = [];
+      $scope.selectedLetters = [];
+    };
 
-  //Advance one level
-  $scope.levelUp = function() {
-    $scope.level++;
-    $scope.letters = [];
-    $scope.dashboard = [];
-    $scope.selectedLetters = [];
-  };
+    // Goes back one level
+    $scope.levelDown = function() {
+     $scope.level = (level > 1) ? (level - 1) : 1;
+      $scope.letters = [];
+      $scope.dashboard = [];
+      $scope.selectedLetters = [];
+    };
 
-  // Goes back one level
-  $scope.levelDown = function() {
-   $scope.level = (level > 1) ? (level - 1) : 1;
-    $scope.numbers = [];
-    $scope.dashboard = [];
-    $scope.selectedNumbers = [];
-  };
-
-  //*************** ACTIONS **************************/
-  //Show Dashboard
-  $scope.showDashboard(true);
-});
+    //*************** ACTIONS **************************/
+    //Show Dashboard
+    $scope.showDashboard(true);
+  });

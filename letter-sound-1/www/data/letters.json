@@ -16,8 +16,8 @@
       ]
     },
     {"letter":"d" ,
-      "upperCaseImg": "img/3-assets/3-assets/dUpperCase.jpg",
-      "lowerCaseImg": "img/3-assets/3-assets/dLowerCase.jpg",
+      "upperCaseImg": "img/3-assets/dUpperCase.jpg",
+      "lowerCaseImg": "img/3-assets/dLowerCase.jpg",
       "instruction":"Can you tap lowercase  d?",
       "imgs":[
         {"src": "img/3-assets/apple.png",

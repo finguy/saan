@@ -1,9 +1,9 @@
 angular.module('saan.services')
 
-.factory('RandomLetter', function($http, Levels, Util) {
+.factory('RandomLetterThree', function($http, LevelsThree, Util) {
   return {
     letter: function(level, playedLetters) {
-      var src = Levels.getSrcData(level);
+      var src = LevelsThree.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
@@ -36,7 +36,24 @@ angular.module('saan.services')
     }
   };
 })
-  .factory('Levels', function() {
+.factory('StatusThree', function() {
+  return {
+    save: function(params) {
+        if (typeof(Storage) !== "undefined" && params && params.key && params.value) {
+            return localStorage.setItem(params.key, params.value);
+        }
+        return null;
+    },
+    get: function(params) {
+      if (typeof(Storage) !== "undefined") {
+        localStorage.getItem(params);
+        return true;
+      }
+      return false;
+    }
+  }
+})
+  .factory('LevelsThree', function() {
     return {
       getSrcData: function(level) {
         var src = '';
