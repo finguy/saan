@@ -76,10 +76,10 @@ angular.module('saan.directives', [])
       }
     };
   })
-  .directive('objectDashboard', function() {
+  .directive('objectDashboardThree', function() {
   return {
     restrict: "E",
-    templateUrl: "templates/directives/objectDashboard.html",
+    templateUrl: "templates/directives/objectDashboardThree.html",
     scope: 'true',
     link: function(scope) {
       scope.selectLetter = function(name) {

@@ -94,6 +94,10 @@ angular.module('saan.controllers')
       $scope.selectedLetters = [];
     };
 
+    $scope.showPage = function() {
+      $scope.isActivity = true;
+    }
+
     //*************** ACTIONS **************************/
     //Show Dashboard
     $scope.showDashboard(true);
