@@ -1,8 +1,8 @@
 angular.module('saan.services')
-.factory('RandomLetter', function($http, Levels, Util) {
+.factory('RandomLetter', function($http, LevelsFive, Util) {
   return {
     letter: function(level, playedLetters) {
-      var src = Levels.getSrcData(level);
+      var src = LevelsFive.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
@@ -35,7 +35,7 @@ angular.module('saan.services')
     }
   };
 })
-  .factory('Levels', function() {
+  .factory('LevelsFive', function() {
     return {
       getSrcData: function(level) {
         var src = '';

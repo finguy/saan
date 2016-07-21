@@ -20,7 +20,7 @@ angular.module('saan.controllers')
     //Shows Activity Dashboard
     $scope.showDashboard = function(readInstructions) {
       RandomWord.word($scope.level, $scope.playedWords).then(
-        function success(data) {
+        function success(data) {          
           var word = data.word;
           $scope.instructions = data.instructions;
           $scope.successMessages = data.successMessages;
