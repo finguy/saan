@@ -36,24 +36,7 @@ angular.module('saan.services')
     }
   };
 })
-.factory('StatusThree', function() {
-  return {
-    save: function(params) {
-        if (typeof(Storage) !== "undefined" && params && params.key && params.value) {
-            return localStorage.setItem(params.key, params.value);
-        }
-        return null;
-    },
-    get: function(params) {
-      if (typeof(Storage) !== "undefined") {
-        localStorage.getItem(params);
-        return true;
-      }
-      return false;
-    }
-  }
-})
-  .factory('LevelsThree', function() {
+.factory('LevelsThree', function() {
     return {
       getSrcData: function(level) {
         var src = '';

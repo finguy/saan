@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
-.controller('4Ctrl', function($scope ,RandomNumber, StatusFour, TTSService,
-  Util) {
+.controller('4Ctrl', function($scope ,RandomNumber, TTSService,
+  Util, Animations) {
   $scope.activityId = '1'; // Activity Id
   $scope.number = null; // Letter to play in level
   $scope.imgs = [];
@@ -18,14 +18,15 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  $scope.showDashboard
+  $scope.showDashboard;
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
-    var status = StatusFour.get("nivel");
+    var status = Util.getStatus("nivel");
     if (status) {
       status = parseInt(status,10);
-      $scope.activityProgress = 100 * (status -1 )/$scope.totalLevels; // -1 porque empieza en cero.
+      $scope.level = status;
+      $scope.activityProgress = 100 * (status-1)/$scope.totalLevels; // -1 porque empieza en cero.
     }
     RandomNumber.number($scope.level, $scope.playedNumbers).then(
       function success(data) {
@@ -61,23 +62,18 @@ angular.module('saan.controllers')
   //Verifies selected letters and returns true if they match the word
   $scope.checkNumber = function(selectedObject, domId) {
     if ($scope.number === parseInt(selectedObject,10)) {
-      Util.successAnimationFireworks(domId);
+      Animations.successFireworks(domId);
       $scope.playedNumbers.push($scope.number);
-
         setTimeout(function() {
-        //  var position = Util.getRandomNumber($scope.successMessages.length);
-        //  var successMessage = $scope.successMessages[position];
-      //    $scope.speak(successMessage);
-          //wait for speak
-          //setTimeout(function() {
-            StatusFour.save({key: "nivel", value: $scope.level});
+          var position = Util.getRandomNumber($scope.successMessages.length);
+          var successMessage = $scope.successMessages[position];
+          $scope.speak(successMessage);          
+          setTimeout(function() {
             $scope.levelUp(); //Advance level
+            Util.saveStatus({key: "nivel", value: $scope.level});
             $scope.showDashboard(); //Reload dashboard
-        //  }, 1000);
+          }, 1000);
       }, 4000);
-
-        //Show animation
-        Util.successAnimationFireworks(domId);
     } else {
       //wait for speak
       setTimeout(function() {

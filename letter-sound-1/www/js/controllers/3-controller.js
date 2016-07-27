@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, RandomLetterThree, StatusThree, TTSService,
+.controller('3Ctrl', function($scope, RandomLetterThree, TTSService,
   Util) {
     $scope.activityId = '1'; // Activity Id
     $scope.letter = ""; // Letter to play in level
