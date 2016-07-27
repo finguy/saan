@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 .controller('5Ctrl', function($scope, RandomLetter, TTSService,
   Util) {
-  $scope.activityId = '1'; // Activity Id
+  $scope.activityId = '5'; // Activity Id
   $scope.letter = ""; // Letter to play in level
   $scope.imgs = [];
   $scope.instructions = ""; // Instructions to read
@@ -12,12 +12,20 @@ angular.module('saan.controllers')
   $scope.selectedObject = ""; // Collects letters the user selects
   $scope.playedLetters = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
+  $scope.totalLevels = 2;
+  $scope.activityProgress = 0;
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
+    var status = Util.getStatus("Activity5-level");
+    if (status) {
+      status = parseInt(status,10);
+      $scope.level = status;
+      $scope.activityProgress = 100 * (status-1)/$scope.totalLevels; // -1 porque empieza en cero.
+    }
     RandomLetter.letter($scope.level, $scope.playedLetters).then(
       function success(data) {
         var letterJson = data.letter;
@@ -61,6 +69,7 @@ angular.module('saan.controllers')
           //wait for speak
           setTimeout(function() {
             $scope.levelUp(); //Advance level
+            Util.saveStatus({key: "Activity5-level", value: $scope.level});
             $scope.showDashboard(); //Reload dashboard
           }, 1000);
         }, 1000);

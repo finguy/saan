@@ -18,11 +18,9 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  $scope.showDashboard;
-
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
-    var status = Util.getStatus("nivel");
+    var status = Util.getStatus("Activity4-level");
     if (status) {
       status = parseInt(status,10);
       $scope.level = status;
@@ -67,10 +65,10 @@ angular.module('saan.controllers')
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
           var successMessage = $scope.successMessages[position];
-          $scope.speak(successMessage);          
+          $scope.speak(successMessage);
           setTimeout(function() {
             $scope.levelUp(); //Advance level
-            Util.saveStatus({key: "nivel", value: $scope.level});
+            Util.saveStatus({key: "Activity4-level", value: $scope.level});
             $scope.showDashboard(); //Reload dashboard
           }, 1000);
       }, 4000);

@@ -13,12 +13,21 @@ angular.module('saan.controllers')
     $scope.selectedObject = ""; // Collects letters the user selects
     $scope.playedLetters = []; // Collects words the user played
     $scope.level = $scope.level || 1; // Indicates activity level
+    $scope.totalLevels = 3;
+    $scope.activityProgress = 0;
+    $scope.letterInstruction = "";
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
     //Shows Activity Dashboard
     $scope.showDashboard = function(readInstructions) {
+      var status = Util.getStatus("Activity3-level");
+      if (status) {
+        status = parseInt(status,10);
+        $scope.level = status;
+        $scope.activityProgress = 100 * (status-1)/$scope.totalLevels; // -1 porque empieza en cero.
+      }
       RandomLetterThree.letter($scope.level, $scope.playedLetters).then(
         function success(data) {
           var letterJson = data.letter;
@@ -27,11 +36,15 @@ angular.module('saan.controllers')
           $scope.errorMessages = data.errorMessages;
           $scope.letter = letterJson.letter;
           $scope.upperCaseImgSrc = letterJson.upperCaseImg;
-          $scope.lowerCaseImgSrc =  letterJson.lowerCaseImg;
+          $scope.lowerCaseImgSrc = letterJson.lowerCaseImg;
           $scope.imgs = letterJson.imgs;
           $scope.dashboard = [$scope.letter];
-
+          $scope.letterInstruction = letterJson.instruction;
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
+
+          if ($scope.isActivity) {
+            $scope.instructions = letterJson.instruction;
+          }
           //wait for UI to load
           setTimeout(function() {
             if (readInstructions){
@@ -64,7 +77,8 @@ angular.module('saan.controllers')
             //wait for speak
             setTimeout(function() {
               $scope.levelUp(); //Advance level
-              $scope.showDashboard(); //Reload dashboard
+              Util.saveStatus({key: "Activity3-level", value: $scope.level});
+              $scope.showDashboard(true); //Reload dashboard
             }, 1000);
           }, 1000);
 
@@ -96,6 +110,10 @@ angular.module('saan.controllers')
 
     $scope.showPage = function() {
       $scope.isActivity = true;
+      $scope.instructions = $scope.letterInstruction;
+      setTimeout(function(){
+          $scope.speak($scope.instructions);
+      },1000);
     }
 
     //*************** ACTIONS **************************/

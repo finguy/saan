@@ -118,7 +118,7 @@ angular.module('saan.directives', [])
    .directive('objectDashboardFive', function() {
     return {
       restrict: "E",
-      templateUrl: "templates/directives/objectDashboardFour.html",
+      templateUrl: "templates/directives/objectDashboardFive.html",
       scope: 'true',
       link: function(scope) {
         scope.selectLetter = function(name) {
