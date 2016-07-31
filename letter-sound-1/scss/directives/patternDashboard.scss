@@ -24,8 +24,14 @@ $pattern-colors: (color-red, $red),
   }
 }
 
+<<<<<<< 3cf8e49dffcd1528ff7a671210c2fefc2a5d7cec
 .pattern-dashboard{
   padding: 5%;
+=======
+.pattern-dashboard {
+  height: 100%;
+  width: 100%;
+>>>>>>> changed drag and drop library
 }
 
 .dropzone {
@@ -36,6 +42,10 @@ $pattern-colors: (color-red, $red),
   margin: auto 10px 10px;
   padding: 14px;
   width: 80px;
+
+  .as-sortable-placeholder{
+    visibility: hidden;
+  }
 }
 
 .color {
@@ -45,6 +55,13 @@ $pattern-colors: (color-red, $red),
   width: 80px;
 }
 
+<<<<<<< 3cf8e49dffcd1528ff7a671210c2fefc2a5d7cec
+=======
+.pattern-container {
+  padding-top: 5%;
+}
+
+>>>>>>> changed drag and drop library
 .pattern-options {
-  margin-top: 15%;
+  padding-top: 10%;
 }

@@ -1,7 +1,7 @@
 // Ionic Starter App
 
 angular.module('saan', ['ionic', 'saan.controllers', 'saan.services',
-                        'saan.directives', 'underscore', 'ui.sortable'])
+                        'saan.directives', 'underscore', 'as.sortable'])
 
 .run(function($ionicPlatform, _) {
 

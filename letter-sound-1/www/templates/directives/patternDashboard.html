@@ -1,22 +1,20 @@
 <div class="pattern-dashboard">
   <div class="pattern-container">
-    <div class="color color-{{color}} inline-block"
-      ng-repeat="color in pattern track by $index">
+    <div class="color color-{{item}} inline-block" ng-repeat="item in pattern track by $index">
     </div>
 
-    <div ui-sortable="sortableOptions" class="dropzone inline-block"
-      ng-model="selectedComponents">
+    <div class="dropzone inline-block" as-sortable="sortableOptions"
+        data-ng-model="pattern">
+        <div ng-repeat="item in dropzone" as-sortable-item>
+        </div>
     </div>
   </div>
 
   <div class="pattern-options text-center">
-    <div ui-sortable="draggableOptions"
-      class="horizontal-center draggable-element-container inline-block"
-      ng-repeat="draggableArray in draggables track by $index"
-      ng-model="draggableArray">
-      <div ng-repeat="draggable in draggableArray" class="text-center">
-        <div class="color color-{{draggable.color}} inline-block"></div>
-        <div ng-class="{'not-sortable': item.locked}">{{draggable.color}}</div>
+    <div as-sortable="sortableCloneOptions" data-ng-model="availableFields">
+      <div ng-repeat="item in availableFields" class="text-center inline-block">
+        <div class="color color-{{item}}" as-sortable-item as-sortable-item-handle></div>
+        {{item}}
       </div>
     </div>
   </div>
