@@ -34,12 +34,17 @@ angular.module('saan.controllers')
           $scope.instructions = data.instructions;
           $scope.successMessages = data.successMessages;
           $scope.errorMessages = data.errorMessages;
+          $scope.addScore = data.scoreSetUp.add;
+          $scope.substractScore = data.scoreSetUp.substract;
+          $scope.minScore = data.scoreSetUp.minScore;
+
           $scope.letter = letterJson.letter;
           $scope.upperCaseImgSrc = letterJson.upperCaseImg;
           $scope.lowerCaseImgSrc = letterJson.lowerCaseImg;
           $scope.imgs = letterJson.imgs;
           $scope.dashboard = [$scope.letter];
-          $scope.letterInstruction = letterJson.instruction;
+          $scope.letterInstruction = data.letterJson.instruction;
+
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
           if ($scope.isActivity) {
@@ -94,7 +99,7 @@ angular.module('saan.controllers')
 
     //Advance one level
     $scope.levelUp = function() {
-      $scope.level++;
+      $scope.level = Util.score($scope.addScore, $scope.level, true);
       $scope.letters = [];
       $scope.dashboard = [];
       $scope.selectedLetters = [];
@@ -102,7 +107,7 @@ angular.module('saan.controllers')
 
     // Goes back one level
     $scope.levelDown = function() {
-     $scope.level = (level > 1) ? (level - 1) : 1;
+      $scope.level = Util.score($scope.minScore, $scope.level, false);
       $scope.letters = [];
       $scope.dashboard = [];
       $scope.selectedLetters = [];

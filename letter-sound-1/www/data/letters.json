@@ -34,5 +34,10 @@
   ],
   "instructions": "Hi! Let's learn letters. Click on the flash cards!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"]
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  }
 }

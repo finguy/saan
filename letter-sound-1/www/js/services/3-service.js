@@ -25,7 +25,8 @@ angular.module('saan.services')
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
-            successMessages: data.successMessages
+            successMessages: data.successMessages,
+            scoreSetUp: data.scoreSetUp,
           };
         },
         function error() {

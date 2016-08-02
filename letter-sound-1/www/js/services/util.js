@@ -16,6 +16,16 @@ angular.module('saan.services')
         return localStorage.getItem(params);
       }
       return false;
+    },
+    score: function(points, currentScore, sum) {
+        if (sum) {
+          return Math.abs(currentScore + points);
+        } else {
+          return Math.abs(currentScore - points);
+        }
+    },
+    isActivityFinished: function(jsonScore, currentScore) {
+      return jsonScore.minScore <= currentScore;
     }
   };
 });
