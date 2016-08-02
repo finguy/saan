@@ -13,6 +13,7 @@ angular.module('saan.controllers')
     $scope.playedWords = []; // Collects words the user played
     $scope.level = $scope.level || 1; // Indicates activity level
     $scope.letterOptions = 3;
+    $scope.checkingWord = false;//Flag to prevent double click bug
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -20,13 +21,13 @@ angular.module('saan.controllers')
     //Shows Activity Dashboard
     $scope.showDashboard = function(readInstructions) {
       RandomWord.word($scope.level, $scope.playedWords).then(
-        function success(data) {          
+        function success(data) {
+          $scope.checkingWord = false;
           var word = data.word;
           $scope.instructions = data.instructions;
           $scope.successMessages = data.successMessages;
           $scope.errorMessages = data.errorMessages;
           $scope.word = word;
-          console.log(word);
           var letters = word.split("");
           var src = [];
           _.each(letters, function(letter, key) {
@@ -58,8 +59,8 @@ angular.module('saan.controllers')
 
     //Verifies selected letters and returns true if they match the word
     $scope.checkWord = function() {
+      $scope.checkingWord = true;
       var builtWord = $scope.selectedLetters.join("");
-
       setTimeout(function(){
         $scope.speak(builtWord);
       }, 100);
@@ -81,6 +82,7 @@ angular.module('saan.controllers')
       } else {
         //wait for speak
         setTimeout(function() {
+          $scope.checkingWord = false;
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);
