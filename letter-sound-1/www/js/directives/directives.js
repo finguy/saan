@@ -6,14 +6,19 @@ angular.module('saan.directives', [])
       scope: 'true',
       link: function(scope) {
         scope.selectLetter = function(position, letter) {
-          scope.selectedLetters[position] = letter;
-          scope.speak(letter);
-          setTimeout(function (){
-            if (scope.selectedLetters.length === scope.word.split("").length)
-              scope.checkWord();
-          }, 500);
-        };
+            if (!scope.checkingLetter && !scope.checkingWord){
+              scope.checkingLetter = true;
+              scope.selectedLetters[position] = letter;
+              scope.speak(letter);
+              setTimeout(function (){
+                 scope.checkingLetter = false;
+                 if (scope.selectedLetters.length === scope.word.split("").length) {
+                     scope.checkWord();
+                 }
+              }, 500);
+          }
       }
+    }
     };
   })
 
