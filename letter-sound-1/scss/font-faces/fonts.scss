@@ -1,0 +1,31 @@
+$crimsontext-font-path: '../lib/ionic/fonts/crimsontext' !default;
+
+@font-face {
+  font-family: 'CrimsonTextRoman';
+  src: url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.eot');
+  src: url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.eot') format('embedded-opentype'),
+       url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.woff2') format('woff2'),
+       url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.woff') format('woff'),
+       url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.ttf') format('truetype'),
+       url('#{$crimsontext-font-path}/roman/CrimsonTextRoman.svg#CrimsonTextRoman') format('svg');
+}
+
+@font-face {
+  font-family: 'CrimsonTextSemibold';
+  src: url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.eot');
+  src: url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.eot') format('embedded-opentype'),
+       url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.woff2') format('woff2'),
+       url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.woff') format('woff'),
+       url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.ttf') format('truetype'),
+       url('#{$crimsontext-font-path}/semibold/CrimsonTextSemibold.svg#CrimsonTextSemibold') format('svg');
+}
+
+@font-face {
+  font-family: 'CrimsonTextBold';
+  src: url('#{$crimsontext-font-path}/bold/CrimsonTextBold.eot');
+  src: url('#{$crimsontext-font-path}/bold/CrimsonTextBold.eot') format('embedded-opentype'),
+       url('#{$crimsontext-font-path}/bold/CrimsonTextBold.woff2') format('woff2'),
+       url('#{$crimsontext-font-path}/bold/CrimsonTextBold.woff') format('woff'),
+       url('#{$crimsontext-font-path}/bold/CrimsonTextBold.ttf') format('truetype'),
+       url('#{$crimsontext-font-path}/bold/CrimsonTextBold.svg#CrimsonTextBold') format('svg');
+}

@@ -14,7 +14,7 @@
     <div as-sortable="sortableCloneOptions" data-ng-model="availableFields">
       <div ng-repeat="item in availableFields" class="text-center inline-block">
         <div class="color color-{{item}}" as-sortable-item as-sortable-item-handle></div>
-        {{item}}
+        <span class="color-label">{{item}}</span>
       </div>
     </div>
   </div>
