@@ -4,7 +4,7 @@ $pink: #e91e63;
 $purple: #9c27b0;
 $blue: #2196f3;
 $green: #4caf50;
-$yellow: #ffff00;
+$yellow: #ff0;
 $orange: #ff9800;
 $brown: #795548;
 
@@ -24,8 +24,9 @@ $pattern-colors: (color-red, $red),
   }
 }
 
-.pattern-dashboard{
-  padding: 5%;
+.pattern-dashboard {
+  height: 100%;
+  width: 100%;
 }
 
 .dropzone {
@@ -36,6 +37,10 @@ $pattern-colors: (color-red, $red),
   margin: auto 10px 10px;
   padding: 14px;
   width: 80px;
+
+  .as-sortable-placeholder {
+    visibility: hidden;
+  }
 }
 
 .color {
@@ -45,6 +50,14 @@ $pattern-colors: (color-red, $red),
   width: 80px;
 }
 
+.color-label {
+  font-size: 2em;
+}
+
+.pattern-container {
+  padding-top: 5%;
+}
+
 .pattern-options {
-  margin-top: 15%;
+  padding-top: 10%;
 }
