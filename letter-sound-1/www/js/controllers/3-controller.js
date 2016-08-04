@@ -16,7 +16,7 @@ angular.module('saan.controllers')
     $scope.totalLevels = 3;
     $scope.activityProgress = 0;
     $scope.letterInstruction = "";
-
+    $scope.score = 0;    
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
@@ -43,7 +43,7 @@ angular.module('saan.controllers')
           $scope.lowerCaseImgSrc = letterJson.lowerCaseImg;
           $scope.imgs = letterJson.imgs;
           $scope.dashboard = [$scope.letter];
-          $scope.letterInstruction = data.letterJson.instruction;
+          $scope.letterInstruction = letterJson.instruction;
 
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
@@ -82,6 +82,7 @@ angular.module('saan.controllers')
             //wait for speak
             setTimeout(function() {
               $scope.levelUp(); //Advance level
+              $scope.score = Util.score($scope.addScore, $scope.score, true);
               Util.saveStatus({key: "Activity3-level", value: $scope.level});
               $scope.showDashboard(true); //Reload dashboard
             }, 1000);
@@ -90,6 +91,7 @@ angular.module('saan.controllers')
       } else {
         //wait for speak
         setTimeout(function() {
+          $scope.score = Util.score($scope.substractScore, $scope.score, false);
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);
@@ -99,7 +101,7 @@ angular.module('saan.controllers')
 
     //Advance one level
     $scope.levelUp = function() {
-      $scope.level = Util.score($scope.addScore, $scope.level, true);
+      $scope.level++;
       $scope.letters = [];
       $scope.dashboard = [];
       $scope.selectedLetters = [];
@@ -107,7 +109,7 @@ angular.module('saan.controllers')
 
     // Goes back one level
     $scope.levelDown = function() {
-      $scope.level = Util.score($scope.minScore, $scope.level, false);
+      $scope.level = (level > 1) ? (level - 1) : 1;
       $scope.letters = [];
       $scope.dashboard = [];
       $scope.selectedLetters = [];

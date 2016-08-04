@@ -17,12 +17,13 @@ angular.module('saan.services')
       }
       return false;
     },
-    score: function(points, currentScore, sum) {
-        if (sum) {
+    score: function(points, currentScore, addition) {
+        if (addition) {
           return Math.abs(currentScore + points);
-        } else {
+        } else if (currentScore > 0){
           return Math.abs(currentScore - points);
         }
+        return 0;
     },
     isActivityFinished: function(jsonScore, currentScore) {
       return jsonScore.minScore <= currentScore;
