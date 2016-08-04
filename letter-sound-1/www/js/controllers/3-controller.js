@@ -16,7 +16,7 @@ angular.module('saan.controllers')
     $scope.totalLevels = 3;
     $scope.activityProgress = 0;
     $scope.letterInstruction = "";
-    $scope.score = 0;    
+    $scope.score = 0;
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
@@ -28,6 +28,12 @@ angular.module('saan.controllers')
         $scope.level = status;
         $scope.activityProgress = 100 * (status-1)/$scope.totalLevels; // -1 porque empieza en cero.
       }
+
+      var score = Util.getStatus("Activity3-score");
+      if (score) {
+        $scope.score = score;
+      }
+
       RandomLetterThree.letter($scope.level, $scope.playedLetters).then(
         function success(data) {
           var letterJson = data.letter;
@@ -84,6 +90,7 @@ angular.module('saan.controllers')
               $scope.levelUp(); //Advance level
               $scope.score = Util.score($scope.addScore, $scope.score, true);
               Util.saveStatus({key: "Activity3-level", value: $scope.level});
+              Util.saveStatus({key: "Activity3-score", value: $scope.score});
               $scope.showDashboard(true); //Reload dashboard
             }, 1000);
           }, 1000);
