@@ -1,21 +1,23 @@
 angular.module('saan.controllers')
 .controller('2Ctrl', function ($scope, RandomPattern, TTSService, Util) {
+  var MODE_SEQUENCE = 1;
+  var MODE_FILLIN = 2;
+
   $scope.availableFields = ["red", "purple", "blue",
                             "green", "yellow", "orange",
                             "brown"];
+  $scope.mode = MODE_FILLIN;
   $scope.dropzone = [];
   $scope.patternLeft = [];
   $scope.patternRight = [];
   $scope.repetitions = 2;
   $scope.positionToFill = 0;
-  var pattern = [];
 
+  var pattern = [];
   var patternLength = 4;
   var patternA = [];
   var patternB = [];
-  $scope.mode = 2;
   var completions = 0;
-
   var readWordTimeout = 1000;
 
   $scope.generatePattern = function(readInstructions){
@@ -23,10 +25,10 @@ angular.module('saan.controllers')
 	    $scope.activityData = data;
       pattern = data.pattern;
 
-      if ($scope.mode == 1){
+      if ($scope.mode == MODE_SEQUENCE){
           $scope.patternLeft = pattern;
           $scope.positionToFill = 0;
-      }else if ($scope.mode == 2){
+      }else if ($scope.mode == MODE_FILLIN){
         $scope.positionToFill = Util.getRandomNumber(patternLength);
 
         if ($scope.positionToFill % 2 === 0){
@@ -60,7 +62,7 @@ angular.module('saan.controllers')
 
   $scope.checkLevel = function(){
 
-    if ($scope.mode == 1){
+    if ($scope.mode == MODE_SEQUENCE){
       completions++;
       $scope.positionToFill = ++$scope.positionToFill % patternLength;
       if (completions == patternLength * $scope.repetitions){
@@ -68,7 +70,7 @@ angular.module('saan.controllers')
   			$scope.selectedComponents = [];
         completions = 0;
   		}
-    }else if ($scope.mode == 2){
+    }else if ($scope.mode == MODE_FILLIN){
       $scope.generatePattern(false);
     }
 	};
