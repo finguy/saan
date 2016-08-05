@@ -16,7 +16,8 @@ angular.module('saan.services')
             pattern: pattern,
             instructions : data.instructions,
             errorMessages : data.errorMessages,
-            successMessages: data.successMessages
+            successMessages: data.successMessages,
+            availableFields: data.colors
           };
         },
         function error() {
@@ -24,6 +25,24 @@ angular.module('saan.services')
           console.log("error");
         }
       );
+    }
+  };
+})
+
+.factory('RandomNumericalSeq', function(Util){
+  return {
+    sequence: function(digits, step, length){
+      var base = Math.random();
+      for (var i = 1; i <= digits; i++)
+        base = base * 10;
+
+      var seq = [Math.floor(base)];
+
+      for (i = 1; i <= length; i++){
+        seq.push(seq[i-1] + step);
+      }
+
+      return seq;
     }
   };
 });

@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('2Ctrl', function ($scope, RandomPattern, TTSService, Util) {
+.controller('2Ctrl', function ($scope, RandomPattern, TTSService, Util, RandomNumericalSeq) {
   var MODE_SEQUENCE = 1;
   var MODE_FILLIN = 2;
 
@@ -23,6 +23,7 @@ angular.module('saan.controllers')
   $scope.generatePattern = function(readInstructions){
   	RandomPattern.pattern($scope.patternLength).then(function(data){
 	    $scope.activityData = data;
+      $scope.availableFields = data.availableFields;
       pattern = data.pattern;
 
       if ($scope.mode == MODE_SEQUENCE){
@@ -58,6 +59,11 @@ angular.module('saan.controllers')
 
   $scope.checkColor = function(selectedColor){
     return (pattern[$scope.positionToFill] == selectedColor);
+  };
+
+  $scope.generaNumericalSeq = function(){
+    var seq = RandomNumericalSeq.sequence(1, 1, 4);
+    
   };
 
   $scope.checkLevel = function(){
