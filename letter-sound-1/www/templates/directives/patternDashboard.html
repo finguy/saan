@@ -1,13 +1,14 @@
-<div class="pattern-dashboard">
+<div class="pattern-dashboard" ng-class="{'text-center':mode=='2'}">
   <div class="pattern-container">
-    <div class="color color-{{item}} inline-block" ng-repeat="item in pattern track by $index">
-    </div>
+    <div class="color color-{{item}} inline-block" ng-repeat="item in patternLeft track by $index"></div>
 
     <div class="dropzone inline-block" as-sortable="sortableOptions"
-        data-ng-model="pattern">
-        <div ng-repeat="item in dropzone" as-sortable-item>
-        </div>
+        data-ng-model="patternLeft">
+        <div ng-repeat="item in dropzone" as-sortable-item></div>
     </div>
+
+    <div class="color color-{{item}} inline-block" ng-repeat="item in patternRight track by $index"></div>
+
   </div>
 
   <div class="pattern-options text-center">

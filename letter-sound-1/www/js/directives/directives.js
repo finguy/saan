@@ -28,12 +28,11 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/patternDashboard.html",
       scope: 'true',
       link: function(scope){
-        var index = 0;
         scope.sortableOptions = {
           containment: '.pattern-dashboard',
           allowDuplicates: true,
           accept: function(sourceItemHandleScope, destSortableScope){
-            return check(sourceItemHandleScope, destSortableScope);
+            return scope.checkColor(sourceItemHandleScope.modelValue);
           }
         };
 
@@ -41,21 +40,9 @@ angular.module('saan.directives', [])
           containment: '.pattern-dashboard',
           clone: true,
           itemMoved: function (eventObj) {
-            index++;
-            if (scope.checkLevel(index)) {
-              index = 0;
-            }
+            scope.checkLevel();
           }
         };
-
-        var check = function(sourceItemHandleScope, destSortableScope) {
-          if (sourceItemHandleScope.modelValue === destSortableScope.modelValue[index]) {
-            return true;
-          }
-          else {
-            return false;
-          }
-      	};
       }
     };
   })
