@@ -35,10 +35,7 @@ $pattern-colors: (color-red, $red),
   border: 2px dashed $grey;
   border-radius: 50%;
   color: $grey;
-  // height: 80px;
-  // margin: auto 10px 10px;
   padding: 14px;
-  // width: 80px;
 
   .as-sortable-placeholder {
     visibility: hidden;
@@ -51,13 +48,14 @@ $pattern-colors: (color-red, $red),
   width: 80px;
 }
 
+.pattern-item.item-number,
 .pattern-item.color {
   border-radius: 50%;
   border: 0;
   margin: auto 10px 10px;
 }
 
-.color-label {
+.item-label {
   font-size: 2em;
 }
 
@@ -76,9 +74,17 @@ $pattern-colors: (color-red, $red),
   justify-content: center;
 }
 
-.number {
-  border-radius: 50%;
-  height: 80px;
-  margin: auto 10px 10px;
-  width: 80px;
+.as-sortable-item-handle.as-sortable-item.item-number{
+  align-items: center;
+  font-size: 2em;
+  justify-content: center;
+  display: flex;
+  background-color: rebeccapurple;
 }
+//
+// .number {
+//   border-radius: 50%;
+//   height: 80px;
+//   margin: auto 10px 10px;
+//   width: 80px;
+// }

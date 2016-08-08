@@ -45,19 +45,24 @@ angular.module('saan.services')
           for (i = 1; i < length; i++)
             seq.push(seq[i-1] + step);
 
-          var options = [];
-          for (i = 1; i <= data.numberOfOptions; i++){
-            var number = Math.floor(Math.random()*digits);
+          var positionToFill = Util.getRandomNumber(length);
+
+          var options = [seq[positionToFill]];
+          for (i = 1; i < data.numberOfOptions; i++){
+            var number = Math.floor(Math.random() * digits);
             while (_.indexOf(options, number) != -1)
-              number = Math.floor(Math.random()*digits);
+              number = Math.floor(Math.random() * digits);
             options.push(number);
           }
+
+          _.shuffle(options);
 
           defer.resolve({
             seq: seq,
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
+            positionToFill: positionToFill,
             availableFields: options
           });
           return defer.promise;

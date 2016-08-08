@@ -1,4 +1,4 @@
-{"numberOfOptions":"5",
+{"numberOfOptions":"4",
   "instructions": "Hi! Look at the number sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]

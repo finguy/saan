@@ -5,13 +5,11 @@ angular.module('saan.controllers')
 
   var ITEM_COLORS = 1;
   var ITEM_NUMBERS = 2;
+
   $scope.ITEM_NUMBERS = 2;
   $scope.ITEM_COLORS = 1;
-  // $scope.availableFields = ["red", "purple", "blue",
-  //                           "green", "yellow", "orange",
-  //                           "brown"];
   $scope.mode = MODE_FILLIN;
-  $scope.itemType = ITEM_COLORS;
+  $scope.itemType = ITEM_NUMBERS;
   $scope.dropzone = [];
   $scope.patternLeft = [];
   $scope.patternRight = [];
@@ -32,7 +30,7 @@ angular.module('saan.controllers')
     }
     else if ($scope.itemType == ITEM_NUMBERS){
       //TODO definir metodo para seleccionar patrones numericos acordes al nivel
-      return RandomNumericalSeq.sequence(1, 1, patternLength);
+      return RandomNumericalSeq.sequence(2, 10, patternLength);
     }
   }
 
@@ -62,9 +60,9 @@ angular.module('saan.controllers')
       if ($scope.mode == MODE_SEQUENCE){
           $scope.patternLeft = pattern;
           $scope.positionToFill = 0;
-      }
-      else if ($scope.mode == MODE_FILLIN){
+      }else if ($scope.mode == MODE_FILLIN){
         $scope.positionToFill = Util.getRandomNumber(patternLength);
+
         if ($scope.positionToFill % 2 === 0){
           patternA = patternA.concat(pattern.slice(0, $scope.positionToFill));
           patternB = pattern.slice($scope.positionToFill+1);
@@ -75,14 +73,19 @@ angular.module('saan.controllers')
           patternB = pattern.slice($scope.positionToFill+1);
         }
       }
-    }
-    else if ($scope.itemType == ITEM_NUMBERS){
+    }else if ($scope.itemType == ITEM_NUMBERS){
       // elegir posicion para completar
-      $scope.positionToFill = Util.getRandomNumber(patternLength);
+      $scope.positionToFill = $scope.activityData.positionToFill;
       patternA = patternA.concat(pattern.slice(0, $scope.positionToFill));
       patternB = pattern.slice($scope.positionToFill+1);
+      //
+      // var position = Util.getRandomNumber(patternLength);
+      // console.log(pattern[$scope.activityData.positionToFill]);
 
+
+      // $scope.availableFields[position] = pattern[$scope.activityData.positionToFill];
     }
+
     $scope.patternLeft = patternA;
     $scope.patternRight = patternB;
   }

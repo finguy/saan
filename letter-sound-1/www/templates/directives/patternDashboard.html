@@ -6,8 +6,9 @@
       <span ng-show="itemType==ITEM_NUMBERS">{{item}}</span>
     </div>
 
-    <div class="dropzone flex pattern-item" as-sortable="sortableOptions"
-        data-ng-model="patternLeft">
+    <div class="dropzone flex pattern-item"
+      as-sortable="sortableOptions"
+      data-ng-model="patternLeft">
         <div ng-repeat="item in dropzone" as-sortable-item></div>
     </div>
 
@@ -23,8 +24,10 @@
       <div ng-repeat="item in availableFields" class="text-center inline-block">
         <div class="pattern-item"
           ng-class="itemType==ITEM_COLORS ? 'color color-{{item}}' : 'item-number'"
-          as-sortable-item as-sortable-item-handle></div>
-        <span class="color-label">{{item}}</span>
+          as-sortable-item as-sortable-item-handle>
+          <span ng-show="itemType==ITEM_NUMBERS">{{item}}</span>
+        </div>
+        <span ng-show="itemType==ITEM_COLORS" class="item-label">{{item}}</span>
       </div>
     </div>
   </div>
