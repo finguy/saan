@@ -1,63 +1,70 @@
 {"numbers":
   [{"number":1,
     "imgs":[
-      {"src": "img/4-assets/one.png",
-        "width": "25%",
-        "height": "25%",
+      { "src": [],
        "name" : 1
      },
-     {"src": "img/4-assets/two.png",
-       "width": "50%",
-       "height": "50%",
+     {"src": "",
       "name" : 2
     },
     {"src": "img/4-assets/three.png",
-      "width": "75%",
-      "height": "75%",
      "name" : 3
    }
       ]
     },
     {"number":2 ,
       "imgs":[
-        {"src": "img/4-assets/two_2.png",
-          "width": "50%",
-          "height": "50%",
+        {"src": "",
          "name" : 2
        },
-        {"src": "img/4-assets/one_2.png",
-         "width": "25%",
-         "height": "25%",
+        {"src": "",
          "name" : 1
        },
 
-      {"src": "img/4-assets/three_2.png",
-        "width": "75%",
-        "height": "75%",
+      {"src": "",
        "name" : 3
      }
         ]
       },
       {"number":3,
         "imgs":[
-          {"src": "img/4-assets/one_3.png",
-           "width": "25%",
-           "height": "25%",
+          {"src": "",
            "name" : 1
          },
-        {"src": "img/4-assets/three_3.png",
-          "width": "75%",
-          "height": "75%",
+        {"src": "",
          "name" : 3
        },
-       {"src": "img/4-assets/two_3.png",
-         "width": "50%",
-         "height": "50%",
+       {"src": "",
         "name" : 2
        }
           ]
         }
   ],
+  "assets": [ "img/4-assets/assorted-objects/1.png",
+            "img/4-assets/assorted-objects/2.png",
+            "img/4-assets/assorted-objects/3.png",
+            "img/4-assets/assorted-objects/4.png",
+            "img/4-assets/assorted-objects/5.png",
+            "img/4-assets/assorted-objects/6.png",
+            "img/4-assets/assorted-objects/7.png",
+            "img/4-assets/assorted-objects/8.png",
+            "img/4-assets/assorted-objects/9.png",
+            "img/4-assets/assorted-objects/10.png",
+            "img/4-assets/assorted-objects/11.png",
+            "img/4-assets/assorted-objects/12.png",
+            "img/4-assets/assorted-objects/13.png",
+            "img/4-assets/assorted-objects/14.png",
+            "img/4-assets/assorted-objects/15.png",
+            "img/4-assets/assorted-objects/16.png",
+            "img/4-assets/assorted-objects/17.png",
+            "img/4-assets/assorted-objects/18.png",
+            "img/4-assets/assorted-objects/19.png",
+            "img/4-assets/assorted-objects/20.png",
+            "img/4-assets/assorted-objects/21.png",
+            "img/4-assets/assorted-objects/22.png",
+            "img/4-assets/assorted-objects/23.png",
+            "img/4-assets/assorted-objects/24.png",
+        ],
   "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]

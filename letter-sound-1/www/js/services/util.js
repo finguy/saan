@@ -16,6 +16,13 @@ angular.module('saan.services')
         return localStorage.getItem(params);
       }
       return false;
+    },
+    range: function(top) {
+      var elems = [];
+      for (var i = 0; i < top*1; i++) {
+        elems.push(i);
+      }
+      return elems;
     }
   };
 });

@@ -4,6 +4,7 @@ angular.module('saan.controllers')
   $scope.activityId = '1'; // Activity Id
   $scope.number = null; // Letter to play in level
   $scope.imgs = [];
+  $scope.assets = [];
   $scope.instructions = ""; // Instructions to read
   $scope.successMessages = [];
   $scope.errorMessages  = [];
@@ -15,8 +16,12 @@ angular.module('saan.controllers')
   $scope.totalLevels = 3;
   $scope.activityProgress = 0;
 
+
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
+
+  //range
+  $scope.range = Util.range;
 
   //Shows Activity Dashboard
   $scope.showDashboard = function(readInstructions) {
@@ -35,6 +40,7 @@ angular.module('saan.controllers')
         $scope.number = numberJson.number;
         $scope.imgs = numberJson.imgs;
         $scope.dashboard = [$scope.number];
+        $scope.assets = data.assets;
 
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
