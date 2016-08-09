@@ -20,14 +20,14 @@ angular.module('saan.services')
               }
             }
           }
-          
+
           var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
             number: numbersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            assets: data.assets;
+            assets: data.assets
           };
         },
         function error() {

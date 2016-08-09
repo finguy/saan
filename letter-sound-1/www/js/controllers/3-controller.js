@@ -42,6 +42,15 @@ angular.module('saan.controllers')
           $scope.letterInstruction = letterJson.instruction;
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
+          for (var i in letterJson.imgs) {
+            if (letterJson.imgs[i]) {
+               var img = {};
+               img.name = letterJson.imgs[i].name;
+               img.src = Util.getRandomElemFromArray(letterJson.imgs[i].src);
+               $scope.imgs.push(img);
+            }
+          }
+
           if ($scope.isActivity) {
             $scope.instructions = letterJson.instruction;
           }

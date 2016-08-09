@@ -38,9 +38,28 @@ angular.module('saan.controllers')
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
         $scope.number = numberJson.number;
-        $scope.imgs = numberJson.imgs;
+        $scope.imgs = [];
         $scope.dashboard = [$scope.number];
         $scope.assets = data.assets;
+
+        var length = $scope.assets.length;
+        for (var i in numberJson.imgs){
+          if (numberJson.imgs[i]) {
+             var img = {};
+             img.name = numberJson.imgs[i].name;
+             img.src = [];
+             var used = [];
+             for (var j=0; j < img.name; j++) {
+               var index = Util.getRandomNumber(length);
+               while (used[index] || !$scope.assets[index]) {
+                  index = Util.getRandomNumber(length);
+               }
+               used[index] = true;                
+               img.src.push($scope.assets[index]);
+             }
+             $scope.imgs.push(img);
+          }
+        }
 
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
 

@@ -3,42 +3,173 @@
     "imgs":[
       { "src": [],
        "name" : 1
-     },
-     {"src": "",
-      "name" : 2
-    },
-    {"src": "img/4-assets/three.png",
-     "name" : 3
-   }
+      },
+      {"src": [],
+        "name" : 2
+      },
+      {"src": [],
+       "name" : 3
+     }
       ]
     },
     {"number":2 ,
       "imgs":[
-        {"src": "",
+        {"src": [],
          "name" : 2
        },
-        {"src": "",
+        {"src": [],
          "name" : 1
        },
 
-      {"src": "",
+      {"src": [],
        "name" : 3
      }
         ]
       },
       {"number":3,
         "imgs":[
-          {"src": "",
+          {"src": [],
            "name" : 1
          },
-        {"src": "",
-         "name" : 3
-       },
-       {"src": "",
-        "name" : 2
-       }
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
           ]
-        }
+      },
+      {"number":3,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":3,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":4,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 4
+         }
+          ]
+      },
+      {"number":5,
+        "imgs":[
+          {"src": [],
+           "name" : 5
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":6,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 6
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+
+      {"number":7,
+        "imgs":[
+          {"src": [],
+           "name" : 7
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":8,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 8
+         }
+          ]
+      },
+      {"number":9,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 9
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":10,
+        "imgs":[
+          {"src": [],
+           "name" : 10
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":11,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 11
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      }
   ],
   "assets": [ "img/4-assets/assorted-objects/1.png",
             "img/4-assets/assorted-objects/2.png",
@@ -64,6 +195,13 @@
             "img/4-assets/assorted-objects/22.png",
             "img/4-assets/assorted-objects/23.png",
             "img/4-assets/assorted-objects/24.png",
+            "img/4-assets/assorted-objects/25.png",
+            "img/4-assets/assorted-objects/26.png",
+            "img/4-assets/assorted-objects/27.png",
+            "img/4-assets/assorted-objects/28.png",
+            "img/4-assets/assorted-objects/29.png",
+            "img/4-assets/assorted-objects/30.png",
+            "img/4-assets/assorted-objects/31.png"
         ],
   "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
