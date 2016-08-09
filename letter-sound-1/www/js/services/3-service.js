@@ -26,7 +26,9 @@ angular.module('saan.services')
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            scoreSetUp: data.scoreSetUp
+            scoreSetUp: data.scoreSetUp,
+            nextLetterImgSrc : data.nextLetterImgSrc,
+            previousLetterImgSrc: data.previousLetterImgSrc
           };
         },
         function error() {

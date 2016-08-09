@@ -64,14 +64,59 @@ angular.module('saan.directives', [])
     restrict: "E",
     templateUrl: "templates/directives/objectDashboardThree.html",
     scope: 'true',
-    link: function(scope) {
-      scope.selectLetter = function(name) {
+    link: function(scope, $element) {
+      scope.selectLetter = function(name, objectNameSrc) {
         scope.selectedObject= name;
-        scope.speak(name);
+        var object = objectNameSrc.split("/");
+        var objectName = object[object.length -1].replace(".png","");
+        scope.speak(name + " in "+objectName);
         setTimeout(function (){
             scope.checkLetter(name);
-        }, 500);
+        }, 1000);
       };
+      scope.restoreImage = function(){
+          scope.nextLetterImgSrc = scope.nextLetterImgSrc.replace("-pressed.png", ".png");
+          scope.previousLetterImgSrc = scope.previousLetterImgSrc.replace("-pressed.png", ".png");
+      };
+      scope.nextLetter = function(letter) {
+        var alphabet = "abcdefghijklmnopqrstuvwxyz";
+        var letters = alphabet.split("");
+        var nextIndex = (alphabet.search(letter) + 1 ) % (alphabet.length);
+        scope.letterTutorial = letters[nextIndex];
+        scope.lowerCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-lowercase.png";
+        scope.upperCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-uppercase.png";
+        scope.nextLetterImgSrc = scope.nextLetterImgSrc.replace(".png", "-pressed.png");
+      };
+      scope.previousLetter = function(letter) {
+        var alphabet = "abcdefghijklmnopqrstuvwxyz";
+        var letters = alphabet.split("");
+        var currentIndex = alphabet.search(letter);
+        var nextIndex = 0;
+        if (currentIndex == 0) {
+          nextIndex = alphabet.length - 1;
+        } else {
+          nextIndex = (currentIndex - 1 ) % (alphabet.length );
+        }
+        scope.letterTutorial = letters[nextIndex];
+        scope.lowerCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-lowercase.png";
+        scope.upperCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-uppercase.png";
+        scope.previousLetterImgSrc = scope.previousLetterImgSrc.replace(".png", "-pressed.png");
+      };
+
+      scope.animateImage = function(id) {
+                var imgs = $element.find('img');
+                for (var i in imgs) {
+                  if (imgs[i] && imgs[i].id == id) {
+                    angular.element(imgs[i]).addClass('activity3-image-morph-click');
+                      break;
+                  }
+                }
+                setTimeout(function() {
+                    for (var i in imgs) {
+                      angular.element(imgs[i]).removeClass('activity3-image-morph-click');
+                    }
+                },1000);
+      }
     }
   };
  })
