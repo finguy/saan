@@ -27,15 +27,13 @@ angular.module('saan.controllers')
   function generatePattern(){
     if ($scope.itemType == ITEM_COLORS){
       return RandomPattern.pattern(patternLength);
-    }
-    else if ($scope.itemType == ITEM_NUMBERS){
+    }else if ($scope.itemType == ITEM_NUMBERS){
       //TODO definir metodo para seleccionar patrones numericos acordes al nivel
       return RandomNumericalSeq.sequence(2, 10, patternLength);
     }
   }
 
   $scope.startActivity = function(readInstructions){
-
     generatePattern().then(function(data){
 	    $scope.activityData = data;
       $scope.availableFields = data.availableFields;
@@ -78,12 +76,6 @@ angular.module('saan.controllers')
       $scope.positionToFill = $scope.activityData.positionToFill;
       patternA = patternA.concat(pattern.slice(0, $scope.positionToFill));
       patternB = pattern.slice($scope.positionToFill+1);
-      //
-      // var position = Util.getRandomNumber(patternLength);
-      // console.log(pattern[$scope.activityData.positionToFill]);
-
-
-      // $scope.availableFields[position] = pattern[$scope.activityData.positionToFill];
     }
 
     $scope.patternLeft = patternA;

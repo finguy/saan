@@ -32,10 +32,10 @@ $pattern-colors: (color-red, $red),
 }
 
 .dropzone {
-  border: 2px dashed $grey;
+  border: 0.2rem dashed $grey;
   border-radius: 50%;
   color: $grey;
-  padding: 14px;
+  padding: 1.4rem;
 
   .as-sortable-placeholder {
     visibility: hidden;
@@ -43,16 +43,16 @@ $pattern-colors: (color-red, $red),
 }
 
 .pattern-item {
-  height: 80px;
-  margin: auto 10px 10px;
-  width: 80px;
+  height: 8rem;
+  margin: auto 1rem 1rem;
+  width: 8rem;
 }
 
 .pattern-item.item-number,
 .pattern-item.color {
-  border-radius: 50%;
   border: 0;
-  margin: auto 10px 10px;
+  border-radius: 50%;
+  margin: auto 1rem 1rem;
 }
 
 .item-label {
@@ -70,21 +70,11 @@ $pattern-colors: (color-red, $red),
 
 .item-number {
   align-items: center;
+  display: flex;
   font-size: 2em;
   justify-content: center;
 }
 
-.as-sortable-item-handle.as-sortable-item.item-number{
-  align-items: center;
-  font-size: 2em;
-  justify-content: center;
+.as-sortable-item.item-number{
   display: flex;
-  background-color: rebeccapurple;
 }
-//
-// .number {
-//   border-radius: 50%;
-//   height: 80px;
-//   margin: auto 10px 10px;
-//   width: 80px;
-// }
