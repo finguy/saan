@@ -91,9 +91,11 @@ angular.module('saan.directives', [])
       templateUrl: "templates/directives/objectDashboardFive.html",
       scope: 'true',
       link: function(scope) {
-        scope.selectLetter = function(name) {
+        scope.selectLetter = function(name, objectNameSrc) {
           scope.selectedObject= name;
-          scope.speak(name);
+          var object = objectNameSrc.split("/");
+          var objectName = object[object.length -1].replace(".png","");
+          scope.speak(name + " in "+objectName);
           setTimeout(function (){
               scope.checkLetter(name);
           }, 500);
