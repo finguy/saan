@@ -1,8 +1,8 @@
 
 <div class="row" >
-  <div class="col img-container" style="clear:both;float:left;" ng-repeat="img in imgs" ng-click="selectNumber('img-{{img.name}}', {{img.name}})">
+  <div class="col img-container" ng-repeat="img in imgs" ng-click="selectNumber('img-{{img.name}}', {{img.name}})">
   <div class="activity-4-border">
-  <div class="activityu-4-content" style="clear:both;float:left; max-width:400px!important; height:100%;">
+  <div class="activityu-4-content">
     <img ng-repeat="srcPath in img.src" src="{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
   </div>
 </div>
