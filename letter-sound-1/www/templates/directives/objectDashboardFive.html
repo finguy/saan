@@ -1,6 +1,15 @@
 <div class="row" >
+<!--
   <div class="col activity-5-box-shadow" ng-repeat="img in imgs" ng-click="selectLetter('{{img.name}}')">
     <img src="{{img.src}}" width="{{img.width}}" height="{{img.height}}" id="img-{{img.name}}"/>
+  </div>
+-->
+
+<div class="col activity-5-box-shadow" ng-repeat="img in imgs" ng-click="selectLetter(img.name)">
+  <div class="activity-3-box-shadow">
+    <img src="{{img.src}}" />
+  </div>
 </div>
+
 </div>
 </div>

@@ -5,6 +5,19 @@ angular.module('saan.services')
     getRandomNumber: function(top){
       return Math.floor((Math.random() * top));
     },
+    getRandomElemFromArray : function(arrayArg) {
+       if (!arrayArg) {
+         return null;
+       }
+
+       var top = arrayArg.length;
+       var bottom = 0;
+       var index = Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
+       if (index > 0 && index < arrayArg.length) {
+         return arrayArg[index];
+       }
+       return arrayArg[0];
+   },
     saveStatus: function(params) {
         if (typeof(Storage) !== "undefined" && params && params.key && params.value) {
             return localStorage.setItem(params.key, params.value);

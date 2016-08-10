@@ -33,8 +33,17 @@ angular.module('saan.controllers')
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
         $scope.letter = letterJson.letter;
-        $scope.imgs = letterJson.imgs;
         $scope.dashboard = [$scope.letter];
+
+        $scope.imgs = []; //letterJson.imgs;
+         for (var i in letterJson.imgs){
+           if (letterJson.imgs[i]) {
+              var img = {};
+              img.name = letterJson.imgs[i].name;
+              img.src = Util.getRandomElemFromArray(letterJson.imgs[i].src);
+              $scope.imgs.push(img);
+           }
+         }
 
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         //wait for UI to load
