@@ -1,0 +1,30 @@
+/* Animations */
+@mixin image-morph($seconds) {
+  -webkit-transition: all $seconds ease;
+    -moz-transition: all $seconds ease;
+      -o-transition: all $seconds ease;
+     -ms-transition: all $seconds ease;
+         transition: all $seconds ease;
+}
+
+@mixin image-morph-rotation-on-click($degrees){
+   -webkit-transform: rotate($degrees);
+    -moz-transform: rotate($degrees);
+      -o-transform: rotate($degrees);
+     -ms-transform: rotate($degrees);
+         transform: rotate($degrees);
+}
+
+/* Shadow Boxes */
+@mixin shadow-box-1($shadowColor,$textColor, $gradientFrom, $gradientTo){
+  -webkit-box-shadow: 3px 3px 5px 6px $shadowColor;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px $shadowColor;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px $shadowColor;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  width:100px;
+  color: $textColor !important;
+  background: -webkit-linear-gradient($gradientFrom, $gradientTo); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($gradientFrom, $gradientTo); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($gradientFrom, $gradientTo); /* For Firefox 3.6 to 15 */
+  background: linear-gradient($gradientFrom, $gradientTo); /* Standard syntax */
+  min-height: 160px;
+}
