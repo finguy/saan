@@ -79,27 +79,24 @@ angular.module('saan.directives', [])
           scope.previousLetterImgSrc = scope.previousLetterImgSrc.replace("-pressed.png", ".png");
       };
       scope.nextLetter = function(letter) {
-        var alphabet = "abcdefghijklmnopqrstuvwxyz";
-        var letters = alphabet.split("");
-        var nextIndex = (alphabet.search(letter) + 1 ) % (alphabet.length);
-        scope.letterTutorial = letters[nextIndex];
-        scope.lowerCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-lowercase.png";
-        scope.upperCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-uppercase.png";
+
+        var nextIndex = (scope.alphabet.search(letter) + 1 ) % (scope.alphabet.length);
+        scope.letterTutorial = scope.aplhabetLetters[nextIndex];
+        scope.lowerCaseImgSrc = scope.srcAlphabetLetters+scope.letterTutorial+"-lowercase.png";
+        scope.upperCaseImgSrc = scope.srcAlphabetLetters+scope.letterTutorial+"-uppercase.png";
         scope.nextLetterImgSrc = scope.nextLetterImgSrc.replace(".png", "-pressed.png");
       };
       scope.previousLetter = function(letter) {
-        var alphabet = "abcdefghijklmnopqrstuvwxyz";
-        var letters = alphabet.split("");
-        var currentIndex = alphabet.search(letter);
+        var currentIndex = scope.alphabet.search(letter);
         var nextIndex = 0;
         if (currentIndex == 0) {
-          nextIndex = alphabet.length - 1;
+          nextIndex = scope.alphabet.length - 1;
         } else {
-          nextIndex = (currentIndex - 1 ) % (alphabet.length );
+          nextIndex = (currentIndex - 1 ) % (scope.alphabet.length );
         }
-        scope.letterTutorial = letters[nextIndex];
-        scope.lowerCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-lowercase.png";
-        scope.upperCaseImgSrc = "img/3-assets/letters-blue/letters-blue-"+scope.letterTutorial+"-uppercase.png";
+        scope.letterTutorial = scope.aplhabetLetters[nextIndex];
+        scope.lowerCaseImgSrc = scope.srcAlphabetLetters+scope.letterTutorial+"-lowercase.png";
+        scope.upperCaseImgSrc = scope.srcAlphabetLetters+scope.letterTutorial+"-uppercase.png";
         scope.previousLetterImgSrc = scope.previousLetterImgSrc.replace(".png", "-pressed.png");
       };
 

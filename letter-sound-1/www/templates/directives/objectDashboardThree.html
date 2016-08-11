@@ -1,6 +1,6 @@
 <div class="row activityDisplay"  ng-show="!isActivity">
   <div class="col">
-    <img src="{{nextLetterImgSrc}}"  width="25%" height="25%" ng-click="previousLetter(letterTutorial); speak(letterTutorial);" on-release="restoreImage()"/>
+    <img src="{{nextLetterImgSrc}}" class="activity-3-ui-arrows" ng-click="previousLetter(letterTutorial); speak(letterTutorial);" on-release="restoreImage()"/>
   </div>
   <div class="col" ng-click="animateImage('upperCaseImg'); speak('This is uppercase ' + letterTutorial)">
     <img src="{{upperCaseImgSrc}}" class="activity3-image-morph" id="upperCaseImg" />
@@ -11,13 +11,13 @@
   </div>
 
   <div class="col">
-    <img src="{{previousLetterImgSrc}}" width="25%" height="25%" ng-click="nextLetter(letterTutorial); speak(letterTutorial);" on-release="restoreImage()"/>
+    <img src="{{previousLetterImgSrc}}" class="activity-3-ui-arrows" ng-click="nextLetter(letterTutorial); speak(letterTutorial);" on-release="restoreImage()"/>
   </div>
 
 <br/><br/>
 <br/><br/>
 </div>
-<div style="float:right;">
+<div class="activity-3-play-container">
 <img class="material-icons" ng-click="showPage()" src="img/3-assets/signPlay.png" ng-show="!isActivity"  />
 </div>
 <div class="row activityDisplay" ng-show="isActivity" id="activity">

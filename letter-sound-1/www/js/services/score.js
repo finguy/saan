@@ -1,6 +1,6 @@
 angular.module('saan.services')
 
-.service('Score', function($http, Levels) {
+.service('Score', function() {
     return {
       update: function(points, currentScore) {
          if ( (currentScore + points) >= 0){

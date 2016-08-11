@@ -28,7 +28,8 @@ angular.module('saan.services')
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
             nextLetterImgSrc : data.nextLetterImgSrc,
-            previousLetterImgSrc: data.previousLetterImgSrc
+            previousLetterImgSrc: data.previousLetterImgSrc,
+            srcAlphabetLetters: data.srcAlphabetLetters
           };
         },
         function error() {
