@@ -21,7 +21,7 @@ angular.module('saan.services')
           }
           var position = Util.getRandomNumber(lettersNotPlayed .length);
           return {
-            letter: lettersNotPlayed[position],
+            letter: lettersNotPlayed[position],            
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages

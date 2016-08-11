@@ -3,6 +3,7 @@ angular.module('saan.controllers')
   Util) {
   $scope.activityId = '5'; // Activity Id
   $scope.letter = ""; // Letter to play in level
+  $scope.letterSrc = "";
   $scope.imgs = [];
   $scope.instructions = ""; // Instructions to read
   $scope.successMessages = [];
@@ -29,6 +30,7 @@ angular.module('saan.controllers')
     RandomLetter.letter($scope.level, $scope.playedLetters).then(
       function success(data) {
         var letterJson = data.letter;
+        $scope.letterSrc  = letterJson.letterSrc;
         $scope.instructions = data.instructions;
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
