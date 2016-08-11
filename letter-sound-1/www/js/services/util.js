@@ -9,10 +9,8 @@ angular.module('saan.services')
         if (!arrayArg) {
           return null;
         }
-
-        var top = arrayArg.length;
-        var bottom = 0;
-        var index = Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
+ 
+        var index = this.getRandomNumber(arrayArg.length);
         if (index > 0 && index < arrayArg.length) {
           return arrayArg[index];
         }
