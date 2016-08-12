@@ -25,9 +25,7 @@ angular.module('saan.services')
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            $scope.addScore = data.scoreSetUp.add;
-            $scope.substractScore = data.scoreSetUp.substract;
-            $scope.minScore = data.scoreSetUp.minScore;
+            scoreSetUp: data.scoreSetUp,
           };
         },
         function error() {
