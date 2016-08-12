@@ -26,6 +26,8 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'directives/patternDashboard';
 @import "directives/progressBar";
 
+@import "util/util";
+
 body{
   font-size: 62.5%;
   font-family: Source Sans Pro;
@@ -57,6 +59,27 @@ body{
   background-image: url('../img/3-assets/background.jpg');
 }
 
+
+
+.activity3-image-morph {
+  @include image-morph(0.5s);
+}
+
+.activity3-image-morph-click {
+  @include image-morph-rotation-on-click(360deg);
+}
+
+.activity-3-box-shadow {
+  @include shadow-box-1(#ccc, #7c3900, #fef3dd, #fab06d);
+}
+
+.activity-3-ui-arrows {
+  width: 25%;
+  height: 25%;
+}
+.activity-3-play-container {
+  float: right;
+}
 .activity4 {
   background-image: url('../img/4-assets/background.jpg');
 }
