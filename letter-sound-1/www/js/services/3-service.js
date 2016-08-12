@@ -20,12 +20,16 @@ angular.module('saan.services')
               }
             }
           }
-          var position = Util.getRandomNumber(lettersNotPlayed .length);
+          var position = Util.getRandomNumber(lettersNotPlayed.length);
           return {
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
-            successMessages: data.successMessages
+            successMessages: data.successMessages,
+            scoreSetUp: data.scoreSetUp,
+            nextLetterImgSrc : data.nextLetterImgSrc,
+            previousLetterImgSrc: data.previousLetterImgSrc,
+            srcAlphabetLetters: data.srcAlphabetLetters
           };
         },
         function error() {
