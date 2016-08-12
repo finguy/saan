@@ -143,5 +143,10 @@
     ],
   "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"]
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  }
 }

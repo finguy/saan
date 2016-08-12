@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 .controller('4Ctrl', function($scope ,RandomNumber, TTSService,
   Util, Animations) {
-  $scope.activityId = '1'; // Activity Id
+  $scope.activityId = '4'; // Activity Id
   $scope.number = null; // Letter to play in level
   $scope.imgs = [];
   $scope.instructions = ""; // Instructions to read
