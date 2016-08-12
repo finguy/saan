@@ -27,6 +27,7 @@ angular.module('saan.services')
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
+            scoreSetUp: data.scoreSetUp,
             assets: data.assets
           };
         },

@@ -205,5 +205,10 @@
         ],
   "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"]
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  }
 }
