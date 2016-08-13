@@ -9,7 +9,7 @@ angular.module('saan.services')
           var data = response.data;
           var pattern = [];
           var length = data.colors.length;
-          for(var i = 0; i < 4; i++){
+          for(var i = 0; i < data.numberOfOptions; i++){
             pattern.push(data.colors[Util.getRandomNumber(length)]);
           }
           return {
