@@ -1,0 +1,22 @@
+<div class="row" >
+
+     <div class= "col">
+     <img  src="img/6-assets/objects/treasure-chest-stars.png"  ng-click="speak(currentPhonema)">
+     <img class="activity-6-img" src="{{imgSrc}}"  ng-click="speak(currentPhonema)">
+     </div>
+
+     <div class="col images-list">
+      <div class="activity-6-letterContainer" >
+      <img src="img/alphabet-buttons/{{letter}}.png" ng-click="checkPhonema(letter)" ng-repeat="letter in letters">   {{letter}}</img>
+      </div>
+     </div>
+
+
+</div>
+<br/><br/><br/><br/>
+
+<div class="row activity-6-dragged-phonemas-container" >
+       <div class="activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged">
+        &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show="isDragged(letter)">
+      </div>
+</div>

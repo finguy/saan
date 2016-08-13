@@ -87,3 +87,36 @@ body{
 .activity5 {
   background-image: url('../img/5-assets/background.jpg');
 }
+
+.activity6 {
+  background-image: url('../img/6-assets/background.png');
+}
+
+.images-list {
+  width: 500px;
+  max-height: 300px;
+  float: left;
+}
+.activity-6-letterContainer {
+  width: 200px;
+  height: 200px;
+}
+.activity-6-letterContainer img {
+  width: 100px;
+  height: 100px;
+}
+
+.activity-6-img {
+  position:absolute;
+  top:20%;
+}
+
+.activity-6-dragged-phonemas {
+    background-image: url("../img/6-assets/frozenTile.png");
+    width: 200px;
+    min-height: 200px;
+}
+
+.activity-6-dragged-phonemas-container {
+  padding-left:20%;
+}

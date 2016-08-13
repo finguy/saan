@@ -1,0 +1,28 @@
+{"words":
+  [{"word":"dog" ,
+    "instruction": "Can you drag the letters when hearing them?",
+    "imgs":[
+                "img/6-assets/objects/dog1.png",
+                "img/6-assets/objects/dog2.png",
+                "img/6-assets/objects/dog3.png"
+      ]
+    },
+    {"word":"house" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/house1.png",
+                  "img/6-assets/objects/house2.png",
+                  "img/6-assets/objects/house3.png",
+                  "img/6-assets/objects/house4.png"
+        ]
+      }
+  ],
+  "instructions": "Hey, Can you drag the letters when hearing them?",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  }
+}
