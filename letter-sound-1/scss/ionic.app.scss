@@ -18,18 +18,15 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'font-faces/fonts';
+@import 'util/util';
 
 // Include all of Ionic
 @import 'www/lib/ionic/scss/ionic';
-@import 'layout/activity-1';
-@import 'directives/letterDashboard';
-@import 'directives/patternDashboard';
-@import 'directives/progressBar';
-@import "util/util";
 
-html{
+html {
   font-size: 62.5%;
 }
+
 body {
   font-family: Source Sans Pro;
   font-size: 1rem;
@@ -61,7 +58,7 @@ body {
   margin-top: auto;
 }
 
-.inline-block{
+.inline-block {
   display: inline-block;
 }
 
