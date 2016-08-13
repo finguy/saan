@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet"> -->
-
-     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
     <link href="css/ionic.app.css" rel="stylesheet">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/directives/letterDashboard.min.css">
+    <link rel="stylesheet" href="css/directives/patternDashboard.min.css">
+    <link rel="stylesheet" href="css/directives/progressBar.min.css">
+    <link rel="stylesheet" href="css/font-faces/fonts.min.css">
+    <link rel="stylesheet" href="css/layout/activity-1.min.css">
+    <link rel="stylesheet" href="css/util/util.min.css">
+    <!-- endinject -->
+
     <link href="lib/ng-sortable/dist/ng-sortable.style.min.css" rel="stylesheet" type="text/css">
     <link href="lib/ng-sortable/dist/ng-sortable.css" rel="stylesheet" type="text/css">
 
@@ -19,36 +24,31 @@
     <script type="text/javascript" src="lib/ng-sortable/dist/ng-sortable.min.js"></script>
 
     <!-- your app's js -->
-  	<script src="js/services.js"></script>
-    <script src="js/services/util.js"></script>
+  	<script src="js/app.js"></script>
+
+    <!-- inject:js -->
+    <script src="js/angular-underscore.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers/1-controller.js"></script>
+    <script src="js/controllers/2-controller.js"></script>
+    <script src="js/controllers/3-controller.js"></script>
+    <script src="js/controllers/4-controller.js"></script>
+    <script src="js/controllers/5-controller.js"></script>
+    <script src="js/controllers/lobby-controller.js"></script>
+    <script src="js/directives/directives.js"></script>
+    <script src="js/directives/patternDashboard.js"></script>
+    <script src="js/services/1-service.js"></script>
+    <script src="js/services/2-service.js"></script>
+    <script src="js/services/3-service.js"></script>
+    <script src="js/services/4-service.js"></script>
+    <script src="js/services/5-service.js"></script>
     <script src="js/services/animations.js"></script>
     <script src="js/services/score.js"></script>
-  	<script src="js/app.js"></script>
-  	<script src="js/controllers.js"></script>
-  	<script src="js/controllers/lobby-controller.js"></script>
-    <script src="js/directives/directives.js"></script>
-
-    <!-- Letter Activity 1 -->
-    <script src="js/services/1-service.js"></script>
-    <script src="js/controllers/1-controller.js"></script>
-
-    <!-- Pattern Activity 2 -->
-    <script src="js/controllers/2-controller.js"></script>
-    <script src="js/services/2-service.js"></script>
-
-    <!-- Pattern Activity 3 -->
-    <script src="js/controllers/3-controller.js"></script>
-    <script src="js/services/3-service.js"></script>
-    <script src="js/directives/patternDashboard.js"></script>
-
-    <!-- Pattern Activity 4 -->
-    <script src="js/controllers/4-controller.js"></script>
-    <script src="js/services/4-service.js"></script>
-
-    <!-- Pattern Activity 5 -->
-    <script src="js/controllers/5-controller.js"></script>
-    <script src="js/services/5-service.js"></script>
-
+    <script src="js/services/util.js"></script>
+    <!-- endinject -->
+    
   </head>
   <body ng-app="saan">
 	<!-- <body> -->
