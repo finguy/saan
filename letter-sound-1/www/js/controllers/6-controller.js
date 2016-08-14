@@ -86,15 +86,16 @@ angular.module('saan.controllers')
       $scope.playedWords.push(wordJson.word);
       $scope.letters = wordJson.word.split("");
       $scope.lettersDragged = wordJson.word.split("");
-      $scope.currentPhonema = $scope.letters[0];
+      $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
       $scope.imgSrc = Util.getRandomElemFromArray(wordJson.imgs);
       $scope.dashboard = [$scope.word];
       $scope.wordInstruction = wordJson.instruction;
+      $scope.totalLevels = data.totalLevels;
     };
 
     //Verifies selected letters or and returns true if they match the word
     $scope.checkPhonema = function(selectedObject) {
-          var LAST_CHECK  = false;
+        var LAST_CHECK  = false;
         var moreThanOneLetter = false;
         var current = $scope.letters[0];
         var i = 0;
@@ -137,7 +138,7 @@ angular.module('saan.controllers')
                    $scope.showDashboard(false); //Reload dashboard
                   }, 1000);
             } else {
-              $scope.currentPhonema = $scope.letters[0];
+              $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
               setTimeout(function() {
                 var position = Util.getRandomNumber($scope.successMessages.length);
                 var successMessage = $scope.successMessages[position];

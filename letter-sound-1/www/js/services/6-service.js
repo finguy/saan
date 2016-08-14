@@ -20,8 +20,6 @@ angular.module('saan.services')
               }
             }
           }
-          console.log("wordsNotPlayed:");
-          console.log(wordsNotPlayed);
           var index = Util.getRandomNumber(wordsNotPlayed.length);
           return {
             word: wordsNotPlayed[index],
@@ -29,6 +27,7 @@ angular.module('saan.services')
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
+            totalLevels : data.words.length
           };
         },
         function error() {

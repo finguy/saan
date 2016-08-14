@@ -1,6 +1,6 @@
 {"words":
   [{"word":"dog" ,
-    "instruction": "Can you drag the letters when hearing them?",
+    "instruction": "Can you select the letters when hearing them?",
     "imgs":[
                 "img/6-assets/objects/dog1.png",
                 "img/6-assets/objects/dog2.png",
@@ -35,7 +35,7 @@
       "imgs":[
                  "img/6-assets/objects/tree1.png"
         ]
-    },  
+    },
     {"word":"tiger" ,
       "instruction": "Can you drag the letters when hearing them?",
       "imgs":[
