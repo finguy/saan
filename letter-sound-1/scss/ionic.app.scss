@@ -24,17 +24,27 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-1';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
-@import "directives/progressBar";
-
+@import 'directives/progressBar';
 @import "util/util";
 
-body{
+html{
   font-size: 62.5%;
+}
+body {
   font-family: Source Sans Pro;
+  font-size: 1rem;
 }
 
 .text-center {
   text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify {
+  justify-content: center;
 }
 
 .horizontal-center {
