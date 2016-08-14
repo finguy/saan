@@ -90,11 +90,11 @@
                "img/5-assets/animals/cammel.png",
                "img/5-assets/animals/bear.png",
                "img/5-assets/animals/elephant.png",
-               "img/5-assets/animals/bat.png",
+               "img/5-assets/animals/bat.png"
                 ],
         "name" : "a"
       },
-      {"src": [ "img/5-assets/animals/tiger.png",                                          
+      {"src": [ "img/5-assets/animals/tiger.png",
               "img/5-assets/animals/snake.png",
               "img/5-assets/animals/sheep.png"
             ],
