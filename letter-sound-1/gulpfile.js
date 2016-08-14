@@ -7,15 +7,29 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var jshint = require('gulp-jshint');
+var inject = require('gulp-inject');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: [
+    './scss/**/*.scss',
+    './scss/ionic.app.scss',
+    '!./scss/util/*.scss'],
+  javascript: [
+         './www/**/*.js',
+         '!./www/js/app.js',
+         '!./www/lib/**'
+     ],
+     css: [
+         './www/**/*.min.css',
+         '!./www/lib/**',
+         '!./www/css/util/**'
+     ]
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass', 'index']);
 
 gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+  gulp.src(paths.sass)
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
@@ -29,6 +43,10 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch([
+     paths.javascript,
+     paths.css
+     ], ['index']);
 });
 
 gulp.task('install', ['git-check'], function() {
@@ -56,3 +74,15 @@ gulp.task('lint', function() {
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
+
+gulp.task('index', function(){
+     return gulp.src('./www/index.html')
+         .pipe(inject(
+             gulp.src(paths.javascript,
+                 {read: false}), {relative: true}))
+         .pipe(gulp.dest('./www'))
+         .pipe(inject(
+             gulp.src(paths.css,
+             {read: false}), {relative: true}))
+         .pipe(gulp.dest('./www'));
+ });
