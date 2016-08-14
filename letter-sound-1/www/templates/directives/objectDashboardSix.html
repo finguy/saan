@@ -7,7 +7,7 @@
 
      <div class="col images-list">
       <div class="activity-6-letterContainer" >
-      <img src="img/alphabet-buttons/{{letter}}.png" ng-click="checkPhonema(letter)" ng-repeat="letter in letters">   {{letter}}</img>
+      <img src="img/alphabet-buttons/{{letter}}.png" ng-click="checkPhonema(letter)" ng-repeat="letter in letters track by $index">   {{letter}}</img>
       </div>
      </div>
 
@@ -16,7 +16,7 @@
 <br/><br/><br/><br/>
 
 <div class="row activity-6-dragged-phonemas-container" >
-       <div class="activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged">
-        &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show="isDragged(letter)">
-      </div>
+       <div class="activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
+       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show=" isDragged(letter)">
+          </div>
 </div>

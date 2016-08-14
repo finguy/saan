@@ -15,9 +15,42 @@
                   "img/6-assets/objects/house3.png",
                   "img/6-assets/objects/house4.png"
         ]
-      }
+    },
+    {"word":"bird" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/bird1.png",
+                  "img/6-assets/objects/bird2.png"
+        ]
+    },
+    {"word":"ball" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/ball1.png",
+                  "img/6-assets/objects/ball2.png"
+        ]
+    },
+    {"word":"tree" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/tree1.png"
+        ]
+    },  
+    {"word":"tiger" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/tiger1.png",
+                  "img/6-assets/objects/tiger2.png"
+        ]
+    },
+    {"word":"apple" ,
+      "instruction": "Can you drag the letters when hearing them?",
+      "imgs":[
+                 "img/6-assets/objects/apple.png"
+        ]
+    }
   ],
-  "instructions": "Hey, Can you drag the letters when hearing them?",
+  "instructions": "Can you drag the letters when hearing them?",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {

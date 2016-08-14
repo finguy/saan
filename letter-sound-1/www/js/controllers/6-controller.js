@@ -94,20 +94,35 @@ angular.module('saan.controllers')
 
     //Verifies selected letters or and returns true if they match the word
     $scope.checkPhonema = function(selectedObject) {
-        var LAST_CHECK = $scope.letters.length === 1;
-        console.log("LAST_CHECK:");
-        console.log(LAST_CHECK);
+          var LAST_CHECK  = false;
+        var moreThanOneLetter = false;
+        var current = $scope.letters[0];
+        var i = 0;
+        while (!moreThanOneLetter && (i+1) < $scope.letters.length ) {
+          moreThanOneLetter = current != $scope.letters[i+1];
+          current = $scope.letters[i+1];
+          i++;
+        }
+
+        LAST_CHECK = !moreThanOneLetter;
         var ER = new RegExp($scope.currentPhonema,"i");
         var name = selectedObject.toLowerCase();
         $scope.speak(name);
         if (ER.test(name)) {
-            $scope.letters.shift();
+
+            var aux = $scope.letters;
+            $scope.letters = [];
+            for (var i in aux) {
+              if (aux[i] && aux[i] !== name) {
+                $scope.letters.push(aux[i]);
+              }
+            }
+
+            //wait for speak
             setTimeout(function() {
             if (LAST_CHECK) {
-              //wait for speak
-
                 $scope.levelUp(); //Advance level
-              /*  $scope.score = Score.update($scope.addScore, $scope.score);
+                $scope.score = Score.update($scope.addScore, $scope.score);
                 Util.saveLevel($scope.activityId, $scope.level);
                 if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
                   Util.saveScore($scope.activityId, $scope.score);
@@ -115,11 +130,12 @@ angular.module('saan.controllers')
                   if ($scope.finished) {
                       Util.saveStatus($scope.activityId, $scope.finished);
                       ActividadesFinalizadasService.add($scope.activityId);
-                  }*/
-                  console.log("before showing dashboard:");
-                  $scope.showDashboard(false); //Reload dashboard
-                //}
-
+                  }
+                 }
+                 $scope.speak($scope.word);
+                  setTimeout(function() {
+                   $scope.showDashboard(false); //Reload dashboard
+                  }, 1000);
             } else {
               $scope.currentPhonema = $scope.letters[0];
               setTimeout(function() {

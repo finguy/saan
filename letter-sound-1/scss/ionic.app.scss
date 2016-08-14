@@ -112,16 +112,21 @@ body{
 }
 
 .activity-6-dragged-phonemas {
-    background-image: url("../img/6-assets/frozenTile.png");
+    background-image: url("../img/6-assets/ice-cube.png");
     width: 200px;
     min-height: 190px;
     margin: 5px;
 }
+
 .activity-6-dragged-phonemas img {
-  padding: 10px;
+    position: relative;
+    top: 80px;
+    left: -30px;
+    height: 80px;
+  -webkit-transform: rotate(3deg); /* Chrome, Safari, Opera */
+   transform: rotate(3deg);
 }
 
 .activity-6-dragged-phonemas-container {
-  margin-left: auto;
-  margin-right: auto;    
+  padding-left: 10%;
 }
