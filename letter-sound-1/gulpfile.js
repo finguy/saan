@@ -10,7 +10,7 @@ var jshint = require('gulp-jshint');
 var inject = require('gulp-inject');
 
 var paths = {
-  sass: ['./scss/ionic.app.scss'],
+  sass: ['./scss/**/*.scss'],
   javascript: [
          './www/**/*.js',
          '!./www/js/app.js',
@@ -21,7 +21,7 @@ var paths = {
 gulp.task('default', ['sass', 'index']);
 
 gulp.task('sass', function(done) {
-  gulp.src(paths.sass)
+  gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
@@ -71,5 +71,5 @@ gulp.task('index', function(){
          .pipe(inject(
              gulp.src(paths.javascript,
                  {read: false}), {relative: true}))
-         .pipe(gulp.dest('./www'));         
+         .pipe(gulp.dest('./www'));
  });
