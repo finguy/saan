@@ -19,7 +19,9 @@ angular.module('saan.services')
                 }
               }
             }
-          }          
+          }
+          console.log("wordsNotPlayed:");
+          console.log(wordsNotPlayed);
           var index = Util.getRandomNumber(wordsNotPlayed.length);
           return {
             word: wordsNotPlayed[index],

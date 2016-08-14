@@ -114,9 +114,14 @@ body{
 .activity-6-dragged-phonemas {
     background-image: url("../img/6-assets/frozenTile.png");
     width: 200px;
-    min-height: 200px;
+    min-height: 190px;
+    margin: 5px;
+}
+.activity-6-dragged-phonemas img {
+  padding: 10px;
 }
 
 .activity-6-dragged-phonemas-container {
-  padding-left:20%;
+  margin-left: auto;
+  margin-right: auto;    
 }

@@ -35,11 +35,15 @@ angular.module('saan.controllers')
         function success(data) {
           $scope.setUpContextVariables(data);
           //wait for UI to load
-          var readWordTimeout = (readInstructions) ? 2000 : 1000;
+          var readWordTimeout = (readInstructions) ? 4000 : 1000;
           setTimeout(function() {
             if (readInstructions){
               $scope.speak($scope.instructions);
             }
+
+            setTimeout(function() {
+                $scope.speak($scope.currentPhonema);
+            }, readWordTimeout);
           }, readWordTimeout);
         },
         function error(error) {
@@ -79,6 +83,7 @@ angular.module('saan.controllers')
       $scope.substractScore = data.scoreSetUp.substract;
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.word = wordJson.word;
+      $scope.playedWords.push(wordJson.word);
       $scope.letters = wordJson.word.split("");
       $scope.lettersDragged = wordJson.word.split("");
       $scope.currentPhonema = $scope.letters[0];
@@ -90,19 +95,19 @@ angular.module('saan.controllers')
     //Verifies selected letters or and returns true if they match the word
     $scope.checkPhonema = function(selectedObject) {
         var LAST_CHECK = $scope.letters.length === 1;
+        console.log("LAST_CHECK:");
+        console.log(LAST_CHECK);
         var ER = new RegExp($scope.currentPhonema,"i");
         var name = selectedObject.toLowerCase();
-          if (ER.test(name)) {
+        $scope.speak(name);
+        if (ER.test(name)) {
             $scope.letters.shift();
-            $scope.currentPhonema = $scope.letters[0];
             setTimeout(function() {
-              var position = Util.getRandomNumber($scope.successMessages.length);
-              var successMessage = $scope.successMessages[position];
-              $scope.speak(successMessage);
+            if (LAST_CHECK) {
               //wait for speak
-              setTimeout(function() {
+
                 $scope.levelUp(); //Advance level
-                $scope.score = Score.update($scope.addScore, $scope.score);
+              /*  $scope.score = Score.update($scope.addScore, $scope.score);
                 Util.saveLevel($scope.activityId, $scope.level);
                 if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
                   Util.saveScore($scope.activityId, $scope.score);
@@ -110,13 +115,23 @@ angular.module('saan.controllers')
                   if ($scope.finished) {
                       Util.saveStatus($scope.activityId, $scope.finished);
                       ActividadesFinalizadasService.add($scope.activityId);
-                  } else if (!LAST_CHECK) {
-                        $scope.showDashboard(true); //Reload dashboard
-                  }
-                  
-                  }
-              }, 1000);
-            }, 1000);
+                  }*/
+                  console.log("before showing dashboard:");
+                  $scope.showDashboard(false); //Reload dashboard
+                //}
+
+            } else {
+              $scope.currentPhonema = $scope.letters[0];
+              setTimeout(function() {
+                var position = Util.getRandomNumber($scope.successMessages.length);
+                var successMessage = $scope.successMessages[position];
+                $scope.speak(successMessage);
+                setTimeout(function() {
+                  $scope.speak($scope.currentPhonema);
+                }, 1000);
+              });
+            }
+           }, 1000);
           } else {
             $scope.score = Score.update(-$scope.substractScore, $scope.score);
             Util.saveScore($scope.activityId, $scope.score);
@@ -127,6 +142,8 @@ angular.module('saan.controllers')
               $scope.speak(errorMessage);
             }, 1000);
           }
+
+
     };
 
     //Advance one level
