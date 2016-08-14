@@ -10,19 +10,11 @@ var jshint = require('gulp-jshint');
 var inject = require('gulp-inject');
 
 var paths = {
-  sass: [
-    './scss/**/*.scss',
-    './scss/ionic.app.scss',
-    '!./scss/util/*.scss'],
+  sass: ['./scss/ionic.app.scss'],
   javascript: [
          './www/**/*.js',
          '!./www/js/app.js',
          '!./www/lib/**'
-     ],
-     css: [
-         './www/**/*.min.css',
-         '!./www/lib/**',
-         '!./www/css/util/**'
      ]
 };
 
@@ -44,8 +36,7 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch([
-     paths.javascript,
-     paths.css
+     paths.javascript
      ], ['index']);
 });
 
@@ -80,9 +71,5 @@ gulp.task('index', function(){
          .pipe(inject(
              gulp.src(paths.javascript,
                  {read: false}), {relative: true}))
-         .pipe(gulp.dest('./www'))
-         .pipe(inject(
-             gulp.src(paths.css,
-             {read: false}), {relative: true}))
-         .pipe(gulp.dest('./www'));
+         .pipe(gulp.dest('./www'));         
  });
