@@ -1,6 +1,6 @@
-<ion-view view-title="{{activityId}}">
-  <div class="content-margin">
-    <div ng-repeat="row in deck">
+<ion-view view-title="{{activityId}}" class="content-margin">
+  <div class="deck-container">
+    <div ng-repeat="row in deck" class="row deck-row">
       <flipable-card ng-repeat="card in row"></flipable-card>
     </div>
   </div>

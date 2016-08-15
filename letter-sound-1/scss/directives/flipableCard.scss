@@ -1,9 +1,9 @@
 .memory-card {
-  float: left;
-  padding-bottom: 25%;
+  display: inline-block;
+  height: 80px;
   position: relative;
   text-align: center;
-  width: 25%;
+  width: 80px;
 }
 
 .memory-card-front,
