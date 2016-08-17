@@ -1,9 +1,9 @@
 .memory-card {
-  display: inline-block;
-  height: 80px;
+  height: 8rem;
+  margin: 1rem;
   position: relative;
   text-align: center;
-  width: 80px;
+  width: 8rem;
 }
 
 .memory-card-front,
@@ -23,7 +23,7 @@
 
 .memory-card-back {
   @include transform(rotateY(-180deg));
-  background-color: #1e1e1e;
+  background-color: $blue;
 }
 
 .flipped {
