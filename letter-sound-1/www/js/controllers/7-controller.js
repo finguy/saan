@@ -7,28 +7,29 @@ angular.module('saan.controllers')
 	function getConfiguration(level){
 		DeckBuilder.getConfig(level).then(function(data){
 			$scope.config = data;
-			buildDeck(data.level.numberOfCards);
+			buildDeck(parseInt(data.level.numberOfCards));
 		});
 	}
 
-	function buildDeck(numberOfCards){
+	function buildDeck(size){
 		var cards = [];
-		for (var i = 0; i < numberOfCards; i++){
+		for (var i = 0; i < size * 2; i++){
 			var number = Util.getRandomNumber(20);
 			while (_.indexOf(cards, number) != -1)
 				number = Math.floor(Math.random() * 10);
 			cards.push(number);
 		}
-		var deck = [];
-		deck.push(cards);
 
-		for (i = 1; i < numberOfCards; i++){
-			deck.push(_.shuffle(cards));
+		cards = cards.concat(_.shuffle(cards));
+		var deck = [];
+		var start = 0;
+		var top = size;
+		console.log(cards);
+		for (var j = 0; j < size; j++){
+			deck.push(cards.splice(start, size));
 		}
 
 		$scope.deck = deck;
-		console.log(deck);
-
 	}
 
 	getConfiguration(1);
