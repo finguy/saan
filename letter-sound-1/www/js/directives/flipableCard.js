@@ -3,7 +3,9 @@ angular.module('saan.directives')
   return {
     restrict: "E",
     templateUrl: "templates/directives/flipableCard.html",
-    scope: "true",
+    scope: {
+      value: '='
+    },
     link: function(scope){
       scope.flip = false;
       scope.flipCard = function(){
