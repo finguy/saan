@@ -1,15 +1,23 @@
 angular.module('saan.directives')
 .directive('flipableCard', function(){
   return {
+    require: '^^memoryDeck',
     restrict: "E",
     templateUrl: "templates/directives/flipableCard.html",
     scope: {
-      value: '='
+      value: '=',
+      row: '=',
+      col: '='
     },
-    link: function(scope){
-      scope.flip = false;
+    link: function(scope, element, attrs, deckCtrl){
       scope.flipCard = function(){
-        scope.flip = !scope.flip;
+        if (!deckCtrl.isCardFlipped(scope.row, scope.col)){
+          deckCtrl.flipCard(scope.row, scope.col);
+        }
+      };
+
+      scope.isCardFlipped = function(){
+        return deckCtrl.isCardFlipped(scope.row, scope.col);
       };
     }
   };
