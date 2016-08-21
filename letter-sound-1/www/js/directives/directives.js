@@ -1,4 +1,4 @@
-angular.module('saan.directives', [])
+angular.module('saan.directives')
   .directive('letterDashboard', function() {
     return {
       restrict: "E",
@@ -16,11 +16,11 @@ angular.module('saan.directives', [])
                      scope.checkWord();
                  }
               }, 500);
-          }
+            }
+        };
       }
-    }
     };
-  })  
+  })
   .directive('objectDashboardThree', function() {
   return {
     restrict: "E",

@@ -3,6 +3,7 @@ angular.module('saan.controllers')
 	$scope.activityId = '7';
 	$scope.config = '';
 	$scope.deck = [];
+	$scope.map = [];
 
 	function getConfiguration(level){
 		DeckBuilder.getConfig(level).then(function(data){
@@ -20,15 +21,16 @@ angular.module('saan.controllers')
 			cards.push(number);
 		}
 
-		cards = cards.concat(_.shuffle(cards));
+		cards = _.shuffle(cards.concat(cards));
 		var deck = [];
+		var deckMap = [];
 		var start = 0;
 		var top = size;
-		console.log(cards);
 		for (var j = 0; j < size; j++){
 			deck.push(cards.splice(start, size));
+			deckMap.push(_.map(deck[j], function(num){ return 0; }));
 		}
-
+		$scope.map = deckMap;
 		$scope.deck = deck;
 	}
 
