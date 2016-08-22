@@ -5,7 +5,7 @@ angular.module('saan.directives')
     restrict: "E",
     templateUrl: "templates/directives/flipableCard.html",
     scope: {
-      value: '=',
+      card: '=',
       row: '=',
       col: '='
     },
