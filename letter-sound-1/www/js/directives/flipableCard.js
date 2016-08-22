@@ -11,13 +11,15 @@ angular.module('saan.directives')
     },
     link: function(scope, element, attrs, deckCtrl){
       scope.flipCard = function(){
-        if (!deckCtrl.isCardFlipped(scope.row, scope.col)){
-          deckCtrl.flipCard(scope.row, scope.col);
-        }
+        deckCtrl.flipCard(scope.row, scope.col);
       };
 
       scope.isCardFlipped = function(){
         return deckCtrl.isCardFlipped(scope.row, scope.col);
+      };
+
+      scope.isCardMatched = function(){
+        return deckCtrl.isCardMatched(scope.row, scope.col);
       };
     }
   };

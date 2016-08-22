@@ -9,7 +9,7 @@ angular.module('saan.services')
         if (!arrayArg) {
           return null;
         }
- 
+
         var index = this.getRandomNumber(arrayArg.length);
         if (index > 0 && index < arrayArg.length) {
           return arrayArg[index];
@@ -63,6 +63,6 @@ angular.module('saan.services')
             return localStorage.setItem(key, score);
         }
         return null;
-    },
+    }
   };
 });
