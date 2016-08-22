@@ -14,14 +14,19 @@ angular.module('saan.controllers')
 
 	function buildDeck(size){
 		var cards = [];
+		var auxCards = [];
+
 		for (var i = 0; i < size * 2; i++){
 			var number = Util.getRandomNumber(20);
-			while (_.indexOf(cards, number) != -1)
+			while (_.indexOf(auxCards, number) != -1)
 				number = Math.floor(Math.random() * 10);
-			cards.push(number);
+			auxCards.push(number);
+			cards.push({key: number, value: number});
+			cards.push({key: number, value: Util.numberToWords(number)});
 		}
 
-		cards = _.shuffle(cards.concat(cards));
+		cards = _.shuffle(cards);
+		console.log(cards);
 		var deck = [];
 		var deckMap = [];
 		var start = 0;
@@ -32,6 +37,7 @@ angular.module('saan.controllers')
 		}
 		$scope.map = deckMap;
 		$scope.deck = deck;
+		console.log($scope.deck);
 	}
 
 	getConfiguration(1);

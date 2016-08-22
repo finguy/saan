@@ -30,7 +30,7 @@ angular.module('saan.directives')
             flipEnabled = false;
             setTimeout(function(){
               $scope.$apply(function(){
-                var value = $scope.deck[row][col] != $scope.deck[selectedCard.row][selectedCard.col] ? 0 : 2;
+                var value = $scope.deck[row][col].key != $scope.deck[selectedCard.row][selectedCard.col].key ? 0 : 2;
                 $scope.map[row][col] = value;
                 $scope.map[selectedCard.row][selectedCard.col] = value;
                 selectedCard.row = "";
@@ -48,7 +48,7 @@ angular.module('saan.directives')
 
       this.isCardMatched = function(row, col){
         return $scope.map[row][col] == 2;
-      };      
+      };
     }]
   };
 });
