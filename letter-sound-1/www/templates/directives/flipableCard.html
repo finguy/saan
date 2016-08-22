@@ -1,6 +1,6 @@
-<div class="memory-card" ng-class="{flipped : isCardFlipped()}" on-tap="flipCard()">
+<div class="memory-card" ng-class="{flipped : isCardFlipped(), hidden : isCardMatched()}" on-tap="flipCard()">
   <div class="memory-card-front">
-    <span class="memory-card-text">front</span>
+    <!-- <span class="memory-card-text">front</span> -->
   </div>
   <div class="memory-card-back">
     <span class="memory-card-text">{{value}}</span>
