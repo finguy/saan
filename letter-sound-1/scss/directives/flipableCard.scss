@@ -4,6 +4,7 @@
   position: relative;
   text-align: center;
   width: 8rem;
+  font-size: 1.6em;
 }
 
 .memory-card-front,
@@ -23,7 +24,10 @@
 
 .memory-card-back {
   @include transform(rotateY(-180deg));
+  align-items: center;
   background-color: $blue;
+  display: flex;
+  justify-content: center;
 }
 
 .flipped {
