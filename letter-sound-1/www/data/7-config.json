@@ -5,7 +5,8 @@
   "levels": [
     {
       "level": "1",
-      "numberOfCards": "4"
+      "numberOfCards": "16",
+      "numberRange": "20"
     }
   ]
 }
