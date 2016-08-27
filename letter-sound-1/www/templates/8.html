@@ -1,5 +1,14 @@
-<ion-view view-title="{{activityId}}">
-  <ion-content>
-    Template para {{activityId}}
-  </ion-content>
+<ion-view view-title="{{activityId}}" class="content-margin">
+  <div class="card-container">
+    <number-card number="4"></number-card>
+    <number-card number="7"></number-card>
+    <number-card number="9"></number-card>
+    <number-card number="8"></number-card>
+  </div>
+  <div as-sortable="sortableCloneOptions" class="token-container">
+    <div as-sortable-item as-sortable-item-handle class="token-card">four</div>
+    <div class="token-card">nine</div>
+    <div class="token-card">eight</div>
+    <div class="token-card">seven</div>
+  </div>
 </ion-view>

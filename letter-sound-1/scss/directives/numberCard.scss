@@ -1,0 +1,22 @@
+.number-card {
+  display: flex;
+  flex-direction: column;
+  height: 30rem;
+  justify-content: center;
+  width: 20rem;
+
+  .number {
+    background-color: #663399;
+    font-size: 4em;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .placeholder{
+    background-color: beige;
+    height: 50%;
+    border: red dotted;
+  }
+}
