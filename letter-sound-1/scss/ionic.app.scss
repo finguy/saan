@@ -27,7 +27,9 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'directives/patternDashboard';
 @import 'directives/progressBar';
 @import 'directives/flipableCard';
+@import 'directives/numberCard';
 @import 'layout/memory';
+@import 'layout/activity-8';
 
 html {
   font-size: 62.5%;
