@@ -5,9 +5,10 @@
     return {
       restrict: "E",
       templateUrl: "templates/directives/numberCard.html",
-      scope: {
-        number: '='
-      }
+      scope: true
+      // {
+      //   card: '='
+      // }
     };
   });
 })();
