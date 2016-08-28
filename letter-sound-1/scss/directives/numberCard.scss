@@ -15,8 +15,21 @@
   }
 
   .placeholder{
-    background-color: beige;
     height: 50%;
     border: red dotted;
+
+    .as-sortable-item{
+      border: 0;
+      background: inherit;
+      margin: 0;
+    }
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .completed{
+    border: 0;
   }
 }
