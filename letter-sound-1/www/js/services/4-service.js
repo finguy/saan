@@ -28,7 +28,8 @@ angular.module('saan.services')
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
-            assets: data.assets
+            assets: data.assets,
+            totalLevels: data.numbers.length
           };
         },
         function error() {

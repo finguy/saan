@@ -16,6 +16,7 @@ angular.module('saan.controllers')
   $scope.totalLevels = 3;
   $scope.activityProgress = 0;
   $scope.score = 0;
+  $scope.checkingNumber = false;
 
 
   //Reproduces sound using TTSService
@@ -85,6 +86,8 @@ angular.module('saan.controllers')
     $scope.addScore = data.scoreSetUp.add;
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.minScore = data.scoreSetUp.minScore;
+    $scope.totalLevels = data.totalLevels;
+    $scope.checkingNumber = false;
 
     var length = $scope.assets.length;
     for (var i in numberJson.imgs){
@@ -108,11 +111,13 @@ angular.module('saan.controllers')
   //Verifies selected letters and returns true if they match the word
   $scope.checkNumber = function(selectedObject, domId) {
     if ($scope.number === parseInt(selectedObject,10)) {
+      $scope.checkingNumber = true;
       Animations.successFireworks(domId);
       $scope.playedNumbers.push($scope.number);
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
           var successMessage = $scope.successMessages[position];
+          $scope.speak(successMessage);
           //wait for speak
           setTimeout(function() {
             $scope.levelUp(); //Advance level
@@ -132,6 +137,7 @@ angular.module('saan.controllers')
     } else {
       //wait for speak
       setTimeout(function() {
+        $scope.checkingNumber = false;
         var position = Util.getRandomNumber($scope.errorMessages.length);
         var errorMessage = $scope.errorMessages[position];
         $scope.speak(errorMessage);
