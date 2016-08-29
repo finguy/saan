@@ -26,6 +26,7 @@ angular.module('saan.services')
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
+            totalLevels: data.letters.length
           };
         },
         function error() {

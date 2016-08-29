@@ -53,8 +53,7 @@
               ],
        "name" : "E"
      },
-      {"src": ["img/5-assets/animals/octopus.png",
-                "img/5-assets/animals/turtle.png",
+      {"src": ["img/5-assets/animals/octopus.png",                
                 "img/5-assets/animals/duck.png"
               ],
        "name" : "u"

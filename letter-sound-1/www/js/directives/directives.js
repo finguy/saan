@@ -137,7 +137,7 @@ angular.module('saan.directives', [])
           scope.selectedObject= name;
           var object = objectNameSrc.split("/");
           var objectName = object[object.length -1].replace(".png","");
-          scope.speak(name + " in "+objectName);
+          scope.speak(scope.letter + " in "+objectName);
           setTimeout(function (){
               scope.checkLetter(name);
           }, 500);
