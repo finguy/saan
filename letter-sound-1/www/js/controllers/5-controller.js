@@ -16,6 +16,7 @@ angular.module('saan.controllers')
   $scope.totalLevels = 2;
   $scope.activityProgress = 0;
   $scope.score = 0;
+  $scope.checkingWord = false;
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
@@ -23,7 +24,7 @@ angular.module('saan.controllers')
   //Shows Activity Dashboard
   var Ctrl5 = Ctrl5 || {} ;
   Ctrl5.showDashboard = function(readInstructions) {
-
+    $scope.checkingWord = false;
     Ctrl5.setUpLevel();
     Ctrl5.setUpScore();
     Ctrl5.setUpStatus();
@@ -107,6 +108,7 @@ angular.module('saan.controllers')
 
   //Verifies selected letters and returns true if they match the word
   $scope.checkLetter = function(selectedObject) {
+    $scope.checkingWord = true;
     var ER = new RegExp($scope.letter,"i");
     var name = selectedObject.toLowerCase();
     if (ER.test(name)) {
@@ -138,6 +140,7 @@ angular.module('saan.controllers')
       Util.saveScore($scope.activityId, $scope.score);
       //wait for speak
       setTimeout(function() {
+        $scope.checkingWord = false;
         var position = Util.getRandomNumber($scope.errorMessages.length);
         var errorMessage = $scope.errorMessages[position];
         $scope.speak(errorMessage);

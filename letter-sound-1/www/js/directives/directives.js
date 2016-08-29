@@ -134,13 +134,17 @@ angular.module('saan.directives', [])
       scope: 'true',
       link: function(scope) {
         scope.selectLetter = function(name, objectNameSrc) {
-          scope.selectedObject= name;
-          var object = objectNameSrc.split("/");
-          var objectName = object[object.length -1].replace(".png","");
-          scope.speak(scope.letter + " in "+objectName);
-          setTimeout(function (){
-              scope.checkLetter(name);
-          }, 500);
+          if (!scope.checkingLetter && !scope.checkingWord){
+            scope.checkingLetter = true;
+              scope.selectedObject= name;
+              var object = objectNameSrc.split("/");
+              var objectName = object[object.length -1].replace(".png","");
+              scope.speak(scope.letter + " in "+objectName);
+              setTimeout(function (){
+                scope.checkingLetter = false;
+                  scope.checkLetter(name);
+              }, 500);
+          }
         };
       }
     };
