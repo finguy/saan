@@ -6,7 +6,6 @@ angular.module('saan.services')
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
-          console.log(data);
           return {
             instructions : data.instructions,
             errorMessages : data.errorMessages,
