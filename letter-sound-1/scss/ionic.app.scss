@@ -21,13 +21,13 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 
 // Include all of Ionic
 @import 'www/lib/ionic/scss/ionic';
+@import "util/util";
 @import 'layout/activity-1';
 @import 'layout/activity-4';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
 @import "directives/progressBar";
 
-@import "util/util";
 
 body{
   font-size: 62.5%;
@@ -83,15 +83,7 @@ body{
 }
 
  .img-container {
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-  border:20px solid #5E2B26;
-  background-color:#e7ddc4;
-   padding:0;
-   margin:1px;
-   clear:both;
-   float:left;
+  @include image-container-1(20px, #5E2B26, #e7ddc4);
  }
 
 

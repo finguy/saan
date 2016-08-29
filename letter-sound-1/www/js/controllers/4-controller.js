@@ -21,9 +21,6 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  //range
-  $scope.range = Util.range;
-
   $scope.setUpLevel = function() {
     var level = Util.getLevel($scope.activityId);
     if (level) {
