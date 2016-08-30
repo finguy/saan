@@ -1,0 +1,3 @@
+<div ng-repeat="row in deck" class="row deck-row">
+  <flipable-card ng-repeat="card in row track by $index" card="card" row="$parent.$index" col="$index"></flipable-card>
+</div>

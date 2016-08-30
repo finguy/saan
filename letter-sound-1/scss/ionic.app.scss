@@ -17,15 +17,17 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: '../lib/ionic/fonts' !default;
-@import 'font-faces/fonts';
-
 // Include all of Ionic
 @import 'www/lib/ionic/scss/ionic';
+@import 'www/lib/bourbon/app/assets/stylesheets/_bourbon';
+@import 'util/util';
+@import 'font-faces/fonts';
 @import 'layout/activity-1';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
 @import 'directives/progressBar';
-@import 'util/util';
+@import 'directives/flipableCard';
+@import 'layout/memory';
 
 html {
   font-size: 62.5%;
@@ -34,6 +36,10 @@ html {
 body {
   font-family: Source Sans Pro;
   font-size: 1rem;
+}
+
+.content-margin {
+  margin-top: 2.4rem;
 }
 
 .text-center {
@@ -64,6 +70,10 @@ body {
 
 .inline-block {
   display: inline-block;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .activity3 {
