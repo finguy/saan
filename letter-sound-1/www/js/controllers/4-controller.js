@@ -95,13 +95,14 @@ angular.module('saan.controllers')
          var img = {};
          img.name = numberJson.imgs[i].name;
          img.src = [];
-         var used = [];
+         //var used = [];
+         var index = Util.getRandomNumber(length);
          for (var j=0; j < img.name; j++) {
-           var index = Util.getRandomNumber(length);
-           while (used[index] || !$scope.assets[index]) {
+           //var index = Util.getRandomNumber(length);
+           /*while (used[index] || !$scope.assets[index]) {
               index = Util.getRandomNumber(length);
-           }
-           used[index] = true;
+           }*/
+          // used[index] = true;
            img.src.push($scope.assets[index]);
          }
          $scope.imgs.push(img);
