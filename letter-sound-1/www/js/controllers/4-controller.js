@@ -22,7 +22,9 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  $scope.setUpLevel = function() {
+  var Ctrl4 = Ctrl4 || {};
+
+  Ctrl4.setUpLevel = function() {
     var level = Util.getLevel($scope.activityId);
     if (level) {
       $scope.level = level;
@@ -30,14 +32,14 @@ angular.module('saan.controllers')
     }
   };
 
-  $scope.setUpScore = function(){
+  Ctrl4.setUpScore = function(){
     var score = Util.getScore($scope.activityId);
     if (score) {
       $scope.score = score
     }
   };
 
-  $scope.setUpStatus = function(){
+  Ctrl4.setUpStatus = function(){
     var finished = Util.getStatus($scope.activityId);
     if (finished === false || finished === true) {
       $scope.finished = finished;
@@ -45,15 +47,15 @@ angular.module('saan.controllers')
   }
 
   //Shows Activity Dashboard
-  $scope.showDashboard = function(readInstructions) {
+  Ctrl4.showDashboard = function(readInstructions) {
 
-    $scope.setUpLevel();
-    $scope.setUpScore();
-    $scope.setUpStatus();
+    Ctrl4.setUpLevel();
+    Ctrl4.setUpScore();
+    Ctrl4.setUpStatus();
 
     RandomNumber.number($scope.level, $scope.playedNumbers).then(
       function success(data) {
-        $scope.setUpContextVariables(data);
+        Ctrl4.setUpContextVariables(data);
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
         //wait for UI to load
@@ -74,7 +76,7 @@ angular.module('saan.controllers')
       }
     );
   };
-  $scope.setUpContextVariables = function(data) {
+  Ctrl4.setUpContextVariables = function(data) {
     var numberJson = data.number;
     $scope.instructions = data.instructions;
     $scope.successMessages = data.successMessages;
@@ -90,19 +92,19 @@ angular.module('saan.controllers')
     $scope.checkingNumber = false;
 
     var length = $scope.assets.length;
+    var used = [];
     for (var i in numberJson.imgs){
       if (numberJson.imgs[i]) {
          var img = {};
          img.name = numberJson.imgs[i].name;
          img.src = [];
-         //var used = [];
+         //Select an unused asset
          var index = Util.getRandomNumber(length);
+         while (used[index] || !$scope.assets[index]) {
+            index = Util.getRandomNumber(length);
+         }
+         used[index] = true;
          for (var j=0; j < img.name; j++) {
-           //var index = Util.getRandomNumber(length);
-           /*while (used[index] || !$scope.assets[index]) {
-              index = Util.getRandomNumber(length);
-           }*/
-          // used[index] = true;
            img.src.push($scope.assets[index]);
          }
          $scope.imgs.push(img);
@@ -121,7 +123,7 @@ angular.module('saan.controllers')
           $scope.speak(successMessage);
           //wait for speak
           setTimeout(function() {
-            $scope.levelUp(); //Advance level
+            Ctrl4.levelUp(); //Advance level
             $scope.score = Score.update($scope.addScore, $scope.score);
             Util.saveLevel($scope.activityId, $scope.level);
             if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
@@ -132,7 +134,7 @@ angular.module('saan.controllers')
                   ActividadesFinalizadasService.add($scope.activityId);
               }
             }
-            $scope.showDashboard(); //Reload dashboard
+            Ctrl4.showDashboard(); //Reload dashboard
           }, 1000);
       }, 4000);
     } else {
@@ -147,7 +149,7 @@ angular.module('saan.controllers')
   };
 
   //Advance one level
-  $scope.levelUp = function() {
+  Ctrl4.levelUp = function() {
     $scope.level++;
     $scope.letters = [];
     $scope.dashboard = [];
@@ -155,7 +157,7 @@ angular.module('saan.controllers')
   };
 
   // Goes back one level
-  $scope.levelDown = function() {
+  Ctrl4.levelDown = function() {
    $scope.level = (level > 1) ? (level - 1) : 1;
     $scope.numbers = [];
     $scope.dashboard = [];
@@ -164,5 +166,5 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   //Show Dashboard
-  $scope.showDashboard(true);
+  Ctrl4.showDashboard(true);
 });

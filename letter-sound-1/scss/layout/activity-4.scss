@@ -3,8 +3,8 @@
 }
 
 .activity-4-border {
-   border-top: 20px solid transparent;
-   padding: 15px;
+   border-top: 2em solid transparent;
+   padding: 1.5em;
    border-image-source: url("../img/4-assets/store-2.png");
    border-image-repeat: repeat;
    border-image-slice: 30;
@@ -14,10 +14,17 @@
 .activity-4-content {
    clear:both;
    float:left;
-   max-width:400px;
+   max-width:40em;
    height:100%;
  }
 
 .activity4-number-container {
-  @include innerCircle-1 (10px, #4ec0e0, #ed3f36, 170px,170px, 70px, 50%, 45%);
+  @include innerCircle-1 (1em, #4ec0e0, #ed3f36, 170px,17em, 7em, 50%, 45%);
+  font-family: learningNumbers;
+ }
+
+ .gradient-number {
+   background: #5E2B26;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
  }
