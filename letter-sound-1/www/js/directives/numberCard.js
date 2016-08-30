@@ -6,9 +6,6 @@
       restrict: "E",
       templateUrl: "templates/directives/numberCard.html",
       scope: true
-      // {
-      //   card: '='
-      // }
     };
   });
 })();

@@ -66,7 +66,6 @@ gulp.task('lint', function() {
 });
 
 gulp.task('index', function(){
-  console.log("va");
      return gulp.src('./www/index.html')
          .pipe(inject(
              gulp.src(paths.javascript,
