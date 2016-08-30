@@ -8,22 +8,23 @@
 
     var config = '';
     var matches = 0;
+    var Ctrl8 = Ctrl8 || {} ;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      getConfiguration();
+      Ctrl8.getConfiguration();
     });
 
-    function getConfiguration(level){
+    Ctrl8.getConfiguration = function (level){
 			NumberMatching.getConfig(level).then(function(data){
 				config = data;
         config.cards = parseInt(config.cards, 10);
         config.top = parseInt(config.top, 10);
         config.numberRange = parseInt(config.numberRange, 10);
-        setActivity();
+        Ctrl8.setActivity();
 			});
-		}
+		};
 
-    function setActivity(){
+    Ctrl8.setActivity  = function (){
       $scope.matches = [];
       $scope.cards = [];
 
@@ -44,13 +45,13 @@
 			}
 
       $scope.matches = _.shuffle($scope.matches);
-    }
+    };
 
     $scope.sortableOptions = {
       containment: '.placeholder',
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
-        return checkMatch(sourceItemHandleScope, destSortableScope);
+        return Ctrl8.checkMatch(sourceItemHandleScope, destSortableScope);
       }
     };
 
@@ -58,7 +59,7 @@
       containment: '.activity-content',
       clone: true,
       itemMoved: function(eventObj) {
-        moveMatch(eventObj);
+        Ctrl8.moveMatch(eventObj);
       }
     };
 
@@ -66,22 +67,22 @@
       return Util.numberToWords(number);
     };
 
-    function checkMatch(sourceItemHandleScope, destSortableScope){
+    Ctrl8.checkMatch = function(sourceItemHandleScope, destSortableScope){
       return parseInt(destSortableScope.element[0].parentElement.innerText, 10) == parseInt(sourceItemHandleScope.modelValue, 10);
-    }
+    };
 
-    function moveMatch(eventObj) {
+    Ctrl8.moveMatch = function(eventObj) {
       var item = $scope.dropzoneModel.pop();
       var index = _.findIndex($scope.cards,
                               function(card){return card.value == item;},
                               item);
       $scope.cards[index].dropzone.push(item);
       matches++;
-      
+
       if (matches == config.cards){
-        setActivity();
+        Ctrl8.setActivity();
       }
-    }
+    };
 
 	}]);
 })();
