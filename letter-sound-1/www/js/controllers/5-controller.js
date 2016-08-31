@@ -120,7 +120,7 @@ angular.module('saan.controllers')
           //wait for speak
           setTimeout(function() {
             Ctrl5.levelUp(); //Advance level
-            Ctrl5.score = Score.update($scope.addScore, $scope.score);
+            $scope.score = Score.update($scope.addScore, $scope.score);
             Util.saveLevel($scope.activityId, $scope.level);
             if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
               Util.saveScore($scope.activityId, $scope.score);
@@ -135,8 +135,7 @@ angular.module('saan.controllers')
         }, 1000);
 
     } else {
-      $scope.score = Score.update(-$scope.substractScore, $scope.score);
-      console.log($scope.score);
+      $scope.score = Score.update(-$scope.substractScore, $scope.score);      
       Util.saveScore($scope.activityId, $scope.score);
       //wait for speak
       setTimeout(function() {
