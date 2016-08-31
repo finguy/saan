@@ -25,15 +25,16 @@ angular.module('saan.controllers')
     $scope.speak = TTSService.speak;
 
     //Shows Activity Dashboard
-    $scope.showDashboard = function(readInstructions) {
+    var Ctrl6 = Ctrl6 || {};
+    Ctrl6.showDashboard = function(readInstructions) {
 
-      $scope.setUpLevel();
-      $scope.setUpScore();
-      $scope.setUpStatus();
+      Ctrl6.setUpLevel();
+      Ctrl6.setUpScore();
+      Ctrl6.setUpStatus();
 
       RandomWordSix.word($scope.level, $scope.playedWords).then(
         function success(data) {
-          $scope.setUpContextVariables(data);
+          Ctrl6.setUpContextVariables(data);
           //wait for UI to load
           var readWordTimeout = (readInstructions) ? 4000 : 1000;
           setTimeout(function() {
@@ -52,7 +53,7 @@ angular.module('saan.controllers')
       );
     };
 
-    $scope.setUpLevel = function() {
+    Ctrl6.setUpLevel = function() {
       var level = Util.getLevel($scope.activityId);
       if (level) {
         $scope.level = level;
@@ -60,21 +61,21 @@ angular.module('saan.controllers')
       }
     };
 
-    $scope.setUpScore = function(){
+    Ctrl6.setUpScore = function(){
       var score = Util.getScore($scope.activityId);
       if (score) {
         $scope.score = score
       }
     };
 
-    $scope.setUpStatus = function(){
+    Ctrl6.setUpStatus = function(){
       var finished = Util.getStatus($scope.activityId);
       if (finished === false || finished === true) {
         $scope.finished = finished;
       }
     }
 
-    $scope.setUpContextVariables = function(data) {
+    Ctrl6.setUpContextVariables = function(data) {
       var wordJson = data.word;
       $scope.instructions = data.instructions;
       $scope.successMessages = data.successMessages;
@@ -122,7 +123,7 @@ angular.module('saan.controllers')
             //wait for speak
             setTimeout(function() {
             if (LAST_CHECK) {
-                $scope.levelUp(); //Advance level
+                Ctrl6.levelUp(); //Advance level
                 $scope.score = Score.update($scope.addScore, $scope.score);
                 Util.saveLevel($scope.activityId, $scope.level);
                 if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
@@ -135,7 +136,7 @@ angular.module('saan.controllers')
                  }
                  $scope.speak($scope.word);
                   setTimeout(function() {
-                   $scope.showDashboard(false); //Reload dashboard
+                   Ctrl6.showDashboard(false); //Reload dashboard
                   }, 1000);
             } else {
               $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
@@ -164,7 +165,7 @@ angular.module('saan.controllers')
     };
 
     //Advance one level
-    $scope.levelUp = function() {
+    Ctrl6.levelUp = function() {
       $scope.level++;
       $scope.letters = [];
       $scope.dashboard = [];
@@ -172,14 +173,14 @@ angular.module('saan.controllers')
     };
 
     // Goes back one level
-    $scope.levelDown = function() {
+    Ctrl6.levelDown = function() {
       $scope.level = (level > 1) ? (level - 1) : 1;
       $scope.letters = [];
       $scope.dashboard = [];
       $scope.selectedLetters = [];
     };
 
-    $scope.showPage = function() {
+    Ctrl6.showPage = function() {
       $scope.isActivity = true;
       $scope.instructions = $scope.letterInstruction;
       setTimeout(function(){
@@ -190,5 +191,5 @@ angular.module('saan.controllers')
 
     //*************** ACTIONS **************************/
     //Show Dashboard
-    $scope.showDashboard(true);
+    Ctrl6.showDashboard(true);
   });

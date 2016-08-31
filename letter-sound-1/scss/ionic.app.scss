@@ -20,13 +20,15 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'font-faces/fonts';
 
 // Include all of Ionic
+@import "util/util";
 @import 'www/lib/ionic/scss/ionic';
 @import 'layout/activity-1';
+@import 'layout/activity-6';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
 @import "directives/progressBar";
 
-@import "util/util";
+
 
 body{
   font-size: 62.5%;
@@ -86,47 +88,4 @@ body{
 
 .activity5 {
   background-image: url('../img/5-assets/background.jpg');
-}
-
-.activity6 {
-  background-image: url('../img/6-assets/background.png');
-}
-
-.images-list {
-  width: 500px;
-  max-height: 300px;
-  float: left;
-}
-.activity-6-letterContainer {
-  width: 200px;
-  height: 200px;
-}
-.activity-6-letterContainer img {
-  width: 100px;
-  height: 100px;
-}
-
-.activity-6-img {
-  position:absolute;
-  top:20%;
-}
-
-.activity-6-dragged-phonemas {
-    background-image: url("../img/6-assets/ice-cube.png");
-    width: 200px;
-    min-height: 190px;
-    margin: 5px;
-}
-
-.activity-6-dragged-phonemas img {
-    position: relative;
-    top: 80px;
-    left: -30px;
-    height: 80px;
-  -webkit-transform: rotate(3deg); /* Chrome, Safari, Opera */
-   transform: rotate(3deg);
-}
-
-.activity-6-dragged-phonemas-container {
-  padding-left: 10%;
 }
