@@ -154,7 +154,7 @@ angular.module('saan.directives', [])
            allowDuplicates: false,
            accept: function(sourceItemHandleScope, destSortableScope){
              console.log("accept");
-             var isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue);             
+             var isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue);
              console.log(isPhonemaOk);
              return isPhonemaOk;
            }
@@ -166,14 +166,14 @@ angular.module('saan.directives', [])
              var moveSuccess, moveFailure;
               moveSuccess = function() {
                 console.log('item moved!');
-              //  scope.checkWordV2(true);
+                scope.checkWordV2(true);// Mark letter as dragged and get new letter
               };
               moveFailure = function() {};
            }
          };
 
-         scope.isDragged = function(letter) {
-           return scope.letters.toString().indexOf(letter) === -1;
+         scope.isDragged = function(letter , index) {           
+           return scope.hasDraggedLetter[index] === true;
          };
 
        }

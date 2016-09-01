@@ -17,9 +17,9 @@
 </div>
 <br/><br/><br/><br/>
 
-<div class="row activity-6-dragged-phonemas-container" as-sortable="sortableOptions" data-ng-model="lettersDragged">
+<div class="row activity-6-dragged-phonemas-container" as-sortable="sortableOptions" data-ng-model="lettersDragged">      
        <div class="activity-6-dragged-phonemas dropzone" ng-repeat="letter in lettersDragged track by $index">
-       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show="isDragged(letter)" class="dragged-phonemas">
+       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas">
           </div>
 </div>
 </div>

@@ -21,6 +21,7 @@ angular.module('saan.controllers')
     $scope.score = 0;
     $scope.status = false;
     $scope.dropzone = [];
+    $scope.hasDraggedLetter = [];
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -114,6 +115,7 @@ angular.module('saan.controllers')
              notFound = ER.test($scope.letters[index]);
            }
            $scope.letters.splice(index,1);
+           $scope.hasDraggedLetter[index] = true;// Mark letter as dragged
            $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
         }
     };
