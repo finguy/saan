@@ -157,7 +157,7 @@ angular.module('saan.directives', [])
            }
          };
          scope.sortableCloneOptions = {
-           containment: '.pattern-dashboard',
+           containment: 'activity-6-dragged-phonemas-container',
            clone: true,
            itemMoved: function (eventObj) {
              console.log('moving!');
