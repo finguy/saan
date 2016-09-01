@@ -18,6 +18,7 @@ var paths = {
      ]
 };
 
+gulp.task('serve:before', ['default', 'watch']);
 gulp.task('default', ['sass', 'index']);
 
 gulp.task('sass', function(done) {
@@ -35,9 +36,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch([
-     paths.javascript
-     ], ['index']);
+  gulp.watch([paths.javascript], ['index']);
 });
 
 gulp.task('install', ['git-check'], function() {
