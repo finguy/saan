@@ -86,11 +86,10 @@ angular.module('saan.directives')
        scope: 'true',
        link: function(scope) {
          scope.selectNumber = function(id, name) {
-           scope.selectedObject= name;
-          // scope.speak(name);
-          // setTimeout(function (){
-               scope.checkNumber(name, id);
-          // }, 500);
+          if (!scope.checkingNumber){
+           scope.selectedObject = name;           
+           scope.checkNumber(name, id);
+         }
          };
        }
      };

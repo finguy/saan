@@ -35,6 +35,7 @@ angular.module('saan.controllers')
       RandomLetterThree.letter($scope.level, $scope.playedLetters).then(
         function success(data) {
           $scope.setUpContextVariables(data);
+
           //wait for UI to load
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
           setTimeout(function() {

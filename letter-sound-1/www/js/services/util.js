@@ -64,6 +64,13 @@ angular.module('saan.services')
         }
         return null;
     },
+    range: function(top) {
+      var elems = [];
+      for (var i = 0; i < top*1; i++) {
+        elems.push(i);
+      }
+      return elems;
+    },
     numberToWords: function(n){
       if (n === 0) return 'zero';
       var a = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
