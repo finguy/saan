@@ -1,0 +1,6 @@
+<div class="number-card">
+  <div class="number">{{card.value}}</div>
+  <div class="placeholder match" as-sortable="sortableOptions" data-ng-model="dropzoneModel" ng-class="{completed: card.dropzone.length > 0}">
+    <div ng-repeat="item in card.dropzone" as-sortable-item>{{numberToWord(item)}}</div>
+  </div>
+</div>
