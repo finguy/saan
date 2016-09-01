@@ -20,6 +20,7 @@ angular.module('saan.controllers')
     $scope.letterInstruction = "";
     $scope.score = 0;
     $scope.status = false;
+    $scope.dropzone = [];
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;

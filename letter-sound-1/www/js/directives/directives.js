@@ -150,14 +150,14 @@ angular.module('saan.directives', [])
        scope: 'true',
        link: function(scope) {
          scope.sortableOptions = {
-           containment: '.pattern-dashboard',
-           allowDuplicates: true,
+           containment: '.activity-6-dragged-phonemas-container',
+           allowDuplicates: false,
            accept: function(sourceItemHandleScope, destSortableScope){
              return scope.checkColor(sourceItemHandleScope.modelValue);
            }
          };
          scope.sortableCloneOptions = {
-           containment: 'activity-6-dragged-phonemas-container',
+           containment: '.activity-6-dragged-phonemas-container',
            clone: true,
            itemMoved: function (eventObj) {
              console.log('moving!');
