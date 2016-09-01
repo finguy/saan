@@ -1,3 +1,5 @@
+<div class="dashboard">
+  <h1>{{currentPhonema}} </h1>
 <div class="row" >
 
      <div class= "col">
@@ -7,7 +9,7 @@
 
      <div class="col images-list">
       <div class="activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-      <img src="img/alphabet-buttons/{{letter}}.png" ng-click="checkPhonema(letter)" ng-repeat="letter in letters track by $index" class="letters-list" as-sortable-item as-sortable-item-handle>   {{letter}}</img>
+      <img src="img/alphabet-buttons/{{letter}}.png" ng-repeat="letter in letters track by $index" class="letters-list" as-sortable-item as-sortable-item-handle>   {{letter}}</img>
       </div>
      </div>
 
@@ -15,8 +17,9 @@
 </div>
 <br/><br/><br/><br/>
 
-<div class="row activity-6-dragged-phonemas-container" as-sortable="sortableOptions">
+<div class="row activity-6-dragged-phonemas-container" as-sortable="sortableOptions" data-ng-model="lettersDragged">
        <div class="activity-6-dragged-phonemas dropzone" ng-repeat="letter in lettersDragged track by $index">
-       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show=" isDragged(letter)" class="dragged-phonemas">
+       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png" ng-show="isDragged(letter)" class="dragged-phonemas">
           </div>
+</div>
 </div>

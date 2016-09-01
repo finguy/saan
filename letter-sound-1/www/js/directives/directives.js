@@ -150,17 +150,25 @@ angular.module('saan.directives', [])
        scope: 'true',
        link: function(scope) {
          scope.sortableOptions = {
-           containment: '.activity-6-dragged-phonemas-container',
+           containment: '.dashboard',
            allowDuplicates: false,
            accept: function(sourceItemHandleScope, destSortableScope){
-             return scope.checkColor(sourceItemHandleScope.modelValue);
+             console.log("accept");
+             var isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue);             
+             console.log(isPhonemaOk);
+             return isPhonemaOk;
            }
          };
          scope.sortableCloneOptions = {
-           containment: '.activity-6-dragged-phonemas-container',
-           clone: true,
+           containment: '.dashboard',
+           clone: false,
            itemMoved: function (eventObj) {
-             console.log('moving!');
+             var moveSuccess, moveFailure;
+              moveSuccess = function() {
+                console.log('item moved!');
+              //  scope.checkWordV2(true);
+              };
+              moveFailure = function() {};
            }
          };
 

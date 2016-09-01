@@ -11,7 +11,7 @@
   width: 20em;
   height: 20em;
 }
-.letters-list{
+.letters-list.as-sortable-item{
   width: 10em;
   height: 10em;
 }
@@ -21,11 +21,13 @@
   top:20%;
 }
 
-.activity-6-dragged-phonemas {
+.activity-6-dragged-phonemas.dropzone {
     background-image: url("../img/6-assets/ice-cube.png");
     width: 20em;
     min-height: 19em;
     margin: .5em;
+    border:0;
+    border-radius: 0;
 }
 
 .dragged-phonemas {

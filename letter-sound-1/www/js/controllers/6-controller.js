@@ -96,7 +96,28 @@ angular.module('saan.controllers')
     };
 
     //Verifies selected letters or and returns true if they match the word
-    $scope.checkPhonema = function(selectedObject) {
+    $scope.checkPhonema = function(selectedObject){
+      var ER = new RegExp($scope.currentPhonema,"i");
+      var name = selectedObject.toLowerCase();
+      return ER.test(name);
+    };
+
+    $scope.checkWordV2 = function(isPhonemaOk) {
+       var ER = new RegExp($scope.currentPhonema,"i");
+       var name = selectedObject.toLowerCase();
+        if (isPhonemaOk) {
+           var index = -1;
+           var tope = $scope.letters.length;
+           var notFound = true;
+           while (index < tope && notFound ) {
+             index++;
+             notFound = ER.test($scope.letters[index]);
+           }
+           $scope.letters.splice(index,1);
+           $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
+        }
+    };
+    $scope.checkWord = function(isPhonemaOk) {
         var LAST_CHECK  = false;
         var moreThanOneLetter = false;
         var current = $scope.letters[0];
@@ -108,19 +129,18 @@ angular.module('saan.controllers')
         }
 
         LAST_CHECK = !moreThanOneLetter;
-        var ER = new RegExp($scope.currentPhonema,"i");
-        var name = selectedObject.toLowerCase();
-        $scope.speak(name);
-        if (ER.test(name)) {
-
+        console.log("letters:");
+        console.log($scope.letters);
+        console.log('currentPhonema' + $scope.currentPhonema);
+        if (isPhonemaOk) {
             var aux = $scope.letters;
-            $scope.letters = [];
             for (var i in aux) {
-              if (aux[i] && aux[i] !== name) {
-                $scope.letters.push(aux[i]);
+              if (aux[i] && aux[i] === name) {
+                $scope.letters.splice(i,1,aux[i]);
+                break;
               }
             }
-
+            $scope.speak(name);
             //wait for speak
             setTimeout(function() {
             if (LAST_CHECK) {
@@ -141,6 +161,7 @@ angular.module('saan.controllers')
                   }, 1000);
             } else {
               $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
+              $scope.speak(name);
               setTimeout(function() {
                 var position = Util.getRandomNumber($scope.successMessages.length);
                 var successMessage = $scope.successMessages[position];
@@ -154,6 +175,7 @@ angular.module('saan.controllers')
           } else {
             $scope.score = Score.update(-$scope.substractScore, $scope.score);
             Util.saveScore($scope.activityId, $scope.score);
+            $scope.speak(name);
             //wait for speak
             setTimeout(function() {
               var position = Util.getRandomNumber($scope.errorMessages.length);
