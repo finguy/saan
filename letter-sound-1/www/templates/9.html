@@ -1,0 +1,9 @@
+<ion-view view-title="{{activityId}}" class="content-margin">
+  <div class="activity-content">
+    Template para actividad 9
+
+    <div as-sortable="sortableCloneOptions" class="match-container" data-ng-model="matches">
+      <div ng-repeat="item in matches" as-sortable-item as-sortable-item-handle class="match-card">{{numberToWord(item)}}</div>
+    </div>
+  </div>
+</ion-view>
