@@ -1,6 +1,6 @@
 {"words":
   [{"word":"dog" ,
-    "instruction": "Can you select the letters when hearing them?",
+    "instruction":"Drag the letter you hear to the magic box",
     "imgs":[
                 "img/6-assets/objects/dog1.png",
                 "img/6-assets/objects/dog2.png",
@@ -8,7 +8,7 @@
       ]
     },
     {"word":"house" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/house1.png",
                   "img/6-assets/objects/house2.png",
@@ -17,40 +17,40 @@
         ]
     },
     {"word":"bird" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/bird1.png",
                   "img/6-assets/objects/bird2.png"
         ]
     },
     {"word":"ball" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/ball1.png",
                   "img/6-assets/objects/ball2.png"
         ]
     },
     {"word":"tree" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/tree1.png"
         ]
     },
     {"word":"tiger" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/tiger1.png",
                   "img/6-assets/objects/tiger2.png"
         ]
     },
     {"word":"apple" ,
-      "instruction": "Can you drag the letters when hearing them?",
+      "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
                  "img/6-assets/objects/apple.png"
         ]
     }
   ],
-  "instructions": "Can you drag the letters when hearing them?",
+  "instructions": "Drag the letter you hear to the magic box",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {

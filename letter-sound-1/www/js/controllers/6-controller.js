@@ -5,6 +5,7 @@ angular.module('saan.controllers')
     $scope.activityId = '6'; // Activity Id
     $scope.word = ""; // Letter to play in level
     $scope.letters = [];
+    $scope.letters2 = [];
     $scope.lettersDragged = [];
     $scope.imgSrc = "";
     $scope.instructions = ""; // Instructions to read
@@ -22,7 +23,8 @@ angular.module('saan.controllers')
     $scope.status = false;
     $scope.dropzone = [];
     $scope.hasDraggedLetter = [];
-
+    $scope.draggingJson = null;
+    $scope.phonemas = [];
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
@@ -87,13 +89,25 @@ angular.module('saan.controllers')
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.word = wordJson.word;
       $scope.playedWords.push(wordJson.word);
-      $scope.letters = wordJson.word.split("");
+      $scope.letters = [];
+      var aux_letters = wordJson.word.split("");
+      for (var j in aux_letters) {
+        if (aux_letters[j]) {
+          var letter = aux_letters[j];
+          $scope.letters.push({"letter": letter, "index": j});
+          $scope.hasDraggedLetter[letter+"_"+j] = false;
+        }
+      }
+
+      $scope.letters = _.shuffle($scope.letters);
       $scope.lettersDragged = wordJson.word.split("");
-      $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
+      var letterJSON = Util.getRandomElemFromArray($scope.letters);
+      $scope.currentPhonema = letterJSON.letter;
       $scope.imgSrc = Util.getRandomElemFromArray(wordJson.imgs);
       $scope.dashboard = [$scope.word];
       $scope.wordInstruction = wordJson.instruction;
       $scope.totalLevels = data.totalLevels;
+      $scope.phonemas = [];
     };
 
     //Verifies selected letters or and returns true if they match the word
@@ -103,45 +117,19 @@ angular.module('saan.controllers')
       return ER.test(name);
     };
 
-    $scope.checkWordV2 = function(isPhonemaOk) {
-       var ER = new RegExp($scope.currentPhonema,"i");
-       var name = selectedObject.toLowerCase();
-        if (isPhonemaOk) {
-           var index = -1;
-           var tope = $scope.letters.length;
-           var notFound = true;
-           while (index < tope && notFound ) {
-             index++;
-             notFound = ER.test($scope.letters[index]);
+    $scope.getNewPhonema = function() {
+         //GET a new letter
+         $scope.phonemas.push($scope.currentPhonema);
+           var selected = true;
+           while (selected && $scope.phonemas.length < $scope.letters.length){
+             var letterJSON = Util.getRandomElemFromArray($scope.letters);
+             $scope.currentPhonema = letterJSON.letter;
+             selected = $scope.hasDraggedLetter[letterJSON.letter + "_" + letterJSON.index];
            }
-           $scope.letters.splice(index,1);
-           $scope.hasDraggedLetter[index] = true;// Mark letter as dragged
-           $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
-        }
     };
-    $scope.checkWord = function(isPhonemaOk) {
-        var LAST_CHECK  = false;
-        var moreThanOneLetter = false;
-        var current = $scope.letters[0];
-        var i = 0;
-        while (!moreThanOneLetter && (i+1) < $scope.letters.length ) {
-          moreThanOneLetter = current != $scope.letters[i+1];
-          current = $scope.letters[i+1];
-          i++;
-        }
-
-        LAST_CHECK = !moreThanOneLetter;
-        console.log("letters:");
-        console.log($scope.letters);
-        console.log('currentPhonema' + $scope.currentPhonema);
+    $scope.handleProgress = function(isPhonemaOk, name) {
+        var LAST_CHECK  = $scope.phonemas.length === $scope.letters.length;
         if (isPhonemaOk) {
-            var aux = $scope.letters;
-            for (var i in aux) {
-              if (aux[i] && aux[i] === name) {
-                $scope.letters.splice(i,1,aux[i]);
-                break;
-              }
-            }
             $scope.speak(name);
             //wait for speak
             setTimeout(function() {
@@ -162,28 +150,24 @@ angular.module('saan.controllers')
                    Ctrl6.showDashboard(false); //Reload dashboard
                   }, 1000);
             } else {
-              $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
-              $scope.speak(name);
-              setTimeout(function() {
                 var position = Util.getRandomNumber($scope.successMessages.length);
                 var successMessage = $scope.successMessages[position];
                 $scope.speak(successMessage);
                 setTimeout(function() {
                   $scope.speak($scope.currentPhonema);
                 }, 1000);
-              });
             }
            }, 1000);
           } else {
-            $scope.score = Score.update(-$scope.substractScore, $scope.score);
-            Util.saveScore($scope.activityId, $scope.score);
-            $scope.speak(name);
-            //wait for speak
-            setTimeout(function() {
-              var position = Util.getRandomNumber($scope.errorMessages.length);
-              var errorMessage = $scope.errorMessages[position];
-              $scope.speak(errorMessage);
-            }, 1000);
+              $scope.score = Score.update(-$scope.substractScore, $scope.score);
+              Util.saveScore($scope.activityId, $scope.score);
+              $scope.speak(name);
+              //wait for speak
+              setTimeout(function() {
+                var position = Util.getRandomNumber($scope.errorMessages.length);
+                var errorMessage = $scope.errorMessages[position];
+                $scope.speak(errorMessage);
+              }, 000);
           }
 
 

@@ -153,27 +153,31 @@ angular.module('saan.directives', [])
            containment: '.dashboard',
            allowDuplicates: false,
            accept: function(sourceItemHandleScope, destSortableScope){
-             console.log("accept");
-             var isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue);
-             console.log(isPhonemaOk);
+             var isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue.letter);
+             if (!isPhonemaOk){
+                scope.handleProgress(false);
+             }
+
              return isPhonemaOk;
            }
          };
          scope.sortableCloneOptions = {
            containment: '.dashboard',
-           clone: false,
-           itemMoved: function (eventObj) {
-             var moveSuccess, moveFailure;
-              moveSuccess = function() {
-                console.log('item moved!');
-                scope.checkWordV2(true);// Mark letter as dragged and get new letter
-              };
-              moveFailure = function() {};
+           clone: true,// ACA si es false se rompe todo!!!!
+           allowDuplicates: true,
+           itemMoved: function (eventObj) {             
+             var jsonInfo = eventObj.source.itemScope.modelValue
+             var letter_index = jsonInfo.index;
+             var letter_value = jsonInfo.letter;
+             var index = letter_value + "_" + letter_index;
+             scope.hasDraggedLetter[index] = true;
+             scope.getNewPhonema();
+             scope.handleProgress(true,letter_value);
            }
          };
 
-         scope.isDragged = function(letter , index) {           
-           return scope.hasDraggedLetter[index] === true;
+         scope.isDragged = function(letter , index) {
+           return scope.hasDraggedLetter[letter +"_" + index] === true;
          };
 
        }

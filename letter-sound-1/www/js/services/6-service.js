@@ -21,6 +21,7 @@ angular.module('saan.services')
             }
           }
           var index = Util.getRandomNumber(wordsNotPlayed.length);
+          index = 0;
           return {
             word: wordsNotPlayed[index],
             instructions : data.instructions,

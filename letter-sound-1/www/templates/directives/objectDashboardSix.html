@@ -1,25 +1,28 @@
-<div class="dashboard">
-  <h1>{{currentPhonema}} </h1>
-<div class="row" >
-
-     <div class= "col">
-     <img  src="img/6-assets/objects/treasure-chest-stars.png"  ng-click="speak(currentPhonema)">
-     <img class="activity-6-img" src="{{imgSrc}}"  ng-click="speak(currentPhonema)">
+  <div class="row dashboard" >
+    <div ng-repeat="item in dropzone" as-sortable-item></div>
+     <div class= "col activity-6-dragged-phonemas-container" as-sortable="sortableOptions" data-ng-model="letters2">
+     <img class="dropzoneImage" src="img/6-assets/objects/treasure-chest-stars.png"  ng-click="speak(currentPhonema)">
+     <img class="activity-6-img " src="{{imgSrc}}"  ng-click="speak(currentPhonema)">
+     </img>
      </div>
 
-     <div class="col images-list">
+     <div class="col">
       <div class="activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-      <img src="img/alphabet-buttons/{{letter}}.png" ng-repeat="letter in letters track by $index" class="letters-list" as-sortable-item as-sortable-item-handle>   {{letter}}</img>
+        <div class="images-list">
+      <img src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter,letter_obj.index)" ng-repeat="letter_obj in letters track by $index" class="letters-list" as-sortable-item as-sortable-item-handle>   {{letter_obj.letter}}</img>
       </div>
+    </div>
      </div>
 
 
 </div>
-<br/><br/><br/><br/>
+<br/><br/>
+<br/><br/>
 
-<div class="row activity-6-dragged-phonemas-container" as-sortable="sortableOptions" data-ng-model="lettersDragged">      
-       <div class="activity-6-dragged-phonemas dropzone" ng-repeat="letter in lettersDragged track by $index">
+
+
+<div class="row ">
+       <div class="activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
        &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas">
           </div>
-</div>
 </div>
