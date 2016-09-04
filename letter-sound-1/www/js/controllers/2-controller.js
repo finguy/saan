@@ -9,7 +9,7 @@ angular.module('saan.controllers')
   $scope.ITEM_NUMBERS = 2;
   $scope.ITEM_COLORS = 1;
   $scope.mode = MODE_FILLIN;
-  $scope.itemType = ITEM_NUMBERS;
+  $scope.itemType = ITEM_COLORS;
   $scope.dropzone = [];
   $scope.patternLeft = [];
   $scope.patternRight = [];

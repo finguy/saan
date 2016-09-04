@@ -1,0 +1,16 @@
+.number-container {
+  display: flex;
+    font-size: 5em;
+    flex-direction: column;
+}
+
+.item-dropzone {
+  background-color: blueviolet;
+  height: 200px;
+  width: 300px;
+  margin-left: 40px;
+}
+
+.item-container {
+    margin-left: 200px;
+}

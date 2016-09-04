@@ -1,9 +1,18 @@
 <ion-view view-title="{{activityId}}" class="content-margin">
-  <div class="activity-content">
-    Template para actividad 9
+  <div class="flex justify items-center height-100 activity-9-content">
+    <div class="number-container">
+      <div class="number"> 2 </div>
+      <div class="text"> two </div>
+    </div>
 
-    <div as-sortable="sortableCloneOptions" class="match-container" data-ng-model="matches">
-      <div ng-repeat="item in matches" as-sortable-item as-sortable-item-handle class="match-card">{{numberToWord(item)}}</div>
+    <div class="item-dropzone" data-ng-model="dropzone" as-sortable="sortableOptions">
+      <div ng-repeat="item in dropzone track by $index" as-sortable-item class="flex pattern-item color color-red"></div>
+    </div>
+
+    <div class="item-container" >
+      <div as-sortable="sortableCloneOptions" data-ng-model="items">
+      <div as-sortable-item as-sortable-item-handle class="flex pattern-item color color-red"></div>
+    </div>
     </div>
   </div>
 </ion-view>
