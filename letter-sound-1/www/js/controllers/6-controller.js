@@ -22,8 +22,7 @@ angular.module('saan.controllers')
     $scope.score = 0;
     $scope.status = false;
     $scope.dropzone = [];
-    $scope.hasDraggedLetter = [];
-    $scope.draggingJson = null;
+    $scope.hasDraggedLetter = [];    
     $scope.phonemas = [];
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -133,18 +132,20 @@ angular.module('saan.controllers')
             $scope.speak(name);
             //wait for speak
             setTimeout(function() {
+            if (!$scope.finished) {
+              $scope.score = Score.update($scope.addScore, $scope.score);
+              Util.saveScore($scope.activityId, $scope.score);
+            }
+
             if (LAST_CHECK) {
                 Ctrl6.levelUp(); //Advance level
-                $scope.score = Score.update($scope.addScore, $scope.score);
                 Util.saveLevel($scope.activityId, $scope.level);
                 if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-                  Util.saveScore($scope.activityId, $scope.score);
                   $scope.finished = $scope.score >= $scope.minScore;
-                  if ($scope.finished) {
-                      Util.saveStatus($scope.activityId, $scope.finished);
-                      ActividadesFinalizadasService.add($scope.activityId);
-                  }
-                 }
+                  Util.saveStatus($scope.activityId, $scope.finished);
+                  ActividadesFinalizadasService.add($scope.activityId);
+                }
+
                  $scope.speak($scope.word);
                   setTimeout(function() {
                    Ctrl6.showDashboard(false); //Reload dashboard

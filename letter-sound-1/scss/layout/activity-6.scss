@@ -7,8 +7,11 @@
   max-height: 30em;
   float: left;
 }
-.activity-6-letterContainer {
-  width: 20em;
+.activity-6-letterContainer.row {
+ width: 50%;
+}
+.activity-6-letterContainer.col {
+  max-width: 20em;
   height: 20em;
 }
 .letters-list.as-sortable-item{
@@ -16,17 +19,29 @@
   height: 10em;
 }
 
+.icon-phonema {
+  padding: 50px;
+}
 .activity-6-img {
   position:absolute;
   top:20%;
 }
 .dropzoneImage.dropzone {
-  border:0;
-  width:100%;
+    border: 0;
+    color: grey;
+    height: 310px;
+    margin: auto 10px 10px;
+    padding: 14px;
+    width: 500px;
+    background-image: url("../img/6-assets/objects/treasure-chest-stars.png");
+    background-repeat: no-repeat;
+    border-radius: 0;
+
 }
 
 .activity-6-dragged-phonemas {
     background-image: url("../img/6-assets/ice-cube.png");
+    background-repeat: no-repeat;
     width: 20em;
     min-height: 19em;
     margin: .5em;
@@ -35,17 +50,12 @@
 }
 
 .dragged-phonemas {
-    position: relative;
-    top: 8em;
-    left: -3em;
+
     height: 8em;
   -webkit-transform: rotate(3deg);
    transform: rotate(3deg);
-   margin-left: auto;
+   margin-left: 30px;
+   margin-top: 50px;
    margin-right: auto;
    display: block;
-}
-
-.activity-6-dragged-phonemas-container {
-  padding-left: 10%;
 }
