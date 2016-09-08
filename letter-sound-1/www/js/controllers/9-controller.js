@@ -2,33 +2,35 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('9Ctrl',['$scope','Util', 'TTSService', function($scope, Util, TTSService) {
+	.controller('9Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
 		$scope.activityId = '9';
     $scope.dropzone = [];
     $scope.items = ['coso'];
     $scope.step = 1;
 
-    var instructions = ["this is the number two", "And this is how its written"];
     var totalSteps = 3;
-    var itemCount = 0;
-
 
     var config = '';
+    var itemCount;
     var Ctrl9 = Ctrl9 || {} ;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      Ctrl9.getConfiguration();
+      Ctrl9.getConfiguration(1);
     });
 
     Ctrl9.getConfiguration = function (level){
-      $scope.number = 2;
-      Ctrl9.startTutorial();
+      LearningNumber.getConfig(level).then(function(data){
+				config = data;
+        config.level.level = parseInt(config.level.level, 10);
+        config.level.numberFrom = parseInt(config.level.numberFrom, 10);
+        config.level.numberTo = parseInt(config.level.numberTo, 10);
+
+        $scope.number = config.level.numberFrom;
+        Ctrl9.startTutorial();
+      });
 		};
 
     Ctrl9.startTutorial = function(){
-      $scope.dropzone = [];
-      $scope.step = 0;
-      itemCount = 0;
       for (var i = 1; i <= totalSteps; i++){
         setTimeout(function(){Ctrl9.readInstructions(i)}, i*2000);
       }
@@ -36,9 +38,12 @@
 
     Ctrl9.readInstructions = function(step){
       $scope.$apply(function(){
-        console.log(instructions[step]);
         $scope.step++;
       });
+    };
+
+    $scope.numberToWords = function(number){
+      return Util.numberToWords(number);
     };
 
     $scope.sortableOptions = {
@@ -54,7 +59,18 @@
         console.log(itemCount);
 
         if (itemCount == $scope.number){
-          Ctrl9.startTutorial();          
+          if ($scope.number < config.level.numberTo){
+            setTimeout(function(){
+              $scope.dropzone = [];
+              $scope.step = 0;
+              itemCount = 0;
+              $scope.number++;
+              Ctrl9.startTutorial();
+            }, 1000);
+          }
+          else{
+            console.log("fin");
+          }
         }
       }
     };

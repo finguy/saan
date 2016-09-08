@@ -1,8 +1,8 @@
 <ion-view view-title="{{activityId}}" class="content-margin">
   <div class="flex justify items-center height-100 activity-9-content">
     <div class="number-container">
-      <div class="number horizontal-center" ng-if="step>=1"> 2 </div>
-      <div class="text animate-if" ng-if="step>=2"> two </div>
+      <div class="number horizontal-center" ng-if="step>=1"> {{number}} </div>
+      <div class="text animate-if" ng-if="step>=2"> {{numberToWords(number)}} </div>
     </div>
 
     <div class="item-dropzone animate-if" data-ng-model="dropzone" as-sortable="sortableOptions" ng-if="step>=3">
