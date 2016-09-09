@@ -5,14 +5,15 @@
 	.controller('9Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
 		$scope.activityId = '9';
     $scope.dropzone = [];
-    $scope.items = ['coso'];
+    $scope.items = ['dummy'];
     $scope.step = 1;
+    $scope.dragDisabled = false;
 
+    var Ctrl9 = Ctrl9 || {};
     var totalSteps = 3;
-
     var config = '';
-    var itemCount;
-    var Ctrl9 = Ctrl9 || {} ;
+    var itemCount = 0;
+    var instructionsTime = 2000;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       Ctrl9.getConfiguration(1);
@@ -32,8 +33,9 @@
 
     Ctrl9.startTutorial = function(){
       for (var i = 1; i <= totalSteps; i++){
-        setTimeout(function(){Ctrl9.readInstructions(i)}, i*2000);
+        setTimeout(function(){Ctrl9.readInstructions(i)}, i*instructionsDelay);
       }
+      $scope.dragDisabled = false;
     };
 
     Ctrl9.readInstructions = function(step){
@@ -57,16 +59,16 @@
       itemMoved: function (eventObj) {
         itemCount++;
         console.log(itemCount);
-
         if (itemCount == $scope.number){
           if ($scope.number < config.level.numberTo){
+            $scope.dragDisabled = true;
             setTimeout(function(){
               $scope.dropzone = [];
               $scope.step = 0;
               itemCount = 0;
               $scope.number++;
               Ctrl9.startTutorial();
-            }, 1000);
+            }, 500);
           }
           else{
             console.log("fin");

@@ -6,11 +6,11 @@
     </div>
 
     <div class="item-dropzone animate-if" data-ng-model="dropzone" as-sortable="sortableOptions" ng-if="step>=3">
-      <div ng-repeat="item in dropzone track by $index" as-sortable-item class="flex pattern-item color color-red"></div>
+      <div ng-repeat="item in dropzone track by $index" class="flex pattern-item color color-red"></div>
     </div>
 
     <div class="item-container animate-if" ng-if="step>=3">
-      <div as-sortable="sortableCloneOptions" data-ng-model="items">
+      <div as-sortable="sortableCloneOptions" data-ng-model="items" is-disabled="dragDisabled">
         <div ng-repeat="item in items" as-sortable-item as-sortable-item-handle class="flex pattern-item color color-red"></div>
       </div>
     </div>
