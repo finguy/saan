@@ -200,22 +200,19 @@ angular.module('saan.directives', [])
             allowDuplicates: true,
             clone:true,
             accept: function(sourceItemHandleScope, destSortableScope){
-              scope.word = sourceItemHandleScope.modelValue.word;              
+              scope.word = sourceItemHandleScope.modelValue.word;
               return true;
             },
             dragEnd: function(eventObj) {
               if (eventObj.dest.sortableScope.$parent.imgSrc) {
-                console.log("drag ended!");
-                console.log(scope.word);
-                /*console.log(eventObj.source.itemScope.item);
-                console.log(eventObj.dest.sortableScope.$parent.imgSrc);*/
                 var ER = new RegExp(scope.word,"i");
                 var result = ER.test(eventObj.dest.sortableScope.$parent.imgSrc);
                 if (result) {
-                  console.log("exito!");
                   scope.draggedImgs.push(eventObj.dest.sortableScope.$parent.imgSrc);
+                  scope.handleProgress(true);
                 } else {
                   eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+                  scope.handleProgress(true);
                 }
               }
             }
@@ -224,32 +221,17 @@ angular.module('saan.directives', [])
           //Drop
           scope.sortableCloneOptions = {
             containment: '.dashboard',
-            dragEnd: function(eventObj) {
-              console.log("drag ended!")
-            }
           };
-
-          scope.selectItem = function(selectedItem) {
-              scope.selectItem = selectItem;
-          };
-
+        
           scope.isDragged = function(item) {
-            console.log(scope.draggedImgs);
             var found = false;
             var ER = new RegExp(item,"i");
             for (var i in scope.draggedImgs) {
               if (scope.draggedImgs[i]){
-                console.log("#");
-                console.log(scope.draggedImgs[i]);
-                console.log("#");
                 found = found || ER.test(scope.draggedImgs[i]);
               }
             }
-            console.log(item +" - " + found);
             return found;
-          };
-          scope.speakConditional = function(imgSrc) {
-
           };
         }
       };

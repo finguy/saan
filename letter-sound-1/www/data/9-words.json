@@ -44,9 +44,55 @@
                 ],
       "instruction":"Drag the letter you hear to the magic box"
 
-    }]}
+    }]},
+    { "id": 2,
+      "words": [{"word":"dog",
+      "imgs": ["img/6-assets/objects/dog1.png",
+                  "img/6-assets/objects/dog2.png",
+                  "img/6-assets/objects/dog3.png"
+                ],
+      "instruction":"Drag the letter you hear to the magic box"
+      },
+      {"word":"house" ,
+        "imgs": ["img/6-assets/objects/house1.png",
+                    "img/6-assets/objects/house2.png",
+                    "img/6-assets/objects/house3.png",
+                    "img/6-assets/objects/house4.png"
+                  ],
+        "instruction": "Drag the letter you hear to the magic box"
+      },
+      {"word":"bird" ,
+        "imgs": ["img/6-assets/objects/bird1.png",
+                    "img/6-assets/objects/bird2.png"
+                  ],
+        "instruction": "Drag the letter you hear to the magic box"
+      },
+      {"word":"ball" ,
+        "imgs": ["img/6-assets/objects/ball2.png",
+                    "img/6-assets/objects/ball1.png"
+                  ],
+        "instruction": "Drag the letter you hear to the magic box"
+      }
+      ]},
+      { "id": 3,
+        "words": [{"word":"dog",
+        "imgs": ["img/6-assets/objects/dog1.png",
+                    "img/6-assets/objects/dog2.png",
+                    "img/6-assets/objects/dog3.png"
+                  ],
+        "instruction":"Drag the letter you hear to the magic box"
+        },
+        {"word":"house" ,
+          "imgs": ["img/6-assets/objects/house1.png",
+                      "img/6-assets/objects/house2.png",
+                      "img/6-assets/objects/house3.png",
+                      "img/6-assets/objects/house4.png"
+                    ],
+          "instruction": "Drag the letter you hear to the magic box"
+        }
+        ]}
   ],
-  "instructions": "Drag the letter you hear to the magic box",
+  "instructions": "Drag the word to the image",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
