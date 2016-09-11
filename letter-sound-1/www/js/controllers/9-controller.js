@@ -5,7 +5,12 @@ angular.module('saan.controllers')
       $scope.activityId = '9'; // Activity Id
       $scope.words = [];
       $scope.imgs = [];
+      $scope.dropzone = [];
+      $scope.isPhonemaOk = false;
+      $scope.imgsDragged = [];
+      $scope.currentWord = "";
 
+      $scope.draggedImgs = [];
       //Shows Activity Dashboard
       var Ctrl9 = Ctrl9 || {};
       Ctrl9.showDashboard = function(readInstructions) {
@@ -63,7 +68,7 @@ angular.module('saan.controllers')
         for (var i in $scope.words) {
           if ($scope.words[i]) {
               $scope.words[i].letters = $scope.words[i].word.split("");
-              var index = Util.getRandomNumber($scope.words[i].imgs.length);              
+              var index = Util.getRandomNumber($scope.words[i].imgs.length);
               $scope.imgs.push($scope.words[i].imgs[index]);
           }
         }

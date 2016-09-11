@@ -1,51 +1,24 @@
-<div class="row">
+<div class="dashboard">
 
-  <div class="col list-words">
-    <div class="row responsive-sm" ng-repeat="data in words">
-        <div class="col list-letters">
+<div class="row word-icons">
+  <div id="{{imgSrc}}"  ng-repeat="imgSrc in imgs track by $index" >
+    <div class="col list-letters" >
+      <img class="letter dropzone" src="{{imgSrc}}" ng-click="selectItem(imgSrc)"/>
+    </div>
+  <div class="col sortable-row " as-sortable="sortableCloneOptions" data-ng-model="imgsDragged">
+    <div class="row responsive-sm draggedWords" ng-repeat="imgSrc in imgsDragged track by $index" as-sortable-item>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="col list-words" as-sortable="sortableOptions" data-ng-model="words">
+    <div class="row words" ng-repeat="data in words">
+        <div class="col list-letters" as-sortable-item as-sortable-item-handle ng-show="!isDragged(data.word)">
           <img class="letter" ng-repeat="letter in data.letters track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
         </div>
     </div>
   </div>
-  <div class="col col-67">
-    <div class="row responsive-sm" ng-repeat="imgSrc in imgs track by $index">
-        <div class="col list-letters">
-          <img class="letter" src="{{imgSrc}}"/>
-        </div>
-    </div>
-  </div>
+
+
 </div>
-
-
-
-
-
-<!--<div class="row dashboard">
-
-     <div ng-repeat="item in dropzone" as-sortable-item></div>
-     <div class= "col" as-sortable="sortableOptions" data-ng-model="letters2">
-       <div class="dropzoneImage dropzone" src="img/6-assets/objects/treasure-chest-stars.png">
-       </div>
-     </div>
-     <div class="col activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-       <div class="icon-phonema">
-         <img class="activity-6-img " src="{{imgSrc}}"  ng-click="speak(currentPhonema)">
-       </div>
-     </div>
-     <div class="row activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-      <div class="col activity-6-letterContainer" ng-repeat="letter_obj in letters track by $index" >
-        <div class="images-list1">
-          <img src="img/alphabet-buttons/{{letter_obj.letter}}.png"  ng-show="!isDragged(letter_obj.letter,letter_obj.index)"  class="letters-list" as-sortable-item as-sortable-item-handle >
-        </div>
-      </div>
-     </div>
-</div>
-<br/><br/>
-<br/><br/>
-
-<div class="row">
-       <div class="col activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
-       &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas" ng-click="speakConditional(letter, $index )">
-          </div>
-</div>
--->

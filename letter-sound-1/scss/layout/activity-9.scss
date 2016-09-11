@@ -6,3 +6,19 @@
 .list-words {
   text-align: left;
 }
+
+.words {
+  width: 50em;
+}
+
+.list-letters.as-sortable-item {
+  border: 0;
+  background-color: transparent;
+}
+.word-icons {
+  margin-left: 30em;
+}
+
+.draggedWords.as-sortable-item {
+  display:none;
+}
