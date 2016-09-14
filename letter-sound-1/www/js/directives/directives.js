@@ -246,7 +246,11 @@ angular.module('saan.directives', [])
 
           scope.selectItem = function(item) {
             scope.selectedItem = item;
+            var itemName = item.substr(item.lastIndexOf('/') +1);
+            itemName = itemName.replace(/[0-9]*.png|[0-9]*.jpg/,"");
+            scope.speak(itemName);
           };
+          
           scope.isSelected = function(item) {
             return scope.selectedItem == item;
           };

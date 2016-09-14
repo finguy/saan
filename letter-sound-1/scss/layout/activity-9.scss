@@ -3,8 +3,8 @@
 }
 
 .letter {
-  width: 80px;
-  height: 80px;
+  width: 8em;
+  height: 8em;
 }
 
 .icon-word.dropzone {
@@ -20,7 +20,7 @@
 }
 
 .selected.dropzone {
-   border-radius: 10px;
+   border-radius: 1em;
 }
 .list-words {
   float: left;
@@ -37,7 +37,7 @@
   background-color: transparent;
 }
 .word-icons {
-  padding: 15px;
+  padding: 1.5em;
 }
 
 .draggedWords.as-sortable-item {
