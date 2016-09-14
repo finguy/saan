@@ -18,15 +18,12 @@ angular.module('saan.services')
 
                 var ER = new RegExp(json[i].id, "i");
                 if (!ER.test(playedWordsStr) && json[i].words) {
-                  for (var k in json[i].words) {
-                    if (json[i].words[k]) {
-                        wordsNotPlayed.push(json[i].words[k]);
-                    }
-                  }
+                  wordsNotPlayed.push(json[i]);
                 }
               }
             }
-          }           
+          }
+     
           var index = Util.getRandomNumber(wordsNotPlayed.length);
 
           return {

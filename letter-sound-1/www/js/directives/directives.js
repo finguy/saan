@@ -200,19 +200,29 @@ angular.module('saan.directives', [])
             allowDuplicates: true,
             clone:true,
             accept: function(sourceItemHandleScope, destSortableScope){
+              console.log("word:");
+              console.log( sourceItemHandleScope.modelValue.word);
               scope.word = sourceItemHandleScope.modelValue.word;
               return true;
             },
             dragEnd: function(eventObj) {
-              if (eventObj.dest.sortableScope.$parent.imgSrc) {
+              if (scope.selectedItem && scope.word) {
                 var ER = new RegExp(scope.word,"i");
-                var result = ER.test(eventObj.dest.sortableScope.$parent.imgSrc);
+                var result = ER.test(scope.selectedItem);
                 if (result) {
-                  scope.draggedImgs.push(eventObj.dest.sortableScope.$parent.imgSrc);
+                  scope.draggedImgs.push(scope.selectedItem);
+                  scope.selectedItem = null;
+                  scope.word = null;
                   scope.handleProgress(true);
                 } else {
-                  eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
-                  scope.handleProgress(true);
+                  //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+                  scope.handleProgress(false);
+                }
+              } else {// Buggy drag and drop
+                if (!scope.word) {
+                  scope.speak("Drag the word again!");
+                } else if (!scope.selectedItem) {
+                  scope.speak("Select the image!");
                 }
               }
             }
@@ -222,7 +232,7 @@ angular.module('saan.directives', [])
           scope.sortableCloneOptions = {
             containment: '.dashboard',
           };
-        
+
           scope.isDragged = function(item) {
             var found = false;
             var ER = new RegExp(item,"i");
@@ -232,6 +242,13 @@ angular.module('saan.directives', [])
               }
             }
             return found;
+          };
+
+          scope.selectItem = function(item) {
+            scope.selectedItem = item;
+          };
+          scope.isSelected = function(item) {
+            return scope.selectedItem == item;
           };
         }
       };

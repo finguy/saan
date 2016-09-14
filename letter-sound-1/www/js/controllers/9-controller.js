@@ -14,6 +14,7 @@ angular.module('saan.controllers')
       $scope.currentWord = "";
       $scope.draggedImgs = [];
       $scope.playedWords = [];
+      $scope.selectedItem = null;
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
       //Shows Activity Dashboard
@@ -22,6 +23,7 @@ angular.module('saan.controllers')
 
         RandomWordsNine.words($scope.level, $scope.playedWords).then(
           function success(data) {
+            console.log("setting up level!");
             Ctrl9.setUpContextVariables(data);
 
             Ctrl9.setUpLevel();
@@ -32,7 +34,7 @@ angular.module('saan.controllers')
             var readWordTimeout = (readInstructions) ? 4000 : 1000;
             setTimeout(function() {
               if (readInstructions){
-              //  $scope.speak($scope.instructions);
+              $scope.speak($scope.instructions);
               }
             }, readWordTimeout);
           },
@@ -94,7 +96,7 @@ angular.module('saan.controllers')
       $scope.handleProgress = function(isWordOk) {
           var LAST_CHECK  = $scope.draggedImgs.length === $scope.words.length;
           if (isWordOk) {
-              //$scope.speak($scope.word);
+              $scope.speak($scope.word);
               //wait for speak
               setTimeout(function() {
               if (!$scope.finished) {
@@ -103,7 +105,7 @@ angular.module('saan.controllers')
               }
               var position = Util.getRandomNumber($scope.successMessages.length);
               var successMessage = $scope.successMessages[position];
-            //  $scope.speak(successMessage);
+              $scope.speak(successMessage);
               setTimeout(function() {
                 if (LAST_CHECK) {
                     Ctrl9.levelUp(); //Advance level

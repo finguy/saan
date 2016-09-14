@@ -3,7 +3,7 @@
 <div class="row word-icons">
   <div id="{{imgSrc}}"  ng-repeat="imgSrc in imgs track by $index" >
     <div class="col list-letters" >
-      <img class="letter dropzone" src="{{imgSrc}}"/>
+      <img class="dropzone icon-word " src="{{imgSrc}}"  ng-show="!isDragged(imgSrc)" ng-click="selectItem(imgSrc)" ng-class="{'selected': imgSrc == selectedItem}" />
     </div>
   <div class="col sortable-row " as-sortable="sortableCloneOptions" data-ng-model="imgsDragged">
     <div class="row responsive-sm draggedWords" ng-repeat="imgSrc in imgsDragged track by $index" as-sortable-item>

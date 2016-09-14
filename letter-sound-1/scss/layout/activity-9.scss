@@ -1,11 +1,32 @@
+.activity9 {
+  background-image: url('../img/9-assets/background-wood.jpg');
+}
+
 .letter {
   width: 80px;
   height: 80px;
 }
 
+.icon-word.dropzone {
+  width: 17em;
+  height: 17em;
+  border:0;
+  border-radius: 0;
+  background-image: url('../img/9-assets/cuadro.png');
+}
+
+.selected {
+   background: 	#09c;
+}
+
+.selected.dropzone {
+   border-radius: 10px;
+}
 .list-words {
+  float: left;
   text-align: left;
 }
+
 
 .words {
   width: 50em;
@@ -16,7 +37,7 @@
   background-color: transparent;
 }
 .word-icons {
-  margin-left: 30em;
+  padding: 15px;
 }
 
 .draggedWords.as-sortable-item {

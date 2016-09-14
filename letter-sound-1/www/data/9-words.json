@@ -5,7 +5,7 @@
                 "img/6-assets/objects/dog2.png",
                 "img/6-assets/objects/dog3.png"
               ],
-    "instruction":"Drag the letter you hear to the magic box"
+    "instruction":"Select the image and drag the word"
     },
     {"word":"house" ,
       "imgs": ["img/6-assets/objects/house1.png",
@@ -13,36 +13,36 @@
                   "img/6-assets/objects/house3.png",
                   "img/6-assets/objects/house4.png"
                 ],
-      "instruction": "Drag the letter you hear to the magic box"
+      "instruction": "Select the image and drag the word"
     },
     {"word":"bird" ,
       "imgs": ["img/6-assets/objects/bird1.png",
                   "img/6-assets/objects/bird2.png"
                 ],
-      "instruction": "Drag the letter you hear to the magic box"
+      "instruction": "Select the image and drag the word"
     },
     {"word":"ball" ,
       "imgs": ["img/6-assets/objects/ball2.png",
                   "img/6-assets/objects/ball1.png"
                 ],
-      "instruction": "Drag the letter you hear to the magic box"
+      "instruction": "Select the image and drag the word"
     },
     {"word":"tree" ,
       "imgs": ["img/6-assets/objects/tree1.png"
                 ],
-      "instruction": "Drag the letter you hear to the magic box"
+      "instruction": "Select the image and drag the word"
     },
     {"word":"tiger" ,
       "imgs": ["img/6-assets/objects/tiger1.png",
                   "img/6-assets/objects/tiger2.png"
                 ],
-      "instruction":"Drag the letter you hear to the magic box"
+      "instruction":"Select the image and drag the word"
     },
     {"word":"apple" ,
       "imgs": [
                   "img/6-assets/objects/apple.png"
                 ],
-      "instruction":"Drag the letter you hear to the magic box"
+      "instruction":"Select the image and drag the word"
 
     }]},
     { "id": 2,
@@ -51,7 +51,7 @@
                   "img/6-assets/objects/dog2.png",
                   "img/6-assets/objects/dog3.png"
                 ],
-      "instruction":"Drag the letter you hear to the magic box"
+      "instruction":"Select the image and drag the word"
       },
       {"word":"house" ,
         "imgs": ["img/6-assets/objects/house1.png",
@@ -59,19 +59,19 @@
                     "img/6-assets/objects/house3.png",
                     "img/6-assets/objects/house4.png"
                   ],
-        "instruction": "Drag the letter you hear to the magic box"
+        "instruction": "Select the image and drag the word"
       },
       {"word":"bird" ,
         "imgs": ["img/6-assets/objects/bird1.png",
                     "img/6-assets/objects/bird2.png"
                   ],
-        "instruction": "Drag the letter you hear to the magic box"
+        "instruction": "Select the image and drag the word"
       },
       {"word":"ball" ,
         "imgs": ["img/6-assets/objects/ball2.png",
                     "img/6-assets/objects/ball1.png"
                   ],
-        "instruction": "Drag the letter you hear to the magic box"
+        "instruction": "Select the image and drag the word"
       }
       ]},
       { "id": 3,
@@ -80,7 +80,7 @@
                     "img/6-assets/objects/dog2.png",
                     "img/6-assets/objects/dog3.png"
                   ],
-        "instruction":"Drag the letter you hear to the magic box"
+        "instruction":"Select the image and drag the word"
         },
         {"word":"house" ,
           "imgs": ["img/6-assets/objects/house1.png",
@@ -88,11 +88,11 @@
                       "img/6-assets/objects/house3.png",
                       "img/6-assets/objects/house4.png"
                     ],
-          "instruction": "Drag the letter you hear to the magic box"
+          "instruction": "Select the image and drag the word"
         }
         ]}
   ],
-  "instructions": "Drag the word to the image",
+  "instructions": "Select the image and drag the word",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
