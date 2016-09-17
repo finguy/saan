@@ -1,5 +1,5 @@
 <div class="dashboard">
-
+<!--
 <div class="row word-icons">
   <div id="{{imgSrc}}"  ng-repeat="imgSrc in imgs track by $index" >
     <div class="col list-letters" >
@@ -11,11 +11,11 @@
   </div>
 </div>
 </div>
-
+-->
   <div class="col list-words" as-sortable="sortableOptions" data-ng-model="words">
     <div class="row words" ng-repeat="data in words">
-        <div class="col list-letters" as-sortable-item as-sortable-item-handle ng-show="!isDragged(data.word)">
-          <img class="letter" ng-repeat="letter in data.letters track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
+        <div class="col list-letters" as-sortable-item as-sortable-item-handle ng-show="!isDragged(data)">
+          <img class="letter" ng-repeat="letter in data track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
         </div>
     </div>
   </div>

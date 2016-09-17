@@ -2,14 +2,13 @@
   <activity-status></activity-status>
   <ion-content class="padding">
     <br/>  <br/>  <br/>
-    <div class="text-center">
-      <span
-        class="material-icons btn-play-word"
-        ng-click="speak(letter)">{{letter}}</span>
+    <div class="text-center list-letters">
+      <img src="{{img}}" />
+        <img class="letter" ng-repeat="letter in word track by $index" src="img/3-assets/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
     </div>
     <br/><br/><br/>
     <center>
-    <object-dashboard-nine></object-dashboard-nine>
+    <object-dashboard-ten></object-dashboard-ten>
     </center>
   </ion-content>
 </ion-view>

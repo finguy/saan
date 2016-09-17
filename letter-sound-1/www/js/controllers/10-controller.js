@@ -1,10 +1,13 @@
-angular.module('saan.controllers') 
-.controller('10Ctrl', function($scope ,RandomNumber, TTSService,
+angular.module('saan.controllers')
+.controller('10Ctrl', function($scope ,RandomWordTen, TTSService,
   Util, Animations, Score) {
   $scope.activityId = '10'; // Activity Id
-  $scope.number = null; // Letter to play in level
-  $scope.imgs = [];
+  $scope.word = []; // Letter to play in level
+  $scope.rimes = [];
+  $scope.words = [];
+  $scope.img = "";
   $scope.assets = [];
+  $scope.playedWords = [];
   $scope.instructions = ""; // Instructions to read
   $scope.successMessages = [];
   $scope.errorMessages  = [];
@@ -53,7 +56,7 @@ angular.module('saan.controllers')
     Ctrl10.setUpScore();
     Ctrl10.setUpStatus();
 
-    RandomNumber.number($scope.level, $scope.playedNumbers).then(
+    RandomWordTen.word($scope.level, $scope.playedNumbers).then(
       function success(data) {
         Ctrl10.setUpContextVariables(data);
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
@@ -77,12 +80,33 @@ angular.module('saan.controllers')
     );
   };
   Ctrl10.setUpContextVariables = function(data) {
-    var numberJson = data.number;
+    console.log(data);
+    var wordJson = data.wordJson;
+    //var numberJson = data.number;
+    $scope.word = wordJson.word.split("");
+    var rimesStr = wordJson.rimes.join(",");
+    var index = Util.getRandomNumber(wordJson.rimes.length);
+    var rime = wordJson.rimes[index];
+    var wordsToPlay = [];
+
+    for (var j in data.allWords) {
+      if (data.allWords[j]) {
+        var ER = new RegExp(data.allWords[j],"i");
+        if (!ER.test(rimesStr)) {
+            wordsToPlay.push(data.allWords[j].split(""));
+        }
+      }
+    }
+
+    wordsToPlay.length = 3;
+    wordsToPlay.push(rime);
+    $scope.words = _.shuffle(wordsToPlay);
+
     $scope.instructions = data.instructions;
     $scope.successMessages = data.successMessages;
     $scope.errorMessages = data.errorMessages;
-    $scope.number = numberJson.number;
-    $scope.imgs = [];
+    var index = Util.getRandomNumber(wordJson.imgs.length);
+    $scope.img = wordJson.imgs[index];    
     $scope.dashboard = [$scope.number];
     $scope.assets = data.assets;
     $scope.addScore = data.scoreSetUp.add;
@@ -91,7 +115,7 @@ angular.module('saan.controllers')
     $scope.totalLevels = data.totalLevels;
     $scope.checkingNumber = false;
 
-    var length = $scope.assets.length;
+    /*var length = $scope.assets.length;
     var used = [];
     for (var i in numberJson.imgs){
       if (numberJson.imgs[i]) {
@@ -109,14 +133,14 @@ angular.module('saan.controllers')
          }
          $scope.imgs.push(img);
       }
-    }
+    } */
   };
   //Verifies selected letters and returns true if they match the word
   $scope.checkNumber = function(selectedObject, domId) {
     if ($scope.number === parseInt(selectedObject,10)) {
       $scope.checkingNumber = true;
       Animations.successFireworks(domId);
-      $scope.playedNumbers.push($scope.number);
+      $scope.playedWords.push($scope.word);
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
           var successMessage = $scope.successMessages[position];

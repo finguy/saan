@@ -1,8 +1,8 @@
 angular.module('saan.services')
-.factory('RandomNumber', function($http, LevelsFour, Util) {
+.factory('RandomWordTen', function($http, LevelsTen, Util) {
   return {
-    number: function(level, playedNumbers) {
-      var src = LevelsFour.getSrcData(level);
+    word: function(level, playedWords) {
+      var src = LevelsTen.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
@@ -13,10 +13,10 @@ angular.module('saan.services')
           } else {
             var playedWordsStr = playedWords.toString();
             for (var i in json) { //FIXME: try to use underscore
-              if (json[i]) {
+              if (json[i].word) {
 
-                var ER = new RegExp(json[i].id, "i");
-                if (!ER.test(playedWordsStr) && json[i].words) {
+                var ER = new RegExp(json[i].word, "i");
+                if (!ER.test(playedWordsStr) && json[i].word) {
                   wordsNotPlayed.push(json[i]);
                 }
               }
@@ -26,12 +26,13 @@ angular.module('saan.services')
           var index = Util.getRandomNumber(wordsNotPlayed.length);
 
           return {
-            words: wordsNotPlayed[index],
+            wordJson: wordsNotPlayed[index],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
-            totalLevels : data.info.length
+            totalLevels : data.info.length,
+            allWords : _.shuffle(data.allWords)
           };
         },
         function error() {
