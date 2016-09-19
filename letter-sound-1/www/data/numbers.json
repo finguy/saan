@@ -1,64 +1,214 @@
 {"numbers":
   [{"number":1,
     "imgs":[
-      {"src": "img/4-assets/one.png",
-        "width": "25%",
-        "height": "25%",
+      { "src": [],
        "name" : 1
-     },
-     {"src": "img/4-assets/two.png",
-       "width": "50%",
-       "height": "50%",
-      "name" : 2
-    },
-    {"src": "img/4-assets/three.png",
-      "width": "75%",
-      "height": "75%",
-     "name" : 3
-   }
+      },
+      {"src": [],
+        "name" : 2
+      },
+      {"src": [],
+       "name" : 3
+     }
       ]
     },
     {"number":2 ,
       "imgs":[
-        {"src": "img/4-assets/two_2.png",
-          "width": "50%",
-          "height": "50%",
+        {"src": [],
          "name" : 2
        },
-        {"src": "img/4-assets/one_2.png",
-         "width": "25%",
-         "height": "25%",
+        {"src": [],
          "name" : 1
        },
 
-      {"src": "img/4-assets/three_2.png",
-        "width": "75%",
-        "height": "75%",
+      {"src": [],
        "name" : 3
      }
         ]
       },
       {"number":3,
         "imgs":[
-          {"src": "img/4-assets/one_3.png",
-           "width": "25%",
-           "height": "25%",
+          {"src": [],
            "name" : 1
          },
-        {"src": "img/4-assets/three_3.png",
-          "width": "75%",
-          "height": "75%",
-         "name" : 3
-       },
-       {"src": "img/4-assets/two_3.png",
-         "width": "50%",
-         "height": "50%",
-        "name" : 2
-       }
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
           ]
-        }
+      },
+      {"number":3,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":3,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":4,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 4
+         }
+          ]
+      },
+      {"number":5,
+        "imgs":[
+          {"src": [],
+           "name" : 5
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":6,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 6
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+
+      {"number":7,
+        "imgs":[
+          {"src": [],
+           "name" : 7
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":8,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 8
+         }
+          ]
+      },
+      {"number":9,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 9
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":10,
+        "imgs":[
+          {"src": [],
+           "name" : 10
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":11,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 11
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      }
   ],
+  "assets": [ "img/4-assets/assorted-objects/1.png",
+            "img/4-assets/assorted-objects/2.png",
+            "img/4-assets/assorted-objects/3.png",
+            "img/4-assets/assorted-objects/4.png",
+            "img/4-assets/assorted-objects/5.png",
+            "img/4-assets/assorted-objects/6.png",
+            "img/4-assets/assorted-objects/7.png",
+            "img/4-assets/assorted-objects/8.png",
+            "img/4-assets/assorted-objects/9.png",
+            "img/4-assets/assorted-objects/10.png",
+            "img/4-assets/assorted-objects/11.png",
+            "img/4-assets/assorted-objects/12.png",
+            "img/4-assets/assorted-objects/13.png",
+            "img/4-assets/assorted-objects/14.png",
+            "img/4-assets/assorted-objects/15.png",
+            "img/4-assets/assorted-objects/16.png",
+            "img/4-assets/assorted-objects/17.png",
+            "img/4-assets/assorted-objects/18.png",
+            "img/4-assets/assorted-objects/19.png",
+            "img/4-assets/assorted-objects/20.png",
+            "img/4-assets/assorted-objects/21.png",
+            "img/4-assets/assorted-objects/22.png",
+            "img/4-assets/assorted-objects/23.png",
+            "img/4-assets/assorted-objects/24.png",
+            "img/4-assets/assorted-objects/25.png",
+            "img/4-assets/assorted-objects/26.png",
+            "img/4-assets/assorted-objects/27.png",
+            "img/4-assets/assorted-objects/28.png",
+            "img/4-assets/assorted-objects/29.png",
+            "img/4-assets/assorted-objects/30.png",
+            "img/4-assets/assorted-objects/31.png"
+        ],
   "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"]
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  }
 }

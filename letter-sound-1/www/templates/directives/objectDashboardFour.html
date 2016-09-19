@@ -1,7 +1,9 @@
 <div class="row" >
-  <div class="col img-container" style="clear:both;float:left;" ng-repeat="img in imgs" ng-click="selectNumber('img-{{img.name}}', {{img.name}})">
-    <img src="{{img.src}}" width="{{img.width}}" height="{{img.height}}" id="img-{{img.name}}"/>
-    <img src="img/4-assets/ground.jpg" width="{{img.width}}" height="{{img.height}}"/>    
-</div>
-</div>
+  <div class="col img-container" ng-repeat="img in imgs" ng-click="selectNumber('img-{{img.name}}', {{img.name}})">
+    <div class="activity-4-border">
+      <div class="activity-4-content">
+        <img ng-repeat="srcPath in img.src track by $index" src="{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
+      </div>
+    </div>
+  </div>
 </div>

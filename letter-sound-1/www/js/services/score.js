@@ -11,5 +11,5 @@ angular.module('saan.services')
       isActivityFinished: function(jsonScore, currentScore) {
         return jsonScore.minScore <= currentScore;
       }
-  }
+  };
 });

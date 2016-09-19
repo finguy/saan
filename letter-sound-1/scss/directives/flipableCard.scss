@@ -1,0 +1,41 @@
+.memory-card {
+  font-size: 1.6em;
+  height: 8rem;
+  margin: 1rem;
+  position: relative;
+  text-align: center;
+  width: 8rem;
+}
+
+.memory-card-front,
+.memory-card-back {
+  @include backface-visibility(hidden);
+  @include transition(transform .3s);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.memory-card-front {
+  background-color: #ff5078;
+}
+
+.memory-card-back {
+  @include transform(rotateY(-180deg));
+  align-items: center;
+  background-color: $blue;
+  display: flex;
+  justify-content: center;
+}
+
+.flipped {
+  .memory-card-front {
+    @include transform(rotateY(-180deg));
+  }
+
+  .memory-card-back {
+    @include transform(rotateY(0));
+  }
+}
