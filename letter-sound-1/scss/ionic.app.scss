@@ -20,11 +20,13 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 // Include all of Ionic
 @import "util/util";
 @import 'www/lib/ionic/scss/ionic';
+
 @import 'www/lib/bourbon/app/assets/stylesheets/_bourbon';
 @import 'util/util';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
 @import 'layout/activity-5';
+@import 'layout/activity-4';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
 @import 'directives/progressBar';
@@ -106,6 +108,15 @@ body {
 .activity-3-play-container {
   float: right;
 }
+
 .activity4 {
   background-image: url('../img/4-assets/background.jpg');
+
+ .img-container {
+   @include image-container-1(20px, #5E2B26, #e7ddc4);
+  }
+}
+
+.activity5 {
+  background-image: url('../img/5-assets/background.jpg');
 }
