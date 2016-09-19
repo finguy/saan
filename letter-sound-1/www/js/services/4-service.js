@@ -20,13 +20,16 @@ angular.module('saan.services')
               }
             }
           }
-          console.log(numbersNotPlayed);
+
           var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
             number: numbersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
-            successMessages: data.successMessages
+            successMessages: data.successMessages,
+            scoreSetUp: data.scoreSetUp,
+            assets: data.assets,
+            totalLevels: data.numbers.length
           };
         },
         function error() {
