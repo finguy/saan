@@ -2,7 +2,7 @@ angular.module('saan.services')
 .factory('LearningNumber', function($http, Util) {
   return {
     getConfig: function(level) {
-      var src = 'data/9-config.json';
+      var src = 'data/13-config.json';
       return $http.get(src).then(
         function success(response) {
           var data = response.data;
