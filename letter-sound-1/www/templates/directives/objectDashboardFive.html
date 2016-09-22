@@ -1,7 +1,9 @@
-<div class="row" >
-  <div class="col img-container" style="clear:both;float:left;" ng-repeat="img in imgs" ng-click="selectLetter('{{img.name}}')">
-    <img src="{{img.src}}" width="{{img.width}}" height="{{img.height}}" id="img-{{img.name}}"/>
-    <img src="img/4-assets/ground.jpg" width="{{img.width}}" height="{{img.height}}"/>
-</div>
+<div class="row activity-5-container" >
+
+<div class="col " ng-repeat="img in imgs" ng-click="selectLetter(img.name, img.src)">
+  <div class="activity-5-box">
+    <img src="{{img.src}}" class="img-box"/>
+    <img src="img/5-assets/grass.png" class="img-box"/>
+  </div>
 </div>
 </div>
