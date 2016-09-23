@@ -1,0 +1,27 @@
+.activity5 {
+  background-image: url('../img/5-assets/background.png');
+}
+
+.activity-5-box-shadow {
+  @include shadow-box-1(#ccc, #7c3900, #fef3dd, #fab06d);
+}
+
+.activity5-letter-container {
+  margin-left: 50%;
+}
+.img-letter {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.activity-5-box {
+  width: 20em;
+}
+.img-box {
+  clear: both;
+  float: left;
+}
+.activity-5-container{
+  margin-left: 10em;
+  margin-top: -10em;
+}
