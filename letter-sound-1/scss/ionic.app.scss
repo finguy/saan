@@ -25,8 +25,9 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'util/util';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
-@import 'layout/activity-6';
 @import 'layout/activity-4';
+@import 'layout/activity-5';
+@import 'layout/activity-6';
 @import 'directives/letterDashboard';
 @import 'directives/patternDashboard';
 @import 'directives/progressBar';
@@ -107,14 +108,4 @@ body {
 }
 .activity-3-play-container {
   float: right;
-}
-
- .img-container {
-  @include image-container-1(20px, #5E2B26, #e7ddc4);
- }
-
-
-
-.activity5 {
-  background-image: url('../img/5-assets/background.jpg');
 }
