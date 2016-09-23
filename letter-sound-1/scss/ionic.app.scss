@@ -34,6 +34,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'directives/numberCard';
 @import 'layout/memory';
 @import 'layout/activity-8';
+@import 'layout/activity-13';
 
 
 html {
@@ -46,7 +47,8 @@ body {
 }
 
 .content-margin {
-  margin-top: 2.4rem;
+  line-height: initial;
+  padding-top: 2.4rem;
 }
 
 .text-center {
@@ -59,6 +61,10 @@ body {
 
 .justify {
   justify-content: center;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .horizontal-center {
