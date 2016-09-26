@@ -1,0 +1,65 @@
+.activity-14-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 5em;
+  height: 100%;
+
+  .operation-container {
+    align-items: center;
+    display: flex;
+    margin-top: 10rem;
+    padding-bottom: 20rem;
+    width: auto;
+  }
+
+  .number-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .symbol-margin {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .dropzone {
+    border: .2rem dashed $grey;
+    border-radius: 0;
+    color: $grey;
+    height: 12rem;
+    padding: 1.4rem;
+    width: 12rem;
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .results-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .match {
+    align-items: center;
+    background-color: #e4de90;
+    display: flex;
+    justify-content: center;
+  }
+
+  .as-sortable-item.match-card {
+    @extend .match;
+    border: 0;
+    border-radius: 0;
+    height: 15rem;
+    width: 20rem;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: space-around;
+  }
+}
