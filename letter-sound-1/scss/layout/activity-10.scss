@@ -1,0 +1,44 @@
+.activity10 {
+  background-image: url('../img/10-assets/background-wood.jpg');
+}
+
+.word {
+  width: 6em;
+  height: 6em;
+}
+
+.words {
+  padding-left: 10em;
+}
+
+.letter {
+  width: 6em;
+  height: 6em;
+}
+
+img.dropzone {
+  border:0;
+  padding:0;
+}
+
+.list-words {
+  background-image: url('../img/10-assets/paper.png');
+  background-repeat: no-repeat;
+  background-size: 60% 100%;
+  margin-top: 5%;
+}
+.list-letters {
+  margin-top: 5%;
+}
+
+
+.list-letters.as-sortable-item {
+  border: 0;
+  background-color: transparent;
+  padding-left: 10em;
+}
+
+.dashboard {
+  margin-left: 10%;
+  margin-top: 5%;
+}

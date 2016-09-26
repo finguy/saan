@@ -129,30 +129,25 @@ angular.module('saan.directives')
             allowDuplicates: true,
             clone:true,
             accept: function(sourceItemHandleScope, destSortableScope){
-              console.log("word:");
-              console.log( sourceItemHandleScope.modelValue.word);
-              scope.word = sourceItemHandleScope.modelValue.word;
+              scope.draggedWord = sourceItemHandleScope.modelValue.word;
+              console.log("dragged:");
+              console.log(scope.draggedWord);
               return true;
             },
             dragEnd: function(eventObj) {
-              if (scope.selectedItem && scope.word) {
-                var ER = new RegExp(scope.word,"i");
-                var result = ER.test(scope.selectedItem);
+              if (scope.draggedWord) {
+                var ER = new RegExp(scope.draggedWord,"i");
+                var result = ER.test(scope.rimesStr);
+                console.log("result:");
+                console.log(result);
                 if (result) {
-                  scope.draggedImgs.push(scope.selectedItem);
-                  scope.selectedItem = null;
-                  scope.word = null;
                   scope.handleProgress(true);
                 } else {
-                  //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
                   scope.handleProgress(false);
                 }
-              } else {// Buggy drag and drop
-                if (!scope.word) {
-                  scope.speak("Drag the word again!");
-                } else if (!scope.selectedItem) {
-                  scope.speak("Select the image!");
-                }
+                scope.draggedWord = false;
+              } else {
+                scope.speak("Drag the word again");
               }
             }
           };
@@ -160,28 +155,6 @@ angular.module('saan.directives')
           //Drop
           scope.sortableCloneOptions = {
             containment: '.dashboard',
-          };
-
-          scope.isDragged = function(item) {
-            var found = false;
-            var ER = new RegExp(item,"i");
-            for (var i in scope.draggedImgs) {
-              if (scope.draggedImgs[i]){
-                found = found || ER.test(scope.draggedImgs[i]);
-              }
-            }
-            return found;
-          };
-
-          scope.selectItem = function(item) {
-            scope.selectedItem = item;
-            var itemName = item.substr(item.lastIndexOf('/') +1);
-            itemName = itemName.replace(/[0-9]*.png|[0-9]*.jpg/,"");
-            scope.speak(itemName);
-          };
-
-          scope.isSelected = function(item) {
-            return scope.selectedItem == item;
           };
         }
       };

@@ -1,8 +1,9 @@
 angular.module('saan.controllers')
 .controller('10Ctrl', function($scope ,RandomWordTen, TTSService,
-  Util, Animations, Score) {
+  Util, Animations, Score,ActividadesFinalizadasService) {
   $scope.activityId = '10'; // Activity Id
   $scope.word = []; // Letter to play in level
+  $scope.wordStr = "";
   $scope.rimes = [];
   $scope.words = [];
   $scope.img = "";
@@ -14,13 +15,14 @@ angular.module('saan.controllers')
   $scope.numbers = []; // Word letters
   $scope.dashboard = []; // Dashboard letters
   $scope.selectedObject = ""; // Collects letters the user selects
-  $scope.playedNumbers = []; // Collects words the user played
+  $scope.playedWords = []; // Collects words the user played
   $scope.level = $scope.level || 1; // Indicates activity level
   $scope.totalLevels = 3;
   $scope.activityProgress = 0;
   $scope.score = 0;
   $scope.checkingNumber = false;
 
+  $scope.imgsDragged = [];
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
@@ -56,7 +58,7 @@ angular.module('saan.controllers')
     Ctrl10.setUpScore();
     Ctrl10.setUpStatus();
 
-    RandomWordTen.word($scope.level, $scope.playedNumbers).then(
+    RandomWordTen.word($scope.level, $scope.playedWords).then(
       function success(data) {
         Ctrl10.setUpContextVariables(data);
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
@@ -66,10 +68,10 @@ angular.module('saan.controllers')
           if (readInstructions){
             $scope.speak($scope.instructions);
               setTimeout(function() {
-                $scope.speak($scope.number);
-              }, 8000);
+                $scope.speak($scope.wordStr);
+              }, 3000);
           } else {
-            $scope.speak($scope.number);
+            $scope.speak($scope.wordStr);
           }
         }, readWordTimeout);
 
@@ -80,11 +82,11 @@ angular.module('saan.controllers')
     );
   };
   Ctrl10.setUpContextVariables = function(data) {
-    console.log(data);
     var wordJson = data.wordJson;
-    //var numberJson = data.number;
+    $scope.playedWords.push(wordJson.word);
+    $scope.wordStr = wordJson.word;
     $scope.word = wordJson.word.split("");
-    var rimesStr = wordJson.rimes.join(",");
+    $scope.rimesStr = wordJson.rimes.join(",");
     var index = Util.getRandomNumber(wordJson.rimes.length);
     var rime = wordJson.rimes[index];
     var wordsToPlay = [];
@@ -92,21 +94,21 @@ angular.module('saan.controllers')
     for (var j in data.allWords) {
       if (data.allWords[j]) {
         var ER = new RegExp(data.allWords[j],"i");
-        if (!ER.test(rimesStr)) {
-            wordsToPlay.push(data.allWords[j].split(""));
+        if (!ER.test($scope.rimesStr)) {
+            wordsToPlay.push({"letters": data.allWords[j].split(""), "word": data.allWords[j]});
         }
       }
     }
 
     wordsToPlay.length = 3;
-    wordsToPlay.push(rime);
+    wordsToPlay.push({"word":rime, "letters": rime.split("")});
     $scope.words = _.shuffle(wordsToPlay);
 
     $scope.instructions = data.instructions;
     $scope.successMessages = data.successMessages;
     $scope.errorMessages = data.errorMessages;
     var index = Util.getRandomNumber(wordJson.imgs.length);
-    $scope.img = wordJson.imgs[index];    
+    $scope.img = wordJson.imgs[index];
     $scope.dashboard = [$scope.number];
     $scope.assets = data.assets;
     $scope.addScore = data.scoreSetUp.add;
@@ -115,62 +117,46 @@ angular.module('saan.controllers')
     $scope.totalLevels = data.totalLevels;
     $scope.checkingNumber = false;
 
-    /*var length = $scope.assets.length;
-    var used = [];
-    for (var i in numberJson.imgs){
-      if (numberJson.imgs[i]) {
-         var img = {};
-         img.name = numberJson.imgs[i].name;
-         img.src = [];
-         //Select an unused asset
-         var index = Util.getRandomNumber(length);
-         while (used[index] || !$scope.assets[index]) {
-            index = Util.getRandomNumber(length);
-         }
-         used[index] = true;
-         for (var j=0; j < img.name; j++) {
-           img.src.push($scope.assets[index]);
-         }
-         $scope.imgs.push(img);
-      }
-    } */
   };
-  //Verifies selected letters and returns true if they match the word
-  $scope.checkNumber = function(selectedObject, domId) {
-    if ($scope.number === parseInt(selectedObject,10)) {
-      $scope.checkingNumber = true;
-      Animations.successFireworks(domId);
-      $scope.playedWords.push($scope.word);
-        setTimeout(function() {
-          var position = Util.getRandomNumber($scope.successMessages.length);
-          var successMessage = $scope.successMessages[position];
-          $scope.speak(successMessage);
-          //wait for speak
-          setTimeout(function() {
-            Ctrl10.levelUp(); //Advance level
-            $scope.score = Score.update($scope.addScore, $scope.score);
-            Util.saveLevel($scope.activityId, $scope.level);
-            if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-              Util.saveScore($scope.activityId, $scope.score);
-              $scope.finished = $scope.score >= $scope.minScore;
-              if ($scope.finished) {
+
+    $scope.handleProgress = function(isWordOk) {
+          if (isWordOk) {
+              $scope.speak($scope.word +" rimes with " + $scope.draggedWord);
+              //wait for speak
+              setTimeout(function() {
+              if (!$scope.finished) {
+                $scope.score = Score.update($scope.addScore, $scope.score);
+                Util.saveScore($scope.activityId, $scope.score);
+              }
+              var position = Util.getRandomNumber($scope.successMessages.length);
+              var successMessage = $scope.successMessages[position];
+              $scope.speak(successMessage);
+              setTimeout(function() {
+                Ctrl10.levelUp(); //Advance level
+                Util.saveLevel($scope.activityId, $scope.level);
+                if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
+                  $scope.finished = $scope.score >= $scope.minScore;
                   Util.saveStatus($scope.activityId, $scope.finished);
                   ActividadesFinalizadasService.add($scope.activityId);
-              }
+                }
+                Ctrl10.showDashboard(false); //Reload dashboard
+
+              }, 1000);
+            }, 4000);
+            } else {
+                $scope.score = Score.update(-$scope.substractScore, $scope.score);
+                Util.saveScore($scope.activityId, $scope.score);
+                $scope.speak(name);
+                //wait for speak
+                setTimeout(function() {
+                  var position = Util.getRandomNumber($scope.errorMessages.length);
+                  var errorMessage = $scope.errorMessages[position];
+                  $scope.speak(errorMessage);
+                }, 1000);
             }
-            Ctrl4.showDashboard(); //Reload dashboard
-          }, 1000);
-      }, 4000);
-    } else {
-      //wait for speak
-      setTimeout(function() {
-        $scope.checkingNumber = false;
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
-      }, 1000);
-    }
-  };
+
+
+      };
 
   //Advance one level
   Ctrl10.levelUp = function() {

@@ -14,7 +14,6 @@ angular.module('saan.services')
             var playedWordsStr = playedWords.toString();
             for (var i in json) { //FIXME: try to use underscore
               if (json[i].word) {
-
                 var ER = new RegExp(json[i].word, "i");
                 if (!ER.test(playedWordsStr) && json[i].word) {
                   wordsNotPlayed.push(json[i]);

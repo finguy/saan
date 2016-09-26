@@ -53,7 +53,7 @@
 
     }],
   "allWords": ["frog","blog","clog","cog","mouse","spouse","prouse","third","burd","curd","herd","chapel","grappel","pineapple","giger","eiger","bee","glee","see","free","all","doll","call","small"],
-  "instructions": "Select the image and drag the word",
+  "instructions": "Drag the word that rimes",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
