@@ -8,7 +8,7 @@
 
     var config = '';
     var matches = 0;
-    var Ctrl8 = Ctrl8 || {} ;
+    var Ctrl8 = Ctrl8 || {};
 
     $scope.$on('$ionicView.beforeEnter', function() {
       Ctrl8.getConfiguration();
@@ -56,7 +56,7 @@
     };
 
     $scope.sortableCloneOptions = {
-      containment: '.activity-content',
+      containment: '.activity-' + $scope.activityId + '-content',
       clone: true,
       itemMoved: function(eventObj) {
         Ctrl8.moveMatch(eventObj);

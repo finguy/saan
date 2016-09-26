@@ -1,33 +1,33 @@
-.activity-content {
+.activity-8-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
 
-.card-container {
-  display: flex;
-  justify-content: space-around;
-}
+  .card-container {
+    display: flex;
+    justify-content: space-around;
+  }
 
-.match-container {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-}
+  .match-container {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
 
-.match {
-  align-items: center;
-  background-color: #e4de90;
-  display: flex;
-  font-size: 4em;
-  justify-content: center;
-}
+  .match {
+    align-items: center;
+    background-color: #e4de90;
+    display: flex;
+    font-size: 4em;
+    justify-content: center;
+  }
 
-.as-sortable-item.match-card {
-  @extend .match;
-  border: 0;
-  border-radius: 0;
-  height: 15rem;
-  width: 20rem;
+  .as-sortable-item.match-card {
+    @extend .match;
+    border: 0;
+    border-radius: 0;
+    height: 15rem;
+    width: 20rem;
+  }
 }
