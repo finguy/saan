@@ -20,7 +20,7 @@ angular.module('saan.controllers')
   $scope.totalLevels = 3;
   $scope.activityProgress = 0;
   $scope.score = 0;
-  $scope.checkingNumber = false;
+  $scope.draggedWord = false;
 
   $scope.imgsDragged = [];
 
@@ -121,9 +121,6 @@ angular.module('saan.controllers')
 
     $scope.handleProgress = function(isWordOk) {
           if (isWordOk) {
-              $scope.speak($scope.word +" rimes with " + $scope.draggedWord);
-              //wait for speak
-              setTimeout(function() {
               if (!$scope.finished) {
                 $scope.score = Score.update($scope.addScore, $scope.score);
                 Util.saveScore($scope.activityId, $scope.score);
@@ -132,6 +129,7 @@ angular.module('saan.controllers')
               var successMessage = $scope.successMessages[position];
               $scope.speak(successMessage);
               setTimeout(function() {
+                $scope.draggedWord = false;
                 Ctrl10.levelUp(); //Advance level
                 Util.saveLevel($scope.activityId, $scope.level);
                 if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
@@ -141,8 +139,7 @@ angular.module('saan.controllers')
                 }
                 Ctrl10.showDashboard(false); //Reload dashboard
 
-              }, 1000);
-            }, 4000);
+              }, 1000);            
             } else {
                 $scope.score = Score.update(-$scope.substractScore, $scope.score);
                 Util.saveScore($scope.activityId, $scope.score);

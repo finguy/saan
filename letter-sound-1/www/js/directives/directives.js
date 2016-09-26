@@ -137,15 +137,14 @@ angular.module('saan.directives')
             dragEnd: function(eventObj) {
               if (scope.draggedWord) {
                 var ER = new RegExp(scope.draggedWord,"i");
-                var result = ER.test(scope.rimesStr);
-                console.log("result:");
-                console.log(result);
+                var result = ER.test(scope.rimesStr);                
                 if (result) {
                   scope.handleProgress(true);
                 } else {
                   scope.handleProgress(false);
+                  scope.draggedWord = false;
                 }
-                scope.draggedWord = false;
+
               } else {
                 scope.speak("Drag the word again");
               }

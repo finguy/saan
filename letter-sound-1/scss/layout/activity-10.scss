@@ -1,5 +1,5 @@
 .activity10 {
-  background-image: url('../img/10-assets/background-wood.jpg');
+  background-image: url('../img/10-assets/background-10.jpg');
 }
 
 .word {
@@ -21,12 +21,11 @@ img.dropzone {
   padding:0;
 }
 
-.list-words {
-  background-image: url('../img/10-assets/paper.png');
-  background-repeat: no-repeat;
-  background-size: 60% 100%;
-  margin-top: 5%;
+.data-container {
+ @include image-container-1(20px, #5E2B26, #e7ddc4);
+ padding: 10px;
 }
+
 .list-letters {
   margin-top: 5%;
 }
@@ -39,6 +38,6 @@ img.dropzone {
 }
 
 .dashboard {
-  margin-left: 10%;
-  margin-top: 5%;
+  margin-left: 30%;
+  margin-top: 15%;
 }
