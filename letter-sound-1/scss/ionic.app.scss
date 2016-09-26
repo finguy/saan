@@ -18,12 +18,14 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: '../lib/ionic/fonts' !default;
 // Include all of Ionic
+@import "util/util";
 @import 'www/lib/ionic/scss/ionic';
 
 @import 'www/lib/bourbon/app/assets/stylesheets/_bourbon';
 @import 'util/util';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
+@import 'layout/activity-5';
 @import 'layout/activity-4';
 @import 'layout/activity-10';
 @import 'directives/letterDashboard';
@@ -33,6 +35,8 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'directives/numberCard';
 @import 'layout/memory';
 @import 'layout/activity-8';
+@import 'layout/activity-13';
+
 
 html {
   font-size: 62.5%;
@@ -44,7 +48,8 @@ body {
 }
 
 .content-margin {
-  margin-top: 2.4rem;
+  line-height: initial;
+  padding-top: 2.4rem;
 }
 
 .text-center {
@@ -57,6 +62,10 @@ body {
 
 .justify {
   justify-content: center;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .horizontal-center {
@@ -105,14 +114,4 @@ body {
 }
 .activity-3-play-container {
   float: right;
-}
-
- .img-container {
-  @include image-container-1(20px, #5E2B26, #e7ddc4);
- }
-
-
-
-.activity5 {
-  background-image: url('../img/5-assets/background.jpg');
 }
