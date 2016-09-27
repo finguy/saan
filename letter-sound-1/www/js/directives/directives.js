@@ -132,13 +132,14 @@ angular.module('saan.directives')
          scope.sortableOptions = {
            containment: '.dashboard',
            allowDuplicates: false,
-           accept: function(sourceItemHandleScope, destSortableScope){             
+           accept: function(sourceItemHandleScope, destSortableScope){
              scope.isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue.letter);
              return scope.isPhonemaOk;
            }
          };
          scope.sortableCloneOptions = {
            containment: '.dashboard',
+          containerPositioning: 'relative',
            clone: true,// ACA si es false se rompe todo!!!!
            allowDuplicates: true,
            dragEnd: function(eventObj) {
@@ -166,4 +167,73 @@ angular.module('saan.directives')
          };
        }
      };
-   });
+   })
+   .directive('objectDashboardNine', function() {
+      return {
+        restrict: "E",
+        templateUrl: "templates/directives/objectDashboardNine.html",
+        scope: 'true',
+        link: function(scope) {
+          //Drag
+          scope.sortableOptions = {
+            containment: '.dashboard',
+            allowDuplicates: true,
+            clone:true,
+            accept: function(sourceItemHandleScope, destSortableScope){
+              console.log("word:");
+              console.log( sourceItemHandleScope.modelValue.word);
+              scope.word = sourceItemHandleScope.modelValue.word;
+              return true;
+            },
+            dragEnd: function(eventObj) {
+              if (scope.selectedItem && scope.word) {
+                var ER = new RegExp(scope.word,"i");
+                var result = ER.test(scope.selectedItem);
+                if (result) {
+                  scope.draggedImgs.push(scope.selectedItem);
+                  scope.selectedItem = null;
+                  scope.word = null;
+                  scope.handleProgress(true);
+                } else {
+                  //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+                  scope.handleProgress(false);
+                }
+              } else {// Buggy drag and drop
+                if (!scope.word) {
+                  scope.speak("Drag the word again!");
+                } else if (!scope.selectedItem) {
+                  scope.speak("Select the image!");
+                }
+              }
+            }
+          };
+
+          //Drop
+          scope.sortableCloneOptions = {
+            containment: '.dashboard',
+          };
+
+          scope.isDragged = function(item) {
+            var found = false;
+            var ER = new RegExp(item,"i");
+            for (var i in scope.draggedImgs) {
+              if (scope.draggedImgs[i]){
+                found = found || ER.test(scope.draggedImgs[i]);
+              }
+            }
+            return found;
+          };
+
+          scope.selectItem = function(item) {
+            scope.selectedItem = item;
+            var itemName = item.substr(item.lastIndexOf('/') +1);
+            itemName = itemName.replace(/[0-9]*.png|[0-9]*.jpg/,"");
+            scope.speak(itemName);
+          };
+          
+          scope.isSelected = function(item) {
+            return scope.selectedItem == item;
+          };
+        }
+      };
+    });

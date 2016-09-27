@@ -11,7 +11,7 @@ angular.module('saan.controllers')
     $scope.instructions = ""; // Instructions to read
     $scope.successMessages = [];
     $scope.errorMessages  = [];
-    $scope.letters = []; // Word letters
+    $scope.words = []; // Word letters
     $scope.dashboard = []; // Dashboard letters
     $scope.selectedObject = ""; // Collects letters the user selects
     $scope.playedWords = []; // Collects words the user played
@@ -22,7 +22,7 @@ angular.module('saan.controllers')
     $scope.score = 0;
     $scope.status = false;
     $scope.dropzone = [];
-    $scope.hasDraggedLetter = [];    
+    $scope.hasDraggedLetter = [];
     $scope.phonemas = [];
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -88,25 +88,25 @@ angular.module('saan.controllers')
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.word = wordJson.word;
       $scope.playedWords.push(wordJson.word);
-      $scope.letters = [];
-      var aux_letters = wordJson.word.split("");
+      $scope.words = [];
+      /*var aux_letters = wordJson.word.split("");
       for (var j in aux_letters) {
         if (aux_letters[j]) {
           var letter = aux_letters[j];
           $scope.letters.push({"letter": letter, "index": j});
           $scope.hasDraggedLetter[letter+"_"+j] = false;
         }
-      }
+      }*/
 
-      $scope.letters = _.shuffle($scope.letters);
-      $scope.lettersDragged = wordJson.word.split("");
+      $scope.words = _.shuffle($scope.words);
+      /*$scope.lettersDragged = wordJson.word.split("");
       var letterJSON = Util.getRandomElemFromArray($scope.letters);
       $scope.currentPhonema = letterJSON.letter;
       $scope.imgSrc = Util.getRandomElemFromArray(wordJson.imgs);
       $scope.dashboard = [$scope.word];
       $scope.wordInstruction = wordJson.instruction;
       $scope.totalLevels = data.totalLevels;
-      $scope.phonemas = [];
+      $scope.phonemas = []; */
     };
 
     //Verifies selected letters or and returns true if they match the word
