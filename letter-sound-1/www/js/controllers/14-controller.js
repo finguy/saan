@@ -8,6 +8,7 @@
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
 
+    var result;
     var config = '';
     var Ctrl14 = Ctrl14 || {};
 
@@ -22,37 +23,6 @@
         config.numberRange = parseInt(config.numberRange, 10);
         Ctrl14.setActivity();
       });
-    };
-
-    Ctrl14.setActivity  = function (){
-      $scope.results = [];
-
-      var number;
-      var index;
-      var valid;
-
-      // select the two numbers to add/subtract
-      for (var i = 0; i < 2; i++){
-        valid = false;
-				while (!valid){
-          number = _.random(1, 10);
-          index = _.indexOf($scope.numbers, number);
-          valid = index == -1;
-        }
-				$scope.numbers[i] = number;
-      }
-
-      // select the result options
-      for (i = 0; i < config.options; i++){
-        valid = false;
-				while (!valid){
-          number = _.random(1, $scope.numbers[0] + $scope.numbers[1]);
-          index = _.indexOf($scope.results, number);
-          valid = index == -1;
-        }
-
-				$scope.results.push(number);
-			}
     };
 
     $scope.sortableOptions = {
@@ -74,11 +44,59 @@
       },
       itemMoved: function (eventObj) {
         console.log("right!!!");
+        Ctrl14.success();
       }
     };
 
     $scope.numberToWord = function(number){
       return Util.numberToWords(number);
+    };
+
+    Ctrl14.setActivity  = function (){
+      $scope.dropzoneModel = [];
+      
+      var results = [];
+      var numbers = [];
+
+      var number;
+      var index;
+      var valid;
+
+      // select the two numbers to add/subtract
+      for (var i = 0; i < 2; i++){
+        valid = false;
+				while (!valid){
+          number = _.random(1, 10);
+          index = _.indexOf($scope.numbers, number);
+          valid = index == -1;
+        }
+				numbers.push(number);
+      }
+      result = numbers[0] + numbers[1];
+      results.push(result);
+      $scope.numbers = numbers;
+
+      var top = result + 5;
+      var bottom = (result - 5 <= 0) ? 1 : result -5;
+
+      // select the result options
+      for (i = 1; i < config.options; i++){
+        valid = false;
+				while (!valid){
+          number = _.random(bottom, top);
+          index = _.indexOf(results, number);
+          valid = index == -1;
+        }
+				results.push(number);
+			}
+
+      //shuffle the results
+      $scope.results = _.shuffle(results);
+    };
+
+    Ctrl14.success = function(){
+      // should increase level and save to storage
+      Ctrl14.setActivity();
     };
 
   }]);

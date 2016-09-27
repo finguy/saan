@@ -276,4 +276,6 @@ angular.module('saan.directives')
              containment: '.dashboard',
            };
          }
-       });
+       };
+     }
+    );
