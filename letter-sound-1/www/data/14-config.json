@@ -1,6 +1,6 @@
 {
   "options": "4",
-  "numberRange": "12",
+  "numberRange": "9",
   "instructions": "Hi! Look at the color sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"]

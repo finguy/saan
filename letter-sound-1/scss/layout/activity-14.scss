@@ -26,9 +26,9 @@
   .dropzone {
     border: .2rem dashed $grey;
     border-radius: 0;
-    height: 12rem;
-    padding: 0rem;
-    width: 12rem;
+    height: 15rem;
+    padding: 0;
+    width: 15rem;
 
     .as-sortable-placeholder {
       visibility: hidden;
@@ -51,7 +51,7 @@
 
   .as-sortable-item.match-card {
     @extend .match;
-    border: 0;
+    border-color: transparent;
     border-radius: 0;
     height: 15rem;
     width: 20rem;

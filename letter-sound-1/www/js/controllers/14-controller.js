@@ -44,7 +44,12 @@
       },
       itemMoved: function (eventObj) {
         console.log("right!!!");
-        Ctrl14.success();
+        setTimeout(function(){
+          $scope.$apply(function(){
+            Ctrl14.success();
+          });
+        }, 1000);
+
       }
     };
 
@@ -54,33 +59,26 @@
 
     Ctrl14.setActivity  = function (){
       $scope.dropzoneModel = [];
-      
       var results = [];
       var numbers = [];
+
+      // select the two numbers to add/subtract
+      numbers.push(_.random(1, config.numberRange));
+      numbers.push(_.random(1, config.numberRange-numbers[0]));
+
+      result = numbers[0] + numbers[1];
+      results.push(result);
+      $scope.numbers = numbers;
+
+      var top = (result + 5 <= config.numberRange) ? result + 5 : config.numberRange;
+      var bottom = (result - 5 <= 0) ? 1 : result -5;
 
       var number;
       var index;
       var valid;
 
-      // select the two numbers to add/subtract
-      for (var i = 0; i < 2; i++){
-        valid = false;
-				while (!valid){
-          number = _.random(1, 10);
-          index = _.indexOf($scope.numbers, number);
-          valid = index == -1;
-        }
-				numbers.push(number);
-      }
-      result = numbers[0] + numbers[1];
-      results.push(result);
-      $scope.numbers = numbers;
-
-      var top = result + 5;
-      var bottom = (result - 5 <= 0) ? 1 : result -5;
-
       // select the result options
-      for (i = 1; i < config.options; i++){
+      for (var i = 1; i < config.options; i++){
         valid = false;
 				while (!valid){
           number = _.random(bottom, top);
