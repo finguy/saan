@@ -59,13 +59,22 @@
       containment: '.placeholder',
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
-        return true;
+        var value = sourceItemHandleScope.modelValue;
+        return value == $scope.numbers[0] + $scope.numbers[1];
       }
     };
 
     $scope.sortableCloneOptions = {
       containment: '.activity-' + $scope.activityId + '-content',
-      clone: true
+      clone: true,
+      dragEnd: function(eventObj) {
+        if (!$scope.sortableOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
+          console.log("wrong!!");
+        }
+      },
+      itemMoved: function (eventObj) {
+        console.log("right!!!");
+      }
     };
 
     $scope.numberToWord = function(number){
