@@ -87,7 +87,7 @@ angular.module('saan.directives')
        link: function(scope) {
          scope.selectNumber = function(id, name) {
           if (!scope.checkingNumber){
-           scope.selectedObject = name;           
+           scope.selectedObject = name;
            scope.checkNumber(name, id);
          }
          };
@@ -230,10 +230,50 @@ angular.module('saan.directives')
             itemName = itemName.replace(/[0-9]*.png|[0-9]*.jpg/,"");
             scope.speak(itemName);
           };
-          
+
           scope.isSelected = function(item) {
             return scope.selectedItem == item;
           };
         }
       };
-    });
+    })
+   .directive('objectDashboardTen', function() {
+       return {
+         restrict: "E",
+         templateUrl: "templates/directives/objectDashboardTen.html",
+         scope: 'true',
+         link: function(scope) {
+           //Drag
+           scope.sortableOptions = {
+             containment: '.dashboard',
+             allowDuplicates: true,
+             clone:true,
+             accept: function(sourceItemHandleScope, destSortableScope){
+               scope.draggedWord = sourceItemHandleScope.modelValue.word;
+               console.log("dragged:");
+               console.log(scope.draggedWord);
+               return true;
+             },
+             dragEnd: function(eventObj) {
+               if (scope.draggedWord) {
+                 var ER = new RegExp(scope.draggedWord,"i");
+                 var result = ER.test(scope.rimesStr);
+                 if (result) {
+                   scope.handleProgress(true);
+                 } else {
+                   scope.handleProgress(false);
+                   scope.draggedWord = false;
+                 }
+
+               } else {
+                 scope.speak("Drag the word again");
+               }
+             }
+           };
+
+           //Drop
+           scope.sortableCloneOptions = {
+             containment: '.dashboard',
+           };
+         }
+       });

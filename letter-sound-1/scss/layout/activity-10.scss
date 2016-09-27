@@ -1,0 +1,43 @@
+.activity10 {
+  background-image: url('../img/10-assets/background-10.jpg');
+}
+
+.word {
+  width: 6em;
+  height: 6em;
+}
+
+.words {
+  padding-left: 10em;
+}
+
+.letter {
+  width: 6em;
+  height: 6em;
+}
+
+img.dropzone {
+  border:0;
+  padding:0;
+}
+
+.data-container {
+ @include image-container-1(20px, #5E2B26, #e7ddc4);
+ padding: 10px;
+}
+
+.list-letters {
+  margin-top: 5%;
+}
+
+
+.list-letters.as-sortable-item {
+  border: 0;
+  background-color: transparent;
+  padding-left: 10em;
+}
+
+.dashboard {
+  margin-left: 30%;
+  margin-top: 15%;
+}
