@@ -26,9 +26,8 @@
   .dropzone {
     border: .2rem dashed $grey;
     border-radius: 0;
-    color: $grey;
     height: 12rem;
-    padding: 1.4rem;
+    padding: 0rem;
     width: 12rem;
 
     .as-sortable-placeholder {
@@ -58,8 +57,19 @@
     width: 20rem;
   }
 
+  .as-sortable-item.number-container{
+    border: 0;
+    color: initial;
+  }
+
   .card-container {
     display: flex;
     justify-content: space-around;
+  }
+
+  .completed {
+    border: 0;
+    height: auto;
+    width: auto;
   }
 }

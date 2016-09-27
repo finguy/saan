@@ -11,11 +11,14 @@
         <div> {{numberToWord(numbers[1])}} </div>
       </div>
       <div class="equals symbol-margin"> = </div>
-      <div class="dropzone" as-sortable="sortableOptions" data-ng-model="dropzoneModel">
-        <div ng-repeat="item in dropzoneModel" as-sortable-item></div>
+      <div class="dropzone" as-sortable="sortableOptions" data-ng-model="dropzoneModel" ng-class="{completed: dropzoneModel > 0}">
+        <div ng-repeat="item in dropzoneModel" as-sortable-item class="number-container">
+          <div class="number horizontal-center"> {{item}} </div>
+          <div> {{numberToWord(item)}} </div>
+        </div>
       </div>
     </div>
-    <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results">
+    <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results" is-disabled="dropzoneModel > 0">
       <div ng-repeat="number in results" as-sortable-item as-sortable-item-handle class="number-container match-card">
         <div class="number horizontal-center"> {{number}} </div>
         <div> {{numberToWord(number)}} </div>
