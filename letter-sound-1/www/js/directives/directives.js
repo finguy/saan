@@ -123,44 +123,88 @@ angular.module('saan.directives')
       }
     };
   })
-  .directive('objectDashboardTen', function() {
-      return {
-        restrict: "E",
-        templateUrl: "templates/directives/objectDashboardTen.html",
-        scope: 'true',
-        link: function(scope) {
-          //Drag
-          scope.sortableOptions = {
-            containment: '.dashboard',
-            allowDuplicates: true,
-            clone:true,
-            accept: function(sourceItemHandleScope, destSortableScope){
-              scope.draggedWord = sourceItemHandleScope.modelValue.word;
-              console.log("dragged:");
-              console.log(scope.draggedWord);
-              return true;
-            },
-            dragEnd: function(eventObj) {
-              if (scope.draggedWord) {
-                var ER = new RegExp(scope.draggedWord,"i");
-                var result = ER.test(scope.rimesStr);                
-                if (result) {
-                  scope.handleProgress(true);
-                } else {
-                  scope.handleProgress(false);
-                  scope.draggedWord = false;
-                }
+  .directive('objectDashboardSix', function() {
+     return {
+       restrict: "E",
+       templateUrl: "templates/directives/objectDashboardSix.html",
+       scope: 'true',
+       link: function(scope) {
+         scope.sortableOptions = {
+           containment: '.dashboard',
+           allowDuplicates: false,
+           accept: function(sourceItemHandleScope, destSortableScope){
+             scope.isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue.letter);
+             return scope.isPhonemaOk;
+           }
+         };
+         scope.sortableCloneOptions = {
+           containment: '.dashboard',
+           clone: true,// ACA si es false se rompe todo!!!!
+           allowDuplicates: true,
+           dragEnd: function(eventObj) {
+             if (!scope.isPhonemaOk){
+                scope.handleProgress(false);
+             } else {
+               var jsonInfo = eventObj.source.itemScope.modelValue
+               var letter_index = jsonInfo.index;
+               var letter_value = jsonInfo.letter;
+               var index = letter_value + "_" + letter_index;
+               scope.hasDraggedLetter[index] = true;
+               scope.getNewPhonema();
+               scope.handleProgress(true,letter_value);
+             }
+           }
+         };
 
-              } else {
-                scope.speak("Drag the word again");
-              }
-            }
-          };
+         scope.isDragged = function(letter , index) {
+           return scope.hasDraggedLetter[letter +"_" + index] === true;
+         };
+         scope.speakConditional = function(letter, index) {
+           if (scope.isDragged(letter, index)) {
+             scope.speak(letter);
+           }
+         };
+       }
+     };
+   })
+   .directive('objectDashboardTen', function() {
+       return {
+         restrict: "E",
+         templateUrl: "templates/directives/objectDashboardTen.html",
+         scope: 'true',
+         link: function(scope) {
+           //Drag
+           scope.sortableOptions = {
+             containment: '.dashboard',
+             allowDuplicates: true,
+             clone:true,
+             accept: function(sourceItemHandleScope, destSortableScope){
+               scope.draggedWord = sourceItemHandleScope.modelValue.word;
+               console.log("dragged:");
+               console.log(scope.draggedWord);
+               return true;
+             },
+             dragEnd: function(eventObj) {
+               if (scope.draggedWord) {
+                 var ER = new RegExp(scope.draggedWord,"i");
+                 var result = ER.test(scope.rimesStr);
+                 if (result) {
+                   scope.handleProgress(true);
+                 } else {
+                   scope.handleProgress(false);
+                   scope.draggedWord = false;
+                 }
 
-          //Drop
-          scope.sortableCloneOptions = {
-            containment: '.dashboard',
-          };
-        }
-      };
+               } else {
+                 scope.speak("Drag the word again");
+               }
+             }
+           };
+
+           //Drop
+           scope.sortableCloneOptions = {
+             containment: '.dashboard',
+           };
+         }
+       };
     });
