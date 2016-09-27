@@ -1,0 +1,50 @@
+.activity9 {
+  background-image: url('../img/9-assets/background-wood.jpg');
+}
+
+.letter {
+  width: 8em;
+  height: 8em;
+}
+
+.icon-word.dropzone {
+  width: 17em;
+  height: 17em;
+  border:0;
+  border-radius: 0;
+  background-image: url('../img/9-assets/cuadro.png');
+}
+
+.selected {
+   background: 	#09c;
+}
+
+.selected.dropzone {
+   border-radius: 1em;
+}
+.list-words {
+  float: left;
+  text-align: left;
+}
+
+
+.words {
+  width: 50em;
+}
+
+.list-letters.as-sortable-item {
+  border: 0;
+  background-color: transparent;
+}
+.word-icons {
+  padding: 1.5em;
+}
+
+.draggedWords.as-sortable-item {
+  display:none;
+}
+
+.instructions {
+  width: 10em;
+  height: 10em;
+}
