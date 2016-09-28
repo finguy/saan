@@ -248,6 +248,7 @@ angular.module('saan.directives')
              containment: '.dashboard',
              allowDuplicates: true,
              clone:true,
+             containerPositioning: 'relative',
              accept: function(sourceItemHandleScope, destSortableScope){
                scope.draggedWord = sourceItemHandleScope.modelValue.word;
                console.log("dragged:");

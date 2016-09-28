@@ -1,43 +1,63 @@
 .activity10 {
   background-image: url('../img/10-assets/background-10.jpg');
-}
 
-.word {
-  width: 6em;
-  height: 6em;
-}
+  .progressBar {
+    width: 250px;
+    height: 14px;
+    padding-right: 20px;
+    position: absolute;
+    right: 0;
+  }
 
-.words {
-  padding-left: 10em;
-}
+  .word {
+    width: 6em;
+    height: 6em;
+  }
 
-.letter {
-  width: 6em;
-  height: 6em;
-}
+  .words {
+    padding: 0.5rem;
+  }
 
-img.dropzone {
-  border:0;
-  padding:0;
-}
+  .letter {
+    width: 6em;
+    height: 6em;
+  }
 
-.data-container {
- @include image-container-1(20px, #5E2B26, #e7ddc4);
- padding: 10px;
-}
+  img.dropzone {
+    border:0;
+    padding:0;
+  }
 
-.list-letters {
-  margin-top: 5%;
-}
+  .data-container {
+   @include image-container-1(20px, #5E2B26, #e7ddc4);
+   padding: 10px;
+   clear: none;
+   float: none;
+   display: inline-block;
+  }
+
+  .list-letters {
+    margin-top: 2rem;
+  }
 
 
-.list-letters.as-sortable-item {
-  border: 0;
-  background-color: transparent;
-  padding-left: 10em;
-}
+  .list-letters.as-sortable-item {
+    border: 0;
+    background-color: transparent;
+    display: inline;
+    // padding-left: 10em;
+  }
 
-.dashboard {
-  margin-left: 30%;
-  margin-top: 15%;
+  .dashboard {
+    text-align: center;
+    height: 100%;
+    padding-top: 15rem;
+    // margin-left: 30%;
+    // margin-top: 15%;
+  }
+
+  .as-sortable-placeholder {
+    width: 100%;
+    height: 6rem;
+  }
 }
