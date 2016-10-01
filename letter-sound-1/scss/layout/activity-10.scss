@@ -1,43 +1,44 @@
 .activity10 {
   background-image: url('../img/10-assets/background-10.jpg');
-}
 
-.word {
-  width: 6em;
-  height: 6em;
-}
+  .word {
+    height: 6rem;
+    width: 6rem;
+  }
 
-.words {
-  padding-left: 10em;
-}
+  .words {
+    padding-left: 10rem;
+  }
 
-.letter {
-  width: 6em;
-  height: 6em;
-}
+  .letter {
+    height: 6rem;
+    width: 6rem;
+  }
 
-img.dropzone {
-  border:0;
-  padding:0;
-}
+  img.dropzone {
+    border: 0;
+    padding: 0;
+  }
 
-.data-container {
- @include image-container-1(20px, #5E2B26, #e7ddc4);
- padding: 10px;
-}
+  .data-container {
+   @include image-container-1(2rem, #5E2B26, #e7ddc4);
+   display: inline-block;
+   margin-bottom: 10rem;
+   padding: 1rem;
+  }
 
-.list-letters {
-  margin-top: 5%;
-}
+  .list-letters {
+    display: inline;
+    margin: 2rem;
+  }
 
 
-.list-letters.as-sortable-item {
-  border: 0;
-  background-color: transparent;
-  padding-left: 10em;
-}
+  .list-letters.as-sortable-item {
+    background-color: transparent;
+    border: 0;
+  }
 
-.dashboard {
-  margin-left: 30%;
-  margin-top: 15%;
+  .as-sortable-placeholder {
+    display: none;
+  }
 }

@@ -177,40 +177,46 @@ angular.module('saan.directives')
           //Drag
           scope.sortableOptions = {
             containment: '.dashboard',
-            allowDuplicates: true,
-            clone:true,
-            accept: function(sourceItemHandleScope, destSortableScope){
-              console.log("word:");
-              console.log( sourceItemHandleScope.modelValue.word);
-              scope.word = sourceItemHandleScope.modelValue.word;
-              return true;
-            },
-            dragEnd: function(eventObj) {
-              if (scope.selectedItem && scope.word) {
-                var ER = new RegExp(scope.word,"i");
-                var result = ER.test(scope.selectedItem);
-                if (result) {
-                  scope.draggedImgs.push(scope.selectedItem);
-                  scope.selectedItem = null;
-                  scope.word = null;
-                  scope.handleProgress(true);
-                } else {
-                  //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
-                  scope.handleProgress(false);
-                }
-              } else {// Buggy drag and drop
-                if (!scope.word) {
-                  scope.speak("Drag the word again!");
-                } else if (!scope.selectedItem) {
-                  scope.speak("Select the image!");
-                }
-              }
-            }
+            // clone:true,
+            // accept: function(sourceItemHandleScope, destSortableScope){
+            //   console.log("word:");
+            //   console.log( sourceItemHandleScope.modelValue.word);
+            //   scope.word = sourceItemHandleScope.modelValue.word;
+            //   return true;
+            // },
+            // dragEnd: function(eventObj) {
+            //   if (scope.selectedItem && scope.word) {
+            //     var ER = new RegExp(scope.word,"i");
+            //     var result = ER.test(scope.selectedItem);
+            //     if (result) {
+            //       scope.draggedImgs.push(scope.selectedItem);
+            //       scope.selectedItem = null;
+            //       scope.word = null;
+            //       scope.handleProgress(true);
+            //     } else {
+            //       //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+            //       scope.handleProgress(false);
+            //     }
+            //   } else {// Buggy drag and drop
+            //     if (!scope.word) {
+            //       scope.speak("Drag the word again!");
+            //     } else if (!scope.selectedItem) {
+            //       scope.speak("Select the image!");
+            //     }
+            //   }
+            // }
           };
 
           //Drop
           scope.sortableCloneOptions = {
             containment: '.dashboard',
+            accept: function(sourceItemHandleScope, destSortableScope){
+              // console.log("word:");
+              console.log( sourceItemHandleScope.modelValue.word);
+              console.log(destSortableScope);
+              // scope.word = sourceItemHandleScope.modelValue.word;
+              return true;
+            }
           };
 
           scope.isDragged = function(item) {
@@ -236,44 +242,4 @@ angular.module('saan.directives')
           };
         }
       };
-    })
-   .directive('objectDashboardTen', function() {
-       return {
-         restrict: "E",
-         templateUrl: "templates/directives/objectDashboardTen.html",
-         scope: 'true',
-         link: function(scope) {
-           //Drag
-           scope.sortableOptions = {
-             containment: '.dashboard',
-             allowDuplicates: true,
-             clone:true,
-             accept: function(sourceItemHandleScope, destSortableScope){
-               scope.draggedWord = sourceItemHandleScope.modelValue.word;
-               console.log("dragged:");
-               console.log(scope.draggedWord);
-               return true;
-             },
-             dragEnd: function(eventObj) {
-               if (scope.draggedWord) {
-                 var ER = new RegExp(scope.draggedWord,"i");
-                 var result = ER.test(scope.rimesStr);
-                 if (result) {
-                   scope.handleProgress(true);
-                 } else {
-                   scope.handleProgress(false);
-                   scope.draggedWord = false;
-                 }
-
-               } else {
-                 scope.speak("Drag the word again");
-               }
-             }
-           };
-
-           //Drop
-           scope.sortableCloneOptions = {
-             containment: '.dashboard',
-           };
-         }
-       });
+    });   

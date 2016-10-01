@@ -25,7 +25,7 @@
   background: -webkit-linear-gradient($gradientFrom, $gradientTo);
   background: -o-linear-gradient($gradientFrom, $gradientTo);
   background: -moz-linear-gradient($gradientFrom, $gradientTo);
-  background: linear-gradient($gradientFrom, $gradientTo);  
+  background: linear-gradient($gradientFrom, $gradientTo);
   min-height: 160px;
 }
 
@@ -36,10 +36,8 @@
   border-radius: $borderRadius;
   border: $borderRadius solid $borderColor;
   background-color:$backgroundColor;
-   padding:0;
-   margin:1px;
-   clear:both;
-   float:left;
+  padding: 0;
+  margin: .1rem ;
 }
 
 /*Inner circle container*/
