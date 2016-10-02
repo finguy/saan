@@ -1,24 +1,19 @@
 <div class="dashboard">
-
-<div class="row word-icons">
-  <div id="{{imgSrc}}"  ng-repeat="imgSrc in imgs track by $index" >
-    <div class="col list-letters" >
-      <img class="dropzone icon-word " src="{{imgSrc}}"  ng-show="!isDragged(imgSrc)" ng-click="selectItem(imgSrc)" ng-class="{'selected': imgSrc == selectedItem}" />
-    </div>
-  <div class="col sortable-row " as-sortable="sortableCloneOptions" data-ng-model="imgsDragged">
-    <div class="row responsive-sm draggedWords" ng-repeat="imgSrc in imgsDragged track by $index" as-sortable-item>
+  <div class="row word-icons">
+    <div id="{{imgSrc}}" ng-repeat="item in imgs track by $index" >
+      <div class="col list-letters" as-sortable="targetOptions" data-ng-model="item.dropzone">
+        <img class="dropzone icon-word" src="{{item.image}}" ng-show="item.dropzone.length == 1"
+        ng-click="selectItem(item.image)" ng-class="{'selected': item.image == selectedItem}"
+        ng-repeat="dummy in items" as-sortable-item/>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
-  <div class="col list-words" as-sortable="sortableOptions" data-ng-model="words">
+  <div class="col list-words" as-sortable="sourceOptions" data-ng-model="words">
     <div class="row words" ng-repeat="data in words">
-        <div class="col list-letters" as-sortable-item as-sortable-item-handle ng-show="!isDragged(data.word)">
-          <img class="letter" ng-repeat="letter in data.letters track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
-        </div>
+      <div class="col list-letters" as-sortable-item as-sortable-item-handle>
+        <img class="letter" ng-repeat="letter in data.letters track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
+      </div>
     </div>
   </div>
-
-
 </div>

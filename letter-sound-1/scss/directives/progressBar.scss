@@ -1,14 +1,13 @@
 
 .progressBar {
-	width: 250px;
-	height: 14px;
-	margin: 50px auto;
-	display: block;
-  padding-right: 20px;
-  float:right;
 	/* Important Thing */
 	-webkit-appearance: none;
-	border: none;
+	border: 0;
+	height: 1.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 1rem;	
+	width: 25rem;
 }
 
 /* All good till now. Now we'll style the background */

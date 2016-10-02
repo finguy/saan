@@ -13,7 +13,6 @@
             containerPositioning: 'relative',
             clone: false,
             dragEnd: function(eventObj) {
-              console.log(eventObj);
               if (!scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
                 console.log("wrong!!");
                 scope.handleProgress(false);
