@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <div class="row word-icons">
+  <div class="word-icons">
     <div id="{{imgSrc}}" ng-repeat="item in imgs track by $index" >
       <div class="col list-letters" as-sortable="targetOptions" data-ng-model="item.dropzone">
         <img class="dropzone icon-word" src="{{item.image}}" ng-show="item.dropzone.length == 1"
@@ -9,9 +9,9 @@
     </div>
   </div>
 
-  <div class="col list-words" as-sortable="sourceOptions" data-ng-model="words">
-    <div class="row words" ng-repeat="data in words">
-      <div class="col list-letters" as-sortable-item as-sortable-item-handle>
+  <div class="list-words" as-sortable="sourceOptions" data-ng-model="words">
+    <div class="words" ng-repeat="data in words">
+      <div class="list-letters" as-sortable-item as-sortable-item-handle>
         <img class="letter" ng-repeat="letter in data.letters track by $index" src="img/alphabet-buttons/{{letter}}.png"/>
       </div>
     </div>

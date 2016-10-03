@@ -2,8 +2,8 @@
   background-image: url('../img/9-assets/background-wood.jpg');
 
   .letter {
-    width: 8rem;
-    height: 8rem;
+    width: 6rem;
+    height: 6rem;
   }
 
   .icon-word.dropzone {
@@ -23,16 +23,20 @@
   }
 
   .list-words {
-    text-align: left;
+    display: flex;
+    justify-content: center;
   }
 
 
   .words {
-    width: 50rem;
+    display: flex;
+    padding: 1em;
   }
 
   .word-icons {
     padding: 1.5rem;
+    display: flex;
+    justify-content: center;
   }
 
   .instructions {
