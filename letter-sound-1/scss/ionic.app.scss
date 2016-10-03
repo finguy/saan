@@ -25,6 +25,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'util/util';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
+@import 'layout/activity-3';
 @import 'layout/activity-4';
 @import 'layout/activity-10';
 @import 'layout/activity-5';
@@ -90,30 +91,4 @@ body {
 
 .hidden {
   visibility: hidden;
-}
-
-.activity3 {
-  background-image: url('../img/3-assets/background.jpg');
-}
-
-
-
-.activity3-image-morph {
-  @include image-morph(0.5s);
-}
-
-.activity3-image-morph-click {
-  @include image-morph-rotation-on-click(360deg);
-}
-
-.activity-3-box-shadow {
-  @include shadow-box-1(#ccc, #7c3900, #fef3dd, #fab06d);
-}
-
-.activity-3-ui-arrows {
-  width: 25%;
-  height: 25%;
-}
-.activity-3-play-container {
-  float: right;
 }
