@@ -3,7 +3,7 @@
   angular.module('saan.controllers')
   .controller('10Ctrl', function($scope ,RandomWordTen, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
-    $scope.activityId = '10'; // Activity Id
+    $scope.activityId = '10'; // Activity Id    
     $scope.word = []; // Letter to play in level
     $scope.wordStr = "";
     $scope.rimes = [];
@@ -140,7 +140,7 @@
             Util.saveStatus($scope.activityId, $scope.finished);
             ActividadesFinalizadasService.add($scope.activityId);
           }
-          
+
           Ctrl10.showDashboard(false); //Reload dashboard
 
         }, 1000);

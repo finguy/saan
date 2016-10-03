@@ -1,28 +1,19 @@
-<div class="row dashboard">
+<div class="dashboard">
+     <div  as-sortable="sortableTargetOptions" data-ng-model="letters2">
+      <img  src="{{imgBox}}" class="dropzone">
+     </div>
 
-     <div ng-repeat="item in dropzone" as-sortable-item></div>
-     <div class= "col" as-sortable="sortableOptions" data-ng-model="letters2">
-       <div class="dropzoneImage dropzone" src="img/6-assets/objects/treasure-chest-stars.png">
-       </div>
-     </div>
-     <div class="col activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-       <div class="icon-phonema">
-         <img class="activity-6-img " src="{{imgSrc}}"  ng-click="speak(currentPhonema)">
-       </div>
-     </div>
-     <div class="row activity-6-letterContainer" as-sortable="sortableCloneOptions" data-ng-model="letters">
-      <div class="col activity-6-letterContainer" ng-repeat="letter_obj in letters track by $index" >
-        <div class="images-list1">
-          <img src="img/alphabet-buttons/{{letter_obj.letter}}.png"  ng-show="!isDragged(letter_obj.letter,letter_obj.index)"  class="letters-list" as-sortable-item as-sortable-item-handle >
+     <div class="activity-6-letterContainer"  as-sortable="sortableSourceOptions" ng-model="letters">
+        <img  src="{{imgSrc}}" ng-click="speak(currentPhonema)">
+        <div  ng-repeat="letter_obj in letters track by $index" >
+            <img src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )" class="letters-list" as-sortable-item as-sortable-item-handle>
         </div>
-      </div>
      </div>
-</div>
-<br/><br/>
-<br/><br/>
 
-<div class="row">
+
+    <div class="row">
        <div class="col activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
        &nbsp;<img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas" ng-click="speakConditional(letter, $index )">
           </div>
+    </div>
 </div>
