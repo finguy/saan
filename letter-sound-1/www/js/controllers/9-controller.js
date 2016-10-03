@@ -76,8 +76,10 @@ angular.module('saan.controllers')
         $scope.imgs = [];
         $scope.draggedImgs = [];
         $scope.playedWords.push(wordsJson.words.id);
+        var cantOpciones = 1;
         for (var i in $scope.words) {
-          if ($scope.words[i]) {
+          if ($scope.words[i] && cantOpciones <= wordsJson.limit) {
+              cantOpciones++;
               $scope.words[i].letters = $scope.words[i].word.split("");
               var index = Util.getRandomNumber($scope.words[i].imgs.length);
               $scope.imgs.push({image: $scope.words[i].imgs[index], dropzone: [$scope.words[i].word]});

@@ -10,54 +10,27 @@
          //Drag
          scope.sourceOptions = {
            containment: '.activity9',
-           containerPositioning: 'relative'
-           // accept: function(sourceItemHandleScope, destSortableScope){
-           //   console.log("word:");
-           //   console.log( sourceItemHandleScope.modelValue.word);
-           //   scope.word = sourceItemHandleScope.modelValue.word;
-           //   return true;
-           // },
-           // dragEnd: function(eventObj) {
-           //   if (scope.selectedItem && scope.word) {
-           //     var ER = new RegExp(scope.word,"i");
-           //     var result = ER.test(scope.selectedItem);
-           //     if (result) {
-           //       scope.draggedImgs.push(scope.selectedItem);
-           //       scope.selectedItem = null;
-           //       scope.word = null;
-           //       scope.handleProgress(true);
-           //     } else {
-           //       //eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
-           //       scope.handleProgress(false);
-           //     }
-           //   } else {// Buggy drag and drop
-           //     if (!scope.word) {
-           //       scope.speak("Drag the word again!");
-           //     } else if (!scope.selectedItem) {
-           //       scope.speak("Select the image!");
-           //     }
-           //   }
-           // }
-         };
-
-         //Drop
-         scope.targetOptions = {
-           containment: '.activity9',
-           accept: function(sourceItemHandleScope, destSortableScope){
-             return sourceItemHandleScope.modelValue.word == destSortableScope.modelValue[0];
-           },
+           containerPositioning: 'relative',
            dragEnd: function(eventObj) {
-             if (!scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
+             if (!scope.wordOk){
                console.log("wrong!!");
                scope.handleProgress(false);
-             }
-             else{
+             } else{
                console.log("move again");
              }
            },
            itemMoved: function (eventObj) {
              console.log("success");
              scope.handleProgress(true);
+           }
+         };
+
+         //Drop
+         scope.targetOptions = {
+           containment: '.activity9',
+           accept: function(sourceItemHandleScope, destSortableScope){
+             scope.wordOk = sourceItemHandleScope.modelValue.word == destSortableScope.modelValue[0];
+             return scope.wordOk;
            }
          };
 
