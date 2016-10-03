@@ -99,7 +99,7 @@ angular.module('saan.controllers')
         }
       }
 
-      $scope.words = _.shuffle($scope.words);
+      $scope.letters = _.shuffle($scope.letters);
       $scope.lettersDragged = wordJson.word.split("");
       var letterJSON = Util.getRandomElemFromArray($scope.letters);
       $scope.currentPhonema = letterJSON.letter;
