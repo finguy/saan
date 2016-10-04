@@ -9,10 +9,9 @@
        link: function(scope) {
 
          scope.sortableTargetOptions = {
+           containment: '.activity6',
            accept: function(sourceItemHandleScope, destSortableScope){
              scope.isPhonemaOk = scope.checkPhonema(sourceItemHandleScope.modelValue.letter);
-             console.log("accept:");
-             console.log(scope.isPhonemaOk);             
              return scope.isPhonemaOk;
            }
          };
@@ -31,7 +30,7 @@
            },
            itemMoved: function (eventObj) {
              console.log("itemMoved");
-             var jsonInfo = eventObj.source.itemScope.modelValue
+             var jsonInfo = eventObj.source.itemScope.modelValue;
              var letter_index = jsonInfo.index;
              var letter_value = jsonInfo.letter;
              var index = letter_value + "_" + letter_index;
