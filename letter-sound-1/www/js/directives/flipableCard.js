@@ -23,6 +23,15 @@
         scope.isCardMatched = function(){
           return deckCtrl.isCardMatched(scope.row, scope.col);
         };
+
+        scope.range = function(){
+          if (Number.isInteger(scope.card.value)){
+            return 1;
+          }
+          else {
+            return _.range(scope.card.key);
+          }
+        };
       }
     };
   });

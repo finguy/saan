@@ -21,34 +21,37 @@
         var selectedCard = {row: "", col: ""};
         var flipEnabled = true;
         var matchedCards = 0;
+        var selectedCards = [];
 
         this.isCardFlipped = function(row, col){
           return $scope.map[row][col] == 1;
         };
 
         this.flipCard = function(row, col){
-          if (flipEnabled && $scope.map[row][col] === CARD_BACK){
-            $scope.map[row][col] = CARD_FRONT;
-            if (selectedCard.row === ""){
-              selectedCard.row = row;
-              selectedCard.col = col;
-            }else{
-              flipEnabled = false;
-              setTimeout(function(){
-                $scope.$apply(function(){
-                  if ($scope.deck[row][col].key == $scope.deck[selectedCard.row][selectedCard.col].key){
-                    matchCard(row, col);
-                    matchCard(selectedCard.row, selectedCard.col);
-                  }
-                  else{
-                    $scope.map[row][col] = CARD_BACK;
-                    $scope.map[selectedCard.row][selectedCard.col] = CARD_BACK;
-                  }
-                  selectedCard.row = "";
-                  selectedCard.col = "";
-                  flipEnabled = true;
-                });
-              }, CARD_CHECK_DELAY);
+          if (flipEnabled){
+            if (selectedCards.length == 2){
+              unflipCard();
+            }
+
+            if ($scope.map[row][col] === CARD_BACK){
+              $scope.map[row][col] = CARD_FRONT;
+              if (selectedCard.row === ""){
+                selectedCard.row = row;
+                selectedCard.col = col;
+                selectedCards.push({"row": row, "col": col});
+              }else{
+                if ($scope.deck[row][col].key == $scope.deck[selectedCard.row][selectedCard.col].key){
+                  selectedCards.push({"row": row, "col": col});
+                  matchCard();
+                }
+                else{
+                  selectedCards.push({"row": row, "col": col});
+                  $scope.map[row][col] = CARD_FRONT;
+                  $scope.map[selectedCard.row][selectedCard.col] = CARD_FRONT;
+                }
+                selectedCard.row = "";
+                selectedCard.col = "";
+              }
             }
           }
         };
@@ -58,11 +61,27 @@
         };
 
         var matchCard = function(row, col){
-          $scope.map[row][col] = CARD_MATCHED;
-          matchedCards++;
-          if (matchedCards == $scope.size){
-            $scope.build();
+          flipEnabled = false;
+          setTimeout(function(){
+            $scope.$apply(function () {
+              for (var i=0; i<selectedCards.length; i++){
+                $scope.map[selectedCards[i].row][selectedCards[i].col] = CARD_MATCHED;
+              }
+              selectedCards= [];
+              matchedCards = matchedCards + 2;
+              if (matchedCards == $scope.size){
+                $scope.build();
+              }
+              flipEnabled = true;
+            });
+          }, CARD_CHECK_DELAY);
+        };
+
+        var unflipCard = function(){
+          for (var i=0; i<selectedCards.length; i++){
+            $scope.map[selectedCards[i].row][selectedCards[i].col] = CARD_BACK;
           }
+          selectedCards = [];
         };
       }]
     };

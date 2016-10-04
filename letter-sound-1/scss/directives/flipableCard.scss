@@ -1,10 +1,10 @@
 .memory-card {
   font-size: 1.6em;
-  height: 8rem;
+  height: 16rem;
   margin: 1rem;
   position: relative;
   text-align: center;
-  width: 8rem;
+  width: 16rem;
 }
 
 .memory-card-front,
@@ -27,6 +27,7 @@
   align-items: center;
   background-color: $blue;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -38,4 +39,13 @@
   .memory-card-back {
     @include transform(rotateY(0));
   }
+}
+
+.memory-card-text {
+  background: url('../img/7-assets/cookie.png') no-repeat center / contain;
+}
+
+.number-image {
+  margin: .5rem;
+  width: 4rem;
 }
