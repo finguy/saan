@@ -1,5 +1,11 @@
 .activity10 {
-  background-image: url('../img/10-assets/background-10.jpg');
+  background: url('../img/10-assets/background-10.jpg');
+  background-size: cover;
+
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+  }
 
   .word {
     height: 6rem;
@@ -15,18 +21,10 @@
     width: 6rem;
   }
 
-  img.dropzone {
-    border: 0;
-    padding: 0;
-  }
-
   .data-container {
-   @include image-container-1(2rem, #5E2B26, #e7ddc4);
-   display: inline-block;
-   margin-bottom: 10rem;
-   margin-left: 28%;
-   margin-top: 20%;
-   padding: 1rem;
+    @include image-container-1(2rem, #5E2B26, #e7ddc4);
+    margin: 5% auto 15rem;
+    padding: 1rem;
   }
 
   .list-letters {

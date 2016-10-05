@@ -1,10 +1,10 @@
 <div class="dashboard">
   <div class="data-container" as-sortable="sortableTargetOptions" data-ng-model="imgsDragged" ng-click="speak(wordStr)">
-   <img src="{{img}}" class="dropzone"/>
-   <img class="word"  ng-repeat="letter in word track by $index" src="img/3-assets/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
+    <img src="{{img}}"/>
+    <img class="word" ng-repeat="letter in word track by $index" src="img/3-assets/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
   </div>
 
-  <div data-ng-model="words" class="list-words" as-sortable="sortableSourceOptions">
+  <div data-ng-model="words" class="list-words text-center" as-sortable="sortableSourceOptions">
     <div ng-repeat="data in words" class="list-letters" as-sortable-item as-sortable-item-handle>
       <img class="letter" ng-repeat="letter in data.letters track by $index"  src="img/alphabet-buttons/{{letter}}.png"/>
     </div>
