@@ -22,6 +22,9 @@
            itemMoved: function (eventObj) {
              console.log("success");
              scope.handleProgress(true);
+           },
+           accept: function(sourceItemHandleScope, destSortableScope){
+             return false;
            }
          };
 

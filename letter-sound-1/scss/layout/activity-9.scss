@@ -1,17 +1,18 @@
 .activity9 {
-  background-image: url('../img/9-assets/background-wood.jpg');
+  background: url('../img/9-assets/background-wood.jpg') no-repeat fixed;
+  background-size: cover;
 
   .letter {
-    width: 6rem;
     height: 6rem;
+    width: 6rem;
   }
 
   .icon-word.dropzone {
-    width: 17rem;
-    height: 17rem;
-    border:0;
-    border-radius: 0;
     background-image: url('../img/9-assets/cuadro.png');
+    border: 0;
+    border-radius: 0;
+    height: 17rem;
+    width: 17rem;
   }
 
   .selected {
@@ -27,21 +28,25 @@
     justify-content: center;
   }
 
-
   .words {
     display: flex;
     padding: 1em;
   }
 
   .word-icons {
-    padding: 1.5rem;
     display: flex;
     justify-content: center;
+    margin-bottom: 15rem;
+    padding: 1.5rem;
   }
 
   .instructions {
     height: 10rem;
     width: 10rem;
+  }
+
+  .list-letters {
+    width: auto;
   }
 
   .as-sortable-item {
@@ -51,5 +56,9 @@
 
   .as-sortable-placeholder {
     display: none !important;
+  }
+
+  .as-sortable-dragging {
+    width: auto !important;
   }
 }
