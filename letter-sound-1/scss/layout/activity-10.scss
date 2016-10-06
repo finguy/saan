@@ -41,4 +41,14 @@
   .as-sortable-placeholder {
     display: none;
   }
+
+  .list-words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    
+  }
+
+  .as-sortable-dragging {
+    width: auto !important;
+  }
 }
