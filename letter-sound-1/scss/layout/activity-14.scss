@@ -14,8 +14,7 @@
   }
 
   .number-container {
-    display: flex;
-    flex-direction: column;
+    width: 20rem;
   }
 
   .symbol-margin {
@@ -26,9 +25,9 @@
   .dropzone {
     border: .2rem dashed $grey;
     border-radius: 0;
-    height: 15rem;
+    height: 21.3rem;
     padding: 0;
-    width: 15rem;
+    width: 20rem;
 
     .as-sortable-placeholder {
       visibility: hidden;
@@ -42,19 +41,10 @@
     width: 100%;
   }
 
-  .match {
-    align-items: center;
-    background-color: #e4de90;
-    display: flex;
-    justify-content: center;
-  }
-
   .as-sortable-item.match-card {
-    @extend .match;
+    background-color: #e4de90;
     border-color: transparent;
     border-radius: 0;
-    height: 15rem;
-    width: 20rem;
   }
 
   .as-sortable-item.number-container{
@@ -68,8 +58,24 @@
   }
 
   .completed {
-    border: 0;
+    border-color: transparent;
     height: auto;
     width: auto;
+  }
+
+  .number {
+    background-color: #e4de90;
+  }
+
+  .number-image {
+    align-items: center;
+    background-color: cornflowerblue;
+    display: flex;
+    flex-wrap: wrap;
+    height: 15rem;
+    justify-content: center;
+    img {
+      width: 4rem;
+    }
   }
 }

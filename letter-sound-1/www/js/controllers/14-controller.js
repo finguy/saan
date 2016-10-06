@@ -57,6 +57,10 @@
       return Util.numberToWords(number);
     };
 
+    $scope.range = function(number){
+      return _.range(number);
+    };
+
     Ctrl14.setActivity  = function (){
       $scope.dropzoneModel = [];
       var results = [];
