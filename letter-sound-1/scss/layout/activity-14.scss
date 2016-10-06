@@ -1,0 +1,81 @@
+.activity-14-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 5em;
+  height: 100%;
+
+  .operation-container {
+    align-items: center;
+    display: flex;
+    margin-top: 10rem;
+    padding-bottom: 20rem;
+    width: auto;
+  }
+
+  .number-container {
+    width: 20rem;
+  }
+
+  .symbol-margin {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .dropzone {
+    border: .2rem dashed $grey;
+    border-radius: 0;
+    height: 21.3rem;
+    padding: 0;
+    width: 20rem;
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .results-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .as-sortable-item.match-card {
+    background-color: #e4de90;
+    border-color: transparent;
+    border-radius: 0;
+  }
+
+  .as-sortable-item.number-container{
+    border: 0;
+    color: initial;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .completed {
+    border-color: transparent;
+    height: auto;
+    width: auto;
+  }
+
+  .number {
+    background-color: #e4de90;
+  }
+
+  .number-image {
+    align-items: center;
+    background-color: cornflowerblue;
+    display: flex;
+    flex-wrap: wrap;
+    height: 15rem;
+    justify-content: center;
+    img {
+      width: 4rem;
+    }
+  }
+}

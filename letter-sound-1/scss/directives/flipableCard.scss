@@ -1,51 +1,53 @@
-.memory-card {
-  font-size: 1.6em;
-  height: 16rem;
-  margin: 1rem;
-  position: relative;
-  text-align: center;
-  width: 16rem;
-}
+flipable-card {
+  .memory-card {
+    font-size: 1.6em;
+    height: 16rem;
+    margin: 1rem;
+    position: relative;
+    text-align: center;
+    width: 16rem;
+  }
 
-.memory-card-front,
-.memory-card-back {
-  @include backface-visibility(hidden);
-  @include transition(transform .3s);
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
+  .memory-card-front,
+  .memory-card-back {
+    @include backface-visibility(hidden);
+    @include transition(transform .3s);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 
-.memory-card-front {
-  background-color: #ff5078;
-}
-
-.memory-card-back {
-  @include transform(rotateY(-180deg));
-  align-items: center;
-  background-color: $blue;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.flipped {
   .memory-card-front {
-    @include transform(rotateY(-180deg));
+    background-color: #ff5078;
   }
 
   .memory-card-back {
-    @include transform(rotateY(0));
+    @include transform(rotateY(-180deg));
+    align-items: center;
+    background-color: $blue;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-}
 
-.memory-card-text {
-  background: url('../img/7-assets/cookie.png') no-repeat center / contain;
-}
+  .flipped {
+    .memory-card-front {
+      @include transform(rotateY(-180deg));
+    }
 
-.number-image {
-  margin: .5rem;
-  width: 4rem;
+    .memory-card-back {
+      @include transform(rotateY(0));
+    }
+  }
+
+  .memory-card-text {
+    background: url('../img/7-assets/cookie.png') no-repeat center / contain;
+  }
+
+  .number-image {
+    margin: .5rem;
+    width: 4rem;
+  }
 }
