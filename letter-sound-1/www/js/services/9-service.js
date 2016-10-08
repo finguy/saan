@@ -23,7 +23,7 @@ angular.module('saan.services')
               }
             }
           }
-     
+
           var index = Util.getRandomNumber(wordsNotPlayed.length);
 
           return {
@@ -32,7 +32,8 @@ angular.module('saan.services')
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
-            totalLevels : data.info.length
+            totalLevels : data.info.length,
+            limit: data.limit
           };
         },
         function error() {

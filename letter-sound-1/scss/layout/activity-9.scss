@@ -1,50 +1,64 @@
 .activity9 {
-  background-image: url('../img/9-assets/background-wood.jpg');
-}
+  background: url('../img/9-assets/background-wood.jpg') no-repeat fixed;
+  background-size: cover;
 
-.letter {
-  width: 8em;
-  height: 8em;
-}
+  .letter {
+    height: 6rem;
+    width: 6rem;
+  }
 
-.icon-word.dropzone {
-  width: 17em;
-  height: 17em;
-  border:0;
-  border-radius: 0;
-  background-image: url('../img/9-assets/cuadro.png');
-}
+  .icon-word.dropzone {
+    background-image: url('../img/9-assets/cuadro.png');
+    border: 0;
+    border-radius: 0;
+    height: 17rem;
+    width: 17rem;
+  }
 
-.selected {
-   background: 	#09c;
-}
+  .selected {
+    background: #09c;
+  }
 
-.selected.dropzone {
-   border-radius: 1em;
-}
-.list-words {
-  float: left;
-  text-align: left;
-}
+  .selected.dropzone {
+    border-radius: 1rem;
+  }
 
+  .list-words {
+    display: flex;
+    justify-content: center;
+  }
 
-.words {
-  width: 50em;
-}
+  .words {
+    display: flex;
+    padding: 1em;
+  }
 
-.list-letters.as-sortable-item {
-  border: 0;
-  background-color: transparent;
-}
-.word-icons {
-  padding: 1.5em;
-}
+  .word-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15rem;
+    padding: 1.5rem;
+  }
 
-.draggedWords.as-sortable-item {
-  display:none;
-}
+  .instructions {
+    height: 10rem;
+    width: 10rem;
+  }
 
-.instructions {
-  width: 10em;
-  height: 10em;
+  .list-letters {
+    width: auto;
+  }
+
+  .as-sortable-item {
+    background-color: inherit;
+    border: inherit;
+  }
+
+  .as-sortable-placeholder {
+    display: none !important;
+  }
+
+  .as-sortable-dragging {
+    width: auto !important;
+  }
 }

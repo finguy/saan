@@ -1,61 +1,63 @@
 .activity6 {
   background-image: url('../img/6-assets/background.png');
-}
 
-.images-list {
-  width: 50em;
-  max-height: 30em;
-  float: left;
-}
-.activity-6-letterContainer.row {
- width: 50%;
-}
-.activity-6-letterContainer.col {
-  max-width: 20em;
-  height: 20em;
-}
-.letters-list.as-sortable-item{
-  width: 10em;
-  height: 10em;
-}
+  .images-list {
+    float: left;
+    max-height: 30rem;
+    width: 50rem;
+  }
 
-.icon-phonema {
-  padding: 50px;
-}
-.activity-6-img {
-  position:absolute;
-  top:20%;
-}
-.dropzoneImage.dropzone {
+  .activity-6-letterContainer{
+    @include image-container-1(2rem, #5E2B26, #e7ddc4);
+    display: inline-flex;
+    margin-bottom: 10rem;
+    padding: 1rem;
+  }
+
+  .letters-list.as-sortable-item{
+    height: 10rem;
+    width: 10rem;
+    background: transparent;
     border: 0;
-    color: grey;
-    height: 310px;
-    margin: auto 10px 10px;
-    padding: 14px;
-    width: 500px;
-    background-image: url("../img/6-assets/objects/treasure-chest-stars.png");
-    background-repeat: no-repeat;
-    border-radius: 0;
+  }
 
-}
+  .icon-phonema {
+    padding: 5rem;
+  }
 
-.activity-6-dragged-phonemas {
-    background-image: url("../img/6-assets/ice-cube.png");
-    background-repeat: no-repeat;
-    width: 20em;
-    min-height: 19em;
-    margin: .5em;
+  .dropzone {
+    background: url('../img/6-assets/objects/treasure-chest-stars.png') no-repeat center / contain;
+    height: 30rem;
     border:0;
-    border-radius: 0;
-}
 
-.dragged-phonemas {
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
 
-    height: 8em;
-  -webkit-transform: rotate(3deg);
-   transform: rotate(3deg);
-   margin-left: 30px;
-   margin-top: 50px;
-   margin-right: auto;
-   display: block;
+  .activity-6-dragged-phonemas {
+      background-image: url('../img/6-assets/ice-cube.png');
+      background-repeat: no-repeat;
+      min-height: 19rem;
+      margin: .5rem;
+      border: 0;
+      border-radius: 0;
+      width: 20rem;
+  }
+
+  .dragged-phonemas {
+    height: 8rem;
+    -webkit-transform: rotate(3deg);
+    transform: rotate(3deg);
+    margin-left: 3rem;
+    margin-top: 5rem;
+    margin-right: auto;
+    display: block;
+  }
+
+  .as-sortable-dragging{
+    background: 0;
+    border: 0;
+    margin: 0;
+  }  
 }

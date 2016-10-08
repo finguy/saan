@@ -15,6 +15,7 @@ angular.module('saan.controllers')
       $scope.draggedImgs = [];
       $scope.playedWords = [];
       $scope.selectedItem = null;
+      $scope.items = ['dummy'];
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
       //Shows Activity Dashboard
@@ -57,7 +58,7 @@ angular.module('saan.controllers')
       Ctrl9.setUpScore = function(){
         var score = Util.getScore($scope.activityId);
         if (score) {
-          $scope.score = score
+          $scope.score = score;
         }
       };
 
@@ -66,7 +67,7 @@ angular.module('saan.controllers')
         if (finished === false || finished === true) {
           $scope.finished = finished;
         }
-      }
+      };
 
       Ctrl9.setUpContextVariables = function(data) {
         console.log(data);
@@ -75,11 +76,13 @@ angular.module('saan.controllers')
         $scope.imgs = [];
         $scope.draggedImgs = [];
         $scope.playedWords.push(wordsJson.words.id);
+        var cantOpciones = 1;
         for (var i in $scope.words) {
-          if ($scope.words[i]) {
+          if ($scope.words[i] && cantOpciones <= wordsJson.limit) {
+              cantOpciones++;
               $scope.words[i].letters = $scope.words[i].word.split("");
               var index = Util.getRandomNumber($scope.words[i].imgs.length);
-              $scope.imgs.push($scope.words[i].imgs[index]);
+              $scope.imgs.push({image: $scope.words[i].imgs[index], dropzone: [$scope.words[i].word]});
           }
         }
 
@@ -91,7 +94,7 @@ angular.module('saan.controllers')
         $scope.substractScore = data.scoreSetUp.substract;
         $scope.minScore = data.scoreSetUp.minScore;
         $scope.totalLevels = data.totalLevels;
-      }
+      };
 
       $scope.handleProgress = function(isWordOk) {
           var LAST_CHECK  = $scope.draggedImgs.length === $scope.words.length;

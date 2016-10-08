@@ -99,5 +99,6 @@
     "add": 1,
     "substract": 1,
     "minScore": 10
-  }
+  },
+  "limit":4  
 }

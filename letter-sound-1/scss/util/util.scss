@@ -15,6 +15,11 @@
          transform: rotate($degrees);
 }
 
+@mixin image-zoom-on-click($size){
+     width: $size;
+     height: $size;
+}
+
 /* Shadow Boxes */
 @mixin shadow-box-1($shadowColor,$textColor, $gradientFrom, $gradientTo){
   -webkit-box-shadow: 3px 3px 5px 6px $shadowColor;
@@ -25,7 +30,7 @@
   background: -webkit-linear-gradient($gradientFrom, $gradientTo);
   background: -o-linear-gradient($gradientFrom, $gradientTo);
   background: -moz-linear-gradient($gradientFrom, $gradientTo);
-  background: linear-gradient($gradientFrom, $gradientTo);  
+  background: linear-gradient($gradientFrom, $gradientTo);
   min-height: 160px;
 }
 
@@ -36,10 +41,8 @@
   border-radius: $borderRadius;
   border: $borderRadius solid $borderColor;
   background-color:$backgroundColor;
-   padding:0;
-   margin:1px;
-   clear:both;
-   float:left;
+  padding: 0;
+  margin: .1rem ;
 }
 
 /*Inner circle container*/

@@ -14,13 +14,13 @@
     align-items: center;
   }
 
-  .placeholder{
-    height: 50%;
+  .placeholder {
     border: red dotted;
+    height: 50%;
 
     .as-sortable-item{
-      border: 0;
       background: inherit;
+      border: 0;      
       margin: 0;
     }
 

@@ -6,13 +6,17 @@
     font-size: 5em;
   }
 
+  .item {
+    margin: auto;
+  }
+
   .item-dropzone {
     border: dotted black .4rem;
     border-radius: 2rem;
     display: flex;
     flex-wrap: wrap;
-    height: 20rem;
     margin-left: 4rem;
+    min-height: 20rem;
     width: 30rem;
 
     .as-sortable-placeholder {

@@ -1,18 +1,15 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity5">
+<ion-view view-title="Dashboard (level: {{level}})" class="activity5 content-margin">
   <activity-status></activity-status>
-  <ion-content class="padding">
     <br/>  <br/>  <br/>
     <div class="activity5-letter-container">
-      <span
-        class="material-icons btn-play-word"
+      <span class="material-icons btn-play-word"
         ng-click="speak(instructions + ' ' + letter)">
-        <img src="{{letterSrc}}" class="img-letter"/></span>
+        <img src="{{letterSrc}}" class="img-letter"/>
+      </span>
     </div>
     <br/><br/><br/>
     <br/><br/><br/>
 
-    <center>
     <object-dashboard-five></object-dashboard-five>
-    </center>
-  </ion-content>
+
 </ion-view>

@@ -2,6 +2,7 @@
   <div class="memory-card-front">
   </div>
   <div class="memory-card-back">
-    <span class="memory-card-text">{{card.value}}</span>
+    <img ng-if="card.value !== card.key" ng-repeat="item in range()" src="img/7-assets/cookie.png" class="number-image">
+    <span ng-if="card.value === card.key">{{card.value}}</span>
   </div>
 </div>
