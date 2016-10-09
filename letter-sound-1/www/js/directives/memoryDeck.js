@@ -16,9 +16,7 @@
         var CARD_FRONT = 1;
         var CARD_MATCHED = 2;
         var CARD_CHECK_DELAY = 1000;
-
-        var rows = $scope.deck.length;
-        var selectedCard = {row: "", col: ""};
+        
         var flipEnabled = true;
         var matchedCards = 0;
         var selectedCards = [];
@@ -35,22 +33,9 @@
 
             if ($scope.map[row][col] === CARD_BACK){
               $scope.map[row][col] = CARD_FRONT;
-              if (selectedCard.row === ""){
-                selectedCard.row = row;
-                selectedCard.col = col;
-                selectedCards.push({"row": row, "col": col});
-              }else{
-                if ($scope.deck[row][col].key == $scope.deck[selectedCard.row][selectedCard.col].key){
-                  selectedCards.push({"row": row, "col": col});
-                  matchCard();
-                }
-                else{
-                  selectedCards.push({"row": row, "col": col});
-                  $scope.map[row][col] = CARD_FRONT;
-                  $scope.map[selectedCard.row][selectedCard.col] = CARD_FRONT;
-                }
-                selectedCard.row = "";
-                selectedCard.col = "";
+              selectedCards.push({"row": row, "col": col});
+              if (selectedCards.length == 2 && $scope.deck[row][col].key == $scope.deck[selectedCards[0].row][selectedCards[0].col].key){
+                matchCard();
               }
             }
           }
