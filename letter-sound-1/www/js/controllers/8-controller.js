@@ -7,7 +7,7 @@
     $scope.dropzoneModel = [];
 
     var config = '';
-    var matches = 0;
+    var matchesCount = 0;
     var Ctrl8 = Ctrl8 || {};
 
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -31,6 +31,7 @@
       var number;
       var index;
       var valid;
+      matchesCount = 0;
 
       for (var i = 0; i < config.cards; i++){
         valid = false;
@@ -77,9 +78,9 @@
                               function(card){return card.value == item;},
                               item);
       $scope.cards[index].dropzone.push(item);
-      matches++;
+      matchesCount++;
 
-      if (matches == config.cards){
+      if (matchesCount == config.cards){
         Ctrl8.setActivity();
       }
     };
