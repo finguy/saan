@@ -14,6 +14,7 @@
   }
 
   .number-container {
+    height: 21rem;
     width: 20rem;
   }
 
@@ -25,7 +26,7 @@
   .dropzone {
     border: .2rem dashed $grey;
     border-radius: 0;
-    height: 21.3rem;
+    height: 21rem;
     padding: 0;
     width: 20rem;
 
@@ -41,15 +42,17 @@
     width: 100%;
   }
 
-  .as-sortable-item.match-card {
-    background-color: #e4de90;
-    border-color: transparent;
-    border-radius: 0;
-  }
+  .as-sortable-item{
+    &.match-card {
+      background-color: #e4de90;
+      border-color: transparent;
+      border-radius: 0;
+    }
 
-  .as-sortable-item.number-container{
-    border: 0;
-    color: initial;
+    &.number-container {
+      border: 0;
+      color: initial;
+    }
   }
 
   .card-container {
@@ -59,8 +62,6 @@
 
   .completed {
     border-color: transparent;
-    height: auto;
-    width: auto;
   }
 
   .number {
@@ -74,6 +75,7 @@
     flex-wrap: wrap;
     height: 15rem;
     justify-content: center;
+
     img {
       width: 4rem;
     }

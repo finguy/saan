@@ -10,8 +10,10 @@ angular.module('saan.services')
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            numberRange : data.numberRange,
-            options: data.options
+            numberRange : parseInt(data.numberRange, 10),
+            options: parseInt(data.options, 10),
+            optionsRange: parseInt(data.optionsRange, 10),
+            mode: parseInt(data.mode, 10)
           };
         },
         function error() {

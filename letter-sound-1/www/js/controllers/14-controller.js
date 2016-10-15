@@ -10,6 +10,8 @@
 
     var result;
     var config = '';
+    var ADD = 1;
+    var SUBTRACT = 2;
     var Ctrl14 = Ctrl14 || {};
 
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -18,9 +20,7 @@
 
     Ctrl14.getConfiguration = function (level){
       NumberOperations.getConfig(level).then(function(data){
-        config = data;
-        config.options = parseInt(config.options, 10);
-        config.numberRange = parseInt(config.numberRange, 10);
+        config = data;      
         Ctrl14.setActivity();
       });
     };
@@ -29,8 +29,7 @@
       containment: '.placeholder',
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
-        var value = sourceItemHandleScope.modelValue;
-        return value == $scope.numbers[0] + $scope.numbers[1];
+        return sourceItemHandleScope.modelValue == result;
       }
     };
 
@@ -68,14 +67,22 @@
 
       // select the two numbers to add/subtract
       numbers.push(_.random(1, config.numberRange));
-      numbers.push(_.random(1, config.numberRange-numbers[0]));
+      if (config.mode == ADD){
+        numbers.push(_.random(1, config.numberRange));
+        result = numbers[0] + numbers[1];
+        $scope.operator = "+";
+      }
+      else{
+        numbers.push(_.random(1, numbers[0]));
+        result = numbers[0] - numbers[1];
+        $scope.operator = "-";
+      }
 
-      result = numbers[0] + numbers[1];
       results.push(result);
       $scope.numbers = numbers;
 
-      var top = (result + 5 <= config.numberRange) ? result + 5 : config.numberRange;
-      var bottom = (result - 5 <= 0) ? 1 : result -5;
+      var top = (result + config.optionsRange <= config.numberRange) ? result + config.optionsRange : config.numberRange;
+      var bottom = (result - config.optionsRange <= 0) ? 0 : result - config.optionsRange;
 
       var number;
       var index;
