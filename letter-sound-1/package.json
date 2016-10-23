@@ -29,11 +29,11 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     {
-      "locator": "saan-plugins/cordova-tts-plugin",
+      "locator": "/saan-plugins/cordova-tts-plugin",
       "id": "com.saan.tts"
     },
     {
-      "locator": "saan-plugins/cordova-media-plugin",
+      "locator": "/saan-plugins/cordova-media-plugin",
       "id": "com.saan.media"
     }
   ],
