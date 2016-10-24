@@ -136,7 +136,7 @@ angular.module('saan.directives')
           }
           };
 
-          scope.animateImage = function(id) {            
+          scope.animateImage = function(id) {
                     var imgs = $element.find('img');
                     for (var i in imgs) {
                       console.log(imgs[i].id +"=="+id);
@@ -150,7 +150,7 @@ angular.module('saan.directives')
                           angular.element(imgs[i]).removeClass('options-image-morph-click');
                         }
                     },1000);
-          }
+         }
         }
       };
     });

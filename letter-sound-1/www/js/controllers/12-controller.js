@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('12Ctrl', function($scope ,RandomText, TTSService,
+  .controller('12Ctrl', function($scope, RandomText, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
     $scope.activityId = '12'; // Activity Id
 
@@ -12,7 +12,9 @@
     $scope.instructions = ""; // Instructions to read
     $scope.successMessages = [];
     $scope.errorMessages  = [];
-
+    $scope.showText = false;
+    $scope.showQuestion = false;
+    $scope.showOptions = false;
     $scope.dashboard = []; // Dashboard letters
 
     $scope.level = $scope.level || 1; // Indicates activity level
@@ -65,11 +67,6 @@
           setTimeout(function() {
             if (readInstructions){
               $scope.speak($scope.instructions);
-                setTimeout(function() {
-                  $scope.speak($scope.wordStr);
-                }, 3000);
-            } else {
-              $scope.speak($scope.wordStr);
             }
           }, readWordTimeout);
 
@@ -85,7 +82,9 @@
       var position = Util.getRandomNumber(textJson.questions.length);
       $scope.playedTexts.push(textJson.id);
       $scope.text = textJson.text;
-
+      $scope.showText = true;
+      $scope.showQuestion = false;
+      $scope.showOptions = false;
       $scope.question = textJson.questions[position].question;
       $scope.answer = textJson.questions[position].answer;
       $scope.options = _.shuffle(textJson.questions[position].options);
@@ -124,7 +123,7 @@
             Util.saveStatus($scope.activityId, $scope.finished);
             ActividadesFinalizadasService.add($scope.activityId);
           }
-          Ctrl12.showDashboard(false); //Reload dashboard
+          Ctrl12.showDashboard(true); //Reload dashboard
         }, 1000);
       } else {
         $scope.score = Score.update(-$scope.substractScore, $scope.score);
@@ -137,6 +136,21 @@
           $scope.speak(errorMessage);
         }, 1000);
       }
+    };
+
+    $scope.displayQuestion = function() {
+      $scope.showText = false;
+      $scope.showQuestion = true;
+      //Wait for UI to load
+      setTimeout(function() {
+        $scope.speak($scope.question);
+        //Wait spoken instructions
+        setTimeout(function() {
+          $scope.showQuestion = false;
+          $scope.showOptions = true;
+          $scope.$apply(); //this triggers a $digest
+        }, 2000);
+      }, 1000);
     };
 
     //Advance one level
@@ -154,6 +168,7 @@
       $scope.dashboard = [];
       $scope.selectedNumbers = [];
     };
+
 
     //*************** ACTIONS **************************/
     //Show Dashboard
