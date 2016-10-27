@@ -31,7 +31,7 @@ angular.module('saan.controllers')
 
 			coso2.play();
 
-			
+
 		});
 
 	};
