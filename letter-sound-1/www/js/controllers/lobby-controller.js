@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('LobbyCtrl', function($scope, actividadesConfiguradas, ActividadesFinalizadasService, _){
+.controller('LobbyCtrl', function($scope, actividadesConfiguradas, ActividadesFinalizadasService, _, $ionicPlatform){
 	var chequearActividadesDisponibles = function(){
 		var actividadesDisponibles = [];
 		var actividadesFinalizadas = ActividadesFinalizadasService.get();
@@ -22,6 +22,17 @@ angular.module('saan.controllers')
 
 		$scope.actividadesDisponibles = actividadesDisponibles;
 		console.log("lobby check");
+		$ionicPlatform.ready(function() {
+			console.log(Media);
+
+			var coso2 = new Media("/android_asset/www/sounds/03_Revolution_Radio.mp3",
+				function(){ console.log("sabe2");},
+				function(err){ console.log(err);} );
+
+			coso2.play();
+
+			
+		});
 
 	};
 
