@@ -1,3 +1,4 @@
+$color : #00bfff;
 .activity12 {
     .options-container{
       margin: 6rem 0 0 6rem;
@@ -19,16 +20,16 @@
 
 
     .text-container {
-      background-color:	#00bfff;
+      background-color:	$color;
       border-radius: 5rem;
       width: 100rem;
     }
 
     .text {
-      font-size: 2rem;
+      font-size: 2em;
       font-weight: bold;
-      font-family: learningNumbers;
-      line-height: 4rem;
+      font-family: Source Sans Pro;
+      line-height: 4em;
       word-break: break-all;
       text-align: justify;
       width: 80rem;

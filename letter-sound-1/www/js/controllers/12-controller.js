@@ -4,7 +4,6 @@
   .controller('12Ctrl', function($scope, RandomText, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
     $scope.activityId = '12'; // Activity Id
-
     $scope.img = "";
     $scope.assets = [];
     $scope.playedTexts = [];
@@ -107,23 +106,25 @@
       var isAnswerOk = ER.test(answer);
       if (isAnswerOk) {
         $scope.checkingAnswer = true;
-        if (!$scope.finished) {
-          $scope.score = Score.update($scope.addScore, $scope.score);
-          Util.saveScore($scope.activityId, $scope.score);
-        }
-
         var position = Util.getRandomNumber($scope.successMessages.length);
         var successMessage = $scope.successMessages[position];
         $scope.speak(successMessage);
         setTimeout(function() {
-          Ctrl12.levelUp(); //Advance level
+          //Advance level
+          Ctrl12.levelUp();
           Util.saveLevel($scope.activityId, $scope.level);
-          if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-            $scope.finished = $scope.score >= $scope.minScore;
-            Util.saveStatus($scope.activityId, $scope.finished);
+          //Check score and status
+          $scope.score = Score.update($scope.addScore, $scope.score);
+          $scope.finished = $scope.score >= $scope.minScore;
+          Util.saveStatus($scope.activityId, $scope.finished);
+          if (!$scope.finished) {
+            Util.saveScore($scope.activityId, $scope.score);
+            //Reload dashboard
+            Ctrl12.showDashboard(true);
+          } else {
             ActividadesFinalizadasService.add($scope.activityId);
           }
-          Ctrl12.showDashboard(true); //Reload dashboard
+                    
         }, 1000);
       } else {
         $scope.score = Score.update(-$scope.substractScore, $scope.score);
