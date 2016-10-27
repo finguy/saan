@@ -130,26 +130,27 @@ angular.module('saan.directives')
         scope: 'true',
         link: function(scope, $element) {
           scope.selectAnswer = function(id, name) {
-           if (!scope.checkingNumber){
-            scope.selectedObject = name;
-            scope.checkNumber(name, id);
-          }
+            if (!scope.checkingAnswer){
+              scope.animateImage(id);
+              scope.selectedObject = id;
+              scope.handleProgress(id);
+            }
           };
 
           scope.animateImage = function(id) {
-                    var imgs = $element.find('img');
-                    for (var i in imgs) {
-                      console.log(imgs[i].id +"=="+id);
-                      if (imgs[i] && imgs[i].id == id) {
-                        angular.element(imgs[i]).addClass('options-image-morph-click');
-                          break;
-                      }
-                    }
-                    setTimeout(function() {
-                        for (var i in imgs) {
-                          angular.element(imgs[i]).removeClass('options-image-morph-click');
-                        }
-                    },1000);
+              var imgs = $element.find('img');
+              for (var i in imgs) {
+                console.log(imgs[i].id +"=="+id);
+                if (imgs[i] && imgs[i].id == id) {
+                  angular.element(imgs[i]).addClass('options-image-morph-click');
+                    break;
+                }
+              }
+              setTimeout(function() {
+                  for (var i in imgs) {
+                    angular.element(imgs[i]).removeClass('options-image-morph-click');
+                  }
+              },1000);
          }
         }
       };

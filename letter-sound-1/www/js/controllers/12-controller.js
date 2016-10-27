@@ -85,7 +85,7 @@
       $scope.showQuestion = false;
       $scope.showOptions = false;
       $scope.question = textJson.questions[position].question;
-      $scope.answer = textJson.questions[position].answer;
+      $scope.answer = parseInt(textJson.questions[position].answer,10);
       $scope.options = _.shuffle(textJson.questions[position].options);
 
       $scope.instructions = data.instructions;
@@ -102,8 +102,7 @@
     };
 
     $scope.handleProgress = function(answer) {
-      var ER = new RegExp($scope.answer,"i");
-      var isAnswerOk = ER.test(answer);
+      var isAnswerOk = $scope.answer === parseInt(answer,10);
       if (isAnswerOk) {
         $scope.checkingAnswer = true;
         var position = Util.getRandomNumber($scope.successMessages.length);
@@ -124,17 +123,19 @@
           } else {
             ActividadesFinalizadasService.add($scope.activityId);
           }
-                    
+
         }, 1000);
       } else {
         $scope.score = Score.update(-$scope.substractScore, $scope.score);
         Util.saveScore($scope.activityId, $scope.score);
-        $scope.speak(name);
         //wait for speak
-        setTimeout(function() {
+        setTimeout(function() {          
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);
+          setTimeout(function() {
+          $scope.checkingAnswer = false;
+          },1000);
         }, 1000);
       }
     };
