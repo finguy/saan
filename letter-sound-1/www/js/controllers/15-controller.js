@@ -41,7 +41,16 @@
       });
     };
 
-    Ctrl15.setActivity = function(){
+    Ctrl15.setActivity = function(stageData){
+			var instructionsPlayer = new Media(AssetsPath.sounds(stageData.soundPath),
+				function(){ $scope.$apply(Ctrl15.showOptions(stageData)); },
+				function(err){ console.log(err); }
+      );
+
+			instructionsPlayer.play();
+    };
+
+    Ctrl15.showOptions = function(stageData){
       $scope.options = [];
 
       Ctrl15.setStage(stageNumber);
