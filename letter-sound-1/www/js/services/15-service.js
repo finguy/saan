@@ -1,5 +1,5 @@
 angular.module('saan.services')
-.factory('MathWrittenProblems', function($http, Util) {
+.factory('MathOralProblems', function($http) {
   return {
     getConfig: function(level) {
       var src = 'data/15-config2.json';
