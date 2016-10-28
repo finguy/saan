@@ -1,6 +1,7 @@
-<ion-view view-title="{{activityId}}" class="content-margin">
-  Template para {{activityId}}
-  <div class="match-container">
-    <div ng-repeat="item in matches" class="match-card">{{numberToWord(item)}}</div>
+<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content content-margin">
+  <div class=" match-container">
+    <!-- <div class=""> -->
+      <div ng-repeat="item in options" class="match-card">{{item}}</div>
+    <!-- </div> -->
   </div>
 </ion-view>

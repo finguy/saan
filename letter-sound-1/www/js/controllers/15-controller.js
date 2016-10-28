@@ -2,39 +2,56 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('15Ctrl',['$scope','Util', 'MathOralProblems',
-  function($scope, Util, MathOralProblems) {
+	.controller('15Ctrl',['$scope', '$log', 'MathOralProblems', 'AssetsPath',
+  function($scope, $log, MathOralProblems, AssetsPath) {
     $scope.activityId = '15';
+
     var Ctrl15 = Ctrl15 || {};
 
     var config;
+    var stage;
+    var level;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      Ctrl15.getConfiguration();
+      stage = 1; //TODO: retrieve and load from local storage
+      level = 1; //TODO: retrieve and load from local storage
+      Ctrl15.getConfiguration(level);
     });
 
     Ctrl15.getConfiguration = function (level){
-      console.log(MathOralProblems);
       MathOralProblems.getConfig(level).then(function(data){
         config = data;
-        Ctrl15.setActivity();
+        Ctrl15.setActivity(config.problems[stage-1]);
       });
     };
 
-    Ctrl15.setActivity = function(){
+    Ctrl15.setActivity = function(stageData){
+			var instructionsPlayer = new Media(AssetsPath.sounds(stageData.soundPath),
+				function(){ $scope.$apply(Ctrl15.showOptions(stageData)); },
+				function(err){ console.log(err); }
+      );
+
+			instructionsPlayer.play();
+    };
+
+    Ctrl15.showOptions = function(stageData){
       $scope.options = [];
-      // $ionicPlatform.ready(function() {
-  			console.log(Media);
+      $scope.options.push(stageData.answer);
 
-  			var coso2 = new Media("/android_asset/www/sounds/Galaga_Theme.mp3",
-  				function(){ console.log("sabe2");},
-  				function(err){ console.log(err);} );
+      var number;
 
-  			coso2.play();
+      for (var i = 1; i < config.options; i++){
+        var valid = false;
+				while (!valid){
+					number = Math.floor(Math.random() * 10);
+          var index = _.findIndex($scope.options, function(option){return option === number;}, number);
+          valid = (number !== 0 && index === -1);
+        }
 
+        $scope.options.push(number);
+			}
 
-  		// });
-      return true;
+      $scope.options = _.shuffle($scope.options);
     };
 	}
 
