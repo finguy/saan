@@ -21,7 +21,7 @@
     Ctrl15.getConfiguration = function (level){
       MathOralProblems.getConfig(level).then(function(data){
         config = data;
-        Ctrl15.setActivity(config.problems[stage-1]);
+        Ctrl15.setActivity(Ctrl15.getStage(stage));
       });
     };
 
@@ -32,6 +32,10 @@
       );
 
 			instructionsPlayer.play();
+    };
+
+    Ctrl15.getStage = function(stage){
+      return config.problems[stage-1];
     };
 
     Ctrl15.showOptions = function(stageData){
@@ -53,6 +57,13 @@
 
       $scope.options = _.shuffle($scope.options);
     };
+
+    $scope.checkAnswer = function(value){
+      if (value === Ctrl15.getStage(stage).answer){
+        stage++;
+        Ctrl15.setActivity(Ctrl15.getStage(stage));
+      }
+    }
 	}
 
 	]);
