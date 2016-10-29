@@ -5,7 +5,6 @@
 
   MathOralProblems.$inject = ['$http', '$log'];
 
-
   function MathOralProblems($http, $log) {
     var data;
 
