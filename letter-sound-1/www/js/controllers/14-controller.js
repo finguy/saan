@@ -2,8 +2,8 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('14Ctrl',['$scope','Util', 'TTSService', 'Carlitos',
-  function($scope, Util, TTSService, Carlitos) {
+	.controller('14Ctrl',['$scope','Util', 'TTSService', 'NumberOperations',
+  function($scope, Util, TTSService, NumberOperations) {
     $scope.activityId = '14';
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
@@ -19,7 +19,7 @@
     });
 
     Ctrl14.getConfiguration = function (level){
-      Carlitos.getConfig(level).then(function(data){
+      NumberOperations.getConfig(level).then(function(data){
         config = data;
         Ctrl14.setActivity();
       });

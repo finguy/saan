@@ -1,12 +1,26 @@
-angular.module('saan.services')
-.factory('MathOralProblems', function($http, $log) {
-  return {
-    getConfig: function(level) {
+(function() {
+  'use strict';
+  angular.module('saan.services')
+  .factory('MathOralProblems', MathOralProblems);
+
+  MathOralProblems.$inject = ['$http', '$log'];
+
+
+  function MathOralProblems($http, $log) {
+    var data;
+
+    return {
+      getConfig: getConfig,
+      getMaxLevel: getMaxLevel
+    };
+
+    function getConfig(level) {
       var src = 'data/15-config.json';
       if (level >= 1){
         return $http.get(src).then(
           function success(response) {
-            return response.data.levels[level-1];
+            data = response.data;
+            return data.levels[level-1];
           },
           function error() {
             //TODO: handle errors for real
@@ -18,5 +32,9 @@ angular.module('saan.services')
         $log.error("Invalid level value");
       }
     }
-  };
-});
+
+    function getMaxLevel(){
+      return data.levels.length;
+    }
+  }
+})();
