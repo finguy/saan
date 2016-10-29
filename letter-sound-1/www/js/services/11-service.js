@@ -5,7 +5,7 @@
 
   Listening.$inject = ['$http', '$log'];
 
-  function MathOralProblems($http, $log) {
+  function Listening($http, $log) {
     return {
       getConfig: getConfig
     };

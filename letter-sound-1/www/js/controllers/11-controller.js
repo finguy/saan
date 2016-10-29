@@ -1,43 +1,78 @@
 (function() {
   'use strict';
 
-	angular.module('saan.controllers')
-	.controller('11Ctrl', ['$scope', '$log', '$state', 'Listening',
-	function($scope, $log, $state, Listening) {
-		$scope.activityId = '11';
-		var Ctrl11 = Ctrl11 || {};
+  angular.module('saan.controllers')
+  .controller('11Ctrl', ['$scope', '$log', '$state', 'Listening', 'AssetsPath',
+  function($scope, $log, $state, Listening, AssetsPath) {
+    $scope.activityId = '11';
+    var Ctrl11 = Ctrl11 || {};
 
     var config;
-    var stage;
+    var stageNumber;
+    var stageData;
     var level;
 
-		$scope.$on('$ionicView.beforeEnter', function() {
-      stage = 1; //TODO: retrieve and load from local storage
+    $scope.$on('$ionicView.beforeEnter', function() {
+      stageNumber = 1; //TODO: retrieve and load from local storage
       level = 1; //TODO: retrieve and load from local storage
       Ctrl11.getConfiguration(level);
     });
 
-		Ctrl11.getConfiguration = function (level){
-      MathOralProblems.getConfig(level).then(function(data){
+    Ctrl11.getConfiguration = function (level){
+      Listening.getConfig(level).then(function(data){
         config = data;
-        Ctrl11.setActivity(Ctrl11.getStage(stage));
+
+        //play instructions of activity
+        var instructionsPlayer = new Media(AssetsPath.sounds(config.instructionsPath),
+          function(){
+            Ctrl11.setActivity();
+            instructionsPlayer.release();
+          },
+          function(err){ $log.error(err); }
+        );
+
+        instructionsPlayer.play();
+        $log.debug("playing instructions");
+
       });
     };
 
-    Ctrl11.setActivity = function(stageData){
+    Ctrl11.setActivity = function(){
       $scope.options = [];
 
-      var instructionsPlayer = new Media(AssetsPath.sounds(stageData.soundPath),
-        function(){ $scope.$apply(Ctrl11.showOptions(stageData)); },
-        function(err){ console.log(err); }
+      Ctrl11.setStage(stageNumber);
+      var storyPlayer = new Media(AssetsPath.sounds(stageData.textSoundPath),
+        function(){
+          Ctrl11.readQuestion();
+        },
+        function(err){ $log.error(err); }
       );
 
-      instructionsPlayer.play();
+      storyPlayer.play();
+      $log.debug("playing story audio");
     };
 
-    Ctrl11.getStage = function(stage){
-      return config.stories[stage-1];
+    Ctrl11.setStage = function(stageNumber){
+      stageData = config.stories[stageNumber-1];
     };
-	}]);
+
+    Ctrl11.readQuestion = function(){
+      var questionPlayer = new Media(AssetsPath.sounds(stageData.questionSoundPath),
+        function(){
+          $scope.$apply(Ctrl11.showOptions());
+          questionPlayer.release();
+        },
+        function(err){ $log.error(err); }
+      );
+
+
+      questionPlayer.play();
+      $log.debug("playing question");
+    };
+
+    Ctrl11.showOptions = function(){
+      //TODO use similar method to activity 12
+    };
+  }]);
 
 })();
