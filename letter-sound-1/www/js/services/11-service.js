@@ -6,8 +6,11 @@
   Listening.$inject = ['$http', '$log'];
 
   function Listening($http, $log) {
+    var data;
+
     return {
-      getConfig: getConfig
+      getConfig: getConfig,
+      getMaxLevel: getMaxLevel
     };
 
     function getConfig(level) {
@@ -15,7 +18,8 @@
       if (level >= 1){
         return $http.get(src).then(
           function success(response) {
-            return response.data.levels[level-1];
+            data = response.data;
+            return data.levels[level-1];
           },
           function error() {
             //TODO: handle errors for real
@@ -26,6 +30,10 @@
       else {
         $log.error("Invalid level value");
       }
+    }
+
+    function getMaxLevel(){
+      return data.levels.length;
     }
   }
 })();

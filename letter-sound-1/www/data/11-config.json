@@ -6,10 +6,24 @@
       "stories": [
         {
           "text": "I have five apples on a basket but then I put three more apples in. How many apples do I have in the basket in total?",
-          "options": [{
-            "id": 1,
-            "imagePath": ""
-            }],
+          "options": [
+            {
+              "id": 1,
+              "imagePath": "img/10-assets/objects/apple.png"
+            },
+            {
+              "id": 2,
+              "imagePath": "img/10-assets/objects/ball1.png"
+            },
+            {
+              "id": 3,
+              "imagePath": "img/10-assets/objects/ball2.png"
+            },
+            {
+              "id": 4,
+              "imagePath": "img/10-assets/objects/bird1.png"
+            }
+          ],
           "answer": 1,
           "textSoundPath": "Galaga_Theme.mp3",
           "questionSoundPath": "Contra_Intro.mp3"
