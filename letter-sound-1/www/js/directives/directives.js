@@ -78,46 +78,7 @@ angular.module('saan.directives')
       }
     }
   };
-}) /*
- .directive('objectDashboardFour', function() {
-     return {
-       restrict: "E",
-       templateUrl: "templates/directives/objectDashboardFour.html",
-       scope: 'true',
-       link: function(scope) {
-         scope.selectNumber = function(id, name) {
-          if (!scope.checkingNumber){
-           scope.selectedObject = name;
-           scope.checkNumber(name, id);
-         }
-         };
-
-         //Drag
-         scope.sortableSourceOptions = {
-           containment: '.activity4',
-           containerPositioning: 'relative',
-           clone: false,
-           dragEnd: function(eventObj) {
-             if (!scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
-               scope.handleProgress(false);
-             } else {
-               console.log("move again!");
-             }
-           },itemMoved: function (eventObj) {
-             scope.handleProgress(true);
-           }
-         };
-
-         //Drop
-         scope.sortableTargetOptions = {
-           accept: function(sourceItemHandleScope, destSortableScope){
-             return sourceItemHandleScope.modelValue.name == scope.number;
-           }
-         };
-
-       }
-     };
-   }) */
+}) 
    .directive('activityStatus', function() {
      return {
        restrict: "E",
