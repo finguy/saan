@@ -32,11 +32,11 @@
 		};
 
     Ctrl13.startTutorial = function(){
-      for (var i = 1; i <= totalSteps; i++){
-        setTimeout(function(){Ctrl13.readInstructions(i)}, i*instructionsTime);
-      }
-      // $scope.number = 5;
-      // $scope.step = 3;
+      // for (var i = 1; i <= totalSteps; i++){
+      //   setTimeout(function(){Ctrl13.readInstructions(i)}, i*instructionsTime);
+      // }
+      $scope.number = 4;
+      $scope.step = 3;
       $scope.dragDisabled = false;
     };
 
@@ -65,15 +65,15 @@
           if ($scope.number < config.level.numberTo){
             $scope.dragDisabled = true;
             // $scope.step = 3;
-            setTimeout(function(){
-              $scope.dropzone = [];
-              $scope.step = 0;
-              itemCount = 0;
-              $scope.number++;
-
-              Ctrl13.startTutorial();
-              $scope.$apply();
-            }, 500);
+            // setTimeout(function(){
+            //   $scope.dropzone = [];
+            //   $scope.step = 0;
+            //   itemCount = 0;
+            //   $scope.number++;
+            //
+            //   Ctrl13.startTutorial();
+            //   $scope.$apply();
+            // }, 500);
           }
           else{
             console.log("fin");
