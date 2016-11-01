@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
-.controller('4Ctrl', function($scope ,RandomNumber, TTSService,
-  Util, Animations, Score) {
+.controller('4Ctrl', function($scope, $state, RandomNumber, TTSService,
+  Util, Animations, Score, ActividadesFinalizadasService) {
   $scope.activityId = '4'; // Activity Id
   $scope.number = null; // Letter to play in level
   $scope.imgs = [];
@@ -17,7 +17,7 @@ angular.module('saan.controllers')
   $scope.activityProgress = 0;
   $scope.score = 0;
   $scope.checkingNumber = false;
-
+  $scope.numberDragged = [];
 
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
@@ -89,7 +89,6 @@ angular.module('saan.controllers')
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.minScore = data.scoreSetUp.minScore;
     $scope.totalLevels = data.totalLevels;
-    $scope.checkingNumber = false;
 
     var length = $scope.assets.length;
     var used = [];
@@ -111,13 +110,9 @@ angular.module('saan.controllers')
       }
     }
   };
-  //Verifies selected letters and returns true if they match the word
-  $scope.checkNumber = function(selectedObject, domId) {
-    if ($scope.number === parseInt(selectedObject,10)) {
-      $scope.checkingNumber = true;
-      Animations.successFireworks(domId);
+  $scope.handleProgress = function(numberOk) {
+    if (numberOk) {
       $scope.playedNumbers.push($scope.number);
-        setTimeout(function() {
           var position = Util.getRandomNumber($scope.successMessages.length);
           var successMessage = $scope.successMessages[position];
           $scope.speak(successMessage);
@@ -126,27 +121,25 @@ angular.module('saan.controllers')
             Ctrl4.levelUp(); //Advance level
             $scope.score = Score.update($scope.addScore, $scope.score);
             Util.saveLevel($scope.activityId, $scope.level);
-            if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
+            if (!$scope.finished) { // Solo sumo o resto si no esta finalizada, porque puedo volver a jugar estando finalizada
               Util.saveScore($scope.activityId, $scope.score);
               $scope.finished = $scope.score >= $scope.minScore;
               if ($scope.finished) {
                   Util.saveStatus($scope.activityId, $scope.finished);
                   ActividadesFinalizadasService.add($scope.activityId);
               }
-            }
+            }            
             Ctrl4.showDashboard(); //Reload dashboard
           }, 1000);
-      }, 4000);
     } else {
-      //wait for speak
-      setTimeout(function() {
-        $scope.checkingNumber = false;
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
-      }, 1000);
+      $scope.score = Score.update(-$scope.substractScore, $scope.score);
+      Util.saveScore($scope.activityId, $scope.score);
+      var position = Util.getRandomNumber($scope.errorMessages.length);
+      var errorMessage = $scope.errorMessages[position];
+      $scope.speak(errorMessage);
     }
-  };
+  }
+
 
   //Advance one level
   Ctrl4.levelUp = function() {

@@ -6,6 +6,15 @@
    }
 }
 
+.col-container {
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard {
+  margin-top: 200px;
+}
+
 .activity-4-border {
    border-top: 2em solid transparent;
    padding: 1.5em;
@@ -31,4 +40,17 @@
    background: #5E2B26;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
+ }
+
+ .as-sortable-item {
+   background-color: inherit;
+   border: inherit;
+ }
+
+ .as-sortable-placeholder {
+   display: none !important;
+ }
+
+ .as-sortable-dragging {
+   width: auto !important;
  }
