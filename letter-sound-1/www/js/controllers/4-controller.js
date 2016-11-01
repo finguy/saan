@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('4Ctrl', function($scope, $state, RandomNumber, TTSService,
+.controller('4Ctrl', function($scope, RandomNumber, TTSService,
   Util, Animations, Score, ActividadesFinalizadasService) {
   $scope.activityId = '4'; // Activity Id
   $scope.number = null; // Letter to play in level
@@ -128,7 +128,7 @@ angular.module('saan.controllers')
                   Util.saveStatus($scope.activityId, $scope.finished);
                   ActividadesFinalizadasService.add($scope.activityId);
               }
-            }            
+            }
             Ctrl4.showDashboard(); //Reload dashboard
           }, 1000);
     } else {
