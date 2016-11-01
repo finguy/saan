@@ -30,6 +30,7 @@ $lightbrow:#e7ddc4;
    .number-container {
      @include innerCircle-1 (1rem, #4ec0e0, #ed3f36, 17rem,17em, 7rem, 50%, 45%);
      font-family: learningNumbers;
+     margin-bottom: 5em;
     }
 
     .gradient-number {

@@ -167,7 +167,7 @@ angular.module('saan.controllers')
 
   //Drag
   $scope.sortableSourceOptions = {
-    containment: '.activity4',
+    containment: '.activity4-content',
     containerPositioning: 'relative',
     clone: false,
     dragEnd: function(eventObj) {
