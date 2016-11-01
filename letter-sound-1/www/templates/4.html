@@ -1,6 +1,22 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity4">
+<ion-view view-title="Dashboard (level: {{level}})" class="activity4-content">
  <activity-status></activity-status>
     <center>
-     <object-dashboard-four></object-dashboard-four>
+      <div class="dashboard">
+        <div class="text-center number-container" as-sortable="sortableTargetOptions" data-ng-model="numberDragged">
+          <span
+            class="material-icons btn-play-word gradient-number"
+            ng-click="speak(number)">
+            {{number}}
+          </span>
+        </div>
+        
+         <div data-ng-model="imgs" class="col-container" as-sortable="sortableSourceOptions">
+          <div class="img-container" ng-repeat="img in imgs" as-sortable-item as-sortable-item-handle>
+            <div class="box-container">
+                <img ng-repeat="srcPath in img.src track by $index" src="{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
+            </div>
+          </div>
+        </div>
+      </div>
     </center>
 </ion-view>

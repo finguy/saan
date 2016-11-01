@@ -78,7 +78,7 @@ angular.module('saan.directives')
       }
     }
   };
- })
+}) /*
  .directive('objectDashboardFour', function() {
      return {
        restrict: "E",
@@ -112,12 +112,12 @@ angular.module('saan.directives')
          scope.sortableTargetOptions = {
            accept: function(sourceItemHandleScope, destSortableScope){
              return sourceItemHandleScope.modelValue.name == scope.number;
-           }           
+           }
          };
 
        }
      };
-   })
+   }) */
    .directive('activityStatus', function() {
      return {
        restrict: "E",
