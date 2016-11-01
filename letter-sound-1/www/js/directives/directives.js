@@ -122,4 +122,36 @@ angular.module('saan.directives')
         };
       }
     };
-  });
+  })
+  .directive('objectDashboardTwelve', function() {
+      return {
+        restrict: "E",
+        templateUrl: "templates/directives/objectDashboardTwelve.html",
+        scope: 'true',
+        link: function(scope, $element) {
+          scope.selectAnswer = function(id, name) {
+            if (!scope.checkingAnswer){
+              scope.animateImage(id);
+              scope.selectedObject = id;
+              scope.handleProgress(id);
+            }
+          };
+
+          scope.animateImage = function(id) {
+              var imgs = $element.find('img');
+              for (var i in imgs) {
+                console.log(imgs[i].id +"=="+id);
+                if (imgs[i] && imgs[i].id == id) {
+                  angular.element(imgs[i]).addClass('options-image-morph-click');
+                    break;
+                }
+              }
+              setTimeout(function() {
+                  for (var i in imgs) {
+                    angular.element(imgs[i]).removeClass('options-image-morph-click');
+                  }
+              },1000);
+         }
+        }
+      };
+    });
