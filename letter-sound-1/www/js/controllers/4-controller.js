@@ -3,17 +3,18 @@ angular.module('saan.controllers')
     Util, Animations, Score, ActividadesFinalizadasService) {
 
     var Ctrl4 = Ctrl4 || {};
-    Ctrl4.activityId = '4'; // Activity Id
-    $scope.number = null; // Letter to play in level #
-    $scope.imgs = []; //#
-    $scope.instructions = ""; // Instructions to read
+    Ctrl4.activityId = '4';
+    Ctrl4.playedNumbers = [];
+    Ctrl4.level = $scope.level || 1;
+    Ctrl4.totalLevels = 3;
+    Ctrl4.score = 0;
+    
+    $scope.number = null;
+    $scope.imgs = [];
+    $scope.instructions = "";
     $scope.successMessages = [];
     $scope.errorMessages = [];
-    Ctrl4.playedNumbers = []; // Collects words the user played
-    Ctrl4.level = $scope.level || 1; // Indicates activity level  #
-    Ctrl4.totalLevels = 3;
-    $scope.activityProgress = 0; //# used in directive
-    Ctrl4.score = 0;
+    $scope.activityProgress = 0;
     $scope.checkingNumber = false;
     $scope.numberDragged = [];
 
@@ -160,7 +161,7 @@ angular.module('saan.controllers')
       containment: '.activity4-content',
       containerPositioning: 'relative',
       clone: false,
-      dragEnd: function(eventObj) {        
+      dragEnd: function(eventObj) {
         if (!$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)) {
           Ctrl4.handleProgress(false);
         } else {
