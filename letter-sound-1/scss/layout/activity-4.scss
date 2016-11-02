@@ -14,6 +14,14 @@ $lightbrow:#e7ddc4;
    .col-container {
      display: flex;
      justify-content: center;
+
+     .as-sortable-placeholder {
+       display: none;
+     }
+
+     .as-sortable-dragging {
+       width: auto;
+     }
    }
 
    .box-container {
@@ -31,6 +39,11 @@ $lightbrow:#e7ddc4;
      @include innerCircle-1 (1rem, #4ec0e0, #ed3f36, 17rem,17em, 7rem, 50%, 45%);
      font-family: learningNumbers;
      margin-bottom: 5em;
+
+     .as-sortable-placeholder {
+       display: none;
+     }
+     
     }
 
     .gradient-number {
@@ -43,14 +56,4 @@ $lightbrow:#e7ddc4;
       background-color: inherit;
       border: inherit;
     }
-
-    .as-sortable-placeholder {
-      display: none !important;
-    }
-
-    .as-sortable-dragging {
-      width: auto !important;
-    }
-
-
 }
