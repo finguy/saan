@@ -28,8 +28,8 @@ $lightbrow:#e7ddc4;
       clear:both;
       float:left;
       max-width:40rem;
-      border-top: 2em solid transparent;
-      padding: 1.5em;
+      border-top: 2rem solid transparent;
+      padding: 1.5rem;
       border-image-source: url("../img/4-assets/store-2.png");
       border-image-repeat: repeat;
       border-image-slice: 30;
@@ -38,12 +38,12 @@ $lightbrow:#e7ddc4;
    .number-container {
      @include innerCircle-1 (1rem, #4ec0e0, #ed3f36, 17rem,17em, 7rem, 50%, 45%);
      font-family: learningNumbers;
-     margin-bottom: 5em;
+     margin-bottom: 5rem;
 
      .as-sortable-placeholder {
        display: none;
      }
-     
+
     }
 
     .gradient-number {
