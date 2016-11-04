@@ -1,0 +1,62 @@
+.activity16 {
+
+  .letter {
+    height: 6rem;
+    width: 6rem;
+  }
+
+  .icon-word.dropzone {
+    background-image: url('../img/9-assets/cuadro.png');
+    border: 0;
+    border-radius: 0;
+    height: 17rem;
+    width: 17rem;
+  }
+
+  .selected {
+    background: #09c;
+  }
+
+  .selected.dropzone {
+    border-radius: 1rem;
+  }
+
+  .list-words {
+    display: flex;
+    justify-content: center;
+  }
+
+  .words {
+    display: flex;
+    padding: 1em;
+  }
+
+  .word-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15rem;
+    padding: 1.5rem;
+  }
+
+  .instructions {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .list-letters {
+    width: auto;
+  }
+
+  .as-sortable-item {
+    background-color: inherit;
+    border: inherit;
+  }
+
+  .as-sortable-placeholder {
+    display: none;
+  }
+
+  .as-sortable-dragging {
+    width: auto;
+  }
+}
