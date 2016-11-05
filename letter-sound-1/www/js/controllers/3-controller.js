@@ -2,45 +2,50 @@ angular.module('saan.controllers')
 
 .controller('3Ctrl', function($scope, RandomLetterThree, TTSService,
   Util,Score,ActividadesFinalizadasService) {
-    $scope.activityId = '3'; // Activity Id
-    $scope.letter = ""; // Letter to play in level
-    $scope.letterTutorial = "";
     $scope.imgs = [];
-    $scope.instructions = ""; // Instructions to read
-    $scope.successMessages = [];
-    $scope.errorMessages  = [];
-    $scope.letters = []; // Word letters
-    $scope.dashboard = []; // Dashboard letters
-    $scope.selectedObject = ""; // Collects letters the user selects
-    $scope.playedLetters = []; // Collects words the user played
-    $scope.level = $scope.level || 1; // Indicates activity level
-    $scope.totalLevels = 3;
     $scope.activityProgress = 0;
-    $scope.letterInstruction = "";
-    $scope.score = 0;
-    $scope.status = false;
-    $scope.alphabet = "abcdefghijklmnopqrstuvwxyz";
-    $scope.aplhabetLetters = $scope.alphabet.split("");
-    $scope.srcAlphabetLetters = "";
+    var Ctrl3 = Ctrl3 || {};
+    Ctrl3.activityId = '3'; // Activity Id
+    Ctrl3.letter = ""; // Letter to play in level
+    Ctrl3.letterTutorial = "";
+
+
+    Ctrl3.instructions = ""; // Instructions to read
+    Ctrl3.successMessages = [];
+    Ctrl3.errorMessages  = [];
+
+    //Ctrl3.letters = []; // Word letters
+    Ctrl3.dashboard = []; // Dashboard letters
+    $scope.selectedObject = ""; // Collects letters the user selects
+    Ctrl3.playedLetters = []; // Collects words the user played
+    Ctrl3.level = Ctrl3.level || 1; // Indicates activity level
+    Ctrl3.totalLevels = 3;
+
+
+    Ctrl3.score = 0;
+    Ctrl3.status = false;
+    Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
+    Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
+    Ctrl3.srcAlphabetLetters = "";
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
     //Shows Activity Dashboard
-    $scope.showDashboard = function(readInstructions) {
+    Ctrl3.showDashboard = function(readInstructions) {
 
-      $scope.setUpLevel();
-      $scope.setUpScore();
-      $scope.setUpStatus();
+      Ctrl3.setUpLevel();
+      Ctrl3.setUpScore();
+      Ctrl3.setUpStatus();
 
-      RandomLetterThree.letter($scope.level, $scope.playedLetters).then(
+      RandomLetterThree.letter(Ctrl3.level, Ctrl3.playedLetters).then(
         function success(data) {
-          $scope.setUpContextVariables(data);
+          Ctrl3.setUpContextVariables(data);
 
           //wait for UI to load
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
           setTimeout(function() {
             if (readInstructions){
-              $scope.speak($scope.instructions);
+              $scope.speak(Ctrl3.instructions);
             }
           }, readWordTimeout);
         },
@@ -50,45 +55,41 @@ angular.module('saan.controllers')
       );
     };
 
-    $scope.setUpLevel = function() {
-      var level = Util.getLevel($scope.activityId);
+    Ctrl3.setUpLevel = function() {
+      var level = Util.getLevel(Ctrl3.activityId);
       if (level) {
-        $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
+        Ctrl3.level = level;
+        $scope.activityProgress = 100 * (level-1)/Ctrl3.totalLevels; // -1 porque empieza en cero.
       }
     };
 
-    $scope.setUpScore = function(){
-      var score = Util.getScore($scope.activityId);
+    Ctrl3.setUpScore = function(){
+      var score = Util.getScore(Ctrl3.activityId);
       if (score) {
-        $scope.score = score
+        Ctrl3.score = score
       }
     };
 
-    $scope.setUpStatus = function(){
-      var finished = Util.getStatus($scope.activityId);
+    Ctrl3.setUpStatus = function(){
+      var finished = Util.getStatus(Ctrl3.activityId);
       if (finished === false || finished === true) {
-        $scope.finished = finished;
+        Ctrl3.finished = finished;
       }
     }
 
-    $scope.setUpContextVariables = function(data) {
+    Ctrl3.setUpContextVariables = function(data) {
       var letterJson = data.letter;
-      $scope.instructions = data.instructions;
-      $scope.successMessages = data.successMessages;
-      $scope.errorMessages = data.errorMessages;
-      $scope.addScore = data.scoreSetUp.add;
-      $scope.substractScore = data.scoreSetUp.substract;
-      $scope.minScore = data.scoreSetUp.minScore;
+      Ctrl3.instructions = data.instructions;
+      Ctrl3.successMessages = data.successMessages;
+      Ctrl3.errorMessages = data.errorMessages;
+      Ctrl3.addScore = data.scoreSetUp.add;
+      Ctrl3.substractScore = data.scoreSetUp.substract;
+      Ctrl3.minScore = data.scoreSetUp.minScore;
 
-      $scope.nextLetterImgSrc = data.nextLetterImgSrc;
-      $scope.previousLetterImgSrc = data.previousLetterImgSrc;
-      $scope.srcAlphabetLetters = data.srcAlphabetLetters;
 
-      $scope.letter = letterJson.letter;
-      $scope.letterTutorial = letterJson.letter;
-      $scope.upperCaseImgSrc = letterJson.upperCaseImg;
-      $scope.lowerCaseImgSrc = letterJson.lowerCaseImg;
+      Ctrl3.letter = letterJson.letter;
+      Ctrl3.letterTutorial = letterJson.letter;
+
       $scope.imgs = [];
       for (var i in letterJson.imgs){
         if (letterJson.imgs[i]) {
@@ -98,80 +99,87 @@ angular.module('saan.controllers')
            $scope.imgs.push(img);
         }
       }
-      $scope.dashboard = [$scope.letter];
-      $scope.letterInstruction = letterJson.instruction;
+      $scope.imgs = _.shuffle($scope.imgs);
+      Ctrl3.dashboard = [Ctrl3.letter];
+      Ctrl3.instructions = letterJson.instruction;
 
-      if ($scope.isActivity) {
-        $scope.instructions = letterJson.instruction;
-      }
     };
 
     //Verifies selected letters and returns true if they match the word
     $scope.checkLetter = function(selectedObject) {
-      var ER = new RegExp($scope.letter,"i");
+      var ER = new RegExp(Ctrl3.letter,"i");
       var name = selectedObject.toLowerCase();
       if (ER.test(name)) {
-        $scope.playedLetters.push($scope.letter.toLowerCase());
+        Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
           setTimeout(function() {
-            var position = Util.getRandomNumber($scope.successMessages.length);
-            var successMessage = $scope.successMessages[position];
+            var position = Util.getRandomNumber(Ctrl3.successMessages.length);
+            var successMessage = Ctrl3.successMessages[position];
             $scope.speak(successMessage);
             //wait for speak
             setTimeout(function() {
-              $scope.levelUp(); //Advance level
-              $scope.score = Score.update($scope.addScore, $scope.score);
-              Util.saveLevel($scope.activityId, $scope.level);
-              if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-                Util.saveScore($scope.activityId, $scope.score);
-                $scope.finished = $scope.score >= $scope.minScore;
-                if ($scope.finished) {
-                    Util.saveStatus($scope.activityId, $scope.finished);
-                    ActividadesFinalizadasService.add($scope.activityId);
+              Ctrl3.levelUp(); //Advance level
+              Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score);
+              Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
+              if (!Ctrl3.finished) { // Solo sumo o resto si no esta finalizada
+                Util.saveScore(Ctrl3.activityId, Ctrl3.score);
+                Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
+                if (Ctrl3.finished) {
+                    Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
+                    ActividadesFinalizadasService.add(Ctrl3.activityId);
                 }
               }
-              $scope.showDashboard(true); //Reload dashboard
+              Ctrl3.showDashboard(true); //Reload dashboard
             }, 1000);
           }, 1000);
 
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score);
-        console.log($scope.score);
-        Util.saveScore($scope.activityId, $scope.score);
+        Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.score);
+        console.log(Ctrl3.score);
+        Util.saveScore(Ctrl3.activityId, Ctrl3.score);
         //wait for speak
         setTimeout(function() {
-          var position = Util.getRandomNumber($scope.errorMessages.length);
-          var errorMessage = $scope.errorMessages[position];
+          var position = Util.getRandomNumber(Ctrl3.errorMessages.length);
+          var errorMessage = Ctrl3.errorMessages[position];
           $scope.speak(errorMessage);
         }, 1000);
       }
     };
 
     //Advance one level
-    $scope.levelUp = function() {
-      $scope.level++;
-      $scope.letters = [];
-      $scope.dashboard = [];
+    Ctrl3.levelUp = function() {
+      Ctrl3.level++;
+      //Ctrl3.letters = [];
+      Ctrl3.dashboard = [];
       $scope.selectedLetters = [];
     };
 
     // Goes back one level
-    $scope.levelDown = function() {
-      $scope.level = (level > 1) ? (level - 1) : 1;
-      $scope.letters = [];
-      $scope.dashboard = [];
+    Ctrl3.levelDown = function() {
+      Ctrl3.level = (level > 1) ? (level - 1) : 1;
+      //Ctrl3.letters = [];
+      Ctrl3.dashboard = [];
       $scope.selectedLetters = [];
     };
 
     $scope.showPage = function() {
       $scope.isActivity = true;
-      $scope.instructions = $scope.letterInstruction;
+      Ctrl3.instructions = Ctrl3.letterInstruction;
       setTimeout(function(){
-          $scope.speak($scope.instructions);
+          $scope.speak(Ctrl3.instructions);
       },1000);
     }
 
+    $scope.selectLetter = function(name, objectNameSrc) {
+      $scope.selectedObject= name;
+      var object = objectNameSrc.split("/");
+      var objectName = object[object.length -1].replace(".png","");
+      $scope.speak(name + " in "+objectName);
+      setTimeout(function (){
+          $scope.checkLetter(name);
+      }, 1000);
+    };
 
     //*************** ACTIONS **************************/
     //Show Dashboard
-    $scope.showDashboard(true);
+    Ctrl3.showDashboard(true);
   });
