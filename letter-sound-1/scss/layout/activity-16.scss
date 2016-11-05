@@ -5,7 +5,7 @@
     width: 6rem;
   }
 
-  .icon-word.dropzone {
+  .icon.dropzone {
     background-image: url('../img/9-assets/cuadro.png');
     border: 0;
     border-radius: 0;
@@ -13,23 +13,12 @@
     width: 17rem;
   }
 
-  .selected {
-    background: #09c;
-  }
 
-  .selected.dropzone {
-    border-radius: 1rem;
-  }
-
-  .list-words {
+  .list-letters {
     display: flex;
     justify-content: center;
   }
 
-  .words {
-    display: flex;
-    padding: 1em;
-  }
 
   .word-icons {
     display: flex;
@@ -43,9 +32,7 @@
     width: 10rem;
   }
 
-  .list-letters {
-    width: auto;
-  }
+
 
   .as-sortable-item {
     background-color: inherit;
@@ -53,10 +40,12 @@
   }
 
   .as-sortable-placeholder {
-    display: none;
+    display: none !important;
   }
 
   .as-sortable-dragging {
     width: auto;
   }
+
+
 }

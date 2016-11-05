@@ -14,7 +14,7 @@ angular.module('saan.controllers')
   Ctrl16.activityId = 16; // Activity Id
   Ctrl16.totalLevels = 1;
   Ctrl16.level = Ctrl16.level || 1; // Indicates activity level
-  Ctrl16.activityProgress = 0;
+  $scope.activityProgress = 0;
   Ctrl16.letterOk = false;
   Ctrl16.playedLetters = [];
 
@@ -45,7 +45,7 @@ angular.module('saan.controllers')
     var level = Util.getLevel(Ctrl16.activityId);
     if (level) {
       Ctrl16.level = level;
-      Ctrl16.activityProgress = 100 * (level - 1) / Ctrl16.totalLevels;
+      $scope.activityProgress = 100 * (level - 1) / Ctrl16.totalLevels;
     }
   };
 
@@ -93,7 +93,9 @@ angular.module('saan.controllers')
     Ctrl16.totalLevels = data.totalLevels;
   };
 
-  $scope.handleProgress = function(isLetterOk) {
+  Ctrl16.handleProgress = function(isLetterOk) {
+    console.log("isLetterOk:");
+    console.log(isLetterOk);
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
     if (isLetterOk) {
       $scope.speak($scope.letter);
@@ -174,8 +176,8 @@ angular.module('saan.controllers')
   $scope.targetOptions = {
     containment: '.activity16',
     accept: function(sourceItemHandleScope, destSortableScope) {
-      $scope.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0];
-      return $scope.letterOk;
+      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0];
+      return Ctrl16.letterOk;
     }
   };
 
