@@ -1,0 +1,5 @@
+<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content content-margin">
+  <div class="match-container">
+    <div ng-repeat="item in options" class="match-card" ng-click="checkAnswer({{item}})">{{item}}</div>
+  </div>
+</ion-view>

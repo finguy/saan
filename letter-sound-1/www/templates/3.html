@@ -1,18 +1,16 @@
-<ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity3">
-  <div ng-show="isActivity">
+<ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity3-content">
   <activity-status></activity-status>
-  </div>
-  
-  <ion-content class="padding">
-    <br/>  <br/>  <br/>
-    <div class="text-center">
-      <img src="img/ic_record_voice_over.png"
-        class="material-icons btn-play-word"
-        ng-click="speak(instructions)"/>
+  <div class="content">
+    <img src="img/ic_record_voice_over.png" class="material-icons btn-play-word" ng-click="speak(instructions)" />
+    <div class="row" id="activity">
+      <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name,img.src)">
+        <div class="activity-3-box-shadow">
+          <div class="letter"> {{img.name}} </div>
+          <br/>
+          <img src="{{img.src}}" />
+        </div>
+      </div>
     </div>
-    <br/><br/><br/>
-    <center>
-    <object-dashboard-three></object-dashboard-three>
-    </center>
-  </ion-content>
+  </div>
+
 </ion-view>

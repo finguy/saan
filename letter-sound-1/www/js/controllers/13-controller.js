@@ -33,7 +33,7 @@
 
     Ctrl13.startTutorial = function(){
       for (var i = 1; i <= totalSteps; i++){
-        setTimeout(function(){Ctrl13.readInstructions(i)}, i*instructionsTime);
+        setTimeout(function(){Ctrl13.readInstructions(i)}, i * instructionsTime);
       }
       $scope.dragDisabled = false;
     };
@@ -67,7 +67,9 @@
               $scope.step = 0;
               itemCount = 0;
               $scope.number++;
+
               Ctrl13.startTutorial();
+              $scope.$apply();
             }, 500);
           }
           else{

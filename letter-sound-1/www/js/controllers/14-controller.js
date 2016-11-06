@@ -20,7 +20,7 @@
 
     Ctrl14.getConfiguration = function (level){
       NumberOperations.getConfig(level).then(function(data){
-        config = data;      
+        config = data;
         Ctrl14.setActivity();
       });
     };

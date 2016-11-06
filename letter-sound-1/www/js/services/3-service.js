@@ -1,6 +1,6 @@
 angular.module('saan.services')
 
-.factory('RandomLetterThree', function($http, LevelsThree, Util) {
+.factory('RandomLetterThree', function($http,$log, LevelsThree, Util) {
   return {
     letter: function(level, playedLetters) {
       var src = LevelsThree.getSrcData(level);
@@ -34,7 +34,7 @@ angular.module('saan.services')
         },
         function error() {
           //TODO: handle errors for real
-          console.log("error");
+          $log.error("error");
         }
       );
     }

@@ -29,7 +29,7 @@ $pattern-colors: (color-red, $red),
   padding-left: 5%;
   padding-right: 5%;
   width: 100%;
-}
+
 
 .dropzone {
   border: .2rem dashed $grey;
@@ -77,4 +77,5 @@ $pattern-colors: (color-red, $red),
 
 .as-sortable-item.item-number {
   display: flex;
+}
 }
