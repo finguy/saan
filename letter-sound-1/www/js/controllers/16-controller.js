@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-  .controller('16Ctrl', function($scope, $log,$timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope,$log, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -151,9 +151,6 @@ angular.module('saan.controllers')
     Ctrl16.level = (level > 1) ? (level - 1) : 1;
     Ctrl16.letters = [];
   };
-  /*************** ACTIONS **************************/
-  //Show Dashboard
-  Ctrl16.showDashboard(true);
 
   //Drag
   $scope.sourceOptions = {
@@ -161,10 +158,10 @@ angular.module('saan.controllers')
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
       if (!Ctrl16.letterOk) {
-        $log("wrong!!");
+        $log.error("wrong!!");
         Ctrl16.handleProgress(false);
       } else {
-        $log("move again");
+        $log.error("move again");
       }
     },
     itemMoved: function(eventObj) {
@@ -184,7 +181,9 @@ angular.module('saan.controllers')
     }
   };
 
-  $scope.isVisible = function(item) {
-    return item && item.dropzone && item.dropzone.length == 1;
-  };
+  $scope.$on('$ionicView.beforeEnter', function() {
+    /*************** ACTIONS **************************/
+    //Show Dashboard
+    Ctrl16.showDashboard(true);
+  });
 });

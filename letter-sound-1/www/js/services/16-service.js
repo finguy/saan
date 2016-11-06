@@ -1,5 +1,5 @@
 angular.module('saan.services')
-.factory('RandomWordsSixteen', function($http, LevelsSixteen, Util) {
+.factory('RandomWordsSixteen', function($http,$log, LevelsSixteen, Util) {
   return {
     letters: function(level, playedLetters) {
       var src = LevelsSixteen.getSrcData(level);
@@ -36,7 +36,7 @@ angular.module('saan.services')
         },
         function error() {
           //TODO: handle errors for real
-          console.log("error");
+          $log.error("error");
         }
       );
     }
