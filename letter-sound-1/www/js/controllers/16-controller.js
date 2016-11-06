@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope, RandomWordsSixteen, TTSService,
+  .controller('16Ctrl', function($scope, $log, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -36,7 +36,7 @@ angular.module('saan.controllers')
         }, readWordTimeout);
       },
       function error(error) {
-        console.log(error);
+        $log.error(error)
       }
     );
   };
@@ -65,25 +65,28 @@ angular.module('saan.controllers')
 
   Ctrl16.setUpContextVariables = function(data) {
     var wordsJson = data;
-    $scope.imgs = [];
-    $scope.draggedImgs = [];
+    var imgs = [];
+    var letters = [];
     Ctrl16.playedLetters.push(wordsJson.info.id);
     $scope.letters = [];
     for (var i in wordsJson.info.letters) {
       if (wordsJson.info.letters[i]) {
         var index = Util.getRandomNumber(wordsJson.info.letters[i].assets.length);
-        $scope.imgs.push({
+        imgs.push({
           image: wordsJson.info.letters[i].assets[index],
           dropzone: [wordsJson.info.letters[i].name]
         });
-        $scope.letters.push({
+        letters.push({
           name: wordsJson.info.letters[i].name,
           letterImage: wordsJson.info.letters[i].letterImg
         });
       }
     }
 
+    $scope.imgs = imgs;
     $scope.imgs = _.shuffle($scope.imgs);
+    $scope.letters = letters;
+    $scope.draggedImgs = [];
     Ctrl16.instructions = data.instructions;
     Ctrl16.successMessages = data.successMessages;
     Ctrl16.errorMessages = data.errorMessages;
@@ -93,47 +96,51 @@ angular.module('saan.controllers')
     Ctrl16.totalLevels = data.totalLevels;
   };
 
-  Ctrl16.handleProgress = function(isLetterOk) {
-    console.log("isLetterOk:");
-    console.log(isLetterOk);
+  Ctrl16.handleSuccess = function() {
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
-    if (isLetterOk) {
-      $scope.speak($scope.letter);
-      //wait for speak
+    $scope.speak($scope.letter);
+    //wait for speak
+    setTimeout(function() {
+      if (!Ctrl16.finished) {
+        Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score);
+        Util.saveScore(Ctrl16.activityId, Ctrl16.score);
+      }
+      var position = Util.getRandomNumber(Ctrl16.successMessages.length);
+      var successMessage = Ctrl16.successMessages[position];
+      $scope.speak(successMessage);
       setTimeout(function() {
-        if (!Ctrl16.finished) {
-          Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score);
-          Util.saveScore(Ctrl16.activityId, Ctrl16.score);
-        }
-        var position = Util.getRandomNumber(Ctrl16.successMessages.length);
-        var successMessage = Ctrl16.successMessages[position];
-        $scope.speak(successMessage);
-        setTimeout(function() {
-          if (LAST_CHECK) {
-            Ctrl16.levelUp(); //Advance level
-            Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
-            if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
-              Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
-              Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
-              ActividadesFinalizadasService.add(Ctrl16.activityId);
-            }
-            Ctrl16.showDashboard(false); //Reload dashboard
+        if (LAST_CHECK) {
+          Ctrl16.levelUp(); //Advance level
+          Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+          if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
+            Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
+            Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
+            ActividadesFinalizadasService.add(Ctrl16.activityId);
           }
-        }, 1000);
+          Ctrl16.showDashboard(false); //Reload dashboard
+        }
       }, 1000);
+    }, 1000);
+  };
+
+  Ctrl16.handleError = function() {
+    Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score);
+    Util.saveScore(Ctrl16.activityId, Ctrl16.score);
+    $scope.speak(name);
+    //wait for speak
+    setTimeout(function() {
+      var position = Util.getRandomNumber(Ctrl16.errorMessages.length);
+      var errorMessage = Ctrl16.errorMessages[position];
+      $scope.speak(errorMessage);
+    }, 000);
+  };
+
+  Ctrl16.handleProgress = function(isLetterOk) {
+    if (isLetterOk) {
+      Ctrl16.handleSuccess();
     } else {
-      Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score);
-      Util.saveScore(Ctrl16.activityId, Ctrl16.score);
-      $scope.speak(name);
-      //wait for speak
-      setTimeout(function() {
-        var position = Util.getRandomNumber(Ctrl16.errorMessages.length);
-        var errorMessage = Ctrl16.errorMessages[position];
-        $scope.speak(errorMessage);
-      }, 000);
+      Ctrl16.handleError();
     }
-
-
   };
 
   //Advance one level
