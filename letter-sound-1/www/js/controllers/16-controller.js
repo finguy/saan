@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-  .controller('16Ctrl', function($scope, $log, RandomWordsSixteen, TTSService,
+  .controller('16Ctrl', function($scope, $log,$timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -29,7 +29,7 @@ angular.module('saan.controllers')
 
         //wait for UI to load
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
-        setTimeout(function() {
+        $timeout(function() {
           if (readInstructions) {
             $scope.speak(Ctrl16.instructions);
           }
@@ -57,10 +57,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpStatus = function() {
-    var finished = Util.getStatus(Ctrl16.activityId);
-    if (finished === false || finished === true) {
-      Ctrl16.finished = finished;
-    }
+    Ctrl16.finished = Util.getStatus(Ctrl16.activityId);
   };
 
   Ctrl16.setUpContextVariables = function(data) {
@@ -100,7 +97,7 @@ angular.module('saan.controllers')
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
     $scope.speak($scope.letter);
     //wait for speak
-    setTimeout(function() {
+    $timeout(function() {
       if (!Ctrl16.finished) {
         Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score);
         Util.saveScore(Ctrl16.activityId, Ctrl16.score);
@@ -108,7 +105,7 @@ angular.module('saan.controllers')
       var position = Util.getRandomNumber(Ctrl16.successMessages.length);
       var successMessage = Ctrl16.successMessages[position];
       $scope.speak(successMessage);
-      setTimeout(function() {
+      $timeout(function() {
         if (LAST_CHECK) {
           Ctrl16.levelUp(); //Advance level
           Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
@@ -128,7 +125,7 @@ angular.module('saan.controllers')
     Util.saveScore(Ctrl16.activityId, Ctrl16.score);
     $scope.speak(name);
     //wait for speak
-    setTimeout(function() {
+    $timeout(function() {
       var position = Util.getRandomNumber(Ctrl16.errorMessages.length);
       var errorMessage = Ctrl16.errorMessages[position];
       $scope.speak(errorMessage);

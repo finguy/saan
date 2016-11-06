@@ -32,6 +32,8 @@ angular.module('saan.services')
           status = false;
         } else if (status === "true") {
           status = true;
+        } else {
+          status = false;
         }
       }
       return status;
