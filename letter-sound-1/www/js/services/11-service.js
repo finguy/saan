@@ -1,11 +1,11 @@
 (function() {
   'use strict';
   angular.module('saan.services')
-  .factory('MathOralProblems', MathOralProblems);
+  .factory('Listening', Listening);
 
-  MathOralProblems.$inject = ['$http', '$log'];
+  Listening.$inject = ['$http', '$log'];
 
-  function MathOralProblems($http, $log) {
+  function Listening($http, $log) {
     var data;
 
     return {
@@ -14,7 +14,7 @@
     };
 
     function getConfig(level) {
-      var src = 'data/15-config.json';
+      var src = 'data/11-config.json';
       if (level >= 1){
         return $http.get(src).then(
           function success(response) {
@@ -23,7 +23,7 @@
           },
           function error() {
             //TODO: handle errors for real
-            console.log("error");
+            $log.error("error");
           }
         );
       }
