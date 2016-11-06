@@ -161,14 +161,13 @@ angular.module('saan.controllers')
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
       if (!Ctrl16.letterOk) {
-        console.log("wrong!!");
+        $log("wrong!!");
         Ctrl16.handleProgress(false);
       } else {
-        console.log("move again");
+        $log("move again");
       }
     },
     itemMoved: function(eventObj) {
-      console.log("success");
       Ctrl16.handleProgress(true);
     },
     accept: function(sourceItemHandleScope, destSortableScope) {
