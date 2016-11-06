@@ -1,34 +1,59 @@
-.activity4 {
+$darkBrown: #5E2B26;
+$lightbrow:#e7ddc4;
+.activity4-content {
   background-image: url('../img/4-assets/background.jpg');
 
   .img-container {
-    @include image-container-1(20px, #5E2B26, #e7ddc4);
+    @include image-container-1(2rem, $darkBrown, $lightbrow);
    }
+
+   .dashboard {
+     margin-top: 20rem;
+   }
+
+   .col-container {
+     display: flex;
+     justify-content: center;
+
+     .as-sortable-placeholder {
+       display: none;
+     }
+
+     .as-sortable-dragging {
+       width: auto;
+     }
+   }
+
+   .box-container {
+      clear:both;
+      float:left;
+      max-width:40rem;
+      border-top: 2rem solid transparent;
+      padding: 1.5rem;
+      border-image-source: url("../img/4-assets/store-2.png");
+      border-image-repeat: repeat;
+      border-image-slice: 30;
+    }
+
+   .number-container {
+     @include innerCircle-1 (1rem, #4ec0e0, #ed3f36, 17rem,17em, 7rem, 50%, 45%);
+     font-family: learningNumbers;
+     margin-bottom: 5rem;
+
+     .as-sortable-placeholder {
+       display: none;
+     }
+
+    }
+
+    .gradient-number {
+      background: #5E2B26;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .as-sortable-item {
+      background-color: inherit;
+      border: inherit;
+    }
 }
-
-.activity-4-border {
-   border-top: 2em solid transparent;
-   padding: 1.5em;
-   border-image-source: url("../img/4-assets/store-2.png");
-   border-image-repeat: repeat;
-   border-image-slice: 30;
-
- }
-
-.activity-4-content {
-   clear:both;
-   float:left;
-   max-width:40em;
-   height:100%;
- }
-
-.activity4-number-container {
-  @include innerCircle-1 (1em, #4ec0e0, #ed3f36, 170px,17em, 7em, 50%, 45%);
-  font-family: learningNumbers;
- }
-
- .gradient-number {
-   background: #5E2B26;
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
- }

@@ -203,12 +203,13 @@
             "img/4-assets/assorted-objects/30.png",
             "img/4-assets/assorted-objects/31.png"
         ],
-  "instructions": "Hi! Listen to the number and then select the figure having that quantity. Good Luck!",
+  "instructions": "Hi! Drag the box to the number containing that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
     "add": 1,
     "substract": 1,
     "minScore": 10
-  }
+  },
+  "totalLevels" : 1
 }

@@ -39,8 +39,8 @@
   -webkit-border-radius: $borderRadius;
   -moz-border-radius: $borderRadius;
   border-radius: $borderRadius;
-  border: $borderRadius solid $borderColor;
-  background-color:$backgroundColor;
+  border: $borderRadius solid $borderColor !important;
+  background-color:$backgroundColor !important;
   padding: 0;
   margin: .1rem ;
 }
@@ -53,6 +53,4 @@
   height: 170px;
   padding-top:70px;
   border-radius: 50%;
-  position:absolute;
-  left:45%;
 }
