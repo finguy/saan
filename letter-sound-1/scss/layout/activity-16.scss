@@ -1,0 +1,49 @@
+.activity-16-content {
+
+  .letter {
+    height: 6rem;
+    width: 6rem;
+  }
+
+  .icon.dropzone {
+    background-image: url('../img/9-assets/cuadro.png');
+    border: 0;
+    border-radius: 0;
+    height: 17rem;
+    width: 17rem;
+  }
+
+
+  .list-letters {
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .word-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15rem;
+    padding: 1.5rem;
+  }
+
+  .instructions {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .as-sortable-item {
+    background-color: inherit;
+    border: inherit;
+  }
+
+  .as-sortable-placeholder {
+    display: none !important;
+  }
+
+  .as-sortable-dragging {
+    width: auto;
+  }
+
+
+}

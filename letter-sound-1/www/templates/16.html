@@ -1,0 +1,22 @@
+<ion-view view-title="Dashboard (level: {{level}})" class="activity-16-content content-margin">
+  <activity-status></activity-status>
+  <div class="text-center">
+    <img src="img/9-assets/radio.png" class="instructions" ng-click="speak(instructions)">
+  </div>
+  <div class="dashboard">
+    <div class="word-icons">
+      <div id="{{imgSrc}}" ng-repeat="item in imgs track by $index">
+        <div as-sortable="targetOptions" data-ng-model="item.dropzone">
+          <img class="dropzone icon" src="{{item.image}}" ng-show="item.dropzone.length == 1" ng-repeat="dummy in items" as-sortable-item/>
+        </div>
+      </div>
+    </div>
+    <div class="list-letters" as-sortable="sourceOptions" data-ng-model="letters">
+      <div ng-repeat="data in letters">
+        <div as-sortable-item as-sortable-item-handle>
+          <img class="letter" src="{{data.letterImage}}" />
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-view>
