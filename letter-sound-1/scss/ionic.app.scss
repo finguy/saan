@@ -36,6 +36,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'directives/progressBar';
 @import 'directives/flipableCard';
 @import 'directives/numberCard';
+@import 'directives/numberGroup';
 @import 'layout/memory';
 @import 'layout/activity-8';
 @import 'layout/activity-12';
@@ -80,6 +81,10 @@ body {
 
 .height-100 {
   height: 100%;
+}
+
+.width-100 {
+  width: 100%;
 }
 
 .vertical-center {
