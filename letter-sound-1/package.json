@@ -29,8 +29,12 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     {
-      "locator": "../cordova-tts-plugin",
+      "locator": "saan-plugins/cordova-tts-plugin",
       "id": "com.saan.tts"
+    },
+    {
+      "locator": "saan-plugins/cordova-media-plugin",
+      "id": "com.saan.media"
     }
   ],
   "cordovaPlatforms": [
