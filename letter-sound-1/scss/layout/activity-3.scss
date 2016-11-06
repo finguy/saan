@@ -1,24 +1,17 @@
-.activity3 {
+.activity3-content {
   background-image: url('../img/3-assets/background.jpg');
 
+    .content {
+      text-align: center;
+      margin: 10rem;
+    }
 
     .letter{
       font-weight: bold;
-      font-size: 10em;
-      padding-top: .5em;
-      padding-bottom: .25em;
-    }
-
-    .blob {
-      width: 8rem;
-      height: 8rem;
-    }
-    .activity3-image-morph {
-      @include image-morph(0.5s);
-    }
-
-    .activity3-image-morph-click {
-      @include image-zoom-on-click(300px);
+      font-size: 10rem;
+      padding-top: 5rem;
+      padding-bottom: .25rem;
+      margin-bottom: 2rem;
     }
 
     .activity-3-box-shadow {
@@ -28,11 +21,4 @@
       font-family: learningNumbers;
     }
 
-    .activity-3-ui-arrows {
-      width: 25%;
-      height: 25%;
-    }
-    .activity-3-play-container {
-      float: right;
-    }
 }
