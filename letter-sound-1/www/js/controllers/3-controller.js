@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, RandomLetterThree, TTSService,
+.controller('3Ctrl', function($scope,$timeout, RandomLetterThree, TTSService,
   Util,Score,ActividadesFinalizadasService) {
     $scope.imgs = [];
     $scope.activityProgress = 0;
@@ -43,7 +43,7 @@ angular.module('saan.controllers')
 
           //wait for UI to load
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
-          setTimeout(function() {
+          $timeout(function() {
             if (readInstructions){
               $scope.speak(Ctrl3.instructions);
             }
@@ -111,12 +111,12 @@ angular.module('saan.controllers')
       var name = selectedObject.toLowerCase();
       if (ER.test(name)) {
         Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
-          setTimeout(function() {
+          $timeout(function() {
             var position = Util.getRandomNumber(Ctrl3.successMessages.length);
             var successMessage = Ctrl3.successMessages[position];
             $scope.speak(successMessage);
             //wait for speak
-            setTimeout(function() {
+            $timeout(function() {
               Ctrl3.levelUp(); //Advance level
               Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score);
               Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
@@ -137,7 +137,7 @@ angular.module('saan.controllers')
         console.log(Ctrl3.score);
         Util.saveScore(Ctrl3.activityId, Ctrl3.score);
         //wait for speak
-        setTimeout(function() {
+        $timeout(function() {
           var position = Util.getRandomNumber(Ctrl3.errorMessages.length);
           var errorMessage = Ctrl3.errorMessages[position];
           $scope.speak(errorMessage);
@@ -164,7 +164,7 @@ angular.module('saan.controllers')
     $scope.showPage = function() {
       $scope.isActivity = true;
       Ctrl3.instructions = Ctrl3.letterInstruction;
-      setTimeout(function(){
+      $timeout(function(){
           $scope.speak(Ctrl3.instructions);
       },1000);
     }
@@ -174,7 +174,7 @@ angular.module('saan.controllers')
       var object = objectNameSrc.split("/");
       var objectName = object[object.length -1].replace(".png","");
       $scope.speak(name + " in "+objectName);
-      setTimeout(function (){
+      $timeout(function (){
           $scope.checkLetter(name);
       }, 1000);
     };
