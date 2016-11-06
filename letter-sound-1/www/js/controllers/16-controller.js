@@ -154,7 +154,7 @@ angular.module('saan.controllers')
 
   //Drag
   $scope.sourceOptions = {
-    containment: '.activity16',
+    containment: '.activity-16-content',
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
       if (!Ctrl16.letterOk) {
