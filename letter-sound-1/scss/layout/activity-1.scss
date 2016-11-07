@@ -1,7 +1,63 @@
+.activity-1-content {
+  background: url("../img/1-assets/background.png") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
 .material-icons.btn-play-word {
   font-size: 8em;
 }
 
 .dashboard-container {
-  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15rem;
+}
+
+.character {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  img {
+    height: 20rem;
+  }
+}
+
+.talkbubble {
+  position: relative;
+  // width: 300px;
+  height: 125px;
+
+  padding: 10px;
+  border-radius: 5px;
+  border: solid lightblue;
+  background: lightblue;
+  right: 32rem;
+    top: 12rem;
+}
+
+.talkbubble:before {
+  content:"";
+  position: absolute;
+  left: 100%;
+  top: 26px;
+  width: 0;
+  height: 0;
+
+  border-top: 13px solid transparent;
+  border-left: 26px solid lightblue;
+  border-bottom: 13px solid transparent;
+}
+
+.talkbubble textarea {
+  position: inherit;
+    background: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    resize: none;
+    font-size: 2em;
+    height: 100%;
 }
