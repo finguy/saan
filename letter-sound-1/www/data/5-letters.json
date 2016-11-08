@@ -3,20 +3,12 @@
     "letterSrc": "img/alphabet-buttons/a.png",
     "imgs":[
       {"src": ["img/5-assets/animals/wale.png",
-                "img/5-assets/animals/aligator.png",
-                "img/5-assets/animals/cat.png",
-                "img/5-assets/animals/bat.png",
-                "img/5-assets/animals/cammel.png",
-                "img/5-assets/animals/bear.png",
-                "img/5-assets/animals/elephant.png",
                 "img/5-assets/animals/snake.png"
               ],
        "name" : "A"
      },
-     {"src": ["img/5-assets/animals/horse.png",
-              "img/5-assets/animals/tiger.png",
-              "img/5-assets/animals/monkey.png",
-              "img/5-assets/animals/sheep.png"
+     {"src": [
+              "img/5-assets/animals/tiger.png"
      ],
       "name" : "e"
     },
@@ -32,28 +24,19 @@
     {"letter":"e" ,
       "letterSrc": "img/alphabet-buttons/e.png",
       "imgs":[
-
-       {"src": ["img/5-assets/animals/aligator.png",
-                "img/5-assets/animals/fish.png",
-                "img/5-assets/animals/lion.png",
-                "img/5-assets/animals/bird.png",
-                "img/5-assets/animals/pig.png"
+        {"src": [
+                  "img/5-assets/animals/frog.png",
+                  "img/5-assets/animals/dog.png",
+                  "img/5-assets/animals/lion.png"
                 ],
-        "name" : "i"
-      },
-      {"src": ["img/5-assets/animals/wale.png",
-              "img/5-assets/animals/horse.png",
-              "img/5-assets/animals/tiger.png",
-              "img/5-assets/animals/cammel.png",
-              "img/5-assets/animals/bear.png",
-              "img/5-assets/animals/elephant.png",
-              "img/5-assets/animals/monkey.png",
-              "img/5-assets/animals/snake.png",
+         "name" : "o"
+       },
+      {"src": [
               "img/5-assets/animals/sheep.png"
               ],
        "name" : "E"
      },
-      {"src": ["img/5-assets/animals/octopus.png",                
+      {"src": ["img/5-assets/animals/octopus.png",
                 "img/5-assets/animals/duck.png"
               ],
        "name" : "u"
@@ -86,15 +69,11 @@
       "letterSrc": "img/alphabet-buttons/o.png",
       "imgs":[
        {"src": [ "img/5-assets/animals/wale.png",
-               "img/5-assets/animals/cammel.png",
-               "img/5-assets/animals/bear.png",
-               "img/5-assets/animals/elephant.png",
-               "img/5-assets/animals/bat.png"
+                 "img/5-assets/animals/snake.png"
                 ],
         "name" : "a"
       },
-      {"src": [ "img/5-assets/animals/tiger.png",
-              "img/5-assets/animals/snake.png",
+      {"src": [
               "img/5-assets/animals/sheep.png"
             ],
        "name" : "e"
@@ -112,18 +91,11 @@
     "letterSrc": "img/alphabet-buttons/u.png",
     "imgs":[
             {"src": [  "img/5-assets/animals/octopus.png",
-                        "img/5-assets/animals/turtle.png",
                         "img/5-assets/animals/duck.png"
                     ],
              "name" : "u"
            },
-           {"src": ["img/5-assets/animals/wale.png",
-                   "img/5-assets/animals/horse.png",
-                   "img/5-assets/animals/cammel.png",
-                   "img/5-assets/animals/bear.png",
-                   "img/5-assets/animals/elephant.png",
-                   "img/5-assets/animals/monkey.png",
-                   "img/5-assets/animals/snake.png",
+           {"src": [
                    "img/5-assets/animals/sheep.png"
                   ],
             "name" : "e"
@@ -143,6 +115,6 @@
   "scoreSetUp" : {
     "add": 1,
     "substract": 1,
-    "minScore": 10
+    "minScore": 5
   }
 }

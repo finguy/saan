@@ -42,29 +42,7 @@ angular.module('saan.directives')
        templateUrl: "templates/directives/progress.html",
        scope: 'true'
      };
-   })
-   .directive('objectDashboardFive', function() {
-    return {
-      restrict: "E",
-      templateUrl: "templates/directives/objectDashboardFive.html",
-      scope: 'true',
-      link: function(scope) {
-        scope.selectLetter = function(name, objectNameSrc) {
-          if (!scope.checkingLetter && !scope.checkingWord){
-            scope.checkingLetter = true;
-              scope.selectedObject= name;
-              var object = objectNameSrc.split("/");
-              var objectName = object[object.length -1].replace(".png","");
-              scope.speak(scope.letter + " in "+objectName);
-              setTimeout(function (){
-                scope.checkingLetter = false;
-                  scope.checkLetter(name);
-              }, 500);
-          }
-        };
-      }
-    };
-  })
+   })   
   .directive('objectDashboardTwelve', function() {
       return {
         restrict: "E",
