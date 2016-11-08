@@ -3,7 +3,7 @@
   angular.module('saan.controllers')
   .controller('10Ctrl', function($scope ,RandomWordTen, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
-    $scope.activityId = '10'; // Activity Id    
+    $scope.activityId = '10'; // Activity Id
     $scope.word = []; // Letter to play in level
     $scope.wordStr = "";
     $scope.rimes = [];
@@ -124,10 +124,7 @@
 
     $scope.handleProgress = function(isWordOk) {
       if (isWordOk) {
-        if (!$scope.finished) {
-          $scope.score = Score.update($scope.addScore, $scope.score);
-          Util.saveScore($scope.activityId, $scope.score);
-        }
+        $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
         var position = Util.getRandomNumber($scope.successMessages.length);
         var successMessage = $scope.successMessages[position];
         $scope.speak(successMessage);
@@ -135,7 +132,7 @@
           $scope.draggedWord = false;
           Ctrl10.levelUp(); //Advance level
           Util.saveLevel($scope.activityId, $scope.level);
-          if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
+          if (!$scope.finished) {
             $scope.finished = $scope.score >= $scope.minScore;
             Util.saveStatus($scope.activityId, $scope.finished);
             ActividadesFinalizadasService.add($scope.activityId);
@@ -145,8 +142,7 @@
 
         }, 1000);
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score);
-        Util.saveScore($scope.activityId, $scope.score);
+        $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
         $scope.speak(name);
         //wait for speak
         setTimeout(function() {

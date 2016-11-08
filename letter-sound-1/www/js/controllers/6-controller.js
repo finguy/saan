@@ -134,18 +134,15 @@ angular.module('saan.controllers')
             //wait for speak
            setTimeout(function() {
             if (!$scope.finished) {
-              $scope.score = Score.update($scope.addScore, $scope.score);
-              Util.saveScore($scope.activityId, $scope.score);
+              $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
             }
 
             if (LAST_CHECK) {
                 Ctrl6.levelUp(); //Advance level
                 Util.saveLevel($scope.activityId, $scope.level);
-                if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-                  $scope.finished = $scope.score >= $scope.minScore;
-                  Util.saveStatus($scope.activityId, $scope.finished);
-                  ActividadesFinalizadasService.add($scope.activityId);
-                }
+                $scope.finished = $scope.score >= $scope.minScore;
+                Util.saveStatus($scope.activityId, $scope.finished);
+                ActividadesFinalizadasService.add($scope.activityId);
 
                  $scope.speak($scope.word);
                   setTimeout(function() {
@@ -161,7 +158,7 @@ angular.module('saan.controllers')
             }
            }, 1000);
           } else {
-              $scope.score = Score.update(-$scope.substractScore, $scope.score);
+              $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);                    
               Util.saveScore($scope.activityId, $scope.score);
               $scope.speak(name);
               //wait for speak

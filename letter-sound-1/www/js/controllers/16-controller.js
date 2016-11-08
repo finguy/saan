@@ -99,8 +99,7 @@ angular.module('saan.controllers')
     //wait for speak
     $timeout(function() {
       if (!Ctrl16.finished) {
-        Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score);
-        Util.saveScore(Ctrl16.activityId, Ctrl16.score);
+        Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score,Ctrl16.activityId, Ctrl16.finished);
       }
       var position = Util.getRandomNumber(Ctrl16.successMessages.length);
       var successMessage = Ctrl16.successMessages[position];
@@ -121,8 +120,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.handleError = function() {
-    Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score);
-    Util.saveScore(Ctrl16.activityId, Ctrl16.score);
+    Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);            
     $scope.speak(name);
     //wait for speak
     $timeout(function() {

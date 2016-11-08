@@ -102,29 +102,24 @@ angular.module('saan.controllers')
               $scope.speak($scope.word);
               //wait for speak
               setTimeout(function() {
-              if (!$scope.finished) {
-                $scope.score = Score.update($scope.addScore, $scope.score);
-                Util.saveScore($scope.activityId, $scope.score);
-              }
-              var position = Util.getRandomNumber($scope.successMessages.length);
-              var successMessage = $scope.successMessages[position];
-              $scope.speak(successMessage);
-              setTimeout(function() {
-                if (LAST_CHECK) {
-                    Ctrl9.levelUp(); //Advance level
-                    Util.saveLevel($scope.activityId, $scope.level);
-                    if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-                      $scope.finished = $scope.score >= $scope.minScore;
-                      Util.saveStatus($scope.activityId, $scope.finished);
-                      ActividadesFinalizadasService.add($scope.activityId);
+                  $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+                  var position = Util.getRandomNumber($scope.successMessages.length);
+                  var successMessage = $scope.successMessages[position];
+                  $scope.speak(successMessage);
+                  setTimeout(function() {
+                    if (LAST_CHECK) {
+                        Ctrl9.levelUp(); //Advance level
+                        Util.saveLevel($scope.activityId, $scope.level);
+
+                        $scope.finished = $scope.score >= $scope.minScore;
+                        Util.saveStatus($scope.activityId, $scope.finished);
+                        ActividadesFinalizadasService.add($scope.activityId);                        
+                        Ctrl9.showDashboard(false); //Reload dashboard
                     }
-                      Ctrl9.showDashboard(false); //Reload dashboard
-                }
-              }, 1000);
+                  }, 1000);
              }, 1000);
             } else {
-                $scope.score = Score.update(-$scope.substractScore, $scope.score);
-                Util.saveScore($scope.activityId, $scope.score);
+                $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);
                 $scope.speak(name);
                 //wait for speak
                 setTimeout(function() {

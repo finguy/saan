@@ -113,23 +113,18 @@
           Ctrl12.levelUp();
           Util.saveLevel($scope.activityId, $scope.level);
           //Check score and status
-          $scope.score = Score.update($scope.addScore, $scope.score);
+          $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
           $scope.finished = $scope.score >= $scope.minScore;
           Util.saveStatus($scope.activityId, $scope.finished);
-          if (!$scope.finished) {
-            Util.saveScore($scope.activityId, $scope.score);
-            //Reload dashboard
-            Ctrl12.showDashboard(true);
-          } else {
+          if ($scope.finished) {
             ActividadesFinalizadasService.add($scope.activityId);
           }
-
+          Ctrl12.showDashboard(true);
         }, 1000);
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score);
-        Util.saveScore($scope.activityId, $scope.score);
+        $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);        
         //wait for speak
-        setTimeout(function() {          
+        setTimeout(function() {
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);

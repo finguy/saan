@@ -118,22 +118,19 @@ angular.module('saan.controllers')
             //wait for speak
             $timeout(function() {
               Ctrl3.levelUp(); //Advance level
-              Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score);
+              Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score, Ctrl3.activityId, Ctrl3.finished);
               Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
-              if (!Ctrl3.finished) { // Solo sumo o resto si no esta finalizada
-                Util.saveScore(Ctrl3.activityId, Ctrl3.score);
-                Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
-                if (Ctrl3.finished) {
+              Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
+              if (Ctrl3.finished) {
                     Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
                     ActividadesFinalizadasService.add(Ctrl3.activityId);
-                }
               }
               Ctrl3.showDashboard(true); //Reload dashboard
             }, 1000);
           }, 1000);
 
       } else {
-        Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.score);
+        Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.score, Ctrl3.activityId, Ctrl3.finished);        
         console.log(Ctrl3.score);
         Util.saveScore(Ctrl3.activityId, Ctrl3.score);
         //wait for speak
