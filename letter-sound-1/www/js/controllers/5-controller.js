@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-  .controller('5Ctrl', function($scope,$timeout, RandomLetter, TTSService,
+  .controller('5Ctrl', function($scope,$timeout, $log, RandomLetter, TTSService,
     Util, Score) {
     $scope.activityId = '5'; // Activity Id
     $scope.letter = ""; // Letter to play in level
@@ -54,7 +54,7 @@ angular.module('saan.controllers')
 
         },
         function error(error) {
-          console.log(error);
+          $log.error(error);
         }
       );
     };
