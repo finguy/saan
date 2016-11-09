@@ -1,11 +1,37 @@
-angular.module('saan.services')
+(function() {
+  'use strict';
+  angular.module('saan.services')
+  .factory('AssetsPath', AssetsPath);
 
-.service('AssetsPath', function() {
-  var MAIN_PATH = "/android_asset/www/";
+  function AssetsPath($http, $log) {
+    var MAIN_PATH = "/android_asset/www/assets/";
 
     return {
-      sounds: function(src) {
-        return MAIN_PATH + "sounds/" + src;
-      }
-  };
-});
+      getActivityAudio: getActivityAudio,
+      getMainPath: getMainPath,
+      getGeneralAudio: getGeneralAudio,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
+    };
+
+    function getActivityAudio(id) {
+      return MAIN_PATH + id + "/audio/";
+    }
+
+    function getMainPath() {
+      return MAIN_PATH;
+    }
+
+    function getGeneralAudio() {
+      return MAIN_PATH + "audio/";
+    }
+
+    function getSuccessAudio() {
+      return MAIN_PATH + "audio/feedback/success/";
+    }
+
+    function getFailureAudio() {
+      return MAIN_PATH + "audio/feedback/failure/";
+    }
+  }
+})();
