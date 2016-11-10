@@ -120,19 +120,24 @@ angular.module('saan.controllers')
           //wait for speak
           setTimeout(function() {
             Ctrl5.levelUp(); //Advance level
-            $scope.score = Score.update($scope.addScore, $scope.score,$scope.activityId, $scope.finished);
+
             Util.saveLevel($scope.activityId, $scope.level);
-            $scope.finished = $scope.score >= $scope.minScore;
-            if ($scope.finished) {
-                  Util.saveStatus($scope.activityId, $scope.finished);
-                  ActividadesFinalizadasService.add($scope.activityId);
+            if (!$scope.finished){
+              $scope.score = Score.update($scope.addScore, $scope.score,$scope.activityId, $scope.finished);
+              $scope.finished = $scope.score >= $scope.minScore;
+              if ($scope.finished) {
+                    Util.saveStatus($scope.activityId, $scope.finished);
+                    ActividadesFinalizadasService.add($scope.activityId);
+              }
             }
             Ctrl5.showDashboard(); //Reload dashboard
           }, 1000);
         }, 1000);
 
     } else {
-      $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+      if (!$scope.finished) {
+        $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+      }
       //wait for speak
       setTimeout(function() {
         $scope.checkingWord = false;

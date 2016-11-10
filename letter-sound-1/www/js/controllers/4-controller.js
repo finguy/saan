@@ -117,17 +117,21 @@ angular.module('saan.controllers')
         //wait for speak
         setTimeout(function() {
           Ctrl4.levelUp(); //Advance level
-          Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.score, Ctrl4.activityId, Ctrl4.finished);
           Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
-          Ctrl4.finished = Ctrl4.score >= Ctrl4.minScore;
-          if (Ctrl4.finished) {
-            Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
-            ActividadesFinalizadasService.add(Ctrl4.activityId);
+          if (!Ctrl4.finished) {
+            Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.score, Ctrl4.activityId, Ctrl4.finished);
+            Ctrl4.finished = Ctrl4.score >= Ctrl4.minScore;
+            if (Ctrl4.finished) {
+              Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
+              ActividadesFinalizadasService.add(Ctrl4.activityId);
+            }
           }
           Ctrl4.showDashboard(); //Reload dashboard
         }, 1000);
       } else {
-        Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.score,Ctrl4.activityId, Ctrl4.finished);                
+        if (!Ctrl4.finished) {
+          Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.score,Ctrl4.activityId, Ctrl4.finished);
+        }
         var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
         var errorMessage = Ctrl4.errorMessages[position];
         $scope.speak(errorMessage);

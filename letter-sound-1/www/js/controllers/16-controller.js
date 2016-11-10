@@ -97,10 +97,7 @@ angular.module('saan.controllers')
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
     $scope.speak($scope.letter);
     //wait for speak
-    $timeout(function() {
-      if (!Ctrl16.finished) {
-        Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score,Ctrl16.activityId, Ctrl16.finished);
-      }
+    $timeout(function() {       
       var position = Util.getRandomNumber(Ctrl16.successMessages.length);
       var successMessage = Ctrl16.successMessages[position];
       $scope.speak(successMessage);
@@ -109,9 +106,12 @@ angular.module('saan.controllers')
           Ctrl16.levelUp(); //Advance level
           Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
           if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
+            Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score,Ctrl16.activityId, Ctrl16.finished);
             Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
+            if (Ctrl16.finished){
             Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
             ActividadesFinalizadasService.add(Ctrl16.activityId);
+            }
           }
           Ctrl16.showDashboard(false); //Reload dashboard
         }
@@ -120,7 +120,9 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.handleError = function() {
-    Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);            
+    if (!Ctrl16.finished) {
+      Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);
+    }
     $scope.speak(name);
     //wait for speak
     $timeout(function() {

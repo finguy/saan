@@ -133,21 +133,23 @@ angular.module('saan.controllers')
             $scope.speak(name);
             //wait for speak
            setTimeout(function() {
-            if (!$scope.finished) {
-              $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
-            }
+
 
             if (LAST_CHECK) {
                 Ctrl6.levelUp(); //Advance level
                 Util.saveLevel($scope.activityId, $scope.level);
+                if (!$scope.finished) {
+                  $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+                }
                 $scope.finished = $scope.score >= $scope.minScore;
-                Util.saveStatus($scope.activityId, $scope.finished);
-                ActividadesFinalizadasService.add($scope.activityId);
-
-                 $scope.speak($scope.word);
-                  setTimeout(function() {
+                if ($scope.finished) {
+                  Util.saveStatus($scope.activityId, $scope.finished);
+                  ActividadesFinalizadasService.add($scope.activityId);
+                }
+                $scope.speak($scope.word);
+                setTimeout(function() {
                    Ctrl6.showDashboard(false); //Reload dashboard
-                  }, 1000);
+                }, 1000);
             } else {
                 var position = Util.getRandomNumber($scope.successMessages.length);
                 var successMessage = $scope.successMessages[position];
@@ -158,8 +160,10 @@ angular.module('saan.controllers')
             }
            }, 1000);
           } else {
-              $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);                    
-              Util.saveScore($scope.activityId, $scope.score);
+              if (!$scope.finished) {
+                $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);
+                Util.saveScore($scope.activityId, $scope.score);
+              }
               $scope.speak(name);
               //wait for speak
               setTimeout(function() {

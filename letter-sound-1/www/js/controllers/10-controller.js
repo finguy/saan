@@ -142,7 +142,9 @@
 
         }, 1000);
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+        if (!$scope.finished) {
+          $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+        }
         $scope.speak(name);
         //wait for speak
         setTimeout(function() {
