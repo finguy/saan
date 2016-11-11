@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope,$log, $timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope, $log, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -31,7 +31,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak(Ctrl16.instructions);
+            $scope.speak($scope.instructions);
           }
         }, readWordTimeout);
       },
@@ -49,10 +49,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpScore = function() {
-    var score = Util.getScore(Ctrl16.activityId);
-    if (score) {
-      Ctrl16.score = score;
-    }
+    Ctrl16.score =Util.getScore(Ctrl16.activityId);
   };
 
   Ctrl16.setUpStatus = function() {
@@ -76,14 +73,14 @@ angular.module('saan.controllers')
           name: wordsJson.info.letters[i].name,
           letterImage: wordsJson.info.letters[i].letterImg
         });
-      }
+      }      
     }
 
     $scope.imgs = imgs;
     $scope.imgs = _.shuffle($scope.imgs);
     $scope.letters = letters;
     $scope.draggedImgs = [];
-    Ctrl16.instructions = data.instructions;
+    $scope.instructions = data.instructions;
     Ctrl16.successMessages = data.successMessages;
     Ctrl16.errorMessages = data.errorMessages;
     Ctrl16.addScore = data.scoreSetUp.add;
@@ -102,18 +99,19 @@ angular.module('saan.controllers')
       var successMessage = Ctrl16.successMessages[position];
       $scope.speak(successMessage);
       $timeout(function() {
-        if (LAST_CHECK) {
-          Ctrl16.levelUp(); //Advance level
-          Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
-          if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
-            Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score,Ctrl16.activityId, Ctrl16.finished);
-            Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
-            if (Ctrl16.finished){
+        if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
+          Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);
+          Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
+          if (Ctrl16.finished) { // Puede haber finalizado
             Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
             ActividadesFinalizadasService.add(Ctrl16.activityId);
-            }
           }
-          Ctrl16.showDashboard(false); //Reload dashboard
+        }
+
+        if (LAST_CHECK) {
+            Ctrl16.levelUp(); //Advance level
+            Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+            Ctrl16.showDashboard(false); //Reload dashboard
         }
       }, 1000);
     }, 1000);
