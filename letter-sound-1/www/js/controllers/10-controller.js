@@ -19,7 +19,7 @@
     $scope.selectedObject = ""; // Collects letters the user selects
     $scope.playedWords = []; // Collects words the user played
     $scope.level = $scope.level || 1; // Indicates activity level
-    $scope.totalLevels = 3;
+    $scope.totalLevels = 1;
     $scope.activityProgress = 0;
     $scope.score = 0;
     $scope.draggedWord = false;
@@ -35,7 +35,6 @@
       var level = Util.getLevel($scope.activityId);
       if (level) {
         $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -119,7 +118,7 @@
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
       $scope.checkingNumber = false;
-
+      $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels; // -1 porque empieza en cero.        
     };
 
     $scope.handleProgress = function(isWordOk) {
@@ -145,7 +144,6 @@
         if (!$scope.finished) {
           $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
         }
-        $scope.speak(name);
         //wait for speak
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.errorMessages.length);
