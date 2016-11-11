@@ -58,17 +58,12 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpLevel = function() {
-    var level = Util.getLevel($scope.activityId);
-    if (level) {
-      $scope.level = level;
-    }
+    $scope.level = Util.getLevel($scope.activityId);   
   };
 
   Ctrl6.setUpScore = function() {
-    var score = Util.getScore($scope.activityId);
-    if (score) {
-      $scope.score = score
-    }
+    $scope.score = Util.getScore($scope.activityId);
+\
   };
 
   Ctrl6.setUpStatus = function() {
@@ -132,7 +127,7 @@ angular.module('saan.controllers')
   };
   $scope.handleProgress = function(isPhonemaOk, name) {
     var LAST_CHECK = $scope.phonemas.length === $scope.letters.length;
-    if (isPhonemaOk) {      
+    if (isPhonemaOk) {
         var position = Util.getRandomNumber($scope.successMessages.length);
         var successMessage = $scope.successMessages[position];
         $scope.speak(successMessage);

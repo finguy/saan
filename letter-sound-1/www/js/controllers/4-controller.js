@@ -24,24 +24,15 @@ angular.module('saan.controllers')
 
 
     Ctrl4.setUpLevel = function() {
-      var level = Util.getLevel(Ctrl4.activityId);
-      if (level) {
-        Ctrl4.level = level;
-      }
+      Ctrl4.level = Util.getLevel(Ctrl4.activityId);     
     };
 
     Ctrl4.setUpScore = function() {
-      var score = Util.getScore(Ctrl4.activityId);
-      if (score) {
-        Ctrl4.score = score
-      }
+      Ctrl4.score = Util.getScore(Ctrl4.activityId);
     };
 
     Ctrl4.setUpStatus = function() {
-      var finished = Util.getStatus(Ctrl4.activityId);
-      if (finished === false || finished === true) {
-        Ctrl4.finished = finished;
-      }
+      Ctrl4.finished = Util.getStatus(Ctrl4.activityId);
     }
 
     //Shows Activity Dashboard

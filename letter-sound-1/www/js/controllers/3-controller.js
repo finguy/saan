@@ -10,7 +10,7 @@ angular.module('saan.controllers')
     Ctrl3.letterTutorial = "";
 
 
-    Ctrl3.instructions = ""; // Instructions to read
+    $scope.instructions = ""; // Instructions to read
     Ctrl3.successMessages = [];
     Ctrl3.errorMessages  = [];
 
@@ -45,7 +45,7 @@ angular.module('saan.controllers')
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
           $timeout(function() {
             if (readInstructions){
-              $scope.speak(Ctrl3.instructions);
+              $scope.speak($scope.instructions);
             }
           }, readWordTimeout);
         },
@@ -56,29 +56,21 @@ angular.module('saan.controllers')
     };
 
     Ctrl3.setUpLevel = function() {
-      var level = Util.getLevel(Ctrl3.activityId);
-      if (level) {
-        Ctrl3.level = level;
-      }
+      Ctrl3.level = Util.getLevel(Ctrl3.activityId);
     };
 
     Ctrl3.setUpScore = function(){
-      var score = Util.getScore(Ctrl3.activityId);
-      if (score) {
-        Ctrl3.score = score
-      }
+      Ctrl3.score  = Util.getScore(Ctrl3.activityId);
+
     };
 
     Ctrl3.setUpStatus = function(){
-      var finished = Util.getStatus(Ctrl3.activityId);
-      if (finished === false || finished === true) {
-        Ctrl3.finished = finished;
-      }
+      Ctrl3.finished = Util.getStatus(Ctrl3.activityId);
     }
 
     Ctrl3.setUpContextVariables = function(data) {
       var letterJson = data.letter;
-      Ctrl3.instructions = data.instructions;
+      $scope.instructions = data.instructions;
       Ctrl3.successMessages = data.successMessages;
       Ctrl3.errorMessages = data.errorMessages;
       Ctrl3.addScore = data.scoreSetUp.add;
@@ -100,8 +92,8 @@ angular.module('saan.controllers')
       }
       $scope.imgs = _.shuffle($scope.imgs);
       Ctrl3.dashboard = [Ctrl3.letter];
-      Ctrl3.instructions = letterJson.instruction;
-      $scope.activityProgress = 100 * (Ctrl3.level-1)/Ctrl3..totalLevels;
+      $scope.instructions = letterJson.instruction;
+      $scope.activityProgress = 100 * (Ctrl3.level-1)/Ctrl3.totalLevels;
     };
 
     //Verifies selected letters and returns true if they match the word
@@ -162,9 +154,9 @@ angular.module('saan.controllers')
 
     $scope.showPage = function() {
       $scope.isActivity = true;
-      Ctrl3.instructions = Ctrl3.letterInstruction;
+      $scope.instructions = Ctrl3.letterInstruction;
       $timeout(function(){
-          $scope.speak(Ctrl3.instructions);
+          $scope.speak($scope.instructions);
       },1000);
     }
 

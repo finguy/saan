@@ -50,7 +50,7 @@ angular.module('saan.controllers')
       };
 
       Ctrl9.setUpScore = function(){
-        $scope.score = Util.getScore($scope.activityId);        
+        $scope.score = Util.getScore($scope.activityId);
       };
 
       Ctrl9.setUpStatus = function(){
@@ -58,7 +58,6 @@ angular.module('saan.controllers')
       };
 
       Ctrl9.setUpContextVariables = function(data) {
-        console.log(data);
         var wordsJson = data;
         $scope.words = _.shuffle(wordsJson.words.words);
         $scope.imgs = [];

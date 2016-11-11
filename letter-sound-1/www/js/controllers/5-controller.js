@@ -60,17 +60,11 @@ angular.module('saan.controllers')
   };
 
   Ctrl5.setUpLevel = function() {
-    var level = Util.getLevel($scope.activityId);
-    if (level) {
-      $scope.level = level;
-    }
+    $scope.level= Util.getLevel($scope.activityId);
   };
 
   Ctrl5.setUpScore = function(){
-    var score = Util.getScore($scope.activityId);
-    if (score) {
-      $scope.score = score
-    }
+    $scope.score = Util.getScore($scope.activityId);
   };
 
   Ctrl5.setUpStatus = function(){
