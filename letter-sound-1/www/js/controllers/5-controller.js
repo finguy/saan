@@ -63,7 +63,6 @@ angular.module('saan.controllers')
     var level = Util.getLevel($scope.activityId);
     if (level) {
       $scope.level = level;
-      $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
     }
   };
 
@@ -103,7 +102,7 @@ angular.module('saan.controllers')
               $scope.imgs.push(img);
            }
          }
-
+        $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels;
   };
 
   //Verifies selected letters and returns true if they match the word

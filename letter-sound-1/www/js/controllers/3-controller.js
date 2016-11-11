@@ -59,7 +59,6 @@ angular.module('saan.controllers')
       var level = Util.getLevel(Ctrl3.activityId);
       if (level) {
         Ctrl3.level = level;
-        $scope.activityProgress = 100 * (level-1)/Ctrl3.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -102,7 +101,7 @@ angular.module('saan.controllers')
       $scope.imgs = _.shuffle($scope.imgs);
       Ctrl3.dashboard = [Ctrl3.letter];
       Ctrl3.instructions = letterJson.instruction;
-
+      $scope.activityProgress = 100 * (Ctrl3.level-1)/Ctrl3..totalLevels;
     };
 
     //Verifies selected letters and returns true if they match the word

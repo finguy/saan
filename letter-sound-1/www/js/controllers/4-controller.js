@@ -27,7 +27,6 @@ angular.module('saan.controllers')
       var level = Util.getLevel(Ctrl4.activityId);
       if (level) {
         Ctrl4.level = level;
-        $scope.activityProgress = 100 * (level - 1) / Ctrl4.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -106,6 +105,7 @@ angular.module('saan.controllers')
           $scope.imgs.push(img);
         }
       }
+      $scope.activityProgress = 100 * (Ctrl4.level-1)/Ctrl4.totalLevels;
     };
 
     Ctrl4.handleProgress = function(numberOk) {

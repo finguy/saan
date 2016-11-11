@@ -61,7 +61,6 @@ angular.module('saan.controllers')
       var level = Util.getLevel($scope.activityId);
       if (level) {
         $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -108,6 +107,7 @@ angular.module('saan.controllers')
       $scope.wordInstruction = wordJson.instruction;
       $scope.totalLevels = data.totalLevels;
       $scope.phonemas = [];
+      $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels;
     };
 
     //Verifies selected letters or and returns true if they match the word

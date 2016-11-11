@@ -49,10 +49,7 @@ angular.module('saan.controllers')
         var level = Util.getLevel($scope.activityId);
         if (level) {
           $scope.level = level;
-          $scope.activityProgress = 100 * (level-1)/$scope.totalLevels;
-        }
-
-        $scope.activityProgress
+        }        
       };
 
       Ctrl9.setUpScore = function(){
@@ -94,6 +91,7 @@ angular.module('saan.controllers')
         $scope.substractScore = data.scoreSetUp.substract;
         $scope.minScore = data.scoreSetUp.minScore;
         $scope.totalLevels = data.totalLevels;
+        $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels;
       };
 
       $scope.handleProgress = function(isWordOk) {

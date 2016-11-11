@@ -45,7 +45,6 @@ angular.module('saan.controllers')
     var level = Util.getLevel(Ctrl16.activityId);
     if (level) {
       Ctrl16.level = level;
-      $scope.activityProgress = 100 * (level - 1) / Ctrl16.totalLevels;
     }
   };
 
@@ -91,13 +90,14 @@ angular.module('saan.controllers')
     Ctrl16.substractScore = data.scoreSetUp.substract;
     Ctrl16.minScore = data.scoreSetUp.minScore;
     Ctrl16.totalLevels = data.totalLevels;
+    $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
   };
 
   Ctrl16.handleSuccess = function() {
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
     $scope.speak($scope.letter);
     //wait for speak
-    $timeout(function() {       
+    $timeout(function() {
       var position = Util.getRandomNumber(Ctrl16.successMessages.length);
       var successMessage = Ctrl16.successMessages[position];
       $scope.speak(successMessage);

@@ -30,8 +30,7 @@
     Ctrl12.setUpLevel = function() {
       var level = Util.getLevel($scope.activityId);
       if (level) {
-        $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
+        $scope.level = level;        
       }
     };
 
@@ -98,6 +97,7 @@
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
       $scope.checkingAnswer = false;
+      $scope.activityProgress = 100 * (Ctrl12.level - 1) / Ctrl12.totalLevels;
 
     };
 
