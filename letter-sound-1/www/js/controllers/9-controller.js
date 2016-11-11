@@ -21,16 +21,13 @@ angular.module('saan.controllers')
       //Shows Activity Dashboard
       var Ctrl9 = Ctrl9 || {};
       Ctrl9.showDashboard = function(readInstructions) {
+        Ctrl9.setUpLevel();
+        Ctrl9.setUpScore();
+        Ctrl9.setUpStatus();
 
         RandomWordsNine.words($scope.level, $scope.playedWords).then(
           function success(data) {
-            console.log("setting up level!");
             Ctrl9.setUpContextVariables(data);
-
-            Ctrl9.setUpLevel();
-            Ctrl9.setUpScore();
-            Ctrl9.setUpStatus();
-
             //wait for UI to load
             var readWordTimeout = (readInstructions) ? 4000 : 1000;
             setTimeout(function() {
@@ -49,21 +46,15 @@ angular.module('saan.controllers')
         var level = Util.getLevel($scope.activityId);
         if (level) {
           $scope.level = level;
-        }        
+        }
       };
 
       Ctrl9.setUpScore = function(){
-        var score = Util.getScore($scope.activityId);
-        if (score) {
-          $scope.score = score;
-        }
+        $scope.score = Util.getScore($scope.activityId);        
       };
 
       Ctrl9.setUpStatus = function(){
-        var finished = Util.getStatus($scope.activityId);
-        if (finished === false || finished === true) {
-          $scope.finished = finished;
-        }
+        $scope.finished = Util.getStatus($scope.activityId);
       };
 
       Ctrl9.setUpContextVariables = function(data) {
@@ -104,17 +95,21 @@ angular.module('saan.controllers')
                   var successMessage = $scope.successMessages[position];
                   $scope.speak(successMessage);
                   setTimeout(function() {
+                    if (!$scope.finished ) { //Aumento puntaje
+                      console.log($scope.addScore);
+                      console.log($scope.score);
+                      console.log($scope.activityId);
+                      console.log($scope.finished);
+                      $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+                      $scope.finished = $scope.score >= $scope.minScore;
+                      if ($scope.finished){ // Puede haber alcanzado el puntaje para que marque como finalizada.
+                        Util.saveStatus($scope.activityId, $scope.finished);
+                        ActividadesFinalizadasService.add($scope.activityId);
+                      }
+                    }
                     if (LAST_CHECK) {
                         Ctrl9.levelUp(); //Advance level
                         Util.saveLevel($scope.activityId, $scope.level);
-                        if (!$scope.finished ) {
-                          $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
-                          $scope.finished = $scope.score >= $scope.minScore;
-                          if ($scope.finished){
-                            Util.saveStatus($scope.activityId, $scope.finished);
-                            ActividadesFinalizadasService.add($scope.activityId);
-                          }
-                        }
                         Ctrl9.showDashboard(false); //Reload dashboard
                     }
                   }, 1000);
