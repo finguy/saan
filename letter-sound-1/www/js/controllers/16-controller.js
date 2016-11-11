@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope,$log, $timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope,$log,$state, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -180,6 +180,10 @@ angular.module('saan.controllers')
       return Ctrl16.letterOk;
     }
   };
+
+  $scope.goLobby = function() {
+    $state.go('lobby');
+  }
 
   $scope.$on('$ionicView.beforeEnter', function() {
     /*************** ACTIONS **************************/

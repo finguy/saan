@@ -2,8 +2,8 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('14Ctrl',['$scope','Util', 'TTSService', 'NumberOperations',
-  function($scope, Util, TTSService, NumberOperations) {
+	.controller('14Ctrl',['$scope', '$state', 'Util', 'TTSService', 'NumberOperations',
+  function($scope, $state, Util, TTSService, NumberOperations) {
     $scope.activityId = '14';
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
@@ -108,6 +108,10 @@
       Ctrl14.setActivity();
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
+    
   }]);
 
 })();

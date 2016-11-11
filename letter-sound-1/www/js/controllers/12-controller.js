@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('12Ctrl', function($scope, RandomText, TTSService,
+  .controller('12Ctrl', function($scope, $state, RandomText, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
     $scope.activityId = '12'; // Activity Id
     $scope.img = "";
@@ -129,7 +129,7 @@
         $scope.score = Score.update(-$scope.substractScore, $scope.score);
         Util.saveScore($scope.activityId, $scope.score);
         //wait for speak
-        setTimeout(function() {          
+        setTimeout(function() {
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);
@@ -171,6 +171,9 @@
       $scope.selectedNumbers = [];
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
 
     //*************** ACTIONS **************************/
     //Show Dashboard

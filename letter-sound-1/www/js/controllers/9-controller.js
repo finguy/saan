@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('9Ctrl', function($scope, RandomWordsNine, TTSService,
+.controller('9Ctrl', function($scope,$state, RandomWordsNine, TTSService,
   Util,Score,ActividadesFinalizadasService) {
       $scope.activityId = 9; // Activity Id
       $scope.totalLevels = 1;
@@ -152,6 +152,11 @@ angular.module('saan.controllers')
         $scope.dashboard = [];
         $scope.selectedLetters = [];
       };
+
+      $scope.goLobby = function() {
+        $state.go('lobby');
+      }
+      
       /*************** ACTIONS **************************/
       //Show Dashboard
       Ctrl9.showDashboard(true);

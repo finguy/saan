@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 	angular.module('saan.controllers')
-	.controller('7Ctrl', ['$scope', 'DeckBuilder', 'Util', function($scope, DeckBuilder, Util) {
+	.controller('7Ctrl', ['$scope','$state', 'DeckBuilder', 'Util', function($scope,$state, DeckBuilder, Util) {
 		$scope.activityId = '7';
 		$scope.deck = [];
 		$scope.map = [];
@@ -52,6 +52,10 @@
 
 			$scope.map = deckMap;
 			$scope.deck = deck;
+
+      $scope.goLobby = function() {
+        $state.go('lobby');
+      }
 		};
 
 	}]);

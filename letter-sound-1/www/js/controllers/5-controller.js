@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('5Ctrl', function($scope, RandomLetter, TTSService,
+.controller('5Ctrl', function($scope,$state, RandomLetter, TTSService,
   Util,Score) {
   $scope.activityId = '5'; // Activity Id
   $scope.letter = ""; // Letter to play in level
@@ -135,7 +135,7 @@ angular.module('saan.controllers')
         }, 1000);
 
     } else {
-      $scope.score = Score.update(-$scope.substractScore, $scope.score);      
+      $scope.score = Score.update(-$scope.substractScore, $scope.score);
       Util.saveScore($scope.activityId, $scope.score);
       //wait for speak
       setTimeout(function() {
@@ -163,6 +163,10 @@ angular.module('saan.controllers')
     $scope.selectedLetters = [];
   };
 
+  $scope.goLobby = function() {
+    $state.go('lobby');
+  }
+  
   //*************** ACTIONS **************************/
   //Show Dashboard
   Ctrl5.showDashboard(true);

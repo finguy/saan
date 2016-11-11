@@ -2,7 +2,7 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('13Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
+	.controller('13Ctrl',['$scope','$state', 'Util', 'TTSService', 'LearningNumber', function($scope,$state, Util, TTSService, LearningNumber) {
 		$scope.activityId = '13';
     $scope.dropzone = [];
     $scope.items = ['dummy'];
@@ -78,6 +78,10 @@
         }
       }
     };
+
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
 
 	}]);
 })();

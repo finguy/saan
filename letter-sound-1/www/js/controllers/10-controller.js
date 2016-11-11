@@ -1,9 +1,9 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('10Ctrl', function($scope ,RandomWordTen, TTSService,
+  .controller('10Ctrl', function($scope, $state, RandomWordTen, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
-    $scope.activityId = '10'; // Activity Id    
+    $scope.activityId = '10'; // Activity Id
     $scope.word = []; // Letter to play in level
     $scope.wordStr = "";
     $scope.rimes = [];
@@ -173,6 +173,10 @@
       $scope.selectedNumbers = [];
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
+    
     //*************** ACTIONS **************************/
     //Show Dashboard
     Ctrl10.showDashboard(true);

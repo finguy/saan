@@ -2,7 +2,7 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('8Ctrl',['$scope','Util', 'NumberMatching', function($scope, Util, NumberMatching) {
+	.controller('8Ctrl',['$scope','$state', 'Util', 'NumberMatching', function($scope,$state, Util, NumberMatching) {
 		$scope.activityId = '8';
     $scope.dropzoneModel = [];
 
@@ -85,5 +85,9 @@
       }
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
+    
 	}]);
 })();

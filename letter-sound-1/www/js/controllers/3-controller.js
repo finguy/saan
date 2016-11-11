@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope,$timeout, RandomLetterThree, TTSService,
+.controller('3Ctrl', function($scope,$state, $timeout, RandomLetterThree, TTSService,
   Util,Score,ActividadesFinalizadasService) {
     $scope.imgs = [];
     $scope.activityProgress = 0;
@@ -178,6 +178,10 @@ angular.module('saan.controllers')
           $scope.checkLetter(name);
       }, 1000);
     };
+
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
 
     //*************** ACTIONS **************************/
     //Show Dashboard

@@ -101,6 +101,10 @@
         }
       }
     };
+
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
   }]);
 
 })();

@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('1Ctrl',
-  function($scope, RandomWord, RandomLetters, TTSService, Util){
+  function($scope,$state, RandomWord, RandomLetters, TTSService, Util){
     $scope.activityId = '1'; // Activity Id
     $scope.word = ""; // Word to play in level
     $scope.instructions = ""; // Instructions to read
@@ -106,6 +106,9 @@ angular.module('saan.controllers')
       $scope.selectedLetters = [];
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
     //*************** ACTIONS **************************/
     //Show Dashboard
     $scope.showDashboard(true);

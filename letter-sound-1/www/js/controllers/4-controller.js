@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-  .controller('4Ctrl', function($scope, RandomNumber, TTSService,
+  .controller('4Ctrl', function($scope,$state, RandomNumber, TTSService,
     Util, Animations, Score, ActividadesFinalizadasService) {
 
     var Ctrl4 = Ctrl4 || {};
@@ -8,7 +8,7 @@ angular.module('saan.controllers')
     Ctrl4.level = $scope.level || 1;
     Ctrl4.totalLevels = 3;
     Ctrl4.score = 0;
-    
+
     $scope.number = null;
     $scope.imgs = [];
     $scope.instructions = "";
@@ -180,6 +180,9 @@ angular.module('saan.controllers')
       }
     };
 
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
 
     //*************** ACTIONS **************************/
     //Show Dashboard

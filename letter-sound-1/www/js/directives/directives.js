@@ -43,6 +43,13 @@ angular.module('saan.directives')
        scope: 'true'
      };
    })
+   .directive('backButton', function() {
+     return {
+       restrict: "E",
+       templateUrl: "templates/directives/backButton.html",
+       scope: 'true'
+     };
+   }) 
    .directive('objectDashboardFive', function() {
     return {
       restrict: "E",

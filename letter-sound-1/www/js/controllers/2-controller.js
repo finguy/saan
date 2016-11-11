@@ -1,8 +1,8 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('2Ctrl', ['$scope', 'RandomPattern', 'TTSService', 'Util', 'RandomNumericalSeq',
-  function ($scope, RandomPattern, TTSService, Util, RandomNumericalSeq) {
+  .controller('2Ctrl', ['$scope','$state', 'RandomPattern', 'TTSService', 'Util', 'RandomNumericalSeq',
+  function ($scope,$state, RandomPattern, TTSService, Util, RandomNumericalSeq) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
 
@@ -107,5 +107,9 @@
         return 'item-number';
       }
     };
+
+    $scope.goLobby = function() {
+      $state.go('lobby');
+    }
   }]);
 })();
