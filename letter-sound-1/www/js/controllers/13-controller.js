@@ -2,7 +2,8 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('13Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
+	.controller('13Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', 'NumberGroup',
+  function($scope, Util, TTSService, LearningNumber, NumberGroup) {
 		$scope.activityId = '13';
     $scope.dropzone = [];
     $scope.items = ['dummy'];
@@ -60,13 +61,22 @@
         itemCount++;
         console.log(itemCount);
         if (itemCount == $scope.number){
+          var group = NumberGroup.group($scope.number, $scope.dropzone);
+          $scope.row1 = group.row1;
+          $scope.row2 = group.row2;
+          $scope.row3 = group.row3;
+          $scope.dropzone = [];
           if ($scope.number < config.level.numberTo){
             $scope.dragDisabled = true;
             setTimeout(function(){
-              $scope.dropzone = [];
+              // $scope.dropzone = [];
               $scope.step = 0;
               itemCount = 0;
               $scope.number++;
+
+              $scope.row1 = [];
+              $scope.row2 = [];
+              $scope.row3 = [];
 
               Ctrl13.startTutorial();
               $scope.$apply();
