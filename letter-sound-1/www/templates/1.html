@@ -1,12 +1,17 @@
-<ion-view view-title="Dashboard (level: {{level}})">
-  <ion-content class="padding">
-    <div class="text-center">
-      <img src="img/ic_record_voice_over.png"
-        class="material-icons btn-play-word"
-        ng-click="speak(word)"/>
+  <div class="height-100 activity-{{activityId}}-content">
+    <div class="dashboard-container">
+        <div radio-group ng-repeat="row in dashboard">
+          <ion-radio ng-repeat="letter in row"
+              ng-attr-name={{$parent.$index}}
+              icon="none"
+              class="letter-button letter-{{letter}}"
+              on-tap="selectLetter($parent.$index, letter)"
+              ng-checked="">
+          </ion-radio>
+        </div>
     </div>
-    <div class="horizontal-center dashboard-container">
-      <letter-dashboard></letter-dashboard>
+    <div class="character" ng-click="speak(word)">
+      <!-- <div ng-if="bubble" class="speech-bubble">{{textSpeech}}</div> -->
+      <img src="assets/characters/mbott.png">
     </div>
-  </ion-content>
-</ion-view>
+  </div>

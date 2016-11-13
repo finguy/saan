@@ -90,6 +90,20 @@ angular.module('saan.controllers')
       }
     };
 
+    $scope.selectLetter = function(position, letter) {
+        if (!$scope.checkingLetter && !$scope.checkingWord){
+          $scope.checkingLetter = true;
+          $scope.selectedLetters[position] = letter;
+          $scope.speak(letter);
+          setTimeout(function (){
+             $scope.checkingLetter = false;
+             if ($scope.selectedLetters.length === $scope.word.split("").length) {
+                 $scope.checkWord();
+             }
+          }, 500);
+        }
+    };
+
     //Advance one level
     $scope.levelUp = function() {
       $scope.level++;

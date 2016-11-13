@@ -22,7 +22,6 @@ angular.module('saan.controllers')
 
 		$scope.actividadesDisponibles = actividadesDisponibles;
 		console.log("lobby check");
-
 	};
 
 	$scope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
