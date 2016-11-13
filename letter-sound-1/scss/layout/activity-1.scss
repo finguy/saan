@@ -1,7 +1,60 @@
-.material-icons.btn-play-word {
-  font-size: 8em;
-}
+.activity-1-content {
+  $alphabet: a b c d e f g h i j k l m n o p q r s t u v w x y z;
+  @include display(flex);
+  @include flex-direction(column);
+  background: url('../assets/1/background.png') no-repeat center center fixed;
+  background-size: cover;
 
-.dashboard-container {
-  width: 80%;
+
+  @each $letter in $alphabet {
+    .letter-#{$letter} {
+      &.item-radio {
+        background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+
+        input:checked + .radio-content .item-content {
+          @include filter(brightness(70%));
+          background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .radio-content .item-content {
+    height: 9rem;
+    width: 9rem;
+  }
+
+  .letter-button {
+    border: 0;
+    display: block;
+    height: 9rem;
+    margin: auto auto 2.5rem;
+    width: 9rem;
+
+    .radio-content {
+      visibility: collapse;
+    }
+  }
+
+  .dashboard-container {
+    @include display(flex);
+    @include justify-content(space-around);
+    margin-top: 15rem;
+  }
+
+  .character {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+
+    img {
+      height: 20rem;
+    }
+  }
+
+  // .speech-bubble {
+  //   right: 32rem;
+  //   top: 14rem;
+  // }
 }
