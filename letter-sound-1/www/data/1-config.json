@@ -1,0 +1,60 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "instructionsPath": "Duck_Hunt.mp3",
+      "instructionsText": "Hi! Listen to the word and then select the letters from that word. Good Luck!",
+      "options": 4,
+      "words": [
+        {
+          "text": "Pot",
+          "audio": "pot.ogg"
+        },
+        {
+          "text": "Bed",
+          "audio": "bed.ogg"
+        },
+        {
+          "text": "Dishes",
+          "audio": "dishes.ogg"
+        },
+        {
+          "text": "Clock",
+          "audio": "clock.ogg"
+        },
+        {
+          "text": "Soap",
+          "audio": "soap.ogg"
+        },
+        {
+          "text": "Radio",
+          "audio": "radio.ogg"
+        },
+        {
+          "text": "Pillow",
+          "audio": "pillow.ogg"
+        },
+        {
+          "text": "Keys",
+          "audio": "keys.ogg"
+        },
+        {
+          "text": "Flowers",
+          "audio": "flowers.ogg"
+        },
+        {
+          "text": "Food",
+          "audio": "food.ogg"
+        },
+        {
+          "text": "Table",
+          "audio": "table.ogg"
+        },
+        {
+          "text": "Photos",
+          "audio": "photos.ogg"
+        }
+      ]
+    }
+  ]
+}
