@@ -106,7 +106,7 @@ angular.module('saan.controllers')
       $scope.selectedLetters = [];
     };
 
-    $scope.goLobby = function() {
+    $scope.goLobby = function() {      
       $state.go('lobby');
     }
     //*************** ACTIONS **************************/
