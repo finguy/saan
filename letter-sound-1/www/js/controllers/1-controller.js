@@ -14,12 +14,13 @@
       var wordPlayer;
       var successPlayer;
       var failurePlayer;
-      var wordData;
       var config;
       var selectedLetters = []; // Collects letters the user selects
       var checkingWord = false; //Flag to prevent double click bug
       var checkingLetter = false;
       var level;
+      var stageNumber;
+      var stageData;
 
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
@@ -36,7 +37,7 @@
           $scope.speak(letter);
           $timeout(function (){
              checkingLetter = false;
-             if (selectedLetters.length === wordData.text.split("").length) {
+             if (selectedLetters.length === stageData.text.split("").length) {
                  Ctrl1.checkWord();
              }
           }, 500);
@@ -44,7 +45,7 @@
       };
 
       $scope.playWordAudio = function() {
-        wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + wordData.audio,
+        wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
           function(){ },
           function(err){ $log.error(err); }
         );
@@ -53,8 +54,12 @@
       };
 
       Ctrl1.getConfiguration = function (level){
+        stageNumber = 4;
         WordBuilding.getConfig(level).then(function(data){
           config = data;
+          config.levelData.words = _.shuffle(config.levelData.words);
+          $scope.items = config.levelData.words;
+          $log.info($scope.items);
           //play instructions of activity
           instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
             function(){
@@ -69,22 +74,22 @@
       };
 
       Ctrl1.setActivity = function(){
+        Ctrl1.setStage(stageNumber);
         selectedLetters = [];
-        var position = _.random(0, config.words.length-1);
-        wordData = config.words[position];
-        wordData.text = wordData.text.toLowerCase();
-        config.words.splice(position, 1); // remove the used word
+        // wordData = config.words[position];
+        stageData.text = stageData.text.toLowerCase();
+        // config.words.splice(position, 1); // remove the used word
 
         Ctrl1.buildDashboard();
         $scope.playWordAudio();
       };
 
       Ctrl1.buildDashboard = function(){
-        var letters = wordData.text.split("");
+        var letters = stageData.text.split("");
         var src = [];
 
         _.each(letters, function(letter, key) {
-          var l = WordBuilding.getRandomLetters(config.options - 1, letter);
+          var l = WordBuilding.getRandomLetters(config.levelData.options - 1, letter);
           l.push(letter);
           src.push(_.shuffle(l));
         });
@@ -99,7 +104,7 @@
         var builtWord = selectedLetters.join("");
         $scope.speak(builtWord);
         $timeout(function(){
-          if (builtWord.toLowerCase() === wordData.text.toLowerCase()) {
+          if (builtWord.toLowerCase() === stageData.text.toLowerCase()) {
             Ctrl1.success();
           }
           else {
@@ -110,25 +115,26 @@
       };
 
       Ctrl1.success = function(){
-          successPlayer = new Media(AssetsPath.getSuccessAudio() + "great.ogg",
-            function(){
-              successPlayer.release();
-              if (config.words.length === 0 ){ //if level finished
-                if (level >= WordBuilding.getMaxLevel()){ //was the last level
-                  ActividadesFinalizadasService.add($scope.activityId);
-                  $state.go('lobby');
-                }
-                else {
-                  Ctrl1.getConfiguration(level++);
-                }
+        successPlayer = new Media(AssetsPath.getSuccessAudio() + "great.ogg",
+          function(){
+            successPlayer.release();
+            if (stageNumber >= config.levelData.words.length){ //if level finished
+              if (level >= WordBuilding.getMaxLevel()){ //was the last level
+                ActividadesFinalizadasService.add($scope.activityId);
+                $state.go('lobby');
               }
               else {
-                Ctrl1.setActivity();
+                Ctrl1.getConfiguration(++level);
               }
-            },
-            function(err){ $log.error(err); }
-          );
-          successPlayer.play();
+            }
+            else {
+              stageNumber++;
+              Ctrl1.setActivity();
+            }
+          },
+          function(err){ $log.error(err); }
+        );
+        successPlayer.play();
       };
 
       Ctrl1.failure = function(){
@@ -138,6 +144,14 @@
         );
 
         failurePlayer.play();
+      };
+
+      Ctrl1.setStage = function(stageNumber){
+        if (stageNumber >= 1){
+          stageData = config.levelData.words[stageNumber-1];
+        }else{
+          $log.error("Invalid stage number");
+        }
       };
     }]
   );

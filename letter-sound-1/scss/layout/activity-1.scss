@@ -40,13 +40,36 @@
   .dashboard-container {
     @include display(flex);
     @include justify-content(space-around);
-    margin-top: 15rem;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .footer {
+    display: flex;
+    margin-top: auto;
+  }
+
+  .item-collection {
+    align-self: flex-end;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    padding-bottom: 1rem;
+
+    img {
+      height: 12rem;
+    }
+  }
+
+  .coso {
+    filter: contrast(0%) brightness(45%);
   }
 
   .character {
-    bottom: 0;
-    position: absolute;
-    right: 0;
+    // bottom: 0;
+    // position: absolute;
+    // right: 0;
+    margin-left: auto;
 
     img {
       height: 20rem;
