@@ -12,8 +12,8 @@
     $scope.ITEM_COLORS = 1;
     $scope.ITEM_NUMBERS = 2;
 
-    $scope.mode = MODE_FILLIN;
-    $scope.itemType = ITEM_NUMBERS;
+    $scope.mode = MODE_SEQUENCE;
+    $scope.itemType = ITEM_COLORS;
     $scope.dropzone = [];
     $scope.repetitions = 2;
     $scope.positionToFill = 0;
