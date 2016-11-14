@@ -40,35 +40,36 @@
   .dashboard-container {
     @include display(flex);
     @include justify-content(space-around);
-    align-items: center;
-    flex-grow: 1;
+    @include align-items(center);
+    @include flex(1);
   }
 
   .footer {
-    display: flex;
+    @include display(flex);
     margin-top: auto;
   }
 
   .item-collection {
-    align-self: flex-end;
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-around;
+    @include display(flex);
+    @include align-self(flex-end);
+    @include flex(1);
+    @include justify-content(space-around);
     padding-bottom: 1rem;
 
     img {
       height: 12rem;
     }
-  }
 
-  .coso {
-    filter: contrast(0%) brightness(45%);
+    .shadow {
+      @include filter(contrast(0) brightness(45%));
+    }
+
+    .completed {
+      @include filter(contrast(100%) brightness(100%));
+    }
   }
 
   .character {
-    // bottom: 0;
-    // position: absolute;
-    // right: 0;
     margin-left: auto;
 
     img {

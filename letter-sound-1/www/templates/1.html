@@ -6,17 +6,14 @@
           icon="none"
           class="letter-button letter-{{letter}}"
           on-tap="selectLetter($parent.$index, letter)"
-          ng-checked="">
+          ng-checked=""
+          ng-disabled="loading || readingInstructions">
       </ion-radio>
     </div>
   </div>
   <div class="footer">
     <div class="item-collection">
-      <img ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}">
-      <!-- <img class="coso" src="assets/1/items/bed.png">
-      <img class="coso" src="assets/1/items/clock.png">
-      <img class="coso" src="assets/1/items/food.png">
-      <img class="coso" src="assets/1/items/key.png"> -->
+      <img class="shadow" ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
     </div>
     <div class="character" ng-click="playWordAudio()">
       <!-- <div ng-if="bubble" class="speech-bubble">{{textSpeech}}</div> -->

@@ -19,69 +19,67 @@
       var checkingWord = false; //Flag to prevent double click bug
       var checkingLetter = false;
       var level;
-      var stageNumber;
       var stageData;
+      var stageNumber;
 
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
 
       $scope.$on('$ionicView.beforeEnter', function() {
+        stageNumber = 1;
         level = 1; //TODO: retrieve and load from local storage
         Ctrl1.getConfiguration(level);
       });
 
       $scope.selectLetter = function(position, letter) {
-        if (!checkingLetter && !checkingWord){
+        if (!$scope.loading && !$scope.readingInstructions && !checkingLetter && !checkingWord){
           checkingLetter = true;
           selectedLetters[position] = letter;
           $scope.speak(letter);
-          $timeout(function (){
-             checkingLetter = false;
-             if (selectedLetters.length === stageData.text.split("").length) {
-                 Ctrl1.checkWord();
-             }
-          }, 500);
+           checkingLetter = false;
+           if (selectedLetters.length === stageData.text.split("").length) {
+             Ctrl1.checkWord();
+           }
         }
       };
 
       $scope.playWordAudio = function() {
-        wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
-          function(){ },
-          function(err){ $log.error(err); }
-        );
-
-        wordPlayer.play();
-      };
-
-      Ctrl1.getConfiguration = function (level){
-        stageNumber = 4;
-        WordBuilding.getConfig(level).then(function(data){
-          config = data;
-          config.levelData.words = _.shuffle(config.levelData.words);
-          $scope.items = config.levelData.words;
-          $log.info($scope.items);
-          //play instructions of activity
-          instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
-            function(){
-              Ctrl1.setActivity();
-              instructionsPlayer.release();
-            },
+        if (!$scope.loading && !$scope.readingInstructions){
+          wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
+            function(){ },
             function(err){ $log.error(err); }
           );
 
-          instructionsPlayer.play();
+          wordPlayer.play();
+        }
+      };
+
+      Ctrl1.getConfiguration = function (level){
+        $scope.loading = true;
+        WordBuilding.getConfig(level).then(function(data){
+          config = data;
+          config.levelData.words = _.shuffle(config.levelData.words);
+
+          Ctrl1.setActivity();
+          //play instructions of activity
+          if ($scope.readingInstructions){
+            instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
+              function(){
+                instructionsPlayer.release();
+                $scope.readingInstructions = false;
+              },
+              function(err){ $log.error(err); }
+            );
+            instructionsPlayer.play();
+          }
         });
       };
 
       Ctrl1.setActivity = function(){
         Ctrl1.setStage(stageNumber);
         selectedLetters = [];
-        // wordData = config.words[position];
         stageData.text = stageData.text.toLowerCase();
-        // config.words.splice(position, 1); // remove the used word
-
         Ctrl1.buildDashboard();
-        $scope.playWordAudio();
       };
 
       Ctrl1.buildDashboard = function(){
@@ -94,8 +92,10 @@
           src.push(_.shuffle(l));
         });
 
+        $scope.stageNumber = stageNumber;
         $scope.dashboard = src;
-        $scope.$apply();
+        $scope.items = config.levelData.words;
+        $scope.loading = false;
       };
 
       //Verifies selected letters and returns true if they match the word
@@ -115,21 +115,25 @@
       };
 
       Ctrl1.success = function(){
+        stageNumber++;
+        $scope.stageNumber++;
         successPlayer = new Media(AssetsPath.getSuccessAudio() + "great.ogg",
           function(){
             successPlayer.release();
-            if (stageNumber >= config.levelData.words.length){ //if level finished
+            if (stageNumber > config.levelData.words.length){ //if level finished
               if (level >= WordBuilding.getMaxLevel()){ //was the last level
                 ActividadesFinalizadasService.add($scope.activityId);
                 $state.go('lobby');
               }
               else {
+                stageNumber = 1;
+                // $scope.stageNumber++;
                 Ctrl1.getConfiguration(++level);
               }
             }
             else {
-              stageNumber++;
               Ctrl1.setActivity();
+              $scope.$apply();
             }
           },
           function(err){ $log.error(err); }
@@ -153,6 +157,19 @@
           $log.error("Invalid stage number");
         }
       };
+
+      $scope.$watch('loading', function(){
+        if (!$scope.loading && !$scope.readingInstructions){
+          $scope.playWordAudio();
+        }
+      });
+
+      $scope.$watch('readingInstructions', function(){
+        if (!$scope.loading && !$scope.readingInstructions){
+          $scope.playWordAudio();
+        }
+      });
+
     }]
   );
 })();
