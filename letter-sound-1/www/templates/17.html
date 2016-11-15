@@ -1,5 +1,5 @@
-<ion-view view-title="{{activityId}}">
-  <div class="pattern-dashboard">
+<ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
+  <!-- <div class="pattern-dashboard"> -->
     <div class="pattern-container" ng-class="{'justify':mode=='2'}">
       <div class="flex pattern-item "
         ng-class="getClass(item)"
@@ -20,18 +20,18 @@
       </div>
     </div>
 
-    <div class="pattern-options text-center">
-      <div as-sortable="sortableCloneOptions" data-ng-model="availableFields">
-        <div ng-repeat="item in availableFields" class="text-center inline-block">
+    <div class="pattern-options">
+      <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
+        <div ng-repeat="item in patternOptions" class="text-center inline-block">
           <div class="pattern-item"
             ng-class="itemType==ITEM_COLORS ? 'color color-{{item}}' : 'item-number'"
             as-sortable-item as-sortable-item-handle>
-            <span ng-show="itemType==ITEM_NUMBERS">{{item}}</span>
+            {{item}}
           </div>
           <span ng-show="itemType==ITEM_COLORS" class="item-label">{{item}}</span>
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 
 </ion-view>

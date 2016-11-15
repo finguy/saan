@@ -10,7 +10,8 @@
 
     return {
       getConfig: getConfig,
-      getMaxLevel: getMaxLevel
+      getMaxLevel: getMaxLevel,
+      getSequenceOptions: getSequenceOptions
     };
 
     function getConfig(level) {
@@ -37,8 +38,21 @@
       }
     }
 
+    function getSequenceOptions(numberFrom, numberTo, step){
+      var number = numberFrom + step;
+      var seq = [];
+      while (number <= numberTo){
+        seq.push(number);
+        number += step;
+      }
+
+      return seq;
+    }
+
     function getMaxLevel(){
       return data.levels.length;
     }
+
+
   }
 })();

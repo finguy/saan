@@ -1,0 +1,61 @@
+.activity-17-content {
+
+  .dropzone {
+    border: .2rem dashed $grey;
+    border-radius: 50%;
+    color: $grey;
+    padding: 1.4rem;
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .pattern-item {
+    height: 8rem;
+    margin: auto 1rem 1rem;
+    width: 8rem;
+
+    &.item-number {
+      border: 0;
+      border-radius: 50%;
+      margin: auto 1rem 1rem;
+    }
+  }
+
+  .item-label {
+    font-size: 2em;
+  }
+
+  .pattern-container {
+    display: flex;
+    padding-top: 5%;
+  }
+
+  .pattern-options {
+    padding-top: 15%;
+  }
+
+  .item-number {
+    align-items: center;
+    display: flex;
+    font-size: 2em;
+    justify-content: center;
+  }
+
+  .as-sortable-item.item-number {
+    display: flex;
+  }
+
+  .as-sortable-placeholder {
+    background-color: transparent;
+    border-color: transparent;
+    margin: auto 1rem 1rem;
+  }
+
+  .options-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
