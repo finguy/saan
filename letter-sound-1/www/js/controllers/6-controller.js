@@ -58,7 +58,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpLevel = function() {
-    $scope.level = Util.getLevel($scope.activityId);   
+    $scope.level = Util.getLevel($scope.activityId);
   };
 
   Ctrl6.setUpScore = function() {
@@ -133,7 +133,7 @@ angular.module('saan.controllers')
         $scope.speak(successMessage);
         setTimeout(function() {
           if (!$scope.finished) {
-            $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+            $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
             $scope.finished = $scope.score >= $scope.minScore;
             if ($scope.finished) {
               Util.saveStatus($scope.activityId, $scope.finished);
@@ -153,7 +153,7 @@ angular.module('saan.controllers')
         }, 1000);
     } else {
       if (!$scope.finished) {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);
+        $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
         Util.saveScore($scope.activityId, $scope.score);
       }
       $scope.speak(name);

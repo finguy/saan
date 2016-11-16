@@ -118,12 +118,12 @@
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
       $scope.checkingNumber = false;
-      $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels; // -1 porque empieza en cero.        
+      $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels; // -1 porque empieza en cero.
     };
 
     $scope.handleProgress = function(isWordOk) {
       if (isWordOk) {
-        $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+        $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
         var position = Util.getRandomNumber($scope.successMessages.length);
         var successMessage = $scope.successMessages[position];
         $scope.speak(successMessage);
@@ -142,7 +142,7 @@
         }, 1000);
       } else {
         if (!$scope.finished) {
-          $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+          $scope.score = Score.update(-$scope.substractScore,$scope.activityId, $scope.finished);
         }
         //wait for speak
         setTimeout(function() {

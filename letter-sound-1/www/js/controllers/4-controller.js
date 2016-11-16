@@ -24,7 +24,7 @@ angular.module('saan.controllers')
 
 
     Ctrl4.setUpLevel = function() {
-      Ctrl4.level = Util.getLevel(Ctrl4.activityId);     
+      Ctrl4.level = Util.getLevel(Ctrl4.activityId);
     };
 
     Ctrl4.setUpScore = function() {
@@ -110,7 +110,7 @@ angular.module('saan.controllers')
           Ctrl4.levelUp(); //Advance level
           Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
           if (!Ctrl4.finished) {
-            Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.score, Ctrl4.activityId, Ctrl4.finished);
+            Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
             Ctrl4.finished = Ctrl4.score >= Ctrl4.minScore;
             if (Ctrl4.finished) {
               Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
@@ -121,7 +121,7 @@ angular.module('saan.controllers')
         }, 1000);
       } else {
         if (!Ctrl4.finished) {
-          Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.score,Ctrl4.activityId, Ctrl4.finished);
+          Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.activityId, Ctrl4.finished);
         }
         var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
         var errorMessage = Ctrl4.errorMessages[position];

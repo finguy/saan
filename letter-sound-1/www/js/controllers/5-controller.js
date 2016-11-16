@@ -116,7 +116,7 @@ angular.module('saan.controllers')
 
             Util.saveLevel($scope.activityId, $scope.level);
             if (!$scope.finished){
-              $scope.score = Score.update($scope.addScore, $scope.score,$scope.activityId, $scope.finished);
+              $scope.score = Score.update($scope.addScore,$scope.activityId, $scope.finished);
               $scope.finished = $scope.score >= $scope.minScore;
               if ($scope.finished) {
                     Util.saveStatus($scope.activityId, $scope.finished);
@@ -129,7 +129,7 @@ angular.module('saan.controllers')
 
     } else {
       if (!$scope.finished) {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score,$scope.activityId, $scope.finished);
+        $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
       }
       //wait for speak
       setTimeout(function() {

@@ -73,7 +73,7 @@ angular.module('saan.controllers')
           name: wordsJson.info.letters[i].name,
           letterImage: wordsJson.info.letters[i].letterImg
         });
-      }      
+      }
     }
 
     $scope.imgs = imgs;
@@ -100,7 +100,7 @@ angular.module('saan.controllers')
       $scope.speak(successMessage);
       $timeout(function() {
         if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
-          Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);
+          Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.activityId, Ctrl16.finished);
           Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
           if (Ctrl16.finished) { // Puede haber finalizado
             Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
@@ -119,7 +119,7 @@ angular.module('saan.controllers')
 
   Ctrl16.handleError = function() {
     if (!Ctrl16.finished) {
-      Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.score, Ctrl16.activityId, Ctrl16.finished);
+      Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.activityId, Ctrl16.finished);
     }
     $scope.speak(name);
     //wait for speak

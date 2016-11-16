@@ -2,8 +2,9 @@ angular.module('saan.services')
 
 .service('Score',function(Util) {
     return {
-      update: function(points, currentScore, activityId, isFinalized) {
-         var score = currentScore + points;
+      update: function(points, activityId, isFinalized) {
+         var currentScore = Util.getScore(activityId);
+         var score = currentScore  + points;
          if ( score >= 0 && !isFinalized) {
             Util.saveScore(activityId, score);
             return score;

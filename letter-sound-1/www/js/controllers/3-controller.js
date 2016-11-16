@@ -111,7 +111,7 @@ angular.module('saan.controllers')
               Ctrl3.levelUp(); //Advance level
               Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
               if (!Ctrl3.finished) {
-                    Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score, Ctrl3.activityId, Ctrl3.finished);
+                    Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.activityId, Ctrl3.finished);
                     Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
                     if (Ctrl3.finished){
                       Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
@@ -124,7 +124,7 @@ angular.module('saan.controllers')
 
       } else {
         if (!Ctrl3.finished) {
-          Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.score, Ctrl3.activityId, Ctrl3.finished);
+          Ctrl3.score = Score.update(-Ctrl3.substractScore,Ctrl3.activityId, Ctrl3.finished);
           Util.saveScore(Ctrl3.activityId, Ctrl3.score);
         }
         //wait for speak

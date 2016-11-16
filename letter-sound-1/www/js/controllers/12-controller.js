@@ -30,7 +30,7 @@
     Ctrl12.setUpLevel = function() {
       var level = Util.getLevel($scope.activityId);
       if (level) {
-        $scope.level = level;        
+        $scope.level = level;
       }
     };
 
@@ -114,7 +114,7 @@
           Util.saveLevel($scope.activityId, $scope.level);
           //Check score and status
           if (!$scope.finished ) {
-            $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+            $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
             $scope.finished = $scope.score >= $scope.minScore;
             Util.saveStatus($scope.activityId, $scope.finished);
             if ($scope.finished) {
@@ -125,7 +125,7 @@
         }, 1000);
       } else {
         if (!$scope.finished) {
-          $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);
+          $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
         }
         //wait for speak
         //setTimeout(function() {

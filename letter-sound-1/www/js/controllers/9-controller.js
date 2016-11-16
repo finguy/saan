@@ -99,7 +99,7 @@ angular.module('saan.controllers')
                       console.log($scope.score);
                       console.log($scope.activityId);
                       console.log($scope.finished);
-                      $scope.score = Score.update($scope.addScore, $scope.score, $scope.activityId, $scope.finished);
+                      $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
                       $scope.finished = $scope.score >= $scope.minScore;
                       if ($scope.finished){ // Puede haber alcanzado el puntaje para que marque como finalizada.
                         Util.saveStatus($scope.activityId, $scope.finished);
@@ -115,7 +115,7 @@ angular.module('saan.controllers')
              }, 1000);
             } else {
                 if (!$scope.finished) {
-                  $scope.score = Score.update(-$scope.substractScore, $scope.score, $scope.activityId, $scope.finished);
+                  $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
                 }
                 $scope.speak(name);
                 //wait for speak
