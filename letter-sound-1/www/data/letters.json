@@ -2,7 +2,7 @@
   [{"letter":"a" ,
     "upperCaseImg": "img/3-assets/letters-blue/letters-blue-a-uppercase.png",
     "lowerCaseImg": "img/3-assets/letters-blue/letters-blue-a-lowercase.png",
-    "instruction":"Can you tap uppercase a?",
+    "instruction":"Can you tap a?",
     "imgs":[
       {"src": ["img/3-assets/animals/wale.png",
                 "img/3-assets/animals/aligator.png",
@@ -34,7 +34,7 @@
     {"letter":"e" ,
       "upperCaseImg": "img/3-assets/letters-blue/letters-blue-e-uppercase.png",
       "lowerCaseImg": "img/3-assets/letters-blue/letters-blue-e-lowercase.png",
-      "instruction":"Can you tap uppercase e?",
+      "instruction":"Can you tap e?",
       "imgs":[
         {"src": ["img/3-assets/animals/wale.png",
                 "img/3-assets/animals/horse.png",
@@ -67,7 +67,7 @@
     {"letter":"i" ,
       "upperCaseImg": "img/3-assets/letters-blue/letters-blue-i-uppercase.png",
       "lowerCaseImg": "img/3-assets/letters-blue/letters-blue-i-lowercase.png",
-      "instruction":"Can you tap uppercase i?",
+      "instruction":"Can you tap i?",
       "imgs":[
         {"src": ["img/3-assets/animals/aligator.png",
                  "img/3-assets/animals/fish.png",
@@ -91,7 +91,7 @@
     {"letter":"o" ,
       "upperCaseImg": "img/3-assets/letters-blue/letters-blue-o-uppercase.png",
       "lowerCaseImg": "img/3-assets/letters-blue/letters-blue-o-lowercase.png",
-      "instruction":"Can you tap lowercase  o?",
+      "instruction":"Can you tap o?",
       "imgs":[
         {"src": ["img/3-assets/animals/octopus.png",
                   "img/3-assets/animals/frog.png",
@@ -122,7 +122,7 @@
   {"letter":"u" ,
     "upperCaseImg": "img/3-assets/letters-blue/letters-blue-u-uppercase.png",
     "lowerCaseImg": "img/3-assets/letters-blue/letters-blue-u-lowercase.png",
-    "instruction":"Can you tap lowercase u?",
+    "instruction":"Can you tap u?",
     "imgs":[
             {"src": [  "img/3-assets/animals/octopus.png",
                         "img/3-assets/animals/turtle.png",
