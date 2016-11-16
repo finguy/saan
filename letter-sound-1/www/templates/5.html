@@ -1,11 +1,11 @@
-<ion-view class="activity5 content-margin">
-  <activity-status></activity-status>  
-  <div class="activity5-letter-container">
+<ion-view class="activity-5-content content-margin">
+  <activity-status></activity-status>
+  <div class="letter-container">
     <span class="material-icons btn-play-word" ng-click="speak(instructions + ' ' + letter)">
       <img src="{{letterSrc}}" class="img-letter" />
     </span>
   </div>
-  <div class="row activity-5-container">
+  <div class="row floating-objects-container">
     <div ng-repeat="img in imgs" ng-click="selectLetter(img.name, img.src)">
       <div class="activity-5-box">
         <img src="{{img.src}}" class="img-figure" />
