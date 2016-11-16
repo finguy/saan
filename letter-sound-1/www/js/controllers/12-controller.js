@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('12Ctrl', function($scope, RandomText, TTSService,
+  .controller('12Ctrl', function($scope, $state, RandomText, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
     $scope.activityId = '12'; // Activity Id
     $scope.img = "";
@@ -121,7 +121,11 @@
               ActividadesFinalizadasService.add($scope.activityId);
             }
           }
-          Ctrl12.showDashboard(true);
+          if ($scope.level >= Ctrl12.totalLevels) {
+            $state.go('lobby');
+          } else {
+              Ctrl12.showDashboard(true);
+          }
         }, 1000);
       } else {
         if (!$scope.finished) {

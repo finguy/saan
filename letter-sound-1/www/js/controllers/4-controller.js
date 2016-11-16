@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-  .controller('4Ctrl', function($scope, RandomNumber, TTSService,
+  .controller('4Ctrl', function($scope, $state,  RandomNumber, TTSService,
     Util, Animations, Score, ActividadesFinalizadasService) {
 
     var Ctrl4 = Ctrl4 || {};
@@ -117,7 +117,11 @@ angular.module('saan.controllers')
               ActividadesFinalizadasService.add(Ctrl4.activityId);
             }
           }
-          Ctrl4.showDashboard(); //Reload dashboard
+          if (Ctrl4.level >= Ctrl4.totalLevels) {
+            $state.go('lobby');
+          } else {
+            Ctrl4.showDashboard(); //Reload dashboard
+          }
         }, 1000);
       } else {
         if (!Ctrl4.finished) {

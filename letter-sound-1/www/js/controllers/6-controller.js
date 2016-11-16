@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('6Ctrl', function($scope, RandomWordSix, TTSService,
+.controller('6Ctrl', function($scope, $state, RandomWordSix, TTSService,
   Util, Score, ActividadesFinalizadasService) {
   $scope.activityId = '6'; // Activity Id
   $scope.word = ""; // Letter to play in level
@@ -145,7 +145,11 @@ angular.module('saan.controllers')
             setTimeout(function() {
               Ctrl6.levelUp(); //Advance level
               Util.saveLevel($scope.activityId, $scope.level);
-              Ctrl6.showDashboard(false); //Reload dashboard
+              if ($scope.level >= $scope.totalLevels){
+                $state.go('lobby');
+              } else {
+                Ctrl6.showDashboard(false); //Reload dashboard
+              }
             }, 1000);
           } else {
             $scope.speak($scope.currentPhonema);

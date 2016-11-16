@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('9Ctrl', function($scope, RandomWordsNine, TTSService,
+.controller('9Ctrl', function($scope, $state, RandomWordsNine, TTSService,
   Util,Score,ActividadesFinalizadasService) {
       $scope.activityId = 9; // Activity Id
       $scope.totalLevels = 1;
@@ -109,7 +109,11 @@ angular.module('saan.controllers')
                     if (LAST_CHECK) {
                         Ctrl9.levelUp(); //Advance level
                         Util.saveLevel($scope.activityId, $scope.level);
-                        Ctrl9.showDashboard(false); //Reload dashboard
+                        if ($scope.level >= $scope.totalLevels) {
+                          $state.go('lobby');
+                        } else {
+                            Ctrl9.showDashboard(false); //Reload dashboard
+                        }
                     }
                   }, 1000);
              }, 1000);

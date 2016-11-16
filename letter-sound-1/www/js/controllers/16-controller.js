@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope, $log, $timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope, $log, $state, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -49,7 +49,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpScore = function() {
-    Ctrl16.score =Util.getScore(Ctrl16.activityId);
+    Ctrl16.score = Util.getScore(Ctrl16.activityId);
   };
 
   Ctrl16.setUpStatus = function() {
@@ -109,9 +109,13 @@ angular.module('saan.controllers')
         }
 
         if (LAST_CHECK) {
-            Ctrl16.levelUp(); //Advance level
-            Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+          Ctrl16.levelUp(); //Advance level
+          Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+          if (Ctrl16.level >= Ctrl16.totalLevels) {
+            $state.go('lobby');
+          } else {
             Ctrl16.showDashboard(false); //Reload dashboard
+          }
         }
       }, 1000);
     }, 1000);
