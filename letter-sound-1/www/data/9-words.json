@@ -92,7 +92,7 @@
         }
         ]}
   ],
-  "instructions": "Select the image and drag the word",
+  "instructions": "Drag the word to the image",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
@@ -100,5 +100,5 @@
     "substract": 1,
     "minScore": 10
   },
-  "limit":4  
+  "limit":4
 }
