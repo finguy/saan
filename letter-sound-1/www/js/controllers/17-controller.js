@@ -20,7 +20,7 @@
 
     $scope.activityId = 17;
     var patternLength = 4;
-    var completions = 0;
+    // var completions = 0;
     var readWordTimeout = 1000;
 
     var Ctrl17 = Ctrl17 || {};
@@ -29,16 +29,23 @@
     var config;
     var instructionsPlayer;
     var stageData;
-    var pattern = [];
+    var completions = 0;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       stageNumber = 1; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      level = 5; //TODO: retrieve and load from local storage
       Ctrl17.getConfiguration(level);
     });
 
-    Ctrl17.getConfiguration = function (level){
+    Ctrl17.clearValues = function(){
       stageNumber = 1;
+      stageData = {};
+      config = {};
+      completions = 0;
+    };
+
+    Ctrl17.getConfiguration = function (level){
+      Ctrl17.clearValues();
       NumberPattern.getConfig(level).then(function(data){
 
         config = data;
@@ -59,17 +66,15 @@
 
     Ctrl17.setActivity = function(){
       // var patternLeft = [];
-      $scope.options = [];
+      $scope.patternOptions = [];
       $scope.patternLeft = [];
-
-      Ctrl17.setStage(stageNumber);
 
       if (config.level.mode == MODE_SEQUENCE){
         Ctrl17.setSequenceStage();
-        $scope.patternLeft = stageData.base;
+        Ctrl17.buildSequenceStage();
       }
       else if (config.level.mode == MODE_FILLIN){
-        //coso coso
+        Ctrl17.buildFillinStage();
       }
       else{
         console.log("invalid option");
@@ -82,20 +87,30 @@
     };
 
     Ctrl17.setSequenceStage = function(){
-      $scope.patternOptions = NumberPattern.getSequenceOptions(_.last(stageData.base), stageData.numberTo, stageData.step);
-      console.log($scope.patternOptions);
-    }
-
-    Ctrl17.setFillinStage = function(){
-      pattern = NumberPattern.getSequenceOptions();
-    }
-
-    Ctrl17.setStage = function(stageNumber){
       if (stageNumber >= 1){
         stageData = config.level.stages[stageNumber-1];
       }else{
         $log.error("Invalid stage number");
       }
+    };
+
+    Ctrl17.buildSequenceStage = function(){
+      $scope.patternLeft = stageData.base;
+      $scope.patternOptions = NumberPattern.getSequenceOptions(_.last(stageData.base), stageData.numberTo, stageData.step);
+    };
+
+    Ctrl17.buildFillinStage = function(){
+      var fillinData = NumberPattern.getFillinData(config.level.step, config.level.patternLength);
+      Ctrl17.setFillinStage(fillinData);
+
+      $scope.patternLeft = fillinData.pattern.slice(0, fillinData.positionToFill);
+      $scope.patternRight = fillinData.pattern.slice(fillinData.positionToFill + 1);
+      $scope.patternOptions = fillinData.patternOptions;
+    };
+
+    Ctrl17.setFillinStage = function(fillinData){
+      stageData = config.level;
+      stageData.fillinData = fillinData;
     };
 
 
@@ -163,7 +178,7 @@
     $scope.sortableOptions = {
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
-        return _.last($scope.patternLeft) + stageData.step == sourceItemHandleScope.modelValue;
+        return Ctrl17.checkAccept(sourceItemHandleScope.modelValue);
       }
     };
 
@@ -173,18 +188,10 @@
       clone: false,
       dragEnd: function(eventObj) {
         //check that item was correctly moved
-        if (_.contains($scope.patternOptions, eventObj.source.itemScope.modelValue)){
-          console.log("wrong!!");
-        }
+        Ctrl17.checkDragEnd(eventObj.source.itemScope.modelValue);
       },
       itemMoved: function (eventObj) {
-        console.log("right!!!");
         Ctrl17.success();
-        // setTimeout(function(){
-        //   $scope.$apply(function(){
-        //     Ctrl14.success();
-        //   });
-        // }, 1000);
       },
       accept: function(sourceItemHandleScope, destSortableScope){
         return false;
@@ -192,6 +199,35 @@
     };
 
     Ctrl17.success =  function(){
+      if (config.level.mode == MODE_SEQUENCE){
+        Ctrl17.sequenceSuccess();
+      }
+      else {
+        Ctrl17.fillinSuccess();
+      }
+
+    };
+
+    Ctrl17.checkAccept = function(movedValue){
+      if (config.level.mode == MODE_SEQUENCE){
+        return _.last($scope.patternLeft) + stageData.step == movedValue;
+      }
+      else {
+        var fillinData = stageData.fillinData;
+        return movedValue == fillinData.pattern[fillinData.positionToFill];
+      }
+    };
+
+    Ctrl17.checkDragEnd = function(movedValue){
+      if (config.level.mode == MODE_SEQUENCE){
+        return _.contains($scope.patternOptions, movedValue);
+      }
+      else {
+        return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;
+      }
+    };
+
+    Ctrl17.sequenceSuccess = function(){
       if ($scope.patternOptions.length === 0){
         if (stageNumber < config.level.stages.length){
           stageNumber++;
@@ -201,15 +237,38 @@
         }
         else {
           if (level >= NumberPattern.getMaxLevel()){
-            ActividadesFinalizadasService.add($scope.activityId);
-            $state.go('lobby');
+            Ctrl17.finishActivity();
           }
-          else{
+          else {
             Ctrl17.getConfiguration(++level);
           }
         }
       }
-    }
+    };
+
+    Ctrl17.fillinSuccess = function(){
+      completions++;
+      if (completions < stageData.completions){
+        $timeout(function(){
+          $scope.$apply(Ctrl17.setActivity());
+        }, 1000);
+      }
+      else {
+        if (level >= NumberPattern.getMaxLevel()){
+          Ctrl17.finishActivity();
+        }
+        else {
+          Ctrl17.getConfiguration(++level);
+        }
+      }
+    };
+
+    Ctrl17.finishActivity = function(){
+      ActividadesFinalizadasService.add($scope.activityId);
+      $state.go('lobby');
+    };
+
+
 
   }]);
 })();

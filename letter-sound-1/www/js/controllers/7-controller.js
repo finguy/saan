@@ -13,7 +13,7 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       //TODO: Get current level in order to get the proper configuration
-      level = 1;
+      level = 4;
       Ctrl7.getConfiguration(level);
     });
 

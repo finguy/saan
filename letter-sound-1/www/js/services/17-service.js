@@ -11,7 +11,8 @@
     return {
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
-      getSequenceOptions: getSequenceOptions
+      getSequenceOptions: getSequenceOptions,
+      getFillinData: getFillinData
     };
 
     function getConfig(level) {
@@ -29,7 +30,7 @@
           },
           function error() {
             //TODO: handle errors for real
-            console.log("error");
+            $log.error("error");
           }
         );
       }
@@ -39,20 +40,54 @@
     }
 
     function getSequenceOptions(numberFrom, numberTo, step){
-      var number = numberFrom + step;
-      var seq = [];
-      while (number <= numberTo){
-        seq.push(number);
-        number += step;
+      if (numberFrom < numberTo){
+        var number = numberFrom + step;
+        var seq = [];
+        while (number <= numberTo){
+          seq.push(number);
+          number += step;
+        }
+
+        return _.shuffle(seq);
+      }
+      else {
+        $log.error("Invalid number range");
+        return;
+      }
+    }
+
+    function getFillinData(step, length){
+      var digits = Math.pow(10, _.random(1,3));
+
+      var base = Math.random() * digits;
+      var pattern = [Math.floor(base)];
+
+      for (var i = 1; i < length; i++)
+        pattern.push(pattern[i-1] + step);
+
+      var positionToFill = _.random(0, length);
+
+      var patternOptions = [pattern[positionToFill]];
+      var number;
+
+      for (i = 1; i < data.numberOfOptions; i++){
+        number = Math.floor(Math.random() * digits);
+        while (_.indexOf(patternOptions, number) != -1)
+          number = Math.floor(Math.random() * digits);
+        patternOptions.push(number);
       }
 
-      return seq;
+      _.shuffle(patternOptions);
+
+      return {
+        pattern: pattern,
+        positionToFill: positionToFill,
+        patternOptions: patternOptions
+      };
     }
 
     function getMaxLevel(){
       return data.levels.length;
     }
-
-
   }
 })();
