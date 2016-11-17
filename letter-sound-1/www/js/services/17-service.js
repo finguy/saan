@@ -65,7 +65,7 @@
       for (var i = 1; i < length; i++)
         pattern.push(pattern[i-1] + step);
 
-      var positionToFill = _.random(0, length);
+      var positionToFill = _.random(0, length -1);
 
       var patternOptions = [pattern[positionToFill]];
       var number;

@@ -1,37 +1,31 @@
 <ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
-  <!-- <div class="pattern-dashboard"> -->
-    <div class="pattern-container" ng-class="{'justify':mode=='2'}">
-      <div class="flex pattern-item "
-        ng-class="getClass(item)"
-        ng-repeat="item in patternLeft track by $index">
-        <span ng-show="itemType == ITEM_NUMBERS">{{item}}</span>
-      </div>
-
-      <div class="dropzone flex pattern-item"
-        as-sortable="sortableOptions"
-        data-ng-model="patternLeft">
-        <div ng-repeat="item in dropzone" as-sortable-item></div>
-      </div>
-
-      <div class="flex pattern-item"
-        ng-class="getClass(item)"
-        ng-repeat="item in patternRight track by $index">
-        <span ng-show="itemType == ITEM_NUMBERS">{{item}}</span>
-      </div>
+  <div class="pattern-container" ng-class="{'justify':mode=='2'}">
+    <div class="flex pattern-item item-number"
+      ng-repeat="item in patternLeft track by $index">
+      <span>{{item}}</span>
     </div>
 
-    <div class="pattern-options">
-      <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
-        <div ng-repeat="item in patternOptions" class="text-center inline-block">
-          <div class="pattern-item"
-            ng-class="itemType==ITEM_COLORS ? 'color color-{{item}}' : 'item-number'"
-            as-sortable-item as-sortable-item-handle>
-            {{item}}
-          </div>
-          <span ng-show="itemType==ITEM_COLORS" class="item-label">{{item}}</span>
+    <div class="dropzone flex pattern-item"
+      as-sortable="sortableOptions"
+      data-ng-model="patternLeft"
+      ng-hide="hideDropzone">
+      <div ng-repeat="item in dropzone" as-sortable-item></div>
+    </div>
+
+    <div class="flex pattern-item item-number"
+      ng-repeat="item in patternRight track by $index">
+      <span>{{item}}</span>
+    </div>
+  </div>
+
+  <div class="pattern-options">
+    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
+      <div ng-repeat="item in patternOptions" class="text-center inline-block">
+        <div class="pattern-item item-number"
+          as-sortable-item as-sortable-item-handle>
+          {{item}}
         </div>
       </div>
     </div>
-  <!-- </div> -->
-
+  </div>
 </ion-view>
