@@ -1,33 +1,28 @@
 <div class="pattern-dashboard">
   <div class="pattern-container" ng-class="{'justify':mode=='2'}">
-    <div class="flex pattern-item "
-      ng-class="getClass(item)"
+    <div class="flex pattern-item color color-{{item}}"
       ng-repeat="item in patternLeft track by $index">
-      <span ng-show="itemType == ITEM_NUMBERS">{{item}}</span>
     </div>
 
     <div class="dropzone flex pattern-item"
       as-sortable="sortableOptions"
-      data-ng-model="patternLeft">
+      data-ng-model="patternLeft"
+      ng-hide="hideDropzone">
       <div ng-repeat="item in dropzone" as-sortable-item></div>
     </div>
 
-    <div class="flex pattern-item"
-      ng-class="getClass(item)"
+    <div class="flex pattern-item color color-{{item}}"
       ng-repeat="item in patternRight track by $index">
-      <span ng-show="itemType == ITEM_NUMBERS">{{item}}</span>
     </div>
   </div>
 
   <div class="pattern-options text-center">
-    <div as-sortable="sortableCloneOptions" data-ng-model="availableFields">
-      <div ng-repeat="item in availableFields" class="text-center inline-block">
-        <div class="pattern-item"
-          ng-class="itemType==ITEM_COLORS ? 'color color-{{item}}' : 'item-number'"
+    <div as-sortable="sortableCloneOptions" data-ng-model="sortableCloneOptions">
+      <div ng-repeat="item in patternOptions" class="text-center inline-block">
+        <div class="pattern-item color color-{{item}}"
           as-sortable-item as-sortable-item-handle>
-          <span ng-show="itemType==ITEM_NUMBERS">{{item}}</span>
         </div>
-        <span ng-show="itemType==ITEM_COLORS" class="item-label">{{item}}</span>
+        <span class="item-label">{{item}}</span>
       </div>
     </div>
   </div>

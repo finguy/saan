@@ -1,0 +1,37 @@
+{
+  "colors": ["blue", "green", "orange", "pink", "purple", "red", "yellow"],
+  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"],
+  "levels": [
+    {
+      "number": 1,
+      "mode": 1,
+      "numberOfColors": 2,
+      "patternLength": 5,
+      "stages": 1
+    },
+    {
+      "number": 2,
+      "mode": 1,
+      "numberOfColors": 3,
+      "patternLength": 5,
+      "stages": 1
+    },
+    {
+      "number": 3,
+      "mode": 2,
+      "numberOfColors": 2,
+      "patternLength": 5,
+      "stages": 2
+    },
+    {
+      "number": 4,
+      "mode": 2,
+      "numberOfColors": 3,
+      "patternLength": 5,
+      "stages": 2
+    }
+  ]
+}
