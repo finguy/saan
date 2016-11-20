@@ -33,7 +33,6 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-5';
 @import 'layout/activity-6';
 @import 'layout/activity-9';
-@import 'directives/patternDashboard';
 @import 'directives/progressBar';
 @import 'directives/flipableCard';
 @import 'directives/numberCard';
@@ -111,16 +110,6 @@ body {
 
 .hidden {
   visibility: hidden;
-}
-
-.character {
-  bottom: 0;
-  position: absolute;
-  right: 0;
-
-  img {
-    height: 20rem;
-  }
 }
 
 .speech-bubble {

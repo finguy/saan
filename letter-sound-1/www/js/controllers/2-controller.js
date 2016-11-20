@@ -41,17 +41,16 @@
         // instructionsPlayer = new Media(AssetsPath.sounds(config.instructionsPath),
         //   function(){
             Ctrl2.setActivity();
-        //     instructionsPlayer.release();
-        //   },
-        //   function(err){ $log.error(err); }
-        // );
-        //
-        // instructionsPlayer.play();
+      //       instructionsPlayer.release();
+      //     },
+      //     function(err){ $log.error(err); }
+      //   );
+      //
+      //   instructionsPlayer.play();
       });
     };
 
     Ctrl2.setActivity = function(){
-      $scope.hideDropzone = false;
       $scope.patternOptions = [];
       $scope.patternLeft = [];
       $scope.mode = config.level.mode;
@@ -83,10 +82,8 @@
     Ctrl2.buildSequenceStage = function(){
       stageData.pattern = ColorPattern.getSequencePattern(stageData.patternLength, stageData.numberOfColors);
       $scope.patternLeft = stageData.pattern;
-      // $scope.dropzone = [stageData.pattern[0]];
-      $scope.patternRight = [];
-      angular.copy(stageData.pattern,$scope.patternRight);
-
+      $scope.dummyDropzone = [];
+      angular.copy(stageData.pattern, $scope.dummyDropzone);
     };
 
     Ctrl2.buildFillinStage = function(){
@@ -95,6 +92,7 @@
       stageData.positionToFill = fillinData.positionToFill;
 
       $scope.patternLeft = fillinData.pattern.slice(0, fillinData.positionToFill);
+      $scope.dummyDropzone = [stageData.pattern[stageData.positionToFill]];
       $scope.patternRight = fillinData.pattern.slice(fillinData.positionToFill + 1);
 
     };
@@ -120,9 +118,9 @@
         return Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue);
       },
       itemMoved: function (eventObj) {
+        $scope.dummyDropzone.splice(0,1);
         if ($scope.mode == MODE_SEQUENCE){
           position++;
-          $scope.patternRight.splice(0,1);
           if (position >= stageData.patternLength){
             Ctrl2.success();
           }
@@ -137,7 +135,6 @@
     };
 
     Ctrl2.success =  function(){
-      $scope.hideDropzone = true;
 
       if (Ctrl2.stageFinished()){
         stageNumber++;
@@ -176,12 +173,7 @@
     };
 
     Ctrl2.stageFinished = function(){
-      if (config.level.mode == MODE_SEQUENCE){
-        return stageNumber < config.level.stages;
-      }
-      else {
-        return stageNumber < stageData.completions;
-      }
+      return stageNumber < stageData.stages;
     };
 
     Ctrl2.finishActivity = function(){
