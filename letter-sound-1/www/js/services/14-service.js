@@ -1,26 +1,48 @@
-angular.module('saan.services')
-.factory('NumberOperations', function($http, Util) {
-  return {
-    getConfig: function(level) {
+(function() {
+  'use strict';
+  angular.module('saan.services')
+  .factory('NumberOperations', NumberOperations);
+
+  NumberOperations.$inject = ['$http', '$log'];
+
+  function NumberOperations($http, $log) {
+    var data;
+
+    return {
+      getConfig: getConfig,
+      getMaxLevel: getMaxLevel
+    };
+
+    function getConfig(level) {
       var src = 'data/14-config.json';
-      return $http.get(src).then(
-        function success(response) {
-          var data = response.data;
-          return {
-            instructions : data.instructions,
-            errorMessages : data.errorMessages,
-            successMessages: data.successMessages,
-            numberRange : parseInt(data.numberRange, 10),
-            options: parseInt(data.options, 10),
-            optionsRange: parseInt(data.optionsRange, 10),
-            mode: parseInt(data.mode, 10)
-          };
-        },
-        function error() {
-          //TODO: handle errors for real
-          console.log("error");
-        }
-      );
+      if (level >= 1){
+        return $http.get(src).then(
+          function success(response) {
+            data = response.data;
+            return {
+              instructions : data.instructions,
+              errorMessages : data.errorMessages,
+              successMessages: data.successMessages,
+              numberRange : data.numberRange,
+              options: data.options,
+              optionsRange: data.optionsRange,
+              mode: data.mode,
+              levelConfig: data.levels[level-1]
+            };
+          },
+          function error() {
+            //TODO: handle errors for real
+            $log.log("error");
+          }
+        );
+      }
+      else {
+        $log.error("Invalid level value");
+      }
     }
-  };
-});
+
+    function getMaxLevel(){
+      return data.levels.length;
+    }
+  }
+})();
