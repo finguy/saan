@@ -1,0 +1,89 @@
+{
+  "numberOfOptions": 4,
+  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"],
+  "levels": [
+    {
+      "number": 1,
+      "mode": 1,
+      "stages":[
+        {
+          "base": [0,1,2,3,4],
+          "numberTo": 10,
+          "step": 1
+        },
+        {
+          "base": [10,11,12,13],
+          "numberTo": 20,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "mode": 1,
+      "stages":[
+        {
+          "base": [0,2,4,6,8],
+          "numberTo": 20,
+          "step": 2
+        },
+        {
+          "base": [20,22,24,26],
+          "numberTo": 40,
+          "step": 2
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "mode": 1,
+      "stages":[
+        {
+          "base": [0,5,10,15,20],
+          "numberTo": 50,
+          "step": 5
+        },
+        {
+          "base": [50,55,60,75],
+          "numberTo": 100,
+          "step": 5
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "mode": 1,
+      "stages":[
+        {
+          "base": [0,10,20,30,40],
+          "numberTo": 100,
+          "step": 10
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "mode": 2,
+      "patternLength": 5,
+      "step": 2,
+      "completions": 2
+    },
+    {
+      "number": 6,
+      "mode": 2,
+      "patternLength": 5,
+      "step": 5,
+      "completions": 2
+    },
+    {
+      "number": 7,
+      "mode": 2,
+      "patternLength": 5,
+      "step": 10,
+      "completions": 2
+    }
+  ]
+}
