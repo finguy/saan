@@ -1,8 +1,9 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('17Ctrl', ['$scope', '$timeout', '$state', '$log', 'NumberPattern', 'ActividadesFinalizadasService',
-  function ($scope, $timeout, $state, $log, NumberPattern, ActividadesFinalizadasService) {
+  .controller('17Ctrl', ['$scope', '$timeout', '$state', '$log', 'NumberPattern',
+  'ActividadesFinalizadasService', 'Util', 'AssetsPath',
+  function ($scope, $timeout, $state, $log, NumberPattern, ActividadesFinalizadasService, Util, AssetsPath) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
 
@@ -19,9 +20,13 @@
     var instructionsPlayer;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      stageNumber = 1; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      stageNumber = 1;
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl17.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl17.clearValues = function(){
@@ -34,11 +39,10 @@
       Ctrl17.clearValues();
       NumberPattern.getConfig(level).then(function(data){
         config = data;
-
+        Ctrl17.setActivity();
         // play instructions of activity
-        instructionsPlayer = new Media(AssetsPath.sounds(config.instructionsPath),
+        instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
           function(){
-            Ctrl17.setActivity();
             instructionsPlayer.release();
           },
           function(err){ $log.error(err); }
@@ -130,13 +134,25 @@
         }, 1000);
       }
       else {
-        if (level >= NumberPattern.getMaxLevel()){
-          Ctrl17.finishActivity();
+        if (level == NumberPattern.getMinLevel() &&
+          !ActividadesFinalizadasService.finalizada($scope.activityId)){
+          // if player reached minimum for setting activity as finished
+          ActividadesFinalizadasService.add($scope.activityId);
+          level++;
+          $state.go('lobby');
         }
         else {
-          $timeout(function(){
-            Ctrl17.getConfiguration(++level);
-          }, 1000);
+          if (level >= NumberPattern.getMaxLevel()){
+            level = 1;
+            $state.go('lobby');
+          }
+          else {
+            $timeout(function(){
+              stageNumber = 1;
+              Util.saveLevel($scope.activityId, ++level);
+              Ctrl17.getConfiguration(level);
+            }, 1000);
+          }
         }
       }
     };
@@ -167,11 +183,6 @@
       else {
         return stageNumber < stageData.completions;
       }
-    };
-
-    Ctrl17.finishActivity = function(){
-      ActividadesFinalizadasService.add($scope.activityId);
-      $state.go('lobby');
     };
   }]);
 })();

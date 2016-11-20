@@ -12,7 +12,8 @@
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
       getSequenceOptions: getSequenceOptions,
-      getFillinData: getFillinData
+      getFillinData: getFillinData,
+      getMinLevel: getMinLevel
     };
 
     function getConfig(level) {
@@ -84,6 +85,10 @@
         positionToFill: positionToFill,
         patternOptions: patternOptions
       };
+    }
+
+    function getMinLevel(){
+      return data.minLevel;
     }
 
     function getMaxLevel(){
