@@ -2,6 +2,7 @@
   "instructions": "Hi! Look at the number sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
+  "minLevel": 1,
   "levels": [
     {
       "level": 1,
