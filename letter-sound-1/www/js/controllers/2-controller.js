@@ -83,6 +83,10 @@
     Ctrl2.buildSequenceStage = function(){
       stageData.pattern = ColorPattern.getSequencePattern(stageData.patternLength, stageData.numberOfColors);
       $scope.patternLeft = stageData.pattern;
+      // $scope.dropzone = [stageData.pattern[0]];
+      $scope.patternRight = [];
+      angular.copy(stageData.pattern,$scope.patternRight);
+
     };
 
     Ctrl2.buildFillinStage = function(){
@@ -118,6 +122,7 @@
       itemMoved: function (eventObj) {
         if ($scope.mode == MODE_SEQUENCE){
           position++;
+          $scope.patternRight.splice(0,1);
           if (position >= stageData.patternLength){
             Ctrl2.success();
           }
@@ -163,7 +168,7 @@
 
     Ctrl2.checkDragEnd = function(movedValue){
       if (config.level.mode == MODE_SEQUENCE){
-        return _.last(patternLeft) == movedValue;
+        return _.last($scope.patternLeft) == movedValue;
       }
       else {
         return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;

@@ -25,17 +25,22 @@ $pattern-colors: (color-red, $red),
 }
 
 .activity-2-content {
+  background: url('../assets/2/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .dropzone {
-    border: .2rem dashed $grey;
-    border-radius: 50%;
-    color: $grey;
-    padding: 1.4rem;
+    // border: .2rem dashed $grey;
+    // border-radius: 50%;
+    // color: $grey;
+    // padding: 1.4rem;
 
-    .as-sortable-placeholder {
-      visibility: hidden;
-    }
+
   }
+
+
 
   .pattern-item {
     height: 8rem;
@@ -49,17 +54,62 @@ $pattern-colors: (color-red, $red),
     }
   }
 
-
   .item-label {
     font-size: 2em;
   }
 
   .pattern-container {
     display: flex;
+    justify-content: center;
     padding-top: 5%;
+
+    .rope {
+      height: 2rem;
+      position: absolute;
+      width: 100%;
+    }
+
+    > :not(.rope) {
+      margin-right: 3rem;
+      position: relative;
+    }
+  }
+
+  .coso {
+    position: absolute !important;
+    width: 100%;
+    height: 20rem;
+    z-index: 1;
   }
 
   .pattern-options {
-    padding-top: 15%;
+    padding-bottom: 2rem;
+  }
+
+  .options-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .character {
+    bottom: 8rem;
+
+    img {
+      height: 30rem;
+    }
+  }
+
+  .as-sortable-dragging {
+    width: auto !important;
+  }
+
+  .as-sortable-item{
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .as-sortable-placeholder {
+    visibility: hidden;
   }
 }

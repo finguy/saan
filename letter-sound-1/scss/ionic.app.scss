@@ -113,6 +113,16 @@ body {
   visibility: hidden;
 }
 
+.character {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+
+  img {
+    height: 20rem;
+  }
+}
+
 .speech-bubble {
   align-items: center;
   background: white;

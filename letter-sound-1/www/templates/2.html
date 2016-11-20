@@ -1,31 +1,34 @@
-<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content">
-  <!-- <div class="pattern-dashboard"> -->
-    <div class="pattern-container" ng-class="{'justify':mode=='2'}">
-      <div class="flex pattern-item color color-{{item}}"
-        ng-repeat="item in patternLeft track by $index">
-      </div>
+<ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
+  <div class="pattern-container">
+    <img src="assets/2/rope.png" class="rope">
+    <img ng-repeat="item in patternLeft track by $index" ng-src="assets/2/feathers/{{item}}.png">
 
-      <div class="dropzone flex pattern-item"
-        as-sortable="sortableOptions"
-        data-ng-model="patternLeft"
-        ng-hide="hideDropzone">
-        <div ng-repeat="item in dropzone" as-sortable-item></div>
-      </div>
-
-      <div class="flex pattern-item color color-{{item}}"
-        ng-repeat="item in patternRight track by $index">
-      </div>
+    <div class="flex coso"
+      as-sortable="sortableOptions"
+      data-ng-model="patternLeft"
+      ng-hide="hideDropzone">
+      <div ng-repeat="item in dropzone" as-sortable-item></div>
+      <!-- <img ng-repeat="item in dropzone " ng-src="assets/2/feathers/empty-{{item}}.png" as-sortable-item> -->
     </div>
 
-    <div class="pattern-options text-center">
-      <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions">
-        <div ng-repeat="item in patternOptions" class="text-center inline-block">
-          <div class="pattern-item color color-{{item}}"
-            as-sortable-item as-sortable-item-handle>
-          </div>
-          <span class="item-label">{{item}}</span>
-        </div>
+    <!-- <div class="flex pattern-item color color-{{item}}"
+      ng-repeat="item in patternRight track by $index">
+    </div> -->
+
+    <!-- <div class="flex"> -->
+      <img ng-repeat="item in patternRight track by $index" ng-src="assets/2/feathers/empty-{{item}}.png">
+    <!-- </div> -->
+  </div>
+
+  <div class="pattern-options">
+    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
+      <div ng-repeat="item in patternOptions" class="text-center">
+        <img ng-src="assets/2/paints/{{item}}-paint.png" as-sortable-item as-sortable-item-handle>
+        <span class="item-label">{{item}}</span>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
+  <div class="character" ng-click="playWordAudio()">
+    <img src="assets/characters/thioye.png">
+  </div>
 </ion-view>
