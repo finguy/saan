@@ -69,6 +69,15 @@ body {
   display: flex;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
 .justify {
   justify-content: center;
 }

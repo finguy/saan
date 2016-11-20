@@ -4,9 +4,16 @@
   "errorMessages": ["Try again!"],
   "levels": [
     {
-      "level": "1",
-      "numberFrom": "1",
-      "numberTo": "10"
+      "level": 1,
+      "numberFrom": 1,
+      "numberTo": 5,
+      "autoCheck": true
+    },
+    {
+      "level": 2,
+      "numberFrom": 10,
+      "numberTo": 10,
+      "autoCheck": false
     }
   ]
 }
