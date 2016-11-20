@@ -1,17 +1,23 @@
-  <div class="height-100 activity-{{activityId}}-content">
-    <div class="dashboard-container">
-        <div radio-group ng-repeat="row in dashboard">
-          <ion-radio ng-repeat="letter in row"
-              ng-attr-name={{$parent.$index}}
-              icon="none"
-              class="letter-button letter-{{letter}}"
-              on-tap="selectLetter($parent.$index, letter)"
-              ng-checked="">
-          </ion-radio>
-        </div>
+<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content content-margin">
+  <div class="dashboard-container">
+    <div radio-group ng-repeat="row in dashboard">
+      <ion-radio ng-repeat="letter in row"
+          ng-attr-name={{$parent.$index}}
+          icon="none"
+          class="letter-button letter-{{letter}}"
+          on-tap="selectLetter($parent.$index, letter)"
+          ng-checked=""
+          ng-disabled="loading || readingInstructions">
+      </ion-radio>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="item-collection">
+      <img class="shadow" ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
     </div>
     <div class="character" ng-click="playWordAudio()">
       <!-- <div ng-if="bubble" class="speech-bubble">{{textSpeech}}</div> -->
       <img src="assets/characters/mbott.png">
     </div>
   </div>
+</div>

@@ -1,58 +1,82 @@
 {
+  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsText": "Hi! Listen to the word and then select the letters from that word. Good Luck!",
   "levels": [
     {
       "level": 1,
-      "instructionsPath": "Duck_Hunt.mp3",
-      "instructionsText": "Hi! Listen to the word and then select the letters from that word. Good Luck!",
       "options": 4,
       "words": [
         {
           "text": "Pot",
-          "audio": "pot.ogg"
+          "audio": "pot.ogg",
+          "img": "pot.png"
         },
         {
           "text": "Bed",
-          "audio": "bed.ogg"
-        },
-        {
-          "text": "Dishes",
-          "audio": "dishes.ogg"
-        },
-        {
-          "text": "Clock",
-          "audio": "clock.ogg"
+          "audio": "bed.ogg",
+          "img": "bed.png"
         },
         {
           "text": "Soap",
-          "audio": "soap.ogg"
+          "audio": "soap.ogg",
+          "img": "soap.png"
+        },
+        {
+          "text": "Key",
+          "audio": "keys.ogg",
+          "img": "key.png"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "options": 4,
+      "words": [
+        {
+          "text": "Food",
+          "audio": "food.ogg",
+          "img": "food.png"
         },
         {
           "text": "Radio",
-          "audio": "radio.ogg"
+          "audio": "radio.ogg",
+          "img": "radio.png"
         },
         {
           "text": "Pillow",
-          "audio": "pillow.ogg"
+          "audio": "pillow.ogg",
+          "img": "pillow.png"
         },
         {
-          "text": "Keys",
-          "audio": "keys.ogg"
-        },
+          "text": "Clock",
+          "audio": "clock.ogg",
+          "img": "clock.png"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "options": 4,
+      "words": [
         {
           "text": "Flowers",
-          "audio": "flowers.ogg"
+          "audio": "flowers.ogg",
+          "img": "flowers.png"
         },
         {
-          "text": "Food",
-          "audio": "food.ogg"
+          "text": "Dishes",
+          "audio": "dishes.ogg",
+          "img": "dishes.png"
         },
         {
           "text": "Table",
-          "audio": "table.ogg"
+          "audio": "table.ogg",
+          "img": "table.png"
         },
         {
           "text": "Photos",
-          "audio": "photos.ogg"
+          "audio": "photos.ogg",
+          "img": "photos.png"
         }
       ]
     }

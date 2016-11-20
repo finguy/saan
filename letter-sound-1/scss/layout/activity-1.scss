@@ -40,13 +40,37 @@
   .dashboard-container {
     @include display(flex);
     @include justify-content(space-around);
-    margin-top: 15rem;
+    @include align-items(center);
+    @include flex(1);
+  }
+
+  .footer {
+    @include display(flex);
+    margin-top: auto;
+  }
+
+  .item-collection {
+    @include display(flex);
+    @include align-self(flex-end);
+    @include flex(1);
+    @include justify-content(space-around);
+    padding-bottom: 1rem;
+
+    img {
+      height: 12rem;
+    }
+
+    .shadow {
+      @include filter(contrast(0) brightness(45%));
+    }
+
+    .completed {
+      @include filter(contrast(100%) brightness(100%));
+    }
   }
 
   .character {
-    bottom: 0;
-    position: absolute;
-    right: 0;
+    margin-left: auto;
 
     img {
       height: 20rem;

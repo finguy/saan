@@ -20,7 +20,11 @@
         return $http.get(src).then(
           function success(response) {
             data = response.data;
-            return data.levels[level-1];
+            return {
+              "instructionsPath": data.instructionsPath,
+              "instructionsText": data.instructionsText,
+              "levelData": data.levels[level-1],
+            };
           },
           function error() {
             //TODO: handle errors for real
