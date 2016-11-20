@@ -1,8 +1,9 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('2Ctrl', ['$scope', '$timeout', '$state', '$log', 'ColorPattern', 'ActividadesFinalizadasService',
-  function ($scope, $timeout, $state, $log, ColorPattern, ActividadesFinalizadasService) {
+  .controller('2Ctrl', ['$scope', '$timeout', '$state', '$log', 'ColorPattern',
+  'ActividadesFinalizadasService', 'Util', 'AssetsPath',
+  function ($scope, $timeout, $state, $log, ColorPattern, ActividadesFinalizadasService, Util, AssetsPath) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
 
@@ -22,8 +23,12 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       stageNumber = 1; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl2.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl2.clearValues = function(){
@@ -37,16 +42,16 @@
       ColorPattern.getConfig(level).then(function(data){
         config = data;
 
+        Ctrl2.setActivity();
         // play instructions of activity
-        // instructionsPlayer = new Media(AssetsPath.sounds(config.instructionsPath),
-        //   function(){
-            Ctrl2.setActivity();
-      //       instructionsPlayer.release();
-      //     },
-      //     function(err){ $log.error(err); }
-      //   );
-      //
-      //   instructionsPlayer.play();
+        instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
+          function(){
+            instructionsPlayer.release();
+          },
+          function(err){ $log.error(err); }
+        );
+
+        instructionsPlayer.play();
       });
     };
 
@@ -135,21 +140,32 @@
     };
 
     Ctrl2.success =  function(){
-
-      if (Ctrl2.stageFinished()){
+      if (stageNumber < stageData.stages){
         stageNumber++;
         $timeout(function(){
           Ctrl2.setActivity();
         }, 1000);
       }
       else {
-        if (level >= ColorPattern.getMaxLevel()){
-          Ctrl2.finishActivity();
+        if (level == ColorPattern.getMinLevel() &&
+          !ActividadesFinalizadasService.finalizada($scope.activityId)){
+          // if player reached minimum for setting activity as finished
+          ActividadesFinalizadasService.add($scope.activityId);
+          level++;
+          $state.go('lobby');
         }
         else {
-          $timeout(function(){
-            Ctrl2.getConfiguration(++level);
-          }, 1000);
+          if (level >= ColorPattern.getMaxLevel()){
+            level = 1;
+            $state.go('lobby');
+          }
+          else {
+            $timeout(function(){
+              stageNumber = 1;
+              Util.saveLevel($scope.activityId, ++level);
+              Ctrl2.getConfiguration(level);
+            }, 1000);
+          }
         }
       }
     };
@@ -170,15 +186,6 @@
       else {
         return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;
       }
-    };
-
-    Ctrl2.stageFinished = function(){
-      return stageNumber < stageData.stages;
-    };
-
-    Ctrl2.finishActivity = function(){
-      ActividadesFinalizadasService.add($scope.activityId);
-      $state.go('lobby');
     };
   }]);
 })();

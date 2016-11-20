@@ -12,7 +12,8 @@
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
       getSequencePattern: getSequencePattern,
-      getFillinPattern: getFillinPattern
+      getFillinPattern: getFillinPattern,
+      getMinLevel: getMinLevel
     };
 
     function getConfig(level) {
@@ -37,6 +38,10 @@
       else {
         $log.error("Invalid level value");
       }
+    }
+
+    function getMinLevel(){
+      return data.minLevel;
     }
 
     function getMaxLevel(){
