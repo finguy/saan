@@ -11,28 +11,28 @@
       "mode": 1,
       "numberOfColors": 2,
       "patternLength": 5,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 2,
       "mode": 1,
       "numberOfColors": 3,
       "patternLength": 5,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 3,
       "mode": 2,
       "numberOfColors": 2,
       "patternLength": 5,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 4,
       "mode": 2,
       "numberOfColors": 3,
       "patternLength": 5,
-      "stages": 1
+      "stages": 4
     }
   ]
 }

@@ -10,7 +10,8 @@
 
     return {
       getConfig: getConfig,
-      getMaxLevel: getMaxLevel
+      getMaxLevel: getMaxLevel,
+      getMinLevel: getMinLevel
     };
 
     function getConfig(level) {
@@ -41,6 +42,9 @@
       }
     }
 
+    function getMinLevel() {
+      return data.minLevel;
+    }
     function getMaxLevel(){
       return data.levels.length;
     }

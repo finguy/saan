@@ -4,7 +4,7 @@
 	angular.module('saan.controllers')
 	.controller('14Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberOperations', 'ActividadesFinalizadasService',
   function($scope, $log, $state, $timeout, Util, NumberOperations, ActividadesFinalizadasService) {
-    $scope.activityId = '14';
+    $scope.activityId = 14;
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
 
@@ -17,9 +17,13 @@
     var Ctrl14 = Ctrl14 || {};
 
     $scope.$on('$ionicView.beforeEnter', function(){
-      stageNumber = 10; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      stageNumber = 1; //TODO: retrieve and load from local storage
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl14.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl14.getConfiguration = function (level) {
@@ -108,14 +112,23 @@
       // should increase level and save to storage
       stageNumber++;
       if (stageNumber > config.levelConfig.stages){
-        level++;
-        if (level > NumberOperations.getMaxLevel()){
+        if (level == NumberOperations.getMinLevel() &&
+          !ActividadesFinalizadasService.finalizada($scope.activityId)){
+          // if player reached minimum for setting activity as finished
           ActividadesFinalizadasService.add($scope.activityId);
+          level++;
           $state.go('lobby');
         }
         else {
-          stageNumber = 1;
-          Ctrl14.getConfiguration(level);
+          if (level == NumberOperations.getMaxLevel()){
+            level = 1;
+            $state.go('lobby');
+          }
+          else {
+            stageNumber = 1;
+            Util.saveLevel($scope.activityId, ++level);
+            Ctrl14.getConfiguration(level);
+          }
         }
       }
       else {
