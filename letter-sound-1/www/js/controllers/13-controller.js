@@ -4,7 +4,7 @@
   angular.module('saan.controllers')
   .controller('13Ctrl',['$scope', '$log', '$timeout', '$state', 'Util', 'LearningNumber', 'ActividadesFinalizadasService',
   function($scope, $log, $timeout, $state, Util, LearningNumber, ActividadesFinalizadasService) {
-    $scope.activityId = '13';
+    $scope.activityId = 13;
     $scope.dropzone = [];
     $scope.items = ['dummy'];
     $scope.step = 1;

@@ -1,6 +1,7 @@
 {
   "instructionsPath": "Duck_Hunt.mp3",
   "instructionsText": "Hi! Listen to the word and then select the letters from that word. Good Luck!",
+  "minLevel": "2",
   "levels": [
     {
       "level": 1,

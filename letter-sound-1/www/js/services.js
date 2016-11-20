@@ -38,12 +38,16 @@ angular.module('saan.services', [])
       },
       getActividadesFinalizadas = function() {
         return JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+      },
+      actividadFinalizada = function(activityId){
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+        return _.indexOf(finishedActivities, activityId) != -1;
       };
-
 
     return {
       add: marcarComoFinalizada,
-      get: getActividadesFinalizadas
+      get: getActividadesFinalizadas,
+      finalizada: actividadFinalizada
     };
   }])
   .factory('TTSService', ['$q', function($q) {
