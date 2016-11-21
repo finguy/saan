@@ -158,7 +158,11 @@
               $scope.$apply();
             }
           },
-          function(err){ $log.error(err); $scope.showText = false;}
+          function(err){
+            $log.error(err);
+            successPlayer.release();
+            $scope.showText = false;
+          }
         );
 
         $scope.textSpeech = successFeedback.text;
@@ -171,7 +175,7 @@
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
           function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); },
-          function(err){ $log.error(err); $scope.showText = false; }
+          function(err){ $log.error(err); failurePlayer.release(); $scope.showText = false; }
         );
 
         $scope.textSpeech = failureFeedback.text;

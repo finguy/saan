@@ -34,5 +34,17 @@
       "patternLength": 5,
       "stages": 4
     }
+  ],
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
   ]
 }

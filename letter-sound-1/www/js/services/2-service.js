@@ -13,7 +13,9 @@
       getMaxLevel: getMaxLevel,
       getSequencePattern: getSequencePattern,
       getFillinPattern: getFillinPattern,
-      getMinLevel: getMinLevel
+      getMinLevel: getMinLevel,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -67,6 +69,16 @@
         pattern: pattern,
         positionToFill: _.random(0, length * 2 - 1)
       };
+    }
+
+    function getSuccessAudio() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    }
+
+    function getFailureAudio() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   }
 })();

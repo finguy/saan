@@ -18,8 +18,6 @@
   <div class="pattern-options">
     <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
       <div ng-repeat="item in patternOptions" class="text-center">
-        <!-- leaving this img commented as a backup  -->
-        <!-- <img ng-src="assets/2/paints/{{item}}-paint.png" as-sortable-item as-sortable-item-handle> -->
         <div class="border">
           <div class="pattern-item color-{{item}}" as-sortable-item as-sortable-item-handle></div>
         </div>
@@ -28,6 +26,7 @@
     </div>
   </div>
   <div class="character">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
     <img src="assets/characters/thioye.png">
   </div>
 </ion-view>
