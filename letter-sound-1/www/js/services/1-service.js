@@ -12,7 +12,9 @@
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
       getRandomLetters: getRandomLetters,
-      getMinLevel: getMinLevel
+      getMinLevel: getMinLevel,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -60,6 +62,16 @@
         .difference(differentLetters) // Remove from alphabet letters in word
         .sample(cantLetters)
         .value();
+    }
+
+    function getSuccessAudio() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    }
+
+    function getFailureAudio() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   }
 })();

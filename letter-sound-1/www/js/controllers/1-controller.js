@@ -10,7 +10,7 @@
 
       $scope.dashboard = []; // Dashboard letters
 
-      $scope.textSpeech = "Great!";
+      $scope.showText = false;
 
       var Ctrl1 = Ctrl1 || {};
       var instructionsPlayer;
@@ -122,11 +122,15 @@
       };
 
       Ctrl1.success = function(){
+        var successFeedback = WordBuilding.getSuccessAudio();
+
         stageNumber++;
         $scope.stageNumber++;
-        successPlayer = new Media(AssetsPath.getSuccessAudio() + "great.ogg",
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
           function(){
             successPlayer.release();
+            $scope.showText = false;
+
             if (stageNumber > config.levelData.words.length){ //if level finished
               if (level == WordBuilding.getMinLevel() &&
                 !ActividadesFinalizadasService.finalizada($scope.activityId)){
@@ -154,17 +158,24 @@
               $scope.$apply();
             }
           },
-          function(err){ $log.error(err); }
+          function(err){ $log.error(err); $scope.showText = false;}
         );
+
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
         successPlayer.play();
       };
 
       Ctrl1.failure = function(){
-        failurePlayer = new Media(AssetsPath.getFailureAudio() + "try_again.ogg",
-          function(){ failurePlayer.release(); },
-          function(err){ $log.error(err); }
+        var failureFeedback = WordBuilding.getFailureAudio();
+
+        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); },
+          function(err){ $log.error(err); $scope.showText = false; }
         );
 
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
         failurePlayer.play();
       };
 

@@ -16,12 +16,7 @@
       <img class="shadow" ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
     </div>
     <div class="character" ng-click="playWordAudio()">
-      <div class="talk-bubble tri-right btm-right-in">
-        <div class="talktext">
-          <p>Great!!</p>
-        </div>
-      </div>
-      <!-- <div ng-if="bubble" class="speech-bubble">{{textSpeech}}</div> -->
+      <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
       <img src="assets/characters/mbott.png">
     </div>
   </div>

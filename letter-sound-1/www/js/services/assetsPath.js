@@ -26,12 +26,12 @@
       return MAIN_PATH + "audio/";
     }
 
-    function getSuccessAudio() {
-      return MAIN_PATH + "audio/feedback/success/";
+    function getSuccessAudio(id) {
+      return MAIN_PATH + id + "/audio/feedback/success/";
     }
 
-    function getFailureAudio() {
-      return MAIN_PATH + "audio/feedback/failure/";
+    function getFailureAudio(id) {
+      return MAIN_PATH + id + "/audio/feedback/failure/";
     }
   }
 })();
