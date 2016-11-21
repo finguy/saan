@@ -1,10 +1,9 @@
 .activity-1-content {
   $alphabet: a b c d e f g h i j k l m n o p q r s t u v w x y z;
-  @include display(flex);
-  @include flex-direction(column);
   background: url('../assets/1/background.png') no-repeat center center fixed;
   background-size: cover;
-
+  display: flex;
+  flex-direction: column;
 
   @each $letter in $alphabet {
     .letter-#{$letter} {
@@ -12,8 +11,8 @@
         background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
 
         input:checked + .radio-content .item-content {
-          @include filter(brightness(70%));
           background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+          filter: brightness(70%);
           visibility: visible;
         }
       }
@@ -38,22 +37,22 @@
   }
 
   .dashboard-container {
-    @include display(flex);
-    @include justify-content(space-around);
-    @include align-items(center);
-    @include flex(1);
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
   }
 
   .footer {
-    @include display(flex);
+    display: flex;
     margin-top: auto;
   }
 
   .item-collection {
-    @include display(flex);
-    @include align-self(flex-end);
-    @include flex(1);
-    @include justify-content(space-around);
+    align-self: flex-end;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
     padding-bottom: 1rem;
 
     img {
@@ -61,11 +60,11 @@
     }
 
     .shadow {
-      @include filter(contrast(0) brightness(45%));
+      filter: contrast(0) brightness(45%);
     }
 
     .completed {
-      @include filter(contrast(100%) brightness(100%));
+      filter: contrast(100%) brightness(100%);
     }
   }
 

@@ -24,11 +24,11 @@ $pattern-colors: (color-red, $red),
 }
 
 .activity-2-content {
-  @include display(flex);
-  @include flex-direction(column);
-  @include justify-content(space-between);
   background: url('../assets/2/background.png') no-repeat center center fixed;
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .dropzone {
     height: 20rem;
@@ -50,8 +50,8 @@ $pattern-colors: (color-red, $red),
   }
 
   .pattern-container {
-    @include display(flex);
-    @include justify-content(center);
+    display: flex;
+    justify-content: center;
     padding-top: 5%;
 
     .rope {
@@ -75,9 +75,9 @@ $pattern-colors: (color-red, $red),
   }
 
   .options-container {
-    @include display(flex);
-    @include align-items(center);
-    @include justify-content(space-between);
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
     width: 90rem;
