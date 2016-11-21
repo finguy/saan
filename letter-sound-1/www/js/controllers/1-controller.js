@@ -10,6 +10,8 @@
 
       $scope.dashboard = []; // Dashboard letters
 
+      $scope.textSpeech = "Great!";
+
       var Ctrl1 = Ctrl1 || {};
       var instructionsPlayer;
       var wordPlayer;
