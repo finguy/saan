@@ -7,7 +7,7 @@
           class="letter-button letter-{{letter}}"
           on-tap="selectLetter($parent.$index, letter)"
           ng-checked=""
-          ng-disabled="loading || readingInstructions">
+          ng-disabled="checkingWord || checkingLetter">
       </ion-radio>
     </div>
   </div>
