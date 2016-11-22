@@ -10,7 +10,8 @@
 
     return {
       getConfig: getConfig,
-      getMaxLevel: getMaxLevel
+      getMaxLevel: getMaxLevel,
+      getMinLevel: getMinLevel
     };
 
     function getConfig(level) {
@@ -30,6 +31,10 @@
       else {
         $log.error("Invalid level value");
       }
+    }
+
+    function getMinLevel(){
+      return data.minLevel;
     }
 
     function getMaxLevel(){

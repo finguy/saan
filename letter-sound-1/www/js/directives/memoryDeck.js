@@ -8,15 +8,15 @@
       scope: {
         deck: '=',
         map: '=',
-        build: '&',
+        deckCompleted: '&',
         size: '='
       },
-      controller: ['$scope', function deckController($scope){
+      controller: ['$scope', '$timeout', function deckController($scope, $timeout){
         var CARD_BACK = 0;
         var CARD_FRONT = 1;
         var CARD_MATCHED = 2;
         var CARD_CHECK_DELAY = 1000;
-        
+
         var flipEnabled = true;
         var matchedCards = 0;
         var selectedCards = [];
@@ -47,18 +47,17 @@
 
         var matchCard = function(row, col){
           flipEnabled = false;
-          setTimeout(function(){
-            $scope.$apply(function () {
+          $timeout(function(){
               for (var i=0; i<selectedCards.length; i++){
                 $scope.map[selectedCards[i].row][selectedCards[i].col] = CARD_MATCHED;
               }
-              selectedCards= [];
+              selectedCards = [];
               matchedCards = matchedCards + 2;
               if (matchedCards == $scope.size){
-                $scope.build();
+                matchedCards = 0;
+                $scope.deckCompleted();
               }
               flipEnabled = true;
-            });
           }, CARD_CHECK_DELAY);
         };
 

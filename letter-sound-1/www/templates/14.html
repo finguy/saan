@@ -3,18 +3,24 @@
     <div class="operation-container">
       <div class="number-container">
         <div class="number text-center"> {{numbers[0]}} </div>
-        <div class="number-image"> <img ng-repeat="item in range(numbers[0])" src="img/7-assets/cookie.png"> </div>
+        <div class="number-image" ng-if="levelConfig.numberImages">
+          <img ng-repeat="item in range(numbers[0])" src="img/7-assets/cookie.png">
+        </div>
       </div>
       <div class="operator symbol-margin"> {{operator}} </div>
       <div class="number-container">
         <div class="number text-center"> {{numbers[1]}} </div>
-        <div class="number-image"> <img ng-repeat="item in range(numbers[1])" src="img/7-assets/cookie.png"> </div>
+        <div class="number-image" ng-if="levelConfig.numberImages">
+          <img ng-repeat="item in range(numbers[1])" src="img/7-assets/cookie.png">
+        </div>
       </div>
       <div class="equals symbol-margin"> = </div>
       <div class="dropzone" as-sortable="sortableOptions" data-ng-model="dropzoneModel" ng-class="{completed: dropzoneModel > 0}">
         <div ng-repeat="res in dropzoneModel" as-sortable-item class="number-container">
           <div class="number text-center"> {{res}} </div>
-          <div class="number-image"> <img ng-repeat="item in range(res)" src="img/7-assets/cookie.png"> </div>
+          <div class="number-image" ng-if="levelConfig.optionImages">
+            <img ng-repeat="item in range(res)" src="img/7-assets/cookie.png">
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +28,9 @@
     <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results" is-disabled="dropzoneModel > 0">
       <div ng-repeat="number in results" as-sortable-item as-sortable-item-handle class="number-container match-card">
         <div class="number text-center"> {{number}} </div>
-        <div class="number-image"> <img ng-repeat="item in range(number)" src="img/7-assets/cookie.png"> </div>
+        <div class="number-image" ng-if="levelConfig.optionImages">
+          <img ng-repeat="item in range(number)" src="img/7-assets/cookie.png">
+        </div>
       </div>
     </div>
   </div>

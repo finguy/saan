@@ -1,3 +1,33 @@
-<ion-view view-title="{{activityId}}">
-  <pattern-dashboard></pattern-dashboard>
+<ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
+  <div class="pattern-container mode-{{mode}}">
+    <img src="assets/2/rope.png" class="rope">
+    <img class="feather" ng-repeat="item in patternLeft track by $index" ng-src="assets/2/feathers/{{item}}.png">
+
+    <div class="dropzone"
+      as-sortable="sortableOptions"
+      data-ng-model="patternLeft">
+      <div ng-repeat="item in dropzone" as-sortable-item></div>
+    </div>
+
+    <img class="feather" ng-repeat="item in dummyDropzone track by $index" ng-src="assets/2/feathers/empty-{{item}}.png">
+
+    <img class="feather" ng-repeat="item in patternRight track by $index" ng-src="assets/2/feathers/{{item}}.png">
+
+  </div>
+
+  <div class="pattern-options">
+    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
+      <div ng-repeat="item in patternOptions" class="text-center">
+        <!-- leaving this img commented as a backup  -->
+        <!-- <img ng-src="assets/2/paints/{{item}}-paint.png" as-sortable-item as-sortable-item-handle> -->
+        <div class="border">
+          <div class="pattern-item color-{{item}}" as-sortable-item as-sortable-item-handle></div>
+        </div>
+        <span class="item-label">{{item}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="character">
+    <img src="assets/characters/thioye.png">
+  </div>
 </ion-view>

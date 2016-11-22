@@ -1,110 +1,190 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('2Ctrl', ['$scope', 'RandomPattern', 'TTSService', 'Util', 'RandomNumericalSeq',
-  function ($scope, RandomPattern, TTSService, Util, RandomNumericalSeq) {
+  .controller('2Ctrl', ['$scope', '$timeout', '$state', '$log', 'ColorPattern',
+  'ActividadesFinalizadasService', 'Util', 'AssetsPath',
+  function ($scope, $timeout, $state, $log, ColorPattern, ActividadesFinalizadasService, Util, AssetsPath) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
 
-    var ITEM_COLORS = 1;
-    var ITEM_NUMBERS = 2;
-
-    $scope.ITEM_COLORS = 1;
-    $scope.ITEM_NUMBERS = 2;
-
-    $scope.mode = MODE_FILLIN;
-    $scope.itemType = ITEM_NUMBERS;
+    $scope.mode = MODE_SEQUENCE;
     $scope.dropzone = [];
-    $scope.repetitions = 2;
-    $scope.positionToFill = 0;
 
-    var pattern = [];
-    var patternLength = 4;
-    var completions = 0;
-    var readWordTimeout = 1000;
+    $scope.activityId = 2;
 
-    function generatePattern(){
-      if ($scope.itemType == ITEM_COLORS){
-        return RandomPattern.pattern(patternLength);
-      }else if ($scope.itemType == ITEM_NUMBERS){
-        //TODO definir metodo para seleccionar patrones numericos acordes al nivel
-        return RandomNumericalSeq.sequence(2, 10, patternLength);
-      }
-    }
+    var Ctrl2 = Ctrl2 || {};
+    var stageNumber;
+    var stageData;
+    var level;
+    var config;
+    var instructionsPlayer;
+    var position;
+    var pattern;
 
-    $scope.startActivity = function(readInstructions){
-      generatePattern().then(function(data){
-        $scope.activityData = data;
-        $scope.availableFields = data.availableFields;
-        pattern = data.seq;
-        populatePattern();
+    $scope.$on('$ionicView.beforeEnter', function() {
+      stageNumber = 1; //TODO: retrieve and load from local storage
+      level = Util.getLevel($scope.activityId) || 1;
+      Ctrl2.getConfiguration(level);
+    });
 
-        //wait for UI to load
-        setTimeout(function() {
-          if (readInstructions){
-            TTSService.speak(data.instructions);
-          }
-        }, readWordTimeout);
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
+    });
+
+    Ctrl2.clearValues = function(){
+      stageNumber = 1;
+      stageData = {};
+      config = {};
+    };
+
+    Ctrl2.getConfiguration = function (level){
+      Ctrl2.clearValues();
+      ColorPattern.getConfig(level).then(function(data){
+        config = data;
+
+        Ctrl2.setActivity();
+        // play instructions of activity
+        instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
+          function(){
+            instructionsPlayer.release();
+          },
+          function(err){ $log.error(err); }
+        );
+
+        instructionsPlayer.play();
       });
     };
 
-    function populatePattern(){
+    Ctrl2.setActivity = function(){
+      $scope.patternOptions = [];
+      $scope.patternLeft = [];
+      $scope.mode = config.level.mode;
+      position = 0;
 
-      if ($scope.itemType == ITEM_COLORS){
+      Ctrl2.setSequenceStage();
+      if (config.level.mode == MODE_SEQUENCE){
+        Ctrl2.buildSequenceStage();
+      }
+      else if (config.level.mode == MODE_FILLIN){
+        Ctrl2.buildFillinStage();
+      }
+      else {
+        $log.error("invalid option");
+        return;
+      }
+
+      $scope.patternOptions = config.colors;
+    };
+
+    Ctrl2.setSequenceStage = function(){
+      if (stageNumber >= 1){
+        stageData = config.level;
+      }else {
+        $log.error("Invalid stage number");
+      }
+    };
+
+    Ctrl2.buildSequenceStage = function(){
+      stageData.pattern = ColorPattern.getSequencePattern(stageData.patternLength, stageData.numberOfColors);
+      $scope.patternLeft = stageData.pattern;
+      $scope.dummyDropzone = [];
+      angular.copy(stageData.pattern, $scope.dummyDropzone);
+    };
+
+    Ctrl2.buildFillinStage = function(){
+      var fillinData = ColorPattern.getFillinPattern(stageData.patternLength, stageData.numberOfColors);
+      stageData.pattern = fillinData.pattern;
+      stageData.positionToFill = fillinData.positionToFill;
+
+      $scope.patternLeft = fillinData.pattern.slice(0, fillinData.positionToFill);
+      $scope.dummyDropzone = [stageData.pattern[stageData.positionToFill]];
+      $scope.patternRight = fillinData.pattern.slice(fillinData.positionToFill + 1);
+
+    };
+
+    Ctrl2.setFillinStage = function(fillinData){
+      stageData = config.level;
+      stageData.fillinData = fillinData;
+    };
+
+    $scope.sortableOptions = {
+      allowDuplicates: true,
+      accept: function(sourceItemHandleScope, destSortableScope){
+        return Ctrl2.checkAccept(sourceItemHandleScope.modelValue);
+      }
+    };
+
+    $scope.sortableCloneOptions = {
+      containment: '.activity-' + $scope.activityId + '-content',
+      containerPositioning: 'relative',
+      clone: true,
+      dragEnd: function(eventObj) {
+        //check that item was correctly moved
+        return Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue);
+      },
+      itemMoved: function (eventObj) {
+        $scope.dummyDropzone.splice(0,1);
         if ($scope.mode == MODE_SEQUENCE){
-          $scope.patternLeft = pattern;
-          $scope.positionToFill = 0;
-        }else if ($scope.mode == MODE_FILLIN){
-          $scope.positionToFill = _.random(0, patternLength * 2 - 1);
-          pattern = pattern.concat(pattern);
-
-          $scope.patternLeft = pattern.slice(0, $scope.positionToFill);
-          $scope.patternRight = pattern.slice($scope.positionToFill + 1);
+          position++;
+          if (position >= stageData.patternLength){
+            Ctrl2.success();
+          }
         }
-      }else if ($scope.itemType == ITEM_NUMBERS){
-        // elegir posicion para completar
-        $scope.positionToFill = $scope.activityData.positionToFill;
-        $scope.patternLeft = pattern.slice(0, $scope.positionToFill);
-        $scope.patternRight = pattern.slice($scope.positionToFill + 1);
-      }
-    }
-
-
-    $scope.startActivity(true);
-
-    $scope.checkColor = function(selectedColor){
-      return (pattern[$scope.positionToFill] == selectedColor);
-    };
-
-    $scope.checkLevel = function(){
-      if ($scope.mode == MODE_SEQUENCE){
-        completions++;
-        $scope.positionToFill = ++$scope.positionToFill % patternLength;
-        if (completions == patternLength * $scope.repetitions){
-          $scope.startActivity(false);
-          $scope.selectedComponents = [];
-          completions = 0;
+        else {
+          Ctrl2.success();
         }
-      }else if ($scope.mode == MODE_FILLIN){
-        $scope.startActivity(false);
+      },
+      accept: function(sourceItemHandleScope, destSortableScope){
+        return false;
       }
     };
 
-    $scope.successMessage = function(){
-      TTSService.speak(_.sample($scope.activityData.successMessages));
-    };
-
-    $scope.errorMessage = function(){
-      TTSService.speak($scope.activityData.errorMessages[0]);
-    };
-
-    $scope.getClass = function(item){
-
-      if ($scope.itemType == ITEM_COLORS){
-        return 'color color-' + item;
+    Ctrl2.success =  function(){
+      if (stageNumber < stageData.stages){
+        stageNumber++;
+        $timeout(function(){
+          Ctrl2.setActivity();
+        }, 1000);
       }
-      else{
-        return 'item-number';
+      else {
+        if (level == ColorPattern.getMinLevel() &&
+          !ActividadesFinalizadasService.finalizada($scope.activityId)){
+          // if player reached minimum for setting activity as finished
+          ActividadesFinalizadasService.add($scope.activityId);
+          level++;
+          $state.go('lobby');
+        }
+        else {
+          if (level >= ColorPattern.getMaxLevel()){
+            level = 1;
+            $state.go('lobby');
+          }
+          else {
+            $timeout(function(){
+              stageNumber = 1;
+              Util.saveLevel($scope.activityId, ++level);
+              Ctrl2.getConfiguration(level);
+            }, 1000);
+          }
+        }
+      }
+    };
+
+    Ctrl2.checkAccept = function(movedValue){
+      if (config.level.mode == MODE_SEQUENCE){
+        return stageData.pattern[position] == movedValue;
+      }
+      else {
+        return movedValue == stageData.pattern[stageData.positionToFill];
+      }
+    };
+
+    Ctrl2.checkDragEnd = function(movedValue){
+      if (config.level.mode == MODE_SEQUENCE){
+        return _.last($scope.patternLeft) == movedValue;
+      }
+      else {
+        return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;
       }
     };
   }]);

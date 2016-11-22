@@ -1,36 +1,44 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('7Ctrl', ['$scope', 'DeckBuilder', 'Util', function($scope, DeckBuilder, Util) {
-    $scope.activityId = '7';
+
+  .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService',
+  function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService) {
+    $scope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
 
     var config = '';
+    var level;
     var Ctrl7 = Ctrl7 || {} ;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       //TODO: Get current level in order to get the proper configuration
-      Ctrl7.getConfiguration(1);
+      level = Util.getLevel($scope.activityId) || 1;
+      Ctrl7.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl7.getConfiguration = function(level){
       DeckBuilder.getConfig(level).then(function(data){
         config = data;
-        config.level.numberRange = parseInt(config.level.numberRange, 10);
-        config.level.numberOfCards = parseInt(data.level.numberOfCards, 10);
         $scope.size = config.level.numberOfCards;
         $scope.buildDeck();
       });
     };
 
     $scope.buildDeck = function(){
+      $scope.map = [];
+      $scope.deck = [];
       var cards = [];
       var auxCards = [];
 
       for (var i = 0; i < $scope.size / 2; i++){
-        var number = Util.getRandomNumber(config.level.numberRange);
 
+        var number = _.random(config.level.numberFrom, config.level.numberTo);
         while (_.indexOf(auxCards, number) != -1)
           number = Math.floor(Math.random() * 10);
 
@@ -52,6 +60,26 @@
 
       $scope.map = deckMap;
       $scope.deck = deck;
+    };
+
+    $scope.deckCompleted = function(){
+      if (level == DeckBuilder.getMinLevel() &&
+        !ActividadesFinalizadasService.finalizada($scope.activityId)){
+        // if player reached minimum for setting activity as finished
+        ActividadesFinalizadasService.add($scope.activityId);
+        level++;
+        $state.go('lobby');
+      }
+      else {
+        if (level == DeckBuilder.getMaxLevel()){
+          level = 1;
+          $state.go('lobby');
+        }
+        else {
+          Util.saveLevel($scope.activityId, ++level);
+          Ctrl7.getConfiguration(level);
+        }
+      }
     };
 
   }]);

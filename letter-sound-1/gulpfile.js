@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var jshint = require('gulp-jshint');
 var inject = require('gulp-inject');
+var autoprefixer = require('gulp-autoprefixer');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -24,6 +25,7 @@ gulp.task('default', ['sass', 'index']);
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
+    .pipe(autoprefixer('last 2 versions'))
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({

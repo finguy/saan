@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
-  angular.module('saan.controllers')
-  .controller('14Ctrl',['$scope','Util', 'TTSService', 'NumberOperations',
-  function($scope, Util, TTSService, NumberOperations) {
-    $scope.activityId = '14';
+	angular.module('saan.controllers')
+	.controller('14Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberOperations', 'ActividadesFinalizadasService',
+  function($scope, $log, $state, $timeout, Util, NumberOperations, ActividadesFinalizadasService) {
+    $scope.activityId = 14;
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
 
@@ -12,15 +12,24 @@
     var config = '';
     var ADD = 1;
     var SUBTRACT = 2;
+    var stageNumber;
+    var level;
     var Ctrl14 = Ctrl14 || {};
 
-    $scope.$on('$ionicView.beforeEnter', function() {
-      Ctrl14.getConfiguration();
+    $scope.$on('$ionicView.beforeEnter', function(){
+      stageNumber = 1; //TODO: retrieve and load from local storage
+      level = Util.getLevel($scope.activityId) || 1;
+      Ctrl14.getConfiguration(level);
     });
 
-    Ctrl14.getConfiguration = function (level){
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
+    });
+
+    Ctrl14.getConfiguration = function (level) {
       NumberOperations.getConfig(level).then(function(data){
         config = data;
+        $scope.levelConfig = config.levelConfig;
         Ctrl14.setActivity();
       });
     };
@@ -38,12 +47,12 @@
       clone: true,
       dragEnd: function(eventObj) {
         if (!$scope.sortableOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
-          console.log("wrong!!");
+          $log.error("wrong!!");
         }
       },
-      itemMoved: function (eventObj) {
-        console.log("right!!!");
-        setTimeout(function(){
+      itemMoved: function (eventObj){
+        $log.info("right!!!");
+        $timeout(function(){
           $scope.$apply(function(){
             Ctrl14.success();
           });
@@ -52,15 +61,11 @@
       }
     };
 
-    $scope.numberToWord = function(number){
-      return Util.numberToWords(number);
-    };
-
     $scope.range = function(number){
       return _.range(number);
     };
 
-    Ctrl14.setActivity  = function (){
+    Ctrl14.setActivity  = function(){
       $scope.dropzoneModel = [];
       var results = [];
       var numbers = [];
@@ -105,7 +110,30 @@
 
     Ctrl14.success = function(){
       // should increase level and save to storage
-      Ctrl14.setActivity();
+      stageNumber++;
+      if (stageNumber > config.levelConfig.stages){
+        if (level == NumberOperations.getMinLevel() &&
+          !ActividadesFinalizadasService.finalizada($scope.activityId)){
+          // if player reached minimum for setting activity as finished
+          ActividadesFinalizadasService.add($scope.activityId);
+          level++;
+          $state.go('lobby');
+        }
+        else {
+          if (level == NumberOperations.getMaxLevel()){
+            level = 1;
+            $state.go('lobby');
+          }
+          else {
+            stageNumber = 1;
+            Util.saveLevel($scope.activityId, ++level);
+            Ctrl14.getConfiguration(level);
+          }
+        }
+      }
+      else {
+        Ctrl14.setActivity();
+      }
     };
 
   }]);

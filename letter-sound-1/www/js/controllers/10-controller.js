@@ -7,6 +7,7 @@
     $scope.word = []; // Letter to play in level
     $scope.wordStr = "";
     $scope.rimes = [];
+    $scope.selectedRimeLetters = [];
     $scope.words = [];
     $scope.img = "";
     $scope.assets = [];
@@ -23,9 +24,9 @@
     $scope.activityProgress = 0;
     $scope.score = 0;
     $scope.draggedWord = false;
-
+    $scope.draggedLetters = [];
     $scope.imgsDragged = [];
-
+    $scope.isWordOk = false;
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
 
@@ -61,7 +62,6 @@
 
       RandomWordTen.word($scope.level, $scope.playedWords).then(
         function success(data) {
-          console.log(data);
           Ctrl10.setUpContextVariables(data);
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
@@ -88,9 +88,12 @@
       $scope.playedWords.push(wordJson.word);
       $scope.wordStr = wordJson.word;
       $scope.word = wordJson.word.split("");
+
       $scope.rimesStr = wordJson.rimes.join(",");
       var index = Util.getRandomNumber(wordJson.rimes.length);
       var rime = wordJson.rimes[index];
+      $scope.selectedRimeLetters = rime.split("");
+      $scope.isWordOk = false;
       var wordsToPlay = [];
 
       for (var j in data.allWords) {
@@ -122,6 +125,7 @@
     };
 
     $scope.handleProgress = function(isWordOk) {
+      $scope.isWordOk = isWordOk;
       if (isWordOk) {
         $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
         var position = Util.getRandomNumber($scope.successMessages.length);
@@ -136,7 +140,6 @@
             Util.saveStatus($scope.activityId, $scope.finished);
             ActividadesFinalizadasService.add($scope.activityId);
           }
-
           Ctrl10.showDashboard(false); //Reload dashboard
 
         }, 1000);
