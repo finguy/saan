@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('LobbyCtrl', function($scope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _){
+.controller('LobbyCtrl', function($scope, $rootScope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _){
 
 	var chequearActividadesDisponibles = function(){
 		var actividadesDisponibles = [];
@@ -30,7 +30,13 @@ angular.module('saan.controllers')
 			chequearActividadesDisponibles();
 		}
 	});
-	console.log("lobby");
-  $scope.isInLobby = true;
+
+	$scope.$on('$ionicView.beforeEnter', function() {
+	  $rootScope.isInLobby = true;
+	});
+
+	$scope.$on('$ionicView.leave', function() {
+	  $rootScope.isInLobby = false;
+	});
 
 });

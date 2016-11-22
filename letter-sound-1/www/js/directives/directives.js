@@ -85,9 +85,9 @@ angular.module('saan.directives')
        templateUrl: "templates/directives/backButton.html",
        scope: 'true',
         link: function(scope) {
-          scope.goLobby =  function() {
+          scope.goBack =  function() {
             $ionicHistory.goBack();
-          };          
+          };
       }
      };
    })
