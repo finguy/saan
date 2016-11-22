@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-	angular.module('saan.controllers')
-	.controller('13Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
-		$scope.activityId = '13';
+  angular.module('saan.controllers')
+  .controller('13Ctrl',['$scope','Util', 'TTSService', 'LearningNumber', function($scope, Util, TTSService, LearningNumber) {
+    $scope.activityId = '13';
     $scope.dropzone = [];
     $scope.items = ['dummy'];
     $scope.step = 1;
@@ -21,7 +21,7 @@
 
     Ctrl13.getConfiguration = function (level){
       LearningNumber.getConfig(level).then(function(data){
-				config = data;
+        config = data;
         config.level.level = parseInt(config.level.level, 10);
         config.level.numberFrom = parseInt(config.level.numberFrom, 10);
         config.level.numberTo = parseInt(config.level.numberTo, 10);
@@ -29,7 +29,7 @@
         $scope.number = config.level.numberFrom;
         Ctrl13.startTutorial();
       });
-		};
+    };
 
     Ctrl13.startTutorial = function(){
       for (var i = 1; i <= totalSteps; i++){
@@ -79,5 +79,5 @@
       }
     };
 
-	}]);
+  }]);
 })();

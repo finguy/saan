@@ -1,8 +1,8 @@
 (function() {
   'use strict';
 
-	angular.module('saan.controllers')
-	.controller('14Ctrl',['$scope','Util', 'TTSService', 'NumberOperations',
+  angular.module('saan.controllers')
+  .controller('14Ctrl',['$scope','Util', 'TTSService', 'NumberOperations',
   function($scope, Util, TTSService, NumberOperations) {
     $scope.activityId = '14';
     $scope.dropzoneModel = [];
@@ -91,13 +91,13 @@
       // select the result options
       for (var i = 1; i < config.options; i++){
         valid = false;
-				while (!valid){
+        while (!valid){
           number = _.random(bottom, top);
           index = _.indexOf(results, number);
           valid = index == -1;
         }
-				results.push(number);
-			}
+        results.push(number);
+      }
 
       //shuffle the results
       $scope.results = _.shuffle(results);
