@@ -1,10 +1,6 @@
 .activity-5-content {
   background-image: url('../img/5-assets/background.png');
 
-  .activity-5-box-shadow {
-    @include shadow-box-1(#ccc, #7c3900, #fef3dd, #fab06d);
-  }
-
   .letter-container {
     text-align: center;
     margin-top: 10rem;
@@ -23,7 +19,7 @@
     display: block;
   }
 
-  .activity-5-box {
+  .box {
     margin: auto 10rem;
     text-align: center;
     width: auto;
