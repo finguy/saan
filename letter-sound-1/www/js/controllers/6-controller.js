@@ -63,7 +63,7 @@ angular.module('saan.controllers')
 
   Ctrl6.setUpScore = function() {
     $scope.score = Util.getScore($scope.activityId);
-\
+
   };
 
   Ctrl6.setUpStatus = function() {
