@@ -23,9 +23,13 @@
     var position;
     var pattern;
 
+    var checking = false;
+    var readInstructions;
+
     $scope.$on('$ionicView.beforeEnter', function() {
       stageNumber = 1; //TODO: retrieve and load from local storage
       level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = true;
       Ctrl2.getConfiguration(level);
     });
 
@@ -45,21 +49,23 @@
         config = data;
 
         Ctrl2.setActivity();
-        // play instructions of activity
-        instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
-          function(){
-            instructionsPlayer.release();
-          },
-          function(err){ $log.error(err); }
-        );
+        if (readInstructions){
+          // play instructions of activity
+          instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
+            function(){ instructionsPlayer.release(); readInstructions = false; },
+            function(err){ $log.error(err); instructionsPlayer.release(); readInstructions = false; }
+          );
 
-        instructionsPlayer.play();
+          instructionsPlayer.play();
+        }
       });
     };
 
     Ctrl2.setActivity = function(){
+      checking = false;
       $scope.patternOptions = [];
       $scope.patternLeft = [];
+      $scope.patternRight = [];
       $scope.mode = config.level.mode;
       position = 0;
 
@@ -145,61 +151,65 @@
     };
 
     Ctrl2.success =  function(){
-      var successFeedback = ColorPattern.getSuccessAudio();
+      if (!checking){
+        var successFeedback = ColorPattern.getSuccessAudio();
 
-      successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-        function(){
-          successPlayer.release();
-          $scope.showText = false;
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function(){
+            successPlayer.release();
+            $scope.showText = false;
 
-          if (stageNumber < stageData.stages){
-            stageNumber++;
-            $timeout(function(){
-              Ctrl2.setActivity();
-            }, 1000);
-          }
-          else {
-            if (level == ColorPattern.getMinLevel() &&
-              !ActividadesFinalizadasService.finalizada($scope.activityId)){
-              // if player reached minimum for setting activity as finished
-              ActividadesFinalizadasService.add($scope.activityId);
-              level++;
-              $state.go('lobby');
+            if (stageNumber < stageData.stages){
+              stageNumber++;
+              $timeout(function(){
+                Ctrl2.setActivity();
+              }, 1000);
             }
             else {
-              if (level >= ColorPattern.getMaxLevel()){
-                level = 1;
+              if (level == ColorPattern.getMinLevel() &&
+                !ActividadesFinalizadasService.finalizada($scope.activityId)){
+                // if player reached minimum for setting activity as finished
+                ActividadesFinalizadasService.add($scope.activityId);
+                level++;
                 $state.go('lobby');
               }
               else {
-                $timeout(function(){
-                  stageNumber = 1;
-                  Util.saveLevel($scope.activityId, ++level);
-                  Ctrl2.getConfiguration(level);
-                }, 1000);
+                if (level == ColorPattern.getMaxLevel()){
+                  level = 1;
+                  $state.go('lobby');
+                }
+                else {
+                  $timeout(function(){
+                    stageNumber = 1;
+                    Util.saveLevel($scope.activityId, ++level);
+                    Ctrl2.getConfiguration(level);
+                  }, 1000);
+                }
               }
             }
-          }
-        },
-        function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
-      );
+          },
+          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
+        );
 
-      $scope.textSpeech = successFeedback.text;
-      $scope.showText = true;
-      successPlayer.play();
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+        successPlayer.play();
+      }
     };
 
     Ctrl2.failure = function(){
-      var failureFeedback = ColorPattern.getFailureAudio();
+      if (!checking){
+        var failureFeedback = ColorPattern.getFailureAudio();
 
-      failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-        function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); },
-        function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; $scope.$apply();}
-      );
+        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); checking = false;},
+          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
+        );
 
-      $scope.textSpeech = failureFeedback.text;
-      $scope.showText = true;
-      failurePlayer.play();
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        failurePlayer.play();
+      }
     };
 
     Ctrl2.checkAccept = function(movedValue){
@@ -216,7 +226,7 @@
         return _.last($scope.patternLeft) == movedValue;
       }
       else {
-        return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;
+        return $scope.patternLeft.length + $scope.patternRight.length == 2 * stageData.patternLength;
       }
     };
   }]);
