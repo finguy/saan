@@ -78,7 +78,19 @@ angular.module('saan.directives')
        templateUrl: "templates/directives/progress.html",
        scope: 'true'
      };
-   })   
+   })
+   .directive('backButton', function($ionicHistory) {
+     return {
+       restrict: "E",
+       templateUrl: "templates/directives/backButton.html",
+       scope: 'true',
+        link: function(scope) {
+          scope.goLobby =  function() {
+            $ionicHistory.goBack();
+          };          
+      }
+     };
+   })
   .directive('objectDashboardTwelve', function() {
       return {
         restrict: "E",

@@ -1,5 +1,6 @@
 angular.module('saan.controllers')
 .controller('LobbyCtrl', function($scope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _){
+
 	var chequearActividadesDisponibles = function(){
 		var actividadesDisponibles = [];
 		var actividadesFinalizadas = ActividadesFinalizadasService.get();
@@ -30,4 +31,6 @@ angular.module('saan.controllers')
 		}
 	});
 	console.log("lobby");
+  $scope.isInLobby = true;
+
 });

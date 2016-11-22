@@ -136,3 +136,14 @@ body {
     width: 0;
   }
 }
+
+.button-back {
+   background: no-repeat url('../img/3-assets/back.png') 0 0;
+   width: 5rem;
+   height: 5rem;
+   top:0.5rem;
+   left: 0.5rem;
+   position:absolute;
+   z-index: 99999;
+   border:0;
+ }
