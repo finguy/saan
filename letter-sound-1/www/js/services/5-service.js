@@ -1,5 +1,5 @@
 angular.module('saan.services')
-.factory('RandomLetter', function($http, LevelsFive, Util) {
+.factory('RandomLetter', function($http, $log, LevelsFive, Util) {
   return {
     letter: function(level, playedLetters) {
       var src = LevelsFive.getSrcData(level);
@@ -31,7 +31,7 @@ angular.module('saan.services')
         },
         function error() {
           //TODO: handle errors for real
-          console.log("error");
+          $log.error("error");
         }
       );
     }

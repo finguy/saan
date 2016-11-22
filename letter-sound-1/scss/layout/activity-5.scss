@@ -1,12 +1,9 @@
-.activity5 {
+.activity-5-content {
   background-image: url('../img/5-assets/background.png');
 
-  .activity-5-box-shadow {
-    @include shadow-box-1(#ccc, #7c3900, #fef3dd, #fab06d);
-  }
-
-  .activity5-letter-container {
+  .letter-container {
     text-align: center;
+    margin-top: 10rem;
   }
 
   .img-letter {
@@ -22,13 +19,13 @@
     display: block;
   }
 
-  .activity-5-box {
+  .box {
     margin: auto 10rem;
     text-align: center;
     width: auto;
   }
 
-  .activity-5-container {
+  .floating-objects-container {
     align-items: flex-end;
     display: flex;
     justify-content: center;
