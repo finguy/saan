@@ -2,9 +2,12 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('11Ctrl', ['$scope', '$log', '$state', '$timeout', 'Listening', 'AssetsPath','ActividadesFinalizadasService',
-  function($scope, $log, $state, $timeout, Listening, AssetsPath, ActividadesFinalizadasService) {
-    $scope.activityId = '11';
+  .controller('11Ctrl', ['$scope', '$log', '$state', '$timeout', 'Listening',
+  'AssetsPath','ActividadesFinalizadasService', 'Util',
+  function($scope, $log, $state, $timeout, Listening, AssetsPath,
+    ActividadesFinalizadasService, Util) {
+    $scope.activityId = 11;
+
     var Ctrl11 = Ctrl11 || {};
 
     var config;
@@ -18,9 +21,13 @@
     var questionPlayer;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      stageNumber = 1; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      stageNumber = 1;
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl11.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl11.getConfiguration = function (level){
@@ -90,13 +97,24 @@
             $scope.$apply(Ctrl11.setActivity());
           }, 1000);
         }
-        else{
-          if (level >= Listening.getMaxLevel()){
+        else {
+          if (level == Listening.getMinLevel() &&
+            !ActividadesFinalizadasService.finalizada($scope.activityId)){
+            // if player reached minimum for setting activity as finished
             ActividadesFinalizadasService.add($scope.activityId);
+            level++;
             $state.go('lobby');
           }
-          else{
-            Ctrl11.getConfiguration(level++);
+          else {
+            if (level == Listening.getMaxLevel()){
+              level = 1;
+              $state.go('lobby');
+            }
+            else {
+              stageNumber = 1;
+              Util.saveLevel($scope.activityId, ++level);
+              Ctrl11.getConfiguration(level);
+            }
           }
         }
       }

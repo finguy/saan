@@ -32,6 +32,10 @@
       }
     }
 
+    function getMinLevel(){
+      return data.minLevel;
+    }
+    
     function getMaxLevel(){
       return data.levels.length;
     }

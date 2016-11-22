@@ -3,9 +3,10 @@
 
   angular.module('saan.controllers')
   .controller('1Ctrl', ['$scope', '$log', '$state', '$timeout', 'WordBuilding',
-    'TTSService', 'AssetsPath', 'ActividadesFinalizadasService',
-    function($scope, $log, $state, $timeout, WordBuilding, TTSService, AssetsPath, ActividadesFinalizadasService){
-      $scope.activityId = '1'; // Activity Id
+    'TTSService', 'AssetsPath', 'ActividadesFinalizadasService', 'Util',
+    function($scope, $log, $state, $timeout, WordBuilding, TTSService, AssetsPath,
+      ActividadesFinalizadasService, Util){
+      $scope.activityId = 1; // Activity Id
 
       $scope.dashboard = []; // Dashboard letters
 
@@ -27,8 +28,12 @@
 
       $scope.$on('$ionicView.beforeEnter', function() {
         stageNumber = 1;
-        level = 1; //TODO: retrieve and load from local storage
+        level = Util.getLevel($scope.activityId) || 1;
         Ctrl1.getConfiguration(level);
+      });
+
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Util.saveLevel($scope.activityId, level);
       });
 
       $scope.selectLetter = function(position, letter) {
@@ -121,14 +126,25 @@
           function(){
             successPlayer.release();
             if (stageNumber > config.levelData.words.length){ //if level finished
-              if (level >= WordBuilding.getMaxLevel()){ //was the last level
+              if (level == WordBuilding.getMinLevel() &&
+                !ActividadesFinalizadasService.finalizada($scope.activityId)){
+                // if player reached minimum for setting activity as finished
                 ActividadesFinalizadasService.add($scope.activityId);
+                level++;
                 $state.go('lobby');
               }
               else {
-                stageNumber = 1;
-                // $scope.stageNumber++;
-                Ctrl1.getConfiguration(++level);
+                if (level == WordBuilding.getMaxLevel()){
+                  // if player finished all available levels
+                  level = 1;
+                  $state.go('lobby');
+                }
+                else {
+                  // player still has levels to play
+                  stageNumber = 1;
+                  Util.saveLevel($scope.activityId, ++level);
+                  Ctrl1.getConfiguration(level);
+                }
               }
             }
             else {

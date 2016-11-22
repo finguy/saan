@@ -11,7 +11,8 @@
     return {
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
-      getRandomLetters: getRandomLetters
+      getRandomLetters: getRandomLetters,
+      getMinLevel: getMinLevel
     };
 
     function getConfig(level) {
@@ -35,6 +36,10 @@
       else {
         $log.error("Invalid level value");
       }
+    }
+
+    function getMinLevel(){
+      return data.minLevel;
     }
 
     function getMaxLevel(){

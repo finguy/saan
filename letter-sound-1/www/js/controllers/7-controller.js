@@ -3,7 +3,7 @@
   angular.module('saan.controllers')
   .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService',
   function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService) {
-    $scope.activityId = '7';
+    $scope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
 
@@ -13,8 +13,12 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       //TODO: Get current level in order to get the proper configuration
-      level = 1;
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl7.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl7.getConfiguration = function(level){
@@ -57,12 +61,22 @@
     };
 
     $scope.deckCompleted = function(){
-      if (level > DeckBuilder.getMaxLevel){
+      if (level == DeckBuilder.getMinLevel() &&
+        !ActividadesFinalizadasService.finalizada($scope.activityId)){
+        // if player reached minimum for setting activity as finished
         ActividadesFinalizadasService.add($scope.activityId);
+        level++;
         $state.go('lobby');
       }
-      else{
-        Ctrl7.getConfiguration(++level);
+      else {
+        if (level == DeckBuilder.getMaxLevel()){
+          level = 1;
+          $state.go('lobby');
+        }
+        else {
+          Util.saveLevel($scope.activityId, ++level);
+          Ctrl7.getConfiguration(level);
+        }
       }
     };
 
