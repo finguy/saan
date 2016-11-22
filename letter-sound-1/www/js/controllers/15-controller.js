@@ -2,9 +2,11 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('15Ctrl', ['$scope', '$log', '$state', '$timeout', 'MathOralProblems', 'AssetsPath', 'ActividadesFinalizadasService',
-  function ($scope, $log, $state, $timeout, MathOralProblems, AssetsPath, ActividadesFinalizadasService) {
-    $scope.activityId = '15';
+  .controller('15Ctrl', ['$scope', '$log', '$state', '$timeout', 'MathOralProblems',
+  'AssetsPath', 'ActividadesFinalizadasService', 'Util',
+  function ($scope, $log, $state, $timeout, MathOralProblems, AssetsPath,
+    ActividadesFinalizadasService, Util) {
+    $scope.activityId = 15;
 
     var Ctrl15 = Ctrl15 || {};
 
@@ -18,9 +20,13 @@
     var problemPlayer;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      stageNumber = 1; //TODO: retrieve and load from local storage
-      level = 1; //TODO: retrieve and load from local storage
+      stageNumber = 1;
+      level = Util.getLevel($scope.activityId) || 1;
       Ctrl15.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl15.getConfiguration = function (level){
@@ -41,16 +47,7 @@
       });
     };
 
-    Ctrl15.setActivity = function(stageData){
-			var instructionsPlayer = new Media(AssetsPath.sounds(stageData.soundPath),
-				function(){ $scope.$apply(Ctrl15.showOptions(stageData)); },
-				function(err){ console.log(err); }
-      );
-
-			instructionsPlayer.play();
-    };
-
-    Ctrl15.showOptions = function(stageData){
+    Ctrl15.setActivity = function(){
       $scope.options = [];
 
       Ctrl15.setStage(stageNumber);
@@ -101,13 +98,24 @@
             $scope.$apply(Ctrl15.setActivity());
           }, 1000);
         }
-        else{
-          if (level >= MathOralProblems.getMaxLevel()){
+        else {
+          if (level == MathOralProblems.getMinLevel() &&
+            !ActividadesFinalizadasService.finalizada($scope.activityId)){
+            // if player reached minimum for setting activity as finished
             ActividadesFinalizadasService.add($scope.activityId);
+            level++;
             $state.go('lobby');
           }
-          else{
-            Ctrl15.getConfiguration(level++);
+          else {
+            if (level == MathOralProblems.getMaxLevel()){
+              level = 1;
+              $state.go('lobby');
+            }
+            else {
+              stageNumber = 1;
+              Util.saveLevel($scope.activityId, ++level);
+              Ctrl15.getConfiguration(level);
+            }
           }
         }
       }

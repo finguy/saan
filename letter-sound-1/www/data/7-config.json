@@ -2,11 +2,43 @@
   "instructions": "Hi! Look at the number sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
+  "minLevel": 3,
   "levels": [
     {
-      "level": "1",
-      "numberOfCards": "16",
-      "numberRange": "10"
+      "level": 1,
+      "numberOfCards": 2,
+      "numberFrom": 1,
+      "numberTo": 1
+    },
+    {
+      "level": 2,
+      "numberOfCards": 2,
+      "numberFrom": 2,
+      "numberTo": 2
+    },
+    {
+      "level": 3,
+      "numberOfCards": 4,
+      "numberFrom": 1,
+      "numberTo": 2
+    },
+    {
+      "level": 4,
+      "numberOfCards": 4,
+      "numberFrom": 3,
+      "numberTo": 4
+    },
+    {
+      "level": 5,
+      "numberOfCards": 4,
+      "numberFrom": 1,
+      "numberTo": 4
+    },
+    {
+      "level": 6,
+      "numberOfCards": 16,
+      "numberFrom": 1,
+      "numberTo": 9
     }
   ]
 }

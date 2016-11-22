@@ -17,22 +17,21 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: '../lib/ionic/fonts' !default;
+
 // Include all of Ionic
 @import "util/util";
 @import 'www/lib/ionic/scss/ionic';
 
-@import 'www/lib/bourbon/app/assets/stylesheets/_bourbon';
 @import 'util/util';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
+@import 'layout/activity-2';
 @import 'layout/activity-3';
 @import 'layout/activity-4';
 @import 'layout/activity-10';
 @import 'layout/activity-5';
 @import 'layout/activity-6';
 @import 'layout/activity-9';
-@import 'directives/letterDashboard';
-@import 'directives/patternDashboard';
 @import 'directives/progressBar';
 @import 'directives/flipableCard';
 @import 'directives/numberCard';
@@ -45,9 +44,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-14';
 @import 'layout/activity-15';
 @import 'layout/activity-16';
-
-
-
+@import 'layout/activity-17';
 
 html {
   font-size: 62.5%;
@@ -69,6 +66,15 @@ body {
 
 .flex {
   display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow-1 {
+  flex-grow: 1;
 }
 
 .justify {
@@ -103,4 +109,30 @@ body {
 
 .hidden {
   visibility: hidden;
+}
+
+.speech-bubble {
+  align-items: center;
+  background: white;
+  border-radius: 1rem;
+  display: flex;
+  font-size: 5rem;
+  justify-content: center;
+  min-height: 10rem;
+  padding: 1rem;
+  position: relative;
+
+  &::after {
+    border: 2rem solid transparent;
+    border-left-color: white;
+    border-right: 0;
+    content: '';
+    height: 0;
+    margin-right: -2rem;
+    margin-top: -2rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+  }
 }

@@ -1,6 +1,6 @@
 angular.module('saan.services')
 
-.service('Util', function($http, Levels) {
+.service('Util', function($http) {
   return {
     getRandomNumber: function(top){
       return Math.floor((Math.random() * top));

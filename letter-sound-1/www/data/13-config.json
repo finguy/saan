@@ -2,11 +2,19 @@
   "instructions": "Hi! Look at the number sequence and try to complete it",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
+  "minLevel": 1,
   "levels": [
     {
-      "level": "1",
-      "numberFrom": "1",
-      "numberTo": "10"
+      "level": 1,
+      "numberFrom": 1,
+      "numberTo": 5,
+      "autoCheck": true
+    },
+    {
+      "level": 2,
+      "numberFrom": 10,
+      "numberTo": 10,
+      "autoCheck": false
     }
   ]
 }

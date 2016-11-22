@@ -1,5 +1,5 @@
 angular.module('saan.controllers')
-.controller('LobbyCtrl', function($scope, actividadesConfiguradas, ActividadesFinalizadasService, _){
+.controller('LobbyCtrl', function($scope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _){
 	var chequearActividadesDisponibles = function(){
 		var actividadesDisponibles = [];
 		var actividadesFinalizadas = ActividadesFinalizadasService.get();
@@ -22,7 +22,6 @@ angular.module('saan.controllers')
 
 		$scope.actividadesDisponibles = actividadesDisponibles;
 		console.log("lobby check");
-
 	};
 
 	$scope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
