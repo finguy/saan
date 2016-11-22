@@ -53,12 +53,12 @@
     function getSequencePattern(length, numberOfColors){
       var colors = _.sample(data.colors, numberOfColors);
       var pattern = [];
-      for (var i = 0; i < length; i++){
+      for (var i = 0; i < length/2; i++){
         var index = _.random(0, numberOfColors-1);
         pattern.push(colors[index]);
       }
 
-      return pattern;
+      return pattern.concat(pattern);
     }
 
     function getFillinPattern(length, numberOfColors){
