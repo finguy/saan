@@ -60,18 +60,11 @@ angular.module('saan.controllers')
   };
 
   Ctrl5.setUpLevel = function() {
-    var level = Util.getLevel($scope.activityId);
-    if (level) {
-      $scope.level = level;
-      $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
-    }
+    $scope.level= Util.getLevel($scope.activityId);
   };
 
   Ctrl5.setUpScore = function(){
-    var score = Util.getScore($scope.activityId);
-    if (score) {
-      $scope.score = score
-    }
+    $scope.score = Util.getScore($scope.activityId);
   };
 
   Ctrl5.setUpStatus = function(){
@@ -103,7 +96,7 @@ angular.module('saan.controllers')
               $scope.imgs.push(img);
            }
          }
-
+        $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels;
   };
 
   //Verifies selected letters and returns true if they match the word
@@ -120,14 +113,14 @@ angular.module('saan.controllers')
           //wait for speak
           setTimeout(function() {
             Ctrl5.levelUp(); //Advance level
-            $scope.score = Score.update($scope.addScore, $scope.score);
+
             Util.saveLevel($scope.activityId, $scope.level);
-            if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-              Util.saveScore($scope.activityId, $scope.score);
+            if (!$scope.finished){
+              $scope.score = Score.update($scope.addScore,$scope.activityId, $scope.finished);
               $scope.finished = $scope.score >= $scope.minScore;
               if ($scope.finished) {
-                  Util.saveStatus($scope.activityId, $scope.finished);
-                  ActividadesFinalizadasService.add($scope.activityId);
+                    Util.saveStatus($scope.activityId, $scope.finished);
+                    ActividadesFinalizadasService.add($scope.activityId);
               }
             }
             Ctrl5.showDashboard(); //Reload dashboard
@@ -135,8 +128,9 @@ angular.module('saan.controllers')
         }, 1000);
 
     } else {
-      $scope.score = Score.update(-$scope.substractScore, $scope.score);      
-      Util.saveScore($scope.activityId, $scope.score);
+      if (!$scope.finished) {
+        $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
+      }
       //wait for speak
       setTimeout(function() {
         $scope.checkingWord = false;

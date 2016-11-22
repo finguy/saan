@@ -31,7 +31,6 @@
       var level = Util.getLevel($scope.activityId);
       if (level) {
         $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -98,6 +97,7 @@
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
       $scope.checkingAnswer = false;
+      $scope.activityProgress = 100 * (Ctrl12.level - 1) / Ctrl12.totalLevels;
 
     };
 
@@ -113,30 +113,29 @@
           Ctrl12.levelUp();
           Util.saveLevel($scope.activityId, $scope.level);
           //Check score and status
-          $scope.score = Score.update($scope.addScore, $scope.score);
-          $scope.finished = $scope.score >= $scope.minScore;
-          Util.saveStatus($scope.activityId, $scope.finished);
-          if (!$scope.finished) {
-            Util.saveScore($scope.activityId, $scope.score);
-            //Reload dashboard
-            Ctrl12.showDashboard(true);
-          } else {
-            ActividadesFinalizadasService.add($scope.activityId);
+          if (!$scope.finished ) {
+            $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
+            $scope.finished = $scope.score >= $scope.minScore;
+            Util.saveStatus($scope.activityId, $scope.finished);
+            if ($scope.finished) {
+              ActividadesFinalizadasService.add($scope.activityId);
+            }
           }
-
+          Ctrl12.showDashboard(true);
         }, 1000);
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score);
-        Util.saveScore($scope.activityId, $scope.score);
+        if (!$scope.finished) {
+          $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
+        }
         //wait for speak
-        setTimeout(function() {          
+        //setTimeout(function() {
           var position = Util.getRandomNumber($scope.errorMessages.length);
           var errorMessage = $scope.errorMessages[position];
           $scope.speak(errorMessage);
           setTimeout(function() {
           $scope.checkingAnswer = false;
           },1000);
-        }, 1000);
+        //}, 1000);
       }
     };
 

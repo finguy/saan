@@ -40,10 +40,14 @@ angular.module('saan.services')
     },
     getLevel: function(idActivity) {
       var key = "Activity"+idActivity+"-level";
+      var level;
       if (typeof(Storage) !== "undefined") {
-        return parseInt(localStorage.getItem(key),10);
+        level = localStorage.getItem(key);
+        if (level) {
+          return parseInt(level,10);
+        }
       }
-      return false;
+      return 1;
     },
     saveLevel: function(idActivity, level) {
       var key = "Activity"+idActivity+"-level";
@@ -54,10 +58,14 @@ angular.module('saan.services')
     },
     getScore: function(idActivity) {
       var key = "Activity"+idActivity+"-score";
+      var score;
       if (typeof(Storage) !== "undefined") {
-        return parseInt(localStorage.getItem(key),10);
+        score = localStorage.getItem(key);
+        if (score) {
+          return parseInt(score,10);
+        }
       }
-      return false;
+      return 0;
     },
     saveScore: function(idActivity, score) {
         var key = "Activity"+idActivity+"-score";

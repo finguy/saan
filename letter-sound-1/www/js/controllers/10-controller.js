@@ -20,7 +20,7 @@
     $scope.selectedObject = ""; // Collects letters the user selects
     $scope.playedWords = []; // Collects words the user played
     $scope.level = $scope.level || 1; // Indicates activity level
-    $scope.totalLevels = 3;
+    $scope.totalLevels = 1;
     $scope.activityProgress = 0;
     $scope.score = 0;
     $scope.draggedWord = false;
@@ -36,7 +36,6 @@
       var level = Util.getLevel($scope.activityId);
       if (level) {
         $scope.level = level;
-        $scope.activityProgress = 100 * (level-1)/$scope.totalLevels; // -1 porque empieza en cero.
       }
     };
 
@@ -122,16 +121,13 @@
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
       $scope.checkingNumber = false;
-
+      $scope.activityProgress = 100 * ($scope.level-1)/$scope.totalLevels; // -1 porque empieza en cero.
     };
 
     $scope.handleProgress = function(isWordOk) {
       $scope.isWordOk = isWordOk;
       if (isWordOk) {
-        if (!$scope.finished) {
-          $scope.score = Score.update($scope.addScore, $scope.score);
-          Util.saveScore($scope.activityId, $scope.score);
-        }
+        $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
         var position = Util.getRandomNumber($scope.successMessages.length);
         var successMessage = $scope.successMessages[position];
         $scope.speak(successMessage);
@@ -139,7 +135,7 @@
           $scope.draggedWord = false;
           Ctrl10.levelUp(); //Advance level
           Util.saveLevel($scope.activityId, $scope.level);
-          if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
+          if (!$scope.finished) {
             $scope.finished = $scope.score >= $scope.minScore;
             Util.saveStatus($scope.activityId, $scope.finished);
             ActividadesFinalizadasService.add($scope.activityId);
@@ -148,9 +144,9 @@
 
         }, 1000);
       } else {
-        $scope.score = Score.update(-$scope.substractScore, $scope.score);
-        Util.saveScore($scope.activityId, $scope.score);
-        $scope.speak(name);
+        if (!$scope.finished) {
+          $scope.score = Score.update(-$scope.substractScore,$scope.activityId, $scope.finished);
+        }
         //wait for speak
         setTimeout(function() {
           var position = Util.getRandomNumber($scope.errorMessages.length);

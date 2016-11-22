@@ -47,7 +47,8 @@
       });
     };
 
-    Ctrl15.setActivity = function(){
+
+  Ctrl15.setActivity = function(){
       $scope.options = [];
 
       Ctrl15.setStage(stageNumber);
