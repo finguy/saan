@@ -8,7 +8,7 @@ angular.module('saan.controllers')
     Ctrl4.level = $scope.level || 1;
     Ctrl4.totalLevels = 3;
     Ctrl4.score = 0;
-    
+
     $scope.number = null;
     $scope.imgs = [];
     $scope.instructions = "";
@@ -24,25 +24,15 @@ angular.module('saan.controllers')
 
 
     Ctrl4.setUpLevel = function() {
-      var level = Util.getLevel(Ctrl4.activityId);
-      if (level) {
-        Ctrl4.level = level;
-        $scope.activityProgress = 100 * (level - 1) / Ctrl4.totalLevels; // -1 porque empieza en cero.
-      }
+      Ctrl4.level = Util.getLevel(Ctrl4.activityId);
     };
 
     Ctrl4.setUpScore = function() {
-      var score = Util.getScore(Ctrl4.activityId);
-      if (score) {
-        Ctrl4.score = score
-      }
+      Ctrl4.score = Util.getScore(Ctrl4.activityId);
     };
 
     Ctrl4.setUpStatus = function() {
-      var finished = Util.getStatus(Ctrl4.activityId);
-      if (finished === false || finished === true) {
-        Ctrl4.finished = finished;
-      }
+      Ctrl4.finished = Util.getStatus(Ctrl4.activityId);
     }
 
     //Shows Activity Dashboard
@@ -106,6 +96,7 @@ angular.module('saan.controllers')
           $scope.imgs.push(img);
         }
       }
+      $scope.activityProgress = 100 * (Ctrl4.level-1)/Ctrl4.totalLevels;
     };
 
     Ctrl4.handleProgress = function(numberOk) {
@@ -117,10 +108,9 @@ angular.module('saan.controllers')
         //wait for speak
         setTimeout(function() {
           Ctrl4.levelUp(); //Advance level
-          Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.score);
           Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
-          if (!Ctrl4.finished) { // Solo sumo o resto si no esta finalizada, porque puedo volver a jugar estando finalizada
-            Util.saveScore(Ctrl4.activityId, Ctrl4.score);
+          if (!Ctrl4.finished) {
+            Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
             Ctrl4.finished = Ctrl4.score >= Ctrl4.minScore;
             if (Ctrl4.finished) {
               Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
@@ -130,8 +120,9 @@ angular.module('saan.controllers')
           Ctrl4.showDashboard(); //Reload dashboard
         }, 1000);
       } else {
-        Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.score);
-        Util.saveScore(Ctrl4.activityId, Ctrl4.score);
+        if (!Ctrl4.finished) {
+          Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.activityId, Ctrl4.finished);
+        }
         var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
         var errorMessage = Ctrl4.errorMessages[position];
         $scope.speak(errorMessage);

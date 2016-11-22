@@ -1,6 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
+
   .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService',
   function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService) {
     $scope.activityId = 7;
@@ -36,6 +37,7 @@
       var auxCards = [];
 
       for (var i = 0; i < $scope.size / 2; i++){
+
         var number = _.random(config.level.numberFrom, config.level.numberTo);
         while (_.indexOf(auxCards, number) != -1)
           number = Math.floor(Math.random() * 10);

@@ -10,7 +10,7 @@ angular.module('saan.controllers')
     Ctrl3.letterTutorial = "";
 
 
-    Ctrl3.instructions = ""; // Instructions to read
+    $scope.instructions = ""; // Instructions to read
     Ctrl3.successMessages = [];
     Ctrl3.errorMessages  = [];
 
@@ -45,7 +45,7 @@ angular.module('saan.controllers')
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
           $timeout(function() {
             if (readInstructions){
-              $scope.speak(Ctrl3.instructions);
+              $scope.speak($scope.instructions);
             }
           }, readWordTimeout);
         },
@@ -56,30 +56,21 @@ angular.module('saan.controllers')
     };
 
     Ctrl3.setUpLevel = function() {
-      var level = Util.getLevel(Ctrl3.activityId);
-      if (level) {
-        Ctrl3.level = level;
-        $scope.activityProgress = 100 * (level-1)/Ctrl3.totalLevels; // -1 porque empieza en cero.
-      }
+      Ctrl3.level = Util.getLevel(Ctrl3.activityId);
     };
 
     Ctrl3.setUpScore = function(){
-      var score = Util.getScore(Ctrl3.activityId);
-      if (score) {
-        Ctrl3.score = score
-      }
+      Ctrl3.score  = Util.getScore(Ctrl3.activityId);
+
     };
 
     Ctrl3.setUpStatus = function(){
-      var finished = Util.getStatus(Ctrl3.activityId);
-      if (finished === false || finished === true) {
-        Ctrl3.finished = finished;
-      }
+      Ctrl3.finished = Util.getStatus(Ctrl3.activityId);
     }
 
     Ctrl3.setUpContextVariables = function(data) {
       var letterJson = data.letter;
-      Ctrl3.instructions = data.instructions;
+      $scope.instructions = data.instructions;
       Ctrl3.successMessages = data.successMessages;
       Ctrl3.errorMessages = data.errorMessages;
       Ctrl3.addScore = data.scoreSetUp.add;
@@ -101,8 +92,8 @@ angular.module('saan.controllers')
       }
       $scope.imgs = _.shuffle($scope.imgs);
       Ctrl3.dashboard = [Ctrl3.letter];
-      Ctrl3.instructions = letterJson.instruction;
-
+      $scope.instructions = letterJson.instruction;
+      $scope.activityProgress = 100 * (Ctrl3.level-1)/Ctrl3.totalLevels;
     };
 
     //Verifies selected letters and returns true if they match the word
@@ -118,24 +109,24 @@ angular.module('saan.controllers')
             //wait for speak
             $timeout(function() {
               Ctrl3.levelUp(); //Advance level
-              Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.score);
               Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
-              if (!Ctrl3.finished) { // Solo sumo o resto si no esta finalizada
-                Util.saveScore(Ctrl3.activityId, Ctrl3.score);
-                Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
-                if (Ctrl3.finished) {
-                    Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
-                    ActividadesFinalizadasService.add(Ctrl3.activityId);
-                }
+              if (!Ctrl3.finished) {
+                    Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.activityId, Ctrl3.finished);
+                    Ctrl3.finished = Ctrl3.score >= Ctrl3.minScore;
+                    if (Ctrl3.finished){
+                      Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
+                      ActividadesFinalizadasService.add(Ctrl3.activityId);
+                    }
               }
               Ctrl3.showDashboard(true); //Reload dashboard
             }, 1000);
           }, 1000);
 
       } else {
-        Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.score);
-        console.log(Ctrl3.score);
-        Util.saveScore(Ctrl3.activityId, Ctrl3.score);
+        if (!Ctrl3.finished) {
+          Ctrl3.score = Score.update(-Ctrl3.substractScore,Ctrl3.activityId, Ctrl3.finished);
+          Util.saveScore(Ctrl3.activityId, Ctrl3.score);
+        }
         //wait for speak
         $timeout(function() {
           var position = Util.getRandomNumber(Ctrl3.errorMessages.length);
@@ -163,9 +154,9 @@ angular.module('saan.controllers')
 
     $scope.showPage = function() {
       $scope.isActivity = true;
-      Ctrl3.instructions = Ctrl3.letterInstruction;
+      $scope.instructions = Ctrl3.letterInstruction;
       $timeout(function(){
-          $scope.speak(Ctrl3.instructions);
+          $scope.speak($scope.instructions);
       },1000);
     }
 

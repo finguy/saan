@@ -96,13 +96,13 @@
       // select the result options
       for (var i = 1; i < config.options; i++){
         valid = false;
-				while (!valid){
+        while (!valid){
           number = _.random(bottom, top);
           index = _.indexOf(results, number);
           valid = index == -1;
         }
-				results.push(number);
-			}
+        results.push(number);
+      }
 
       //shuffle the results
       $scope.results = _.shuffle(results);
