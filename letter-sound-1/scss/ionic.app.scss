@@ -110,3 +110,40 @@ body {
 .hidden {
   visibility: hidden;
 }
+
+.speech-bubble {
+  align-items: center;
+  background: white;
+  border-radius: 1rem;
+  display: flex;
+  font-size: 5rem;
+  justify-content: center;
+  min-height: 10rem;
+  padding: 1rem;
+  position: relative;
+
+  &::after {
+    border: 2rem solid transparent;
+    border-left-color: white;
+    border-right: 0;
+    content: '';
+    height: 0;
+    margin-right: -2rem;
+    margin-top: -2rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+  }
+}
+
+.button-back {
+  background: no-repeat url('../img/3-assets/back.png') 0 0;
+  border: 0;
+  height: 5rem;
+  left: .5rem;
+  position: absolute;
+  top: .5rem;
+  width: 5rem;
+  z-index: 99999;
+ }
