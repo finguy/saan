@@ -1,0 +1,33 @@
+.talk-bubble {
+  align-items: center;
+  background-color: white;
+  border-radius: 3rem;
+  bottom: 0;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  margin: 4rem;
+  min-width: 20rem;
+  padding: 2rem;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
+.talk-bubble::after {
+  border: 1.2rem solid;
+  border-color: white white transparent transparent;
+  bottom: -2rem;
+  content: ' ';
+  height: 0;
+  left: auto;
+  position: absolute;
+  right: 3.8rem;
+  width: 0;
+}
+
+.talktext p {
+  font-size: 3em;
+  font-weight: 600;
+  margin: 0;
+}

@@ -19,10 +19,10 @@ $dark:                            #444 !default;
 $ionicons-font-path: '../lib/ionic/fonts' !default;
 
 // Include all of Ionic
-@import "util/util";
 @import 'www/lib/ionic/scss/ionic';
 
 @import 'util/util';
+@import 'directives/talk-bubble';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
 @import 'layout/activity-2';
@@ -109,30 +109,4 @@ body {
 
 .hidden {
   visibility: hidden;
-}
-
-.speech-bubble {
-  align-items: center;
-  background: white;
-  border-radius: 1rem;
-  display: flex;
-  font-size: 5rem;
-  justify-content: center;
-  min-height: 10rem;
-  padding: 1rem;
-  position: relative;
-
-  &::after {
-    border: 2rem solid transparent;
-    border-left-color: white;
-    border-right: 0;
-    content: '';
-    height: 0;
-    margin-right: -2rem;
-    margin-top: -2rem;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 0;
-  }
 }
