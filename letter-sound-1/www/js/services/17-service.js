@@ -13,7 +13,9 @@
       getMaxLevel: getMaxLevel,
       getSequenceOptions: getSequenceOptions,
       getFillinData: getFillinData,
-      getMinLevel: getMinLevel
+      getMinLevel: getMinLevel,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -93,6 +95,15 @@
 
     function getMaxLevel(){
       return data.levels.length;
+    }
+
+    function getSuccessAudio() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    }
+    function getFailureAudio() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   }
 })();
