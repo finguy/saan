@@ -1,4 +1,17 @@
 .activity-17-content {
+  background: url('../assets/17/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .character {
+    bottom: 8rem;
+    position: absolute;
+    right: 0;
+
+    img { height: 30rem; }
+  }
 
   .dropzone {
     border: .2rem dashed grey;
@@ -29,7 +42,7 @@
   }
 
   .pattern-options {
-    padding-top: 15%;
+    padding-bottom: 3rem;
   }
 
   .item-number {
