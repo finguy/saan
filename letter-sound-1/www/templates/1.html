@@ -7,7 +7,7 @@
           class="letter-button letter-{{letter}}"
           on-tap="selectLetter($parent.$index, letter)"
           ng-checked=""
-          ng-disabled="loading || readingInstructions">
+          ng-disabled="checkingWord || checkingLetter">
       </ion-radio>
     </div>
   </div>
@@ -16,7 +16,7 @@
       <img class="shadow" ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
     </div>
     <div class="character" ng-click="playWordAudio()">
-      <!-- <div ng-if="bubble" class="speech-bubble">{{textSpeech}}</div> -->
+      <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
       <img src="assets/characters/mbott.png">
     </div>
   </div>

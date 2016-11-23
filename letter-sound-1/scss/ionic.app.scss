@@ -19,10 +19,10 @@ $dark:                            #444 !default;
 $ionicons-font-path: '../lib/ionic/fonts' !default;
 
 // Include all of Ionic
-@import "util/util";
 @import 'www/lib/ionic/scss/ionic';
 
 @import 'util/util';
+@import 'directives/talk-bubble';
 @import 'font-faces/fonts';
 @import 'layout/activity-1';
 @import 'layout/activity-2';

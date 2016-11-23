@@ -13,7 +13,9 @@
       getMaxLevel: getMaxLevel,
       getSequencePattern: getSequencePattern,
       getFillinPattern: getFillinPattern,
-      getMinLevel: getMinLevel
+      getMinLevel: getMinLevel,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -51,12 +53,12 @@
     function getSequencePattern(length, numberOfColors){
       var colors = _.sample(data.colors, numberOfColors);
       var pattern = [];
-      for (var i = 0; i < length; i++){
+      for (var i = 0; i < length/2; i++){
         var index = _.random(0, numberOfColors-1);
         pattern.push(colors[index]);
       }
 
-      return pattern;
+      return pattern.concat(pattern);
     }
 
     function getFillinPattern(length, numberOfColors){
@@ -67,6 +69,16 @@
         pattern: pattern,
         positionToFill: _.random(0, length * 2 - 1)
       };
+    }
+
+    function getSuccessAudio() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    }
+
+    function getFailureAudio() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   }
 })();
