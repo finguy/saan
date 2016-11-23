@@ -128,8 +128,7 @@
       clone: true,
       dragEnd: function(eventObj) {
         //check that item was correctly moved
-        if (!Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue))
-        {
+        if (!Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue)){
           Ctrl2.failure();
         }
       },
