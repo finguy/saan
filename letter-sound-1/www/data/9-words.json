@@ -97,8 +97,8 @@
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
     "add": 1,
-    "substract": 1,
-    "minScore": 10
+    "substract": 1
   },
-  "limit":4
+  "limit":4,
+  "finalizationLevel": 2
 }

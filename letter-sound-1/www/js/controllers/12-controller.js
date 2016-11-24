@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-  .controller('12Ctrl', function($scope, RandomText, TTSService,
+  .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
     Util, Animations, Score,ActividadesFinalizadasService) {
     $scope.activityId = '12'; // Activity Id
     $scope.img = "";
@@ -57,12 +57,11 @@
 
       RandomText.text($scope.level, $scope.playedTexts).then(
         function success(data) {
-          console.log(data);
           Ctrl12.setUpContextVariables(data);
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
 
           //wait for UI to load
-          setTimeout(function() {
+          $timeout(function() {
             if (readInstructions){
               $scope.speak($scope.instructions);
             }
@@ -70,7 +69,7 @@
 
         },
         function error(error) {
-          console.log(error);
+          $log.error(error);
         }
       );
     };
@@ -96,46 +95,62 @@
       $scope.substractScore = data.scoreSetUp.substract;
       $scope.minScore = data.scoreSetUp.minScore;
       $scope.totalLevels = data.totalLevels;
+      Ctrl12.finalizationLevel = data.finalizationLevel;
+      Ctrl12.initialLevel = 1;
       $scope.checkingAnswer = false;
-      $scope.activityProgress = 100 * (Ctrl12.level - 1) / Ctrl12.totalLevels;
+      if ($scope.finished) {
+        $scope.activityProgress = 100;
+      } else {
+        $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
+      }
 
     };
+    Ctrl12.success = function(){
+      $scope.checkingAnswer = true;
+      var position = Util.getRandomNumber($scope.successMessages.length);
+      var successMessage = $scope.successMessages[position];
+      $scope.speak(successMessage);
+      $timeout(function() {
+        //Advance level
+        Ctrl12.levelUp(); //Advance level
+        Util.saveLevel($scope.activityId, $scope.level);
+        if (!$scope.finished) {
+          $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
+          $scope.finished = $scope.level >= Ctrl12.finalizationLevel;
+          if ($scope.finished) {
+            Util.saveStatus($scope.activityId, $scope.finished);
+            ActividadesFinalizadasService.add($scope.activityId);
+            $state.go('lobby');
+          } else {
+            Ctrl12.showDashboard(true);
+          }
+        } else if ($scope.level <= $scope.totalLevels) {
+          Ctrl12.showDashboard(true);
+        } else {
+          Util.saveLevel($scope.activityId, Ctrl12.initialLevel);
+          $state.go('lobby');
+        }
+      }, 1000);
+    };
 
+    Ctrl12.error = function(){
+      if (!$scope.finished) {
+        $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
+      }
+        var position = Util.getRandomNumber($scope.errorMessages.length);
+        var errorMessage = $scope.errorMessages[position];
+        $scope.speak(errorMessage);
+        $timeout(function() {
+        $scope.checkingAnswer = false;
+        },1000);
+    };
     $scope.handleProgress = function(answer) {
       var isAnswerOk = $scope.answer === parseInt(answer,10);
       if (isAnswerOk) {
-        $scope.checkingAnswer = true;
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
-        setTimeout(function() {
-          //Advance level
-          Ctrl12.levelUp();
-          Util.saveLevel($scope.activityId, $scope.level);
-          //Check score and status
-          if (!$scope.finished ) {
-            $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-            $scope.finished = $scope.score >= $scope.minScore;
-            Util.saveStatus($scope.activityId, $scope.finished);
-            if ($scope.finished) {
-              ActividadesFinalizadasService.add($scope.activityId);
-            }
-          }
-          Ctrl12.showDashboard(true);
-        }, 1000);
+        Ctrl12.success();
       } else {
-        if (!$scope.finished) {
-          $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
-        }
-        //wait for speak
-        //setTimeout(function() {
-          var position = Util.getRandomNumber($scope.errorMessages.length);
-          var errorMessage = $scope.errorMessages[position];
-          $scope.speak(errorMessage);
-          setTimeout(function() {
-          $scope.checkingAnswer = false;
-          },1000);
-        //}, 1000);
+        Ctrl12.error();
+
       }
     };
 
@@ -143,10 +158,10 @@
       $scope.showText = false;
       $scope.showQuestion = true;
       //Wait for UI to load
-      setTimeout(function() {
+      $timeout(function() {
         $scope.speak($scope.question);
         //Wait spoken instructions
-        setTimeout(function() {
+        $timeout(function() {
           $scope.showQuestion = false;
           $scope.showOptions = true;
           $scope.$apply(); //this triggers a $digest

@@ -211,5 +211,5 @@
     "substract": 1,
     "minScore": 10
   },
-  "totalLevels" : 1
+  "finalizationLevel" : 3
 }

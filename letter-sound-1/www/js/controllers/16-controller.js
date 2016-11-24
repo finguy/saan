@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope, $log, $timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope,$state, $log, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService) {
 
   $scope.letters = [];
@@ -85,10 +85,16 @@ angular.module('saan.controllers')
     Ctrl16.errorMessages = data.errorMessages;
     Ctrl16.addScore = data.scoreSetUp.add;
     Ctrl16.substractScore = data.scoreSetUp.substract;
-    Ctrl16.minScore = data.scoreSetUp.minScore;
+    Ctrl16.finalizationLevel = data.finalizationLevel;
     Ctrl16.totalLevels = data.totalLevels;
-    $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
+    Ctrl16.initialLevel = 1;
+    if (Ctrl16.finished) {
+      $scope.activityProgress = 100;
+    } else {
+      $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
+    }
   };
+
 
   Ctrl16.handleSuccess = function() {
     var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
@@ -99,19 +105,30 @@ angular.module('saan.controllers')
       var successMessage = Ctrl16.successMessages[position];
       $scope.speak(successMessage);
       $timeout(function() {
-        if (!Ctrl16.finished) { // Solo sumo o resto si no esta finalizada
-          Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.activityId, Ctrl16.finished);
-          Ctrl16.finished = Ctrl16.score >= Ctrl16.minScore;
-          if (Ctrl16.finished) { // Puede haber finalizado
-            Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
-            ActividadesFinalizadasService.add(Ctrl16.activityId);
-          }
-        }
-
         if (LAST_CHECK) {
-            Ctrl16.levelUp(); //Advance level
-            Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
-            Ctrl16.showDashboard(false); //Reload dashboard
+          Ctrl16.levelUp(); //Advance level
+          Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+          if (!Ctrl16.finished) { //Aumento puntaje
+            Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.activityId, Ctrl16.finished);
+            Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
+            if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
+              Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
+              ActividadesFinalizadasService.add(Ctrl16.activityId);
+              $state.go('lobby');
+            } else if (Ctrl16.level <= Ctrl16.totalLevels) {
+              Ctrl16.showDashboard(false);
+            } else {
+              Util.saveLevel(Ctrl16.activityId, Ctrl16.initialLevel);
+              $state.go('lobby');
+            }
+          } else {
+            if (Ctrl16.level <= Ctrl16.totalLevels) {
+              Ctrl16.showDashboard(false);
+            } else {
+              Util.saveLevel(Ctrl16.activityId, Ctrl16.initialLevel);
+              $state.go('lobby');
+            }
+          }
         }
       }, 1000);
     }, 1000);

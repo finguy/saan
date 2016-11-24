@@ -1,12 +1,11 @@
 angular.module('saan.controllers')
-  .controller('4Ctrl', function($scope, RandomNumber, TTSService,
+  .controller('4Ctrl', function($scope, $state, $timeout, RandomNumber, TTSService,
     Util, Animations, Score, ActividadesFinalizadasService) {
 
     var Ctrl4 = Ctrl4 || {};
     Ctrl4.activityId = '4';
     Ctrl4.playedNumbers = [];
     Ctrl4.level = $scope.level || 1;
-    Ctrl4.totalLevels = 3;
     Ctrl4.score = 0;
 
     $scope.number = null;
@@ -47,10 +46,10 @@ angular.module('saan.controllers')
           Ctrl4.setUpContextVariables(data);
           var readWordTimeout = (readInstructions) ? 2000 : 1000;
           //wait for UI to load
-          setTimeout(function() {
+          $timeout(function() {
             if (readInstructions) {
               $scope.speak(Ctrl4.instructions);
-              setTimeout(function() {
+              $timeout(function() {
                 $scope.speak($scope.number);
               }, 8000);
             } else {
@@ -75,6 +74,8 @@ angular.module('saan.controllers')
       Ctrl4.addScore = data.scoreSetUp.add;
       Ctrl4.substractScore = data.scoreSetUp.substract;
       Ctrl4.minScore = data.scoreSetUp.minScore;
+      Ctrl4.finalizationLevel = data.finalizationLevel;
+      Ctrl4.initialLevel = 1;
       Ctrl4.totalLevels = data.totalLevels;
 
       var length = Ctrl4.assets.length;
@@ -96,36 +97,56 @@ angular.module('saan.controllers')
           $scope.imgs.push(img);
         }
       }
-      $scope.activityProgress = 100 * (Ctrl4.level-1)/Ctrl4.totalLevels;
+
+      if (Ctrl4.finished) {
+        $scope.activityProgress = 100;// If finalized show all progress
+      } else {
+        $scope.activityProgress = 100 * (Ctrl4.level - 1) / Ctrl4.totalLevels;
+      }
+    };
+
+    Ctrl4.success = function() {
+      Ctrl4.playedNumbers.push($scope.number);
+      var position = Util.getRandomNumber(Ctrl4.successMessages.length);
+      var successMessage = Ctrl4.successMessages[position];
+      $scope.speak(successMessage);
+      //wait for speak
+      $timeout(function() {
+        Ctrl4.levelUp(); //Advance level
+        Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
+        if (!Ctrl4.finished) {
+          Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
+          Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
+          if (Ctrl4.finished) {
+            Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
+            ActividadesFinalizadasService.add(Ctrl4.activityId);
+            $state.go('lobby');
+          } else {
+            Ctrl4.showDashboard(false);
+          }
+        } else if (Ctrl4.level <= Ctrl4.totalLevels) {
+          Ctrl4.showDashboard(false);
+        } else {
+          Util.saveLevel(Ctrl4.activityId, Ctrl4.initialLevel);
+          $state.go('lobby');
+        }
+      }, 1000);
+    };
+
+    Ctrl4.error = function() {
+      if (!Ctrl4.finished) {
+        Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.activityId, Ctrl4.finished);
+      }
+      var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
+      var errorMessage = Ctrl4.errorMessages[position];
+      $scope.speak(errorMessage);
     };
 
     Ctrl4.handleProgress = function(numberOk) {
       if (numberOk) {
-        Ctrl4.playedNumbers.push($scope.number);
-        var position = Util.getRandomNumber(Ctrl4.successMessages.length);
-        var successMessage = Ctrl4.successMessages[position];
-        $scope.speak(successMessage);
-        //wait for speak
-        setTimeout(function() {
-          Ctrl4.levelUp(); //Advance level
-          Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
-          if (!Ctrl4.finished) {
-            Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
-            Ctrl4.finished = Ctrl4.score >= Ctrl4.minScore;
-            if (Ctrl4.finished) {
-              Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
-              ActividadesFinalizadasService.add(Ctrl4.activityId);
-            }
-          }
-          Ctrl4.showDashboard(); //Reload dashboard
-        }, 1000);
+        Ctrl4.success();
       } else {
-        if (!Ctrl4.finished) {
-          Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.activityId, Ctrl4.finished);
-        }
-        var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
-        var errorMessage = Ctrl4.errorMessages[position];
-        $scope.speak(errorMessage);
+        Ctrl4.error();
       }
     }
 

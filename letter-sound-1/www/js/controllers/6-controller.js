@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('6Ctrl', function($scope, RandomWordSix, TTSService,
+.controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
   Util, Score, ActividadesFinalizadasService) {
   $scope.activityId = '6'; // Activity Id
   $scope.word = ""; // Letter to play in level
@@ -41,18 +41,18 @@ angular.module('saan.controllers')
         Ctrl6.setUpContextVariables(data);
         //wait for UI to load
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
-        setTimeout(function() {
+        $timeout(function() {
           if (readInstructions) {
             $scope.speak($scope.instructions);
           }
 
-          setTimeout(function() {
+          $timeout(function() {
             $scope.speak($scope.currentPhonema);
           }, readWordTimeout);
         }, readWordTimeout);
       },
       function error(error) {
-        console.log(error);
+        $log.error(error);
       }
     );
   };
@@ -67,10 +67,8 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpStatus = function() {
-    var finished = Util.getStatus($scope.activityId);
-    if (finished === false || finished === true) {
-      $scope.finished = finished;
-    }
+    $scope.finished = Util.getStatus($scope.activityId);
+
   }
 
   Ctrl6.setUpContextVariables = function(data) {
@@ -80,7 +78,8 @@ angular.module('saan.controllers')
     $scope.errorMessages = data.errorMessages;
     $scope.addScore = data.scoreSetUp.add;
     $scope.substractScore = data.scoreSetUp.substract;
-    $scope.minScore = data.scoreSetUp.minScore;
+    $scope.finalizationLevel = data.finalizationLevel;
+    Ctrl6.initialLevel = 1;
     $scope.word = wordJson.word;
     $scope.playedWords.push(wordJson.word);
     $scope.words = [];
@@ -105,7 +104,11 @@ angular.module('saan.controllers')
     $scope.wordInstruction = wordJson.instruction;
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
-    $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
+    if ($scope.finished) {
+      $scope.activityProgress = 100;
+    } else {
+      $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
+    }
   };
 
   //Verifies selected letters or and returns true if they match the word
@@ -125,47 +128,68 @@ angular.module('saan.controllers')
       selected = $scope.hasDraggedLetter[letterJSON.letter + "_" + letterJSON.index];
     }
   };
-  $scope.handleProgress = function(isPhonemaOk, name) {
+
+
+  Ctrl6.success = function() {
     var LAST_CHECK = $scope.phonemas.length === $scope.letters.length;
-    if (isPhonemaOk) {
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
-        setTimeout(function() {
+    var position = Util.getRandomNumber($scope.successMessages.length);
+    var successMessage = $scope.successMessages[position];
+    $scope.speak(successMessage);
+    $timeout(function() {
+      if (!$scope.finished) {
+        $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
+      }
+      if (LAST_CHECK) {
+        $scope.speak($scope.word);
+        $timeout(function() {
+          Ctrl6.levelUp(); //Advance level
+          Util.saveLevel($scope.activityId, $scope.level);
           if (!$scope.finished) {
             $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-            $scope.finished = $scope.score >= $scope.minScore;
+            $scope.finished = $scope.level >= $scope.finalizationLevel;
             if ($scope.finished) {
               Util.saveStatus($scope.activityId, $scope.finished);
               ActividadesFinalizadasService.add($scope.activityId);
+              $state.go('lobby');
+            } else if ($scope.level <= $scope.totalLevels) {
+              Ctrl6.showDashboard(false);
+            } else {
+              Util.saveLevel($scope.activityId, Ctrl6.initialLevel);
+              $state.go('lobby');
             }
-          }
-          if (LAST_CHECK) {
-            $scope.speak($scope.word);
-            setTimeout(function() {
-              Ctrl6.levelUp(); //Advance level
-              Util.saveLevel($scope.activityId, $scope.level);
-              Ctrl6.showDashboard(false); //Reload dashboard
-            }, 1000);
+          } else if ($scope.level <= $scope.totalLevels) {
+            Ctrl6.showDashboard(false);
           } else {
-            $scope.speak($scope.currentPhonema);
+            Util.saveLevel($scope.activityId, Ctrl6.initialLevel);
+            $state.go('lobby');
           }
         }, 1000);
-    } else {
-      if (!$scope.finished) {
-        $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
-        Util.saveScore($scope.activityId, $scope.score);
+      } else {
+        $scope.speak($scope.currentPhonema);
       }
-      $scope.speak(name);
-      //wait for speak
-      setTimeout(function() {
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
-      }, 000);
+    }, 1000);
+  };
+
+  Ctrl6.error = function() {
+    if (!$scope.finished) {
+      $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
+      Util.saveScore($scope.activityId, $scope.score);
     }
+    $scope.speak(name);
+    //wait for speak
+    $timeout(function() {
+      var position = Util.getRandomNumber($scope.errorMessages.length);
+      var errorMessage = $scope.errorMessages[position];
+      $scope.speak(errorMessage);
+    }, 000);
+  };
 
-
+  $scope.handleProgress = function(isPhonemaOk, name) {
+    if (isPhonemaOk) {
+      Ctrl6.success();
+    } else {
+      Ctrl6.error();
+    }
   };
 
   //Advance one level
@@ -187,7 +211,7 @@ angular.module('saan.controllers')
   Ctrl6.showPage = function() {
     $scope.isActivity = true;
     $scope.instructions = $scope.letterInstruction;
-    setTimeout(function() {
+    $timeout(function() {
       $scope.speak($scope.instructions);
     }, 1000);
   }

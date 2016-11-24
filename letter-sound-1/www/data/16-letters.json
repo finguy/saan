@@ -31,7 +31,7 @@
       {  "name":"o",
          "letterImg":"img/3-assets/letters-blue/letters-blue-o-lowercase.png",
          "assets":["img/3-assets/animals/octopus.png",
-                "img/3-assets/animals/frog.png",                
+                "img/3-assets/animals/frog.png",
                 "img/3-assets/animals/dog.png"
                 ]
       }
@@ -102,7 +102,7 @@
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
     "add": 1,
-    "substract": 1,
-    "minScore": 10
-  }
+    "substract": 1
+  },
+  "finalizationLevel": 2
 }

@@ -20,13 +20,14 @@ angular.module('saan.services')
               }
             }
           }
-          var index = Util.getRandomNumber(wordsNotPlayed.length);          
+          var index = Util.getRandomNumber(wordsNotPlayed.length);
           return {
-            word: wordsNotPlayed[index],
+            word : wordsNotPlayed[index],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            scoreSetUp: data.scoreSetUp,
+            scoreSetUp : data.scoreSetUp,
+            finalizationLevel : data.finalizationLevel,
             totalLevels : data.words.length
           };
         },
