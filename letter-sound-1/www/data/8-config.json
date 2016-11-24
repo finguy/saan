@@ -1,8 +1,31 @@
 {
-  "cards": "4",
-  "options": "4",
-  "numberRange": "12",
-  "instructions": "Hi! Look at the color sequence and try to complete it",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"]
+  "cards": 4,
+  "options": 1,
+  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+  "minLevel": 4,
+  "levels": [
+    {
+      "number": 1,
+      "numberFrom": 1,
+      "numberTo": 10
+    },
+    {
+      "number": 2,
+      "numberFrom": 11,
+      "numberTo": 20
+    }
+  ],
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }

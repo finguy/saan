@@ -2,26 +2,37 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('8Ctrl',['$scope','Util', 'NumberMatching', function($scope, Util, NumberMatching) {
-    $scope.activityId = '8';
+  .controller('8Ctrl',['$scope', '$log', 'Util', 'NumberMatching', 'ActividadesFinalizadasService', 'AssetsPath',
+  function($scope, $log, Util, NumberMatching, ActividadesFinalizadasService, AssetsPath) {
+    $scope.activityId = 8;
     $scope.dropzoneModel = [];
 
-    var config = '';
-    var matchesCount = 0;
+    var config;
+    // var matchesCount = 0;
     var Ctrl8 = Ctrl8 || {};
 
     $scope.$on('$ionicView.beforeEnter', function() {
+      // stageNumber = 1;
+      level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = true;
       Ctrl8.getConfiguration();
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl8.getConfiguration = function (level){
       NumberMatching.getConfig(level).then(function(data){
         config = data;
-        config.cards = parseInt(config.cards, 10);
-        config.top = parseInt(config.top, 10);
-        config.numberRange = parseInt(config.numberRange, 10);
         Ctrl8.setActivity();
       });
+    };
+
+    Ctrl8.clearValues = function(){
+      // stageNumber = 1;
+      stageData = {};
+      config = {};
     };
 
     Ctrl8.setActivity  = function (){
