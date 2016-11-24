@@ -1,10 +1,8 @@
-<ion-view view-title="{{activityId}}" class="content-margin">
-  <div class="activity-{{activityId}}-content">
-    <div class="card-container">
-      <number-card ng-repeat="card in cards"></number-card>
-    </div>
-    <div as-sortable="sortableCloneOptions" class="match-container" data-ng-model="matches">
-      <div ng-repeat="item in matches" as-sortable-item as-sortable-item-handle class="match-card">{{numberToWord(item)}}</div>
-    </div>
+<ion-view view-title="{{activityId}}" class="content-margin activity-{{activityId}}-content">  
+  <div class="card-container">
+    <number-card ng-repeat="card in cards"></number-card>
+  </div>
+  <div as-sortable="sortableCloneOptions" class="match-container" data-ng-model="matches">
+    <div ng-repeat="item in matches" as-sortable-item as-sortable-item-handle class="match-card">{{numberToWord(item)}}</div>
   </div>
 </ion-view>

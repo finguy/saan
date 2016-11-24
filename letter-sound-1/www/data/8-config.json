@@ -3,17 +3,17 @@
   "options": 1,
   "instructionsPath": "Duck_Hunt.mp3",
   "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-  "minLevel": 4,
+  "minLevel": 1,
   "levels": [
     {
       "number": 1,
       "numberFrom": 1,
-      "numberTo": 10
+      "numberTo": 5
     },
     {
       "number": 2,
-      "numberFrom": 11,
-      "numberTo": 20
+      "numberFrom": 6,
+      "numberTo": 10
     }
   ],
   "successFeedback": [

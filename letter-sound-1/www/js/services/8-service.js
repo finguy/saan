@@ -5,7 +5,7 @@
 
   NumberMatching.$inject = ['$http', '$log'];
 
-  function NumberMatching($http, Util) {
+  function NumberMatching($http, $log) {
     var data;
 
     return {
@@ -13,7 +13,7 @@
       getMaxLevel: getMaxLevel,
       getMinLevel: getMinLevel,
       getSuccessAudio: getSuccessAudio,
-      getFailureAudio: getFailureAudio,      
+      getFailureAudio: getFailureAudio,
     };
 
     function getConfig(level) {
@@ -21,7 +21,7 @@
       if (level >= 1){
         return $http.get(src).then(
           function success(response) {
-            var data = response.data;
+            data = response.data;            
             return {
               instructionsPath: data.instructionsPath,
               instructionsText: data.instructionsText,
