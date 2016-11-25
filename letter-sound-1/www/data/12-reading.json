@@ -48,7 +48,7 @@
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
     "add": 1,
-    "substract": 1,
-    "minScore": 10
-  }
+    "substract": 1
+  },
+  "finalizationLevel": 2
 }

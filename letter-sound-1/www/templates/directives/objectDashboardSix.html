@@ -1,7 +1,7 @@
 <div class="dashboard text-center">
   <div as-sortable="sortableTargetOptions" data-ng-model="letters2" class="dropzone">
   </div>
-  <div class="activity-6-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
+  <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
     <img src="{{imgSrc}}" ng-click="speak(currentPhonema)">
     <div ng-repeat="letter_obj in letters track by $index" >
       <img src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )"
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="row">
-   <div class="col activity-6-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
+   <div class="col activity-{{activityId}}-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
      &nbsp;
      <img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas" ng-click="speakConditional(letter, $index )">
    </div>

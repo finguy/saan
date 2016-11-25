@@ -21,15 +21,18 @@ angular.module('saan.services')
             }
           }
           var position = Util.getRandomNumber(lettersNotPlayed.length);
+          console.log(data);
           return {
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            scoreSetUp: data.scoreSetUp,
+            scoreSetUp : data.scoreSetUp,
             nextLetterImgSrc : data.nextLetterImgSrc,
-            previousLetterImgSrc: data.previousLetterImgSrc,
-            srcAlphabetLetters: data.srcAlphabetLetters
+            previousLetterImgSrc : data.previousLetterImgSrc,
+            srcAlphabetLetters : data.srcAlphabetLetters,
+            finalizationLevel : data.finalizationLevel,
+            totalLevels : data.letters.length
           };
         },
         function error() {
@@ -46,10 +49,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/letters.json';
+            src = 'data/3-letters.json';
             break;
           default:
-            src = 'data/letters.json';
+            src = 'data/3-letters.json';
         }
         return src;
       },

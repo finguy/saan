@@ -19,8 +19,7 @@
                console.log("move again");
              }
            },
-           itemMoved: function (eventObj) {
-             console.log("success");
+           itemMoved: function (eventObj) {             
              scope.handleProgress(true);
            },
            accept: function(sourceItemHandleScope, destSortableScope){

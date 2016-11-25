@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
-  .controller('5Ctrl', function($scope,$timeout, $log, RandomLetter, TTSService,
-    Util, Score) {
-    $scope.activityId = '5'; // Activity Id
+  .controller('5Ctrl', function($scope, $timeout, $state, $log, RandomLetter, TTSService,
+    Util, Score, ActividadesFinalizadasService) {
+    $scope.activityId = 5; // Activity Id
     $scope.letter = ""; // Letter to play in level
     $scope.letterSrc = "";
     $scope.imgs = [];
@@ -21,20 +21,20 @@ angular.module('saan.controllers')
     var Ctrl5 = Ctrl5 || {};
     Ctrl5.selectedObject = ""; // Collects letters the user selects
     Ctrl5.playedLetters = []; // Collects words the user played
-    Ctrl5.level = Ctrl5.level || 1; // Indicates activity level
+    Ctrl5.level =  null; // Indicates activity level
     Ctrl5.score = 0;
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, Ctrl5.level);
+    });
+
     Ctrl5.showDashboard = function(readInstructions) {
       $scope.checkingWord = false;
+
       Ctrl5.setUpLevel();
       Ctrl5.setUpScore();
       Ctrl5.setUpStatus();
 
-      var status = Util.getStatus("Activity5-level");
-      if (status) {
-        status = parseInt(status, 10);
-        Ctrl5.level = status;
-        $scope.activityProgress = 100 * (status - 1) / Ctrl5.totalLevels; // -1 porque empieza en cero.
-      }
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
 
@@ -60,22 +60,17 @@ angular.module('saan.controllers')
     };
 
     Ctrl5.setUpLevel = function() {
-      var level = Util.getLevel($scope.activityId);
-      if (level) {
-        Ctrl5.level = level;
-        $scope.activityProgress = 100 * (level - 1) / Ctrl5.totalLevels; // -1 porque empieza en cero.
+      if (!Ctrl5.level) {
+        Ctrl5.level = Util.getLevel($scope.activityId);
       }
     };
 
     Ctrl5.setUpScore = function() {
-      var score = Util.getScore($scope.activityId);
-      if (score) {
-        Ctrl5.score = score
-      }
+      Ctrl5.score =Util.getScore($scope.activityId);
     };
 
     Ctrl5.setUpStatus = function() {
-      $scope.finished = Util.getStatus($scope.activityId);
+      Ctrl5.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
     };
 
     Ctrl5.setUpContextVariables = function(data) {
@@ -86,10 +81,12 @@ angular.module('saan.controllers')
       $scope.errorMessages = data.errorMessages;
       $scope.letter = letterJson.letter;
 
-      $scope.addScore = data.scoreSetUp.add;
-      $scope.substractScore = data.scoreSetUp.substract;
-      $scope.minScore = data.scoreSetUp.minScore;
+      Ctrl5.addScore = data.scoreSetUp.add;
+      Ctrl5.substractScore = data.scoreSetUp.substract;
+      Ctrl5.finalizationLevel = data.finalizationLevel;
       Ctrl5.totalLevels = data.totalLevels;
+      Ctrl5.initialLevel = 1;
+
       $scope.imgs = [];
       for (var i in letterJson.imgs) {
         if (letterJson.imgs[i]) {
@@ -100,9 +97,15 @@ angular.module('saan.controllers')
         }
       }
 
+      if (Ctrl5.finished) {
+        $scope.activityProgress = 100;
+      } else {
+        $scope.activityProgress = 100 * (Ctrl5.level - 1) / Ctrl5.totalLevels;
+      }
+
     };
 
-    Ctrl5.handleSuccess = function() {
+    Ctrl5.success = function() {
       Ctrl5.playedLetters.push($scope.letter.toLowerCase());
       $timeout(function() {
         var position = Util.getRandomNumber($scope.successMessages.length);
@@ -111,23 +114,27 @@ angular.module('saan.controllers')
         //wait for speak
         $timeout(function() {
           Ctrl5.levelUp(); //Advance level
-          Ctrl5.score = Score.update($scope.addScore, Ctrl5.score);
-          Util.saveLevel($scope.activityId, Ctrl5.level);
-          if (!$scope.finished) { // Solo sumo o resto si no esta finalizada
-            Util.saveScore($scope.activityId, Ctrl5.score);
-            $scope.finished = Ctrl5.score >= $scope.minScore;
-            if ($scope.finished) {
-              Util.saveStatus($scope.activityId, $scope.finished);
+          if (!Ctrl5.finished) {
+            Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
+            Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
+            if (Ctrl5.finished) {
               ActividadesFinalizadasService.add($scope.activityId);
+              $state.go('lobby');
+            } else {
+              Ctrl5.showDashboard(false);
             }
+          } else if (Ctrl5.level <= Ctrl5.totalLevels) {
+            Ctrl5.showDashboard(false);
+          } else {
+            Ctrl5.level =  Ctrl5.initialLevel;
+            $state.go('lobby');
           }
-          Ctrl5.showDashboard(); //Reload dashboard
         }, 1000);
       }, 1000);
     };
 
-    Ctrl5.handleError = function() {
-      Ctrl5.score = Score.update(-$scope.substractScore, Ctrl5.score);
+    Ctrl5.error = function() {
+      Ctrl5.score = Score.update(-Ctrl5.substractScore, Ctrl5.score);
       Util.saveScore($scope.activityId, Ctrl5.score);
       //wait for speak
       $timeout(function() {
@@ -144,9 +151,9 @@ angular.module('saan.controllers')
       var ER = new RegExp($scope.letter, "i");
       var name = selectedObject.toLowerCase();
       if (ER.test(name)) {
-        Ctrl5.handleSuccess();
+        Ctrl5.success();
       } else {
-        Ctrl5.handleError();
+        Ctrl5.error();
       }
     };
 

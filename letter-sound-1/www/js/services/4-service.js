@@ -23,13 +23,14 @@ angular.module('saan.services')
 
           var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
-            number: numbersNotPlayed[position],
+            number : numbersNotPlayed[position],
             instructions : data.instructions,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
-            scoreSetUp: data.scoreSetUp,
-            assets: data.assets,
-            totalLevels: data.numbers.length
+            scoreSetUp : data.scoreSetUp,
+            assets : data.assets,
+            finalizationLevel : data.finalizationLevel,
+            totalLevels : data.numbers.length
           };
         },
         function error() {
@@ -46,10 +47,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/numbers.json';
+            src = 'data/4-numbers.json';
             break;
           default:
-            src = 'data/numbers.json';
+            src = 'data/4-numbers.json';
         }
         return src;
       },

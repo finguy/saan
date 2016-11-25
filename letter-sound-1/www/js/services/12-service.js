@@ -4,7 +4,7 @@ angular.module('saan.services')
     text: function(level, playedTexts) {
       var src = LevelsTwelve.getSrcData(level);
       return $http.get(src).then(
-        function success(response) {          
+        function success(response) {
           var data = response.data;
           var json = data.readings;
           var textsNotPlayed = [];
@@ -29,6 +29,7 @@ angular.module('saan.services')
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
+            finalizationLevel : data.finalizationLevel,
             totalLevels : data.readings.length,
           };
         },
