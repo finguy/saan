@@ -2,7 +2,7 @@ angular.module('saan.controllers')
 
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
   Util, Score, ActividadesFinalizadasService) {
-  $scope.activityId = '6'; // Activity Id
+  $scope.activityId = 6; // Activity Id
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
   $scope.letters2 = [];
@@ -157,7 +157,7 @@ angular.module('saan.controllers')
               $state.go('lobby');
             } else if ($scope.level <= $scope.totalLevels) {
               Ctrl6.showDashboard(false);
-            } else {              
+            } else {
               $state.go('lobby');
             }
           } else if ($scope.level <= $scope.totalLevels) {

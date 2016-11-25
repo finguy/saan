@@ -3,7 +3,7 @@ angular.module('saan.controllers')
     Util, Animations, Score, ActividadesFinalizadasService) {
 
     var Ctrl4 = Ctrl4 || {};
-    Ctrl4.activityId = '4';
+    $scope.activityId = 4;
     Ctrl4.playedNumbers = [];
     Ctrl4.level = null;
     Ctrl4.score = 0;
@@ -24,20 +24,20 @@ angular.module('saan.controllers')
 
     Ctrl4.setUpLevel = function() {
       if (!Ctrl4.level) {
-        Ctrl4.level = Util.getLevel(Ctrl4.activityId);
+        Ctrl4.level = Util.getLevel($scope.activityId);
       }
     };
 
     Ctrl4.setUpScore = function() {
-      Ctrl4.score = Util.getScore(Ctrl4.activityId);
+      Ctrl4.score = Util.getScore($scope.activityId);
     };
 
     Ctrl4.setUpStatus = function() {
-      Ctrl4.finished = ActividadesFinalizadasService.finalizada(Ctrl4.activityId);
+      Ctrl4.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
     }
 
     $scope.$on('$ionicView.beforeLeave', function() {
-      Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
+      Util.saveLevel($scope.activityId, Ctrl4.level);
     });
 
     //Shows Activity Dashboard
@@ -120,10 +120,10 @@ angular.module('saan.controllers')
       $timeout(function() {
         Ctrl4.levelUp(); //Advance level
         if (!Ctrl4.finished) {
-          Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
+          Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
           Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
           if (Ctrl4.finished) {
-            ActividadesFinalizadasService.add(Ctrl4.activityId);
+            ActividadesFinalizadasService.add($scope.activityId);
             $state.go('lobby');
           } else {
             Ctrl4.showDashboard(false);
@@ -139,7 +139,7 @@ angular.module('saan.controllers')
 
     Ctrl4.error = function() {
       if (!Ctrl4.finished) {
-        Ctrl4.score = Score.update(-Ctrl4.substractScore, Ctrl4.activityId, Ctrl4.finished);
+        Ctrl4.score = Score.update(-Ctrl4.substractScore, $scope.activityId, Ctrl4.finished);
       }
       var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
       var errorMessage = Ctrl4.errorMessages[position];

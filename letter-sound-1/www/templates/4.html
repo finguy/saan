@@ -1,4 +1,4 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity4-content">
+<ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}}-content">
  <activity-status></activity-status>
     <center>
       <div class="dashboard">
@@ -9,7 +9,7 @@
             {{number}}
           </span>
         </div>
-        
+
          <div data-ng-model="imgs" class="col-container" as-sortable="sortableSourceOptions">
           <div class="img-container" ng-repeat="img in imgs" as-sortable-item as-sortable-item-handle>
             <div class="box-container">

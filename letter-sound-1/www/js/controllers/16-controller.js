@@ -11,7 +11,7 @@ angular.module('saan.controllers')
   $scope.speak = TTSService.speak;
   //Shows Activity Dashboard
   var Ctrl16 = Ctrl16 || {};
-  Ctrl16.activityId = 16; // Activity Id
+  $scope.activityId = 16; // Activity Id
   Ctrl16.totalLevels = 1;
   Ctrl16.level = null; // Indicates activity level
   $scope.activityProgress = 0;
@@ -19,7 +19,7 @@ angular.module('saan.controllers')
   Ctrl16.playedLetters = [];
 
   $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+    Util.saveLevel($scope.activityId, Ctrl16.level);
   });
 
   Ctrl16.showDashboard = function(readInstructions) {
@@ -27,7 +27,7 @@ angular.module('saan.controllers')
     Ctrl16.setUpLevel();
     Ctrl16.setUpScore();
     Ctrl16.setUpStatus();
-    
+
     RandomWordsSixteen.letters(Ctrl16.level, Ctrl16.playedLetters).then(
       function success(data) {
         Ctrl16.setUpContextVariables(data);
@@ -48,16 +48,16 @@ angular.module('saan.controllers')
 
   Ctrl16.setUpLevel = function() {
     if (!Ctrl16.level) {
-      Ctrl16.level = Util.getLevel(Ctrl16.activityId);
+      Ctrl16.level = Util.getLevel($scope.activityId);
     }
   };
 
   Ctrl16.setUpScore = function() {
-    Ctrl16.score =Util.getScore(Ctrl16.activityId);
+    Ctrl16.score =Util.getScore($scope.activityId);
   };
 
   Ctrl16.setUpStatus = function() {
-    Ctrl16.finished = ActividadesFinalizadasService.finalizada(Ctrl16.activityId);
+    Ctrl16.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
 
   Ctrl16.setUpContextVariables = function(data) {
@@ -112,10 +112,10 @@ angular.module('saan.controllers')
         if (LAST_CHECK) {
           Ctrl16.levelUp(); //Advance level
           if (!Ctrl16.finished) { //Aumento puntaje
-            Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.activityId, Ctrl16.finished);
+            Ctrl16.score = Score.update(Ctrl16.addScore, $scope.activityId, Ctrl16.finished);
             Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
             if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
-              ActividadesFinalizadasService.add(Ctrl16.activityId);
+              ActividadesFinalizadasService.add($scope.activityId);
               $state.go('lobby');
             } else if (Ctrl16.level <= Ctrl16.totalLevels) {
               Ctrl16.showDashboard(false);
@@ -138,7 +138,7 @@ angular.module('saan.controllers')
 
   Ctrl16.handleError = function() {
     if (!Ctrl16.finished) {
-      Ctrl16.score = Score.update(-Ctrl16.substractScore, Ctrl16.activityId, Ctrl16.finished);
+      Ctrl16.score = Score.update(-Ctrl16.substractScore, $scope.activityId, Ctrl16.finished);
     }
     $scope.speak(name);
     //wait for speak

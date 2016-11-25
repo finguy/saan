@@ -3,7 +3,7 @@
   angular.module('saan.controllers')
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService) {
-      $scope.activityId = '10'; // Activity Id
+      $scope.activityId = 10; // Activity Id
       $scope.word = []; // Letter to play in level
       $scope.wordStr = "";
       $scope.rimes = [];

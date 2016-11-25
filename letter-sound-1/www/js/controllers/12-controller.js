@@ -3,7 +3,7 @@
   angular.module('saan.controllers')
     .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService) {
-      $scope.activityId = '12'; // Activity Id
+      $scope.activityId = 12; // Activity Id
       $scope.img = "";
       $scope.assets = [];
       $scope.playedTexts = [];
@@ -38,7 +38,7 @@
       };
 
       Ctrl12.setUpScore = function() {
-        $scope.score = Util.getScore($scope.activityId);        
+        $scope.score = Util.getScore($scope.activityId);
       };
 
       Ctrl12.setUpStatus = function() {

@@ -5,7 +5,7 @@ angular.module('saan.controllers')
   $scope.imgs = [];
   $scope.activityProgress = 0;
   var Ctrl3 = Ctrl3 || {};
-  Ctrl3.activityId = '3'; // Activity Id
+  $scope.activityId = '3'; // Activity Id
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
 
@@ -31,7 +31,7 @@ angular.module('saan.controllers')
   $scope.speak = TTSService.speak;
 
   $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
+    Util.saveLevel($scope.activityId, Ctrl3.level);
   });
 
   //Shows Activity Dashboard
@@ -61,17 +61,17 @@ angular.module('saan.controllers')
 
   Ctrl3.setUpLevel = function() {
     if (!Ctrl3.level) {
-      Ctrl3.level = Util.getLevel(Ctrl3.activityId);
+      Ctrl3.level = Util.getLevel($scope.activityId);
     }
   };
 
   Ctrl3.setUpScore = function() {
-    Ctrl3.score = Util.getScore(Ctrl3.activityId);
+    Ctrl3.score = Util.getScore($scope.activityId);
 
   };
 
   Ctrl3.setUpStatus = function() {
-    Ctrl3.finished = ActividadesFinalizadasService.finalizada(Ctrl3.activityId);
+    Ctrl3.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   }
 
   Ctrl3.setUpContextVariables = function(data) {
@@ -118,10 +118,10 @@ angular.module('saan.controllers')
       $timeout(function() {
         Ctrl3.levelUp(); //Advance level
         if (!Ctrl3.finished) {
-          Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.activityId, Ctrl3.finished);
+          Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
           Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
           if (Ctrl3.finished) {
-            ActividadesFinalizadasService.add(Ctrl3.activityId);
+            ActividadesFinalizadasService.add($scope.activityId);
             $state.go('lobby');
           } else {
             Ctrl3.showDashboard(true);
@@ -138,8 +138,8 @@ angular.module('saan.controllers')
 
   Ctrl3.error = function() {
     if (!Ctrl3.finished) {
-      Ctrl3.score = Score.update(-Ctrl3.substractScore, Ctrl3.activityId, Ctrl3.finished);
-      Util.saveScore(Ctrl3.activityId, Ctrl3.score);
+      Ctrl3.score = Score.update(-Ctrl3.substractScore, $scope.activityId, Ctrl3.finished);
+      Util.saveScore($scope.activityId, Ctrl3.score);
     }
     //wait for speak
     $timeout(function() {
