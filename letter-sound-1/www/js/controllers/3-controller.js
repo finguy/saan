@@ -5,7 +5,7 @@ angular.module('saan.controllers')
   $scope.imgs = [];
   $scope.activityProgress = 0;
   var Ctrl3 = Ctrl3 || {};
-  $scope.activityId = '3'; // Activity Id
+  $scope.activityId = 3; // Activity Id
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
 
