@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="data-container" as-sortable="sortableTargetOptions" data-ng-model="imgsDragged" ng-click="speak(wordStr)">
     <img src="{{img}}"/>
-    <img class="word" ng-repeat="letter in word track by $index" src="img/3-assets/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
+    <img class="word" ng-repeat="letter in word track by $index" src="img/3/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
     <br/>
     <img class="letter letterDragged" ng-repeat="letter in selectedRimeLetters track by $index"  src="img/alphabet-buttons/{{letter}}.png" ng-show="isWordOk"/>
   </div>

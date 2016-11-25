@@ -1,9 +1,11 @@
 angular.module('saan.controllers')
 
 .controller('3Ctrl', function($scope, $timeout, $state, RandomLetterThree, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.imgs = [];
   $scope.activityProgress = 0;
+  $scope.showText = false;
+  $scope.textSpeech = "";
   var Ctrl3 = Ctrl3 || {};
   $scope.activityId = 3; // Activity Id
   Ctrl3.letter = ""; // Letter to play in level
@@ -27,6 +29,11 @@ angular.module('saan.controllers')
   Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
   Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
   Ctrl3.srcAlphabetLetters = "";
+  Ctrl3.successPlayer;
+  Ctrl3.failurePlayer;
+
+
+
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
@@ -106,6 +113,38 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
+
+    //Success feeback player
+    var successFeedback = RandomLetterThree.getSuccessAudio();
+    Ctrl3.successText = successFeedback.text;
+    Ctrl3.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        Ctrl3.successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+
+    //Failure feeback player
+    var failureFeedback = RandomLetterThree.getFailureAudio();
+    Ctrl3.failureText = failureFeedback.text;
+    Ctrl3.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        Ctrl3.failurePlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.failurePlayer.release();
+        $scope.showText = false;
+      }
+    );
   };
 
   Ctrl3.success = function() {
@@ -113,7 +152,9 @@ angular.module('saan.controllers')
     $timeout(function() {
       var position = Util.getRandomNumber(Ctrl3.successMessages.length);
       var successMessage = Ctrl3.successMessages[position];
-      $scope.speak(successMessage);
+      $scope.showText = true;
+      $scope.textSpeech = Ctrl3.successText;
+      Ctrl3.successPlayer.play();
       //wait for speak
       $timeout(function() {
         Ctrl3.levelUp(); //Advance level
@@ -145,7 +186,9 @@ angular.module('saan.controllers')
     $timeout(function() {
       var position = Util.getRandomNumber(Ctrl3.errorMessages.length);
       var errorMessage = Ctrl3.errorMessages[position];
-      $scope.speak(errorMessage);
+      $scope.showText = true;
+      $scope.textSpeech = Ctrl3.failureText;
+      Ctrl3.failurePlayer.play();
     }, 1000);
   };
 

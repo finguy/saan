@@ -2,37 +2,37 @@
   [{"id":1,
     "letters": [
       { "name":"a",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-a-lowercase.png",
-        "assets": [ "img/3-assets/animals/wale.png",
-                  "img/3-assets/animals/aligator.png",
-                  "img/3-assets/animals/cat.png",
-                  "img/3-assets/animals/bat.png",
-                  "img/3-assets/animals/cammel.png",
-                  "img/3-assets/animals/bear.png",
-                  "img/3-assets/animals/elephant.png",
-                  "img/3-assets/animals/snake.png"
+        "letterImg": "img/3/letters-blue/letters-blue-a-lowercase.png",
+        "assets": [ "img/3/animals/wale.png",
+                  "img/3/animals/aligator.png",
+                  "img/3/animals/cat.png",
+                  "img/3/animals/bat.png",
+                  "img/3/animals/cammel.png",
+                  "img/3/animals/bear.png",
+                  "img/3/animals/elephant.png",
+                  "img/3/animals/snake.png"
                 ]
       },
       { "name":"e",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-e-lowercase.png",
+        "letterImg": "img/3/letters-blue/letters-blue-e-lowercase.png",
         "assets": [
-                   "img/3-assets/animals/tiger.png",
-                   "img/3-assets/animals/monkey.png",
-                   "img/3-assets/animals/sheep.png"
+                   "img/3/animals/tiger.png",
+                   "img/3/animals/monkey.png",
+                   "img/3/animals/sheep.png"
                   ]
       },
       { "name":"i",
-        "letterImg":"img/3-assets/letters-blue/letters-blue-i-lowercase.png",
-        "assets":["img/3-assets/animals/aligator.png",
-                 "img/3-assets/animals/fish.png",
-                 "img/3-assets/animals/bird.png",
-                 "img/3-assets/animals/pig.png"]
+        "letterImg":"img/3/letters-blue/letters-blue-i-lowercase.png",
+        "assets":["img/3/animals/aligator.png",
+                 "img/3/animals/fish.png",
+                 "img/3/animals/bird.png",
+                 "img/3/animals/pig.png"]
       },
       {  "name":"o",
-         "letterImg":"img/3-assets/letters-blue/letters-blue-o-lowercase.png",
-         "assets":["img/3-assets/animals/octopus.png",
-                "img/3-assets/animals/frog.png",
-                "img/3-assets/animals/dog.png"
+         "letterImg":"img/3/letters-blue/letters-blue-o-lowercase.png",
+         "assets":["img/3/animals/octopus.png",
+                "img/3/animals/frog.png",
+                "img/3/animals/dog.png"
                 ]
       }
     ]
@@ -40,29 +40,29 @@
   {"id":2,
     "letters": [
       { "name":"u",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-u-lowercase.png",
-        "assets": [  "img/3-assets/animals/octopus.png",
-                     "img/3-assets/animals/turtle.png",
-                     "img/3-assets/animals/duck.png"
+        "letterImg": "img/3/letters-blue/letters-blue-u-lowercase.png",
+        "assets": [  "img/3/animals/octopus.png",
+                     "img/3/animals/turtle.png",
+                     "img/3/animals/duck.png"
                 ]
       },
       { "name":"m",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-m-lowercase.png",
+        "letterImg": "img/3/letters-blue/letters-blue-m-lowercase.png",
         "assets": [
-                   "img/3-assets/animals/cammel.png"
+                   "img/3/animals/cammel.png"
                   ]
       },
       { "name":"h",
-        "letterImg":"img/3-assets/letters-blue/letters-blue-h-lowercase.png",
-        "assets":["img/3-assets/animals/elephant.png",
-                 "img/3-assets/animals/fish.png"
+        "letterImg":"img/3/letters-blue/letters-blue-h-lowercase.png",
+        "assets":["img/3/animals/elephant.png",
+                 "img/3/animals/fish.png"
                  ]
       },
       {  "name":"g",
-         "letterImg":"img/3-assets/letters-blue/letters-blue-g-uppercase.png",
-         "assets":["img/3-assets/animals/pig.png",
-                "img/3-assets/animals/frog.png",
-                "img/3-assets/animals/dog.png"
+         "letterImg":"img/3/letters-blue/letters-blue-g-uppercase.png",
+         "assets":["img/3/animals/pig.png",
+                "img/3/animals/frog.png",
+                "img/3/animals/dog.png"
                 ]
       }
     ]
@@ -70,29 +70,29 @@
   {"id":3,
     "letters": [
       { "name":"t",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-t-lowercase.png",
-        "assets": [  "img/3-assets/animals/octopus.png",
-                     "img/3-assets/animals/turtle.png"
+        "letterImg": "img/3/letters-blue/letters-blue-t-lowercase.png",
+        "assets": [  "img/3/animals/octopus.png",
+                     "img/3/animals/turtle.png"
                   ]
       },
       { "name":"p",
-        "letterImg": "img/3-assets/letters-blue/letters-blue-p-lowercase.png",
+        "letterImg": "img/3/letters-blue/letters-blue-p-lowercase.png",
         "assets": [
-                   "img/3-assets/animals/sheep.png",
-                   "img/3-assets/animals/pig.png"
+                   "img/3/animals/sheep.png",
+                   "img/3/animals/pig.png"
                   ]
       },
       { "name":"f",
-        "letterImg":"img/3-assets/letters-blue/letters-blue-f-uppercase.png",
+        "letterImg":"img/3/letters-blue/letters-blue-f-uppercase.png",
         "assets":[
-                 "img/3-assets/animals/fish.png",
-                 "img/3-assets/animals/frog.png"
+                 "img/3/animals/fish.png",
+                 "img/3/animals/frog.png"
                  ]
       },
       {  "name":"d",
-         "letterImg":"img/3-assets/letters-blue/letters-blue-g-lowercase.png",
+         "letterImg":"img/3/letters-blue/letters-blue-g-lowercase.png",
          "assets":[
-                "img/3-assets/animals/dog.png"
+                "img/3/animals/dog.png"
                 ]
       }
     ]

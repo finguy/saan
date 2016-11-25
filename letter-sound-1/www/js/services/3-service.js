@@ -1,49 +1,63 @@
 angular.module('saan.services')
 
-.factory('RandomLetterThree', function($http,$log, LevelsThree, Util) {
-  return {
-    letter: function(level, playedLetters) {
-      var src = LevelsThree.getSrcData(level);
-      return $http.get(src).then(
-        function success(response) {
-          var data = response.data;
-          var lettersNotPlayed = [];
-          if (playedLetters.length === 0 ){
-            lettersNotPlayed = data.letters;
-          } else {
-            for (var i in data.letters) { //FIXME: try to use underscore
-              if (data.letters[i]) {
-                var ER = new RegExp(data.letters[i].letter, "i");
-                if (!ER.test(playedLetters.toString())) {
-                  lettersNotPlayed.push(data.letters[i]);
+.factory('RandomLetterThree', function($http, $log, LevelsThree, Util) {
+    var data;
+    return {
+      letter: function(level, playedLetters) {
+        var src = LevelsThree.getSrcData(level);
+        return $http.get(src).then(
+          function success(response) {
+            data = response.data;
+            var lettersNotPlayed = [];
+            if (playedLetters.length === 0) {
+              lettersNotPlayed = data.letters;
+            } else {
+              for (var i in data.letters) { //FIXME: try to use underscore
+                if (data.letters[i]) {
+                  var ER = new RegExp(data.letters[i].letter, "i");
+                  if (!ER.test(playedLetters.toString())) {
+                    lettersNotPlayed.push(data.letters[i]);
+                  }
                 }
               }
             }
+
+
+
+            var position = Util.getRandomNumber(lettersNotPlayed.length);
+            console.log(data);
+            return {
+              letter: lettersNotPlayed[position],
+              instructions: data.instructions,
+              errorMessages: data.errorMessages,
+              successMessages: data.successMessages,
+              scoreSetUp: data.scoreSetUp,
+              nextLetterImgSrc: data.nextLetterImgSrc,
+              previousLetterImgSrc: data.previousLetterImgSrc,
+              srcAlphabetLetters: data.srcAlphabetLetters,
+              finalizationLevel: data.finalizationLevel,
+              totalLevels: data.letters.length,
+              instructionsPath: data.instructionsPath,
+              instructionsText: data.instructionsText
+            };
+          },
+          function error() {
+            //TODO: handle errors for real
+            $log.error("error");
           }
-          var position = Util.getRandomNumber(lettersNotPlayed.length);
-          console.log(data);
-          return {
-            letter: lettersNotPlayed[position],
-            instructions : data.instructions,
-            errorMessages : data.errorMessages,
-            successMessages: data.successMessages,
-            scoreSetUp : data.scoreSetUp,
-            nextLetterImgSrc : data.nextLetterImgSrc,
-            previousLetterImgSrc : data.previousLetterImgSrc,
-            srcAlphabetLetters : data.srcAlphabetLetters,
-            finalizationLevel : data.finalizationLevel,
-            totalLevels : data.letters.length
-          };
-        },
-        function error() {
-          //TODO: handle errors for real
-          $log.error("error");
-        }
-      );
-    }
-  };
-})
-.factory('LevelsThree', function() {
+        );
+      },
+      getSuccessAudio: function() {
+        var index = _.random(0, data.successFeedback.length - 1);
+        return data.successFeedback[index];
+      },
+      getFailureAudio: function() {
+        var index = _.random(0, data.failureFeedback.length - 1);
+        return data.failureFeedback[index];
+      }
+    };
+  })
+  .factory('LevelsThree', function() {
     return {
       getSrcData: function(level) {
         var src = '';
