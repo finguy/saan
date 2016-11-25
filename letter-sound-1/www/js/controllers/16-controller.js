@@ -13,19 +13,24 @@ angular.module('saan.controllers')
   var Ctrl16 = Ctrl16 || {};
   Ctrl16.activityId = 16; // Activity Id
   Ctrl16.totalLevels = 1;
-  Ctrl16.level = Ctrl16.level || 1; // Indicates activity level
+  Ctrl16.level = null; // Indicates activity level
   $scope.activityProgress = 0;
   Ctrl16.letterOk = false;
   Ctrl16.playedLetters = [];
 
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
+  });
+
   Ctrl16.showDashboard = function(readInstructions) {
 
+    Ctrl16.setUpLevel();
+    Ctrl16.setUpScore();
+    Ctrl16.setUpStatus();
+    
     RandomWordsSixteen.letters(Ctrl16.level, Ctrl16.playedLetters).then(
       function success(data) {
         Ctrl16.setUpContextVariables(data);
-        Ctrl16.setUpLevel();
-        Ctrl16.setUpScore();
-        Ctrl16.setUpStatus();
 
         //wait for UI to load
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
@@ -42,9 +47,8 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpLevel = function() {
-    var level = Util.getLevel(Ctrl16.activityId);
-    if (level) {
-      Ctrl16.level = level;
+    if (!Ctrl16.level) {
+      Ctrl16.level = Util.getLevel(Ctrl16.activityId);
     }
   };
 
@@ -53,7 +57,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpStatus = function() {
-    Ctrl16.finished = Util.getStatus(Ctrl16.activityId);
+    Ctrl16.finished = ActividadesFinalizadasService.finalizada(Ctrl16.activityId);
   };
 
   Ctrl16.setUpContextVariables = function(data) {
@@ -107,25 +111,23 @@ angular.module('saan.controllers')
       $timeout(function() {
         if (LAST_CHECK) {
           Ctrl16.levelUp(); //Advance level
-          Util.saveLevel(Ctrl16.activityId, Ctrl16.level);
           if (!Ctrl16.finished) { //Aumento puntaje
             Ctrl16.score = Score.update(Ctrl16.addScore, Ctrl16.activityId, Ctrl16.finished);
             Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
             if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
-              Util.saveStatus(Ctrl16.activityId, Ctrl16.finished);
               ActividadesFinalizadasService.add(Ctrl16.activityId);
               $state.go('lobby');
             } else if (Ctrl16.level <= Ctrl16.totalLevels) {
               Ctrl16.showDashboard(false);
             } else {
-              Util.saveLevel(Ctrl16.activityId, Ctrl16.initialLevel);
+              Ctrl16.level =  Ctrl16.initialLevel;
               $state.go('lobby');
             }
           } else {
             if (Ctrl16.level <= Ctrl16.totalLevels) {
               Ctrl16.showDashboard(false);
             } else {
-              Util.saveLevel(Ctrl16.activityId, Ctrl16.initialLevel);
+              Ctrl16.level =  Ctrl16.initialLevel;
               $state.go('lobby');
             }
           }

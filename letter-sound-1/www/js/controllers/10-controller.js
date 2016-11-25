@@ -19,7 +19,7 @@
       $scope.dashboard = []; // Dashboard letters
       $scope.selectedObject = ""; // Collects letters the user selects
       $scope.playedWords = []; // Collects words the user played
-      $scope.level = $scope.level || 1; // Indicates activity level
+      $scope.level = null; // Indicates activity level
       $scope.totalLevels = 1;
       $scope.activityProgress = 0;
       $scope.score = 0;
@@ -30,10 +30,16 @@
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
 
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Util.saveLevel($scope.activityId, $scope.level);
+      });
+
       var Ctrl10 = Ctrl10 || {};
 
       Ctrl10.setUpLevel = function() {
-        $scope.level = Util.getLevel($scope.activityId);
+        if (!$scope.level) {
+          $scope.level = Util.getLevel($scope.activityId);
+        }
       };
 
       Ctrl10.setUpScore = function() {
@@ -42,8 +48,7 @@
       };
 
       Ctrl10.setUpStatus = function() {
-        $scope.finished = Util.getStatus($scope.activityId);
-
+        $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
       };
 
       //Shows Activity Dashboard
@@ -136,12 +141,10 @@
         $timeout(function() {
           $scope.draggedWord = false;
           Ctrl10.levelUp(); //Advance level
-          Util.saveLevel($scope.activityId, $scope.level);
           if (!$scope.finished) {
             $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
             $scope.finished = $scope.level >= Ctrl10.finalizationLevel;
             if ($scope.finished) {
-              Util.saveStatus($scope.activityId, $scope.finished);
               ActividadesFinalizadasService.add($scope.activityId);
               $state.go('lobby');
             } else {
@@ -150,7 +153,7 @@
           } else if ($scope.level <= $scope.totalLevels) {
             Ctrl10.showDashboard(true);
           } else {
-            Util.saveLevel($scope.activityId, Ctrl10.initialLevel);
+            $scope.level =  Ctrl10.initialLevel;
             $state.go('lobby');
           }
         }, 1000);

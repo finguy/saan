@@ -15,7 +15,7 @@ angular.module('saan.controllers')
   $scope.dashboard = []; // Dashboard letters
   $scope.selectedObject = ""; // Collects letters the user selects
   $scope.playedWords = []; // Collects words the user played
-  $scope.level = $scope.level || 1; // Indicates activity level
+  $scope.level = null; // Indicates activity level
   $scope.totalLevels = 3;
   $scope.activityProgress = 0;
   $scope.letterInstruction = "";
@@ -30,6 +30,11 @@ angular.module('saan.controllers')
 
   //Shows Activity Dashboard
   var Ctrl6 = Ctrl6 || {};
+
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, $scope.level);
+  });
+
   Ctrl6.showDashboard = function(readInstructions) {
 
     Ctrl6.setUpLevel();
@@ -58,7 +63,9 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpLevel = function() {
-    $scope.level = Util.getLevel($scope.activityId);
+    if (!$scope.level) {
+      $scope.level = Util.getLevel($scope.activityId);
+    }
   };
 
   Ctrl6.setUpScore = function() {
@@ -67,8 +74,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpStatus = function() {
-    $scope.finished = Util.getStatus($scope.activityId);
-
+    $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   }
 
   Ctrl6.setUpContextVariables = function(data) {
@@ -143,24 +149,21 @@ angular.module('saan.controllers')
         $scope.speak($scope.word);
         $timeout(function() {
           Ctrl6.levelUp(); //Advance level
-          Util.saveLevel($scope.activityId, $scope.level);
           if (!$scope.finished) {
             $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
             $scope.finished = $scope.level >= $scope.finalizationLevel;
             if ($scope.finished) {
-              Util.saveStatus($scope.activityId, $scope.finished);
               ActividadesFinalizadasService.add($scope.activityId);
               $state.go('lobby');
             } else if ($scope.level <= $scope.totalLevels) {
               Ctrl6.showDashboard(false);
-            } else {
-              Util.saveLevel($scope.activityId, Ctrl6.initialLevel);
+            } else {              
               $state.go('lobby');
             }
           } else if ($scope.level <= $scope.totalLevels) {
             Ctrl6.showDashboard(false);
           } else {
-            Util.saveLevel($scope.activityId, Ctrl6.initialLevel);
+            $scope.level = Ctrl6.initialLevel;
             $state.go('lobby');
           }
         }, 1000);

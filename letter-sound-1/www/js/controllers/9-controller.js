@@ -16,15 +16,20 @@ angular.module('saan.controllers')
   $scope.items = ['dummy'];
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
+
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
+  });
+
   //Shows Activity Dashboard
   var Ctrl9 = Ctrl9 || {};
+  Ctrl9.level = null;
   Ctrl9.showDashboard = function(readInstructions) {
     Ctrl9.setUpLevel();
     Ctrl9.setUpScore();
     Ctrl9.setUpStatus();
 
-    console.log("showDashboard level");
-    console.log(Ctrl9.level);
+
     RandomWordsNine.words(Ctrl9.level, $scope.playedWords).then(
       function success(data) {
         Ctrl9.setUpContextVariables(data);
@@ -43,15 +48,17 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.setUpLevel = function() {
-    Ctrl9.level = Util.getLevel($scope.activityId);
+    if (!Ctrl9.level) {
+      Ctrl9.level = Util.getLevel($scope.activityId);
+    }
   };
 
   Ctrl9.setUpScore = function() {
     $scope.score = Util.getScore($scope.activityId);
   };
 
-  Ctrl9.setUpStatus = function() {
-    Ctrl9.finished = Util.getStatus($scope.activityId);
+  Ctrl9.setUpStatus = function() {    
+    Ctrl9.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
 
   Ctrl9.setUpContextVariables = function(data) {
@@ -86,6 +93,7 @@ angular.module('saan.controllers')
     Ctrl9.totalLevels = data.totalLevels;
     Ctrl9.initialLevel = 1;
 
+
     if (Ctrl9.finished) {
       $scope.activityProgress = 100;
     } else {
@@ -93,7 +101,7 @@ angular.module('saan.controllers')
     }
   };
 
-  Ctrl9.success = function() {  
+  Ctrl9.success = function() {
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     var position = Util.getRandomNumber($scope.successMessages.length);
@@ -102,25 +110,23 @@ angular.module('saan.controllers')
     $timeout(function() {
       if (LAST_CHECK) {
         Ctrl9.levelUp(); //Advance level
-        Util.saveLevel($scope.activityId, Ctrl9.level);
         if (!Ctrl9.finished) { //Aumento puntaje
           $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
           Ctrl9.finished = Ctrl9.level >= Ctrl9.finalizationLevel;
           if (Ctrl9.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
-            Util.saveStatus($scope.activityId, Ctrl9.finished);
             ActividadesFinalizadasService.add($scope.activityId);
             $state.go('lobby');
           } else if (Ctrl9.level <= Ctrl9.totalLevels) {
             Ctrl9.showDashboard(false);
           } else {
-            Util.saveLevel($scope.activityId, Ctrl9.initialLevel);
+            Ctrl9.level =  Ctrl9.initialLevel;
             $state.go('lobby');
           }
         } else {
           if (Ctrl9.level <= Ctrl9.totalLevels) {
             Ctrl9.showDashboard(false);
           } else {
-            Util.saveLevel($scope.activityId, Ctrl9.initialLevel);
+            Ctrl9.level = Ctrl9.initialLevel;
             $state.go('lobby');
           }
         }

@@ -21,8 +21,13 @@ angular.module('saan.controllers')
     var Ctrl5 = Ctrl5 || {};
     Ctrl5.selectedObject = ""; // Collects letters the user selects
     Ctrl5.playedLetters = []; // Collects words the user played
-    Ctrl5.level =  1; // Indicates activity level
+    Ctrl5.level =  null; // Indicates activity level
     Ctrl5.score = 0;
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, Ctrl5.level);
+    });
+
     Ctrl5.showDashboard = function(readInstructions) {
       $scope.checkingWord = false;
 
@@ -55,7 +60,9 @@ angular.module('saan.controllers')
     };
 
     Ctrl5.setUpLevel = function() {
-      Ctrl5.level = Util.getLevel($scope.activityId);
+      if (!Ctrl5.level) {
+        Ctrl5.level = Util.getLevel($scope.activityId);
+      }
     };
 
     Ctrl5.setUpScore = function() {
@@ -63,7 +70,7 @@ angular.module('saan.controllers')
     };
 
     Ctrl5.setUpStatus = function() {
-      Ctrl5.finished = Util.getStatus($scope.activityId);
+      Ctrl5.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
     };
 
     Ctrl5.setUpContextVariables = function(data) {
@@ -93,8 +100,6 @@ angular.module('saan.controllers')
       if (Ctrl5.finished) {
         $scope.activityProgress = 100;
       } else {
-        console.log("level:");
-        console.log(Ctrl5.level);
         $scope.activityProgress = 100 * (Ctrl5.level - 1) / Ctrl5.totalLevels;
       }
 
@@ -109,12 +114,10 @@ angular.module('saan.controllers')
         //wait for speak
         $timeout(function() {
           Ctrl5.levelUp(); //Advance level
-          Util.saveLevel($scope.activityId, Ctrl5.level);
           if (!Ctrl5.finished) {
             Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
             Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
             if (Ctrl5.finished) {
-              Util.saveStatus($scope.activityId, Ctrl5.finished);
               ActividadesFinalizadasService.add($scope.activityId);
               $state.go('lobby');
             } else {
@@ -123,7 +126,7 @@ angular.module('saan.controllers')
           } else if (Ctrl5.level <= Ctrl5.totalLevels) {
             Ctrl5.showDashboard(false);
           } else {
-            Util.saveLevel($scope.activityId, Ctrl5.initialLevel);
+            Ctrl5.level =  Ctrl5.initialLevel;
             $state.go('lobby');
           }
         }, 1000);

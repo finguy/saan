@@ -5,7 +5,7 @@ angular.module('saan.controllers')
     var Ctrl4 = Ctrl4 || {};
     Ctrl4.activityId = '4';
     Ctrl4.playedNumbers = [];
-    Ctrl4.level = $scope.level || 1;
+    Ctrl4.level = null;
     Ctrl4.score = 0;
 
     $scope.number = null;
@@ -23,7 +23,9 @@ angular.module('saan.controllers')
 
 
     Ctrl4.setUpLevel = function() {
-      Ctrl4.level = Util.getLevel(Ctrl4.activityId);
+      if (!Ctrl4.level) {
+        Ctrl4.level = Util.getLevel(Ctrl4.activityId);
+      }
     };
 
     Ctrl4.setUpScore = function() {
@@ -31,8 +33,12 @@ angular.module('saan.controllers')
     };
 
     Ctrl4.setUpStatus = function() {
-      Ctrl4.finished = Util.getStatus(Ctrl4.activityId);
+      Ctrl4.finished = ActividadesFinalizadasService.finalizada(Ctrl4.activityId);
     }
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
+    });
 
     //Shows Activity Dashboard
     Ctrl4.showDashboard = function(readInstructions) {
@@ -113,12 +119,10 @@ angular.module('saan.controllers')
       //wait for speak
       $timeout(function() {
         Ctrl4.levelUp(); //Advance level
-        Util.saveLevel(Ctrl4.activityId, Ctrl4.level);
         if (!Ctrl4.finished) {
           Ctrl4.score = Score.update(Ctrl4.addScore, Ctrl4.activityId, Ctrl4.finished);
           Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
           if (Ctrl4.finished) {
-            Util.saveStatus(Ctrl4.activityId, Ctrl4.finished);
             ActividadesFinalizadasService.add(Ctrl4.activityId);
             $state.go('lobby');
           } else {
@@ -127,7 +131,7 @@ angular.module('saan.controllers')
         } else if (Ctrl4.level <= Ctrl4.totalLevels) {
           Ctrl4.showDashboard(false);
         } else {
-          Util.saveLevel(Ctrl4.activityId, Ctrl4.initialLevel);
+          Ctrl4.level = Ctrl4.initialLevel;
           $state.go('lobby');
         }
       }, 1000);

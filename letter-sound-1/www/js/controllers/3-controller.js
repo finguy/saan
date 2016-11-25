@@ -18,7 +18,7 @@ angular.module('saan.controllers')
   Ctrl3.dashboard = []; // Dashboard letters
   $scope.selectedObject = ""; // Collects letters the user selects
   Ctrl3.playedLetters = []; // Collects words the user played
-  Ctrl3.level = Ctrl3.level || 1; // Indicates activity level
+  Ctrl3.level = null; // Indicates activity level
 
 
 
@@ -29,6 +29,10 @@ angular.module('saan.controllers')
   Ctrl3.srcAlphabetLetters = "";
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
+
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
+  });
 
   //Shows Activity Dashboard
   Ctrl3.showDashboard = function(readInstructions) {
@@ -56,7 +60,9 @@ angular.module('saan.controllers')
   };
 
   Ctrl3.setUpLevel = function() {
-    Ctrl3.level = Util.getLevel(Ctrl3.activityId);
+    if (!Ctrl3.level) {
+      Ctrl3.level = Util.getLevel(Ctrl3.activityId);
+    }
   };
 
   Ctrl3.setUpScore = function() {
@@ -65,7 +71,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl3.setUpStatus = function() {
-    Ctrl3.finished = Util.getStatus(Ctrl3.activityId);
+    Ctrl3.finished = ActividadesFinalizadasService.finalizada(Ctrl3.activityId);
   }
 
   Ctrl3.setUpContextVariables = function(data) {
@@ -96,7 +102,7 @@ angular.module('saan.controllers')
     $scope.instructions = letterJson.instruction;
 
     if (Ctrl3.finished) {
-      $scope.activityProgress = 100; 
+      $scope.activityProgress = 100;
     } else {
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
@@ -111,12 +117,10 @@ angular.module('saan.controllers')
       //wait for speak
       $timeout(function() {
         Ctrl3.levelUp(); //Advance level
-        Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
         if (!Ctrl3.finished) {
           Ctrl3.score = Score.update(Ctrl3.addScore, Ctrl3.activityId, Ctrl3.finished);
           Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
           if (Ctrl3.finished) {
-            Util.saveStatus(Ctrl3.activityId, Ctrl3.finished);
             ActividadesFinalizadasService.add(Ctrl3.activityId);
             $state.go('lobby');
           } else {
@@ -125,7 +129,7 @@ angular.module('saan.controllers')
         } else if (Ctrl3.level <= Ctrl3.totalLevels) {
           Ctrl3.showDashboard(true);
         } else {
-          Util.saveLevel(Ctrl3.activityId, Ctrl3.initialLevel);
+          Ctrl3.level = Ctrl3.initialLevel;
           $state.go('lobby');
         }
       }, 1000);
