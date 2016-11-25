@@ -39,6 +39,7 @@
       }
       else {
         $log.error("Invalid level value");
+        return [];
       }
     }
 
@@ -51,14 +52,20 @@
     }
 
     function getSequencePattern(length, numberOfColors){
-      var colors = _.sample(data.colors, numberOfColors);
-      var pattern = [];
-      for (var i = 0; i < length/2; i++){
-        var index = _.random(0, numberOfColors-1);
-        pattern.push(colors[index]);
-      }
+      if (numberOfColors >= 1){
+        var colors = _.sample(data.colors, numberOfColors);
+        var pattern = colors;
 
-      return pattern.concat(pattern);
+        for (var i = numberOfColors; i < length/2; i++){
+          var index = _.random(0, numberOfColors-1);
+          pattern.push(colors[index]);
+        }
+        pattern = _.shuffle(pattern);
+        return pattern.concat(pattern);
+      }
+      else {
+        $log.error("Invalid color value");
+      }
     }
 
     function getFillinPattern(length, numberOfColors){
