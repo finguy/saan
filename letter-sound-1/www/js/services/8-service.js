@@ -13,7 +13,7 @@
       getMaxLevel: getMaxLevel,
       getMinLevel: getMinLevel,
       getSuccessAudio: getSuccessAudio,
-      getFailureAudio: getFailureAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -21,7 +21,7 @@
       if (level >= 1){
         return $http.get(src).then(
           function success(response) {
-            data = response.data;            
+            data = response.data;
             return {
               instructionsPath: data.instructionsPath,
               instructionsText: data.instructionsText,
@@ -30,7 +30,6 @@
             };
           },
           function error() {
-            //TODO: handle errors for real
             $log.error("error");
           }
         );

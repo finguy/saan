@@ -8,19 +8,17 @@
     $scope.dropzoneModel = [];
 
     var config;
-    // var matchesCount = 0;
     var Ctrl8 = Ctrl8 || {};
     var level;
     var stageNumber;
     var stageData;
     var readInstructions;
-    var matchesCount;
     var instructionsPlayer;
     var failurePlayer;
     var successPlayer;
+    var checking = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      // stageNumber = 1;
       level = Util.getLevel($scope.activityId) || 1;
       readInstructions = true;
       Ctrl8.getConfiguration(level);
@@ -53,13 +51,9 @@
     };
 
     Ctrl8.setActivity  = function (){
+      checking = false;
       $scope.matches = [];
       $scope.cards = [];
-
-      var number;
-      var index;
-      var valid;
-      matchesCount = 0;
 
       _.each(stageData.tickets, function(element){
         $scope.cards.push({value: element, dropzone: []});
@@ -109,42 +103,48 @@
     };
 
     Ctrl8.success = function(eventObj) {
-      var item = $scope.dropzoneModel.pop();
-      var index = _.findIndex($scope.cards,
-                              function(card){return card.value == item;},
-                              item);
-      $scope.cards[index].dropzone.push(item);
-      var successFeedback = NumberMatching.getSuccessAudio();
+      if (!checking){
+        checking = true;
+        var item = $scope.dropzoneModel.pop();
+        var index = _.findIndex($scope.cards,
+                                function(card){return card.value == item;},
+                                item);
+        $scope.cards[index].dropzone.push(item);
+        var successFeedback = NumberMatching.getSuccessAudio();
 
-      successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-        function(){
-          if ($scope.matches.length === 0){
-            if (level == NumberMatching.getMinLevel() &&
-              !ActividadesFinalizadasService.finalizada($scope.activityId)){
-              // if player reached minimum for setting activity as finished
-              ActividadesFinalizadasService.add($scope.activityId);
-              level++;
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function(){ successPlayer.release(); $scope.showText = false; $scope.$apply();},
+          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
+        );
+
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+
+        successPlayer.play();
+
+        if ($scope.matches.length === 0){
+          if (level == NumberMatching.getMinLevel() &&
+            !ActividadesFinalizadasService.finalizada($scope.activityId)){
+            // if player reached minimum for setting activity as finished
+            ActividadesFinalizadasService.add($scope.activityId);
+            level++;
+            $state.go('lobby');
+          }
+          else {
+            if (level == NumberMatching.getMaxLevel()){
+              level = 1;
               $state.go('lobby');
             }
             else {
-              if (level >= NumberMatching.getMaxLevel()){
-                level = 1;
-                $state.go('lobby');
-              }
-              else {
-                $timeout(function(){
-                  stageNumber = 1;
-                  Util.saveLevel($scope.activityId, ++level);
-                  Ctrl8.getConfiguration(level);
-                }, 1000);
-              }
+              $timeout(function(){
+                Util.saveLevel($scope.activityId, ++level);
+                Ctrl8.getConfiguration(level);
+              }, 1000);
             }
           }
-        },
-        function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
-      );
-
-      successPlayer.play();
+        }
+        checking = false;
+      }
     };
 
     Ctrl8.failure = function(){
@@ -161,6 +161,5 @@
         failurePlayer.play();
       }
     };
-
   }]);
 })();
