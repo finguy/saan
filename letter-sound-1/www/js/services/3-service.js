@@ -36,9 +36,7 @@ angular.module('saan.services')
               previousLetterImgSrc: data.previousLetterImgSrc,
               srcAlphabetLetters: data.srcAlphabetLetters,
               finalizationLevel: data.finalizationLevel,
-              totalLevels: data.letters.length,
-              instructionsPath: data.instructionsPath,
-              instructionsText: data.instructionsText
+              totalLevels: data.letters.length              
             };
           },
           function error() {

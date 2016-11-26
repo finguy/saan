@@ -150,8 +150,6 @@ angular.module('saan.controllers')
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     $timeout(function() {
-      var position = Util.getRandomNumber(Ctrl3.successMessages.length);
-      var successMessage = Ctrl3.successMessages[position];
       $scope.showText = true;
       $scope.textSpeech = Ctrl3.successText;
       Ctrl3.successPlayer.play();
@@ -184,8 +182,6 @@ angular.module('saan.controllers')
     }
     //wait for speak
     $timeout(function() {
-      var position = Util.getRandomNumber(Ctrl3.errorMessages.length);
-      var errorMessage = Ctrl3.errorMessages[position];
       $scope.showText = true;
       $scope.textSpeech = Ctrl3.failureText;
       Ctrl3.failurePlayer.play();
