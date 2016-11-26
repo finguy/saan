@@ -1,12 +1,14 @@
 angular.module('saan.controllers')
   .controller('4Ctrl', function($scope, $state, $timeout, RandomNumber, TTSService,
-    Util, Animations, Score, ActividadesFinalizadasService) {
+    Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
 
     var Ctrl4 = Ctrl4 || {};
     $scope.activityId = 4;
     Ctrl4.playedNumbers = [];
     Ctrl4.level = null;
     Ctrl4.score = 0;
+    Ctrl4.successPlayer;
+    Ctrl4.failurePlayer;
 
     $scope.number = null;
     $scope.imgs = [];
@@ -16,6 +18,8 @@ angular.module('saan.controllers')
     $scope.activityProgress = 0;
     $scope.checkingNumber = false;
     $scope.numberDragged = [];
+    $scope.showText = false;
+    $scope.textSpeech = "";
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -105,19 +109,51 @@ angular.module('saan.controllers')
       }
 
       if (Ctrl4.finished) {
-        $scope.activityProgress = 100;// If finalized show all progress
+        $scope.activityProgress = 100; // If finalized show all progress
       } else {
         $scope.activityProgress = 100 * (Ctrl4.level - 1) / Ctrl4.totalLevels;
       }
+
+      //Success feeback player
+      var successFeedback = RandomNumber.getSuccessAudio();
+      Ctrl4.successText = successFeedback.text;
+      Ctrl4.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        function success() {
+          Ctrl4.successPlayer.release();
+          $scope.showText = false;
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl4.successPlayer.release();
+          $scope.showText = false;
+          $scope.checkingWord = false;
+        }
+      );
+
+      //Failure feeback player
+      var failureFeedback = RandomNumber.getFailureAudio();
+      Ctrl4.failureText = failureFeedback.text;
+      Ctrl4.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          Ctrl4.failurePlayer.release();
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl4.failurePlayer.release();
+          $scope.showText = false;
+        }
+      );
     };
 
     Ctrl4.success = function() {
       Ctrl4.playedNumbers.push($scope.number);
-      var position = Util.getRandomNumber(Ctrl4.successMessages.length);
-      var successMessage = Ctrl4.successMessages[position];
-      $scope.speak(successMessage);
       //wait for speak
       $timeout(function() {
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl4.successText;
+        Ctrl4.successPlayer.play();
         Ctrl4.levelUp(); //Advance level
         if (!Ctrl4.finished) {
           Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
@@ -141,9 +177,11 @@ angular.module('saan.controllers')
       if (!Ctrl4.finished) {
         Ctrl4.score = Score.update(-Ctrl4.substractScore, $scope.activityId, Ctrl4.finished);
       }
-      var position = Util.getRandomNumber(Ctrl4.errorMessages.length);
-      var errorMessage = Ctrl4.errorMessages[position];
-      $scope.speak(errorMessage);
+      $timeout(function() {
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl4.failureText;
+        Ctrl4.failurePlayer.play();
+      }, 1000);
     };
 
     Ctrl4.handleProgress = function(numberOk) {

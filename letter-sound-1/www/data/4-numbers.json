@@ -171,37 +171,37 @@
           ]
       }
   ],
-  "assets": [ "img/4-assets/assorted-objects/1.png",
-            "img/4-assets/assorted-objects/2.png",
-            "img/4-assets/assorted-objects/3.png",
-            "img/4-assets/assorted-objects/4.png",
-            "img/4-assets/assorted-objects/5.png",
-            "img/4-assets/assorted-objects/6.png",
-            "img/4-assets/assorted-objects/7.png",
-            "img/4-assets/assorted-objects/8.png",
-            "img/4-assets/assorted-objects/9.png",
-            "img/4-assets/assorted-objects/10.png",
-            "img/4-assets/assorted-objects/11.png",
-            "img/4-assets/assorted-objects/12.png",
-            "img/4-assets/assorted-objects/13.png",
-            "img/4-assets/assorted-objects/14.png",
-            "img/4-assets/assorted-objects/15.png",
-            "img/4-assets/assorted-objects/16.png",
-            "img/4-assets/assorted-objects/17.png",
-            "img/4-assets/assorted-objects/18.png",
-            "img/4-assets/assorted-objects/19.png",
-            "img/4-assets/assorted-objects/20.png",
-            "img/4-assets/assorted-objects/21.png",
-            "img/4-assets/assorted-objects/22.png",
-            "img/4-assets/assorted-objects/23.png",
-            "img/4-assets/assorted-objects/24.png",
-            "img/4-assets/assorted-objects/25.png",
-            "img/4-assets/assorted-objects/26.png",
-            "img/4-assets/assorted-objects/27.png",
-            "img/4-assets/assorted-objects/28.png",
-            "img/4-assets/assorted-objects/29.png",
-            "img/4-assets/assorted-objects/30.png",
-            "img/4-assets/assorted-objects/31.png"
+  "assets": [ "assets/4/assorted-objects/1.png",
+            "assets/4/assorted-objects/2.png",
+            "assets/4/assorted-objects/3.png",
+            "assets/4/assorted-objects/4.png",
+            "assets/4/assorted-objects/5.png",
+            "assets/4/assorted-objects/6.png",
+            "assets/4/assorted-objects/7.png",
+            "assets/4/assorted-objects/8.png",
+            "assets/4/assorted-objects/9.png",
+            "assets/4/assorted-objects/10.png",
+            "assets/4/assorted-objects/11.png",
+            "assets/4/assorted-objects/12.png",
+            "assets/4/assorted-objects/13.png",
+            "assets/4/assorted-objects/14.png",
+            "assets/4/assorted-objects/15.png",
+            "assets/4/assorted-objects/16.png",
+            "assets/4/assorted-objects/17.png",
+            "assets/4/assorted-objects/18.png",
+            "assets/4/assorted-objects/19.png",
+            "assets/4/assorted-objects/20.png",
+            "assets/4/assorted-objects/21.png",
+            "assets/4/assorted-objects/22.png",
+            "assets/4/assorted-objects/23.png",
+            "assets/4/assorted-objects/24.png",
+            "assets/4/assorted-objects/25.png",
+            "assets/4/assorted-objects/26.png",
+            "assets/4/assorted-objects/27.png",
+            "assets/4/assorted-objects/28.png",
+            "assets/4/assorted-objects/29.png",
+            "assets/4/assorted-objects/30.png",
+            "assets/4/assorted-objects/31.png"
         ],
   "instructions": "Hi! Drag the box to the number containing that quantity. Good Luck!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
@@ -211,5 +211,17 @@
     "substract": 1,
     "minScore": 10
   },
-  "finalizationLevel" : 3
+  "finalizationLevel" : 3,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }

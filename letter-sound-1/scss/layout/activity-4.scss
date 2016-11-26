@@ -1,14 +1,14 @@
 $darkBrown: #5E2B26;
 $lightbrow:#e7ddc4;
 .activity4-content {
-  background-image: url('../img/4-assets/background.jpg');
+  background-image: url('../assets/4/background.jpg');
 
   .img-container {
     @include image-container-1(2rem, $darkBrown, $lightbrow);
    }
 
    .dashboard {
-     margin-top: 20rem;
+     margin-top: 5rem;
    }
 
    .col-container {
@@ -30,7 +30,7 @@ $lightbrow:#e7ddc4;
       max-width:40rem;
       border-top: 2rem solid transparent;
       padding: 1.5rem;
-      border-image-source: url("../img/4-assets/store-2.png");
+      border-image-source: url("../assets/4/store-2.png");
       border-image-repeat: repeat;
       border-image-slice: 30;
     }
@@ -55,5 +55,21 @@ $lightbrow:#e7ddc4;
     .as-sortable-item {
       background-color: inherit;
       border: inherit;
+    }
+
+    .character{
+      bottom: 8rem;
+      position: absolute;
+      right: 0;
+
+       img {
+        height: 20rem;
+        margin-left: auto;
+       }
+    }
+
+    .talk-bubble {
+      right: 22rem;
+      bottom: 15rem;
     }
 }
