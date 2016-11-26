@@ -1,109 +1,109 @@
 {"letters":
   [{"letter":"a" ,
-    "letterSrc": "img/alphabet-buttons/a.png",
+    "letterSrc": "assets/alphabet-buttons/a.png",
     "imgs":[
-      {"src": ["img/5-assets/animals/wale.png",
-                "img/5-assets/animals/snake.png"
+      {"src": ["assets/5/animals/wale.png",
+                "assets/5/animals/snake.png"
               ],
        "name" : "A"
      },
      {"src": [
-              "img/5-assets/animals/tiger.png"
+              "assets/5/animals/tiger.png"
      ],
       "name" : "e"
     },
-    {"src": ["img/5-assets/animals/octopus.png",
-              "img/5-assets/animals/frog.png",
-              "img/5-assets/animals/dog.png",
-              "img/5-assets/animals/lion.png"
+    {"src": ["assets/5/animals/octopus.png",
+              "assets/5/animals/frog.png",
+              "assets/5/animals/dog.png",
+              "assets/5/animals/lion.png"
             ],
      "name" : "o"
    }
       ]
     },
     {"letter":"e" ,
-      "letterSrc": "img/alphabet-buttons/e.png",
+      "letterSrc": "assets/alphabet-buttons/e.png",
       "imgs":[
         {"src": [
-                  "img/5-assets/animals/frog.png",
-                  "img/5-assets/animals/dog.png",
-                  "img/5-assets/animals/lion.png"
+                  "assets/5/animals/frog.png",
+                  "assets/5/animals/dog.png",
+                  "assets/5/animals/lion.png"
                 ],
          "name" : "o"
        },
       {"src": [
-              "img/5-assets/animals/sheep.png"
+              "assets/5/animals/sheep.png"
               ],
        "name" : "E"
      },
-      {"src": ["img/5-assets/animals/octopus.png",
-                "img/5-assets/animals/duck.png"
+      {"src": ["assets/5/animals/octopus.png",
+                "assets/5/animals/duck.png"
               ],
        "name" : "u"
      }
         ]
     },
     {"letter":"i" ,
-      "letterSrc": "img/alphabet-buttons/i.png",
+      "letterSrc": "assets/alphabet-buttons/i.png",
       "imgs":[
-       {"src": [ "img/5-assets/animals/horse.png",
-                 "img/5-assets/animals/frog.png",
-                 "img/5-assets/animals/dog.png"
+       {"src": [ "assets/5/animals/horse.png",
+                 "assets/5/animals/frog.png",
+                 "assets/5/animals/dog.png"
                  ],
         "name" : "o"
       },
-      {"src": ["img/5-assets/animals/octopus.png",
-                "img/5-assets/animals/turtle.png",
-                "img/5-assets/animals/duck.png"],
+      {"src": ["assets/5/animals/octopus.png",
+                "assets/5/animals/turtle.png",
+                "assets/5/animals/duck.png"],
        "name" : "u"
      },
-     {"src": ["img/5-assets/animals/aligator.png",
-              "img/5-assets/animals/fish.png",
-              "img/5-assets/animals/bird.png",
-              "img/5-assets/animals/pig.png"],
+     {"src": ["assets/5/animals/aligator.png",
+              "assets/5/animals/fish.png",
+              "assets/5/animals/bird.png",
+              "assets/5/animals/pig.png"],
       "name" : "I"
     }
         ]
     },
     {"letter":"o" ,
-      "letterSrc": "img/alphabet-buttons/o.png",
+      "letterSrc": "assets/alphabet-buttons/o.png",
       "imgs":[
-       {"src": [ "img/5-assets/animals/wale.png",
-                 "img/5-assets/animals/snake.png"
+       {"src": [ "assets/5/animals/wale.png",
+                 "assets/5/animals/snake.png"
                 ],
         "name" : "a"
       },
       {"src": [
-              "img/5-assets/animals/sheep.png"
+              "assets/5/animals/sheep.png"
             ],
        "name" : "e"
      },
-     {"src": ["img/5-assets/animals/octopus.png",
-               "img/5-assets/animals/frog.png",
-               "img/5-assets/animals/horse.png",
-               "img/5-assets/animals/dog.png"
+     {"src": ["assets/5/animals/octopus.png",
+               "assets/5/animals/frog.png",
+               "assets/5/animals/horse.png",
+               "assets/5/animals/dog.png"
              ],
       "name" : "o"
     }
         ]
     },
   {"letter":"u" ,
-    "letterSrc": "img/alphabet-buttons/u.png",
+    "letterSrc": "assets/alphabet-buttons/u.png",
     "imgs":[
-            {"src": [  "img/5-assets/animals/octopus.png",
-                        "img/5-assets/animals/duck.png"
+            {"src": [  "assets/5/animals/octopus.png",
+                        "assets/5/animals/duck.png"
                     ],
              "name" : "u"
            },
            {"src": [
-                   "img/5-assets/animals/sheep.png"
+                   "assets/5/animals/sheep.png"
                   ],
             "name" : "e"
           },
-          {"src": ["img/5-assets/animals/aligator.png",
-                   "img/5-assets/animals/fish.png",
-                   "img/5-assets/animals/bird.png",
-                   "img/5-assets/animals/pig.png"],
+          {"src": ["assets/5/animals/aligator.png",
+                   "assets/5/animals/fish.png",
+                   "assets/5/animals/bird.png",
+                   "assets/5/animals/pig.png"],
            "name" : "I"
          }
       ]
@@ -116,5 +116,17 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 3
+  "finalizationLevel": 3,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }

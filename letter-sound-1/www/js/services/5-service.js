@@ -1,11 +1,12 @@
 angular.module('saan.services')
 .factory('RandomLetter', function($http, $log, LevelsFive, Util) {
+  var data;
   return {
     letter: function(level, playedLetters) {
       var src = LevelsFive.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
-          var data = response.data;
+          data = response.data;
           var lettersNotPlayed = [];
           if (playedLetters.length === 0 ){
             lettersNotPlayed = data.letters;
@@ -35,6 +36,14 @@ angular.module('saan.services')
           $log.error("error");
         }
       );
+    },
+    getSuccessAudio: function() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    },
+    getFailureAudio: function() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   };
 })

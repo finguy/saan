@@ -1,5 +1,5 @@
 .activity-5-content {
-  background-image: url('../img/5-assets/background.png');
+  background-image: url('../assets/5/background.png');
 
   .letter-container {
     text-align: center;
@@ -29,5 +29,21 @@
     align-items: flex-end;
     display: flex;
     justify-content: center;
+  }
+
+  .character{
+    bottom: 8rem;
+    position: absolute;
+    right: 0;
+
+     img {
+      height: 20rem;
+      margin-left: auto;
+     }
+  }
+
+  .talk-bubble {
+    right: 22rem;
+    bottom: 15rem;
   }
 }

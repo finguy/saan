@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
   .controller('5Ctrl', function($scope, $timeout, $state, $log, RandomLetter, TTSService,
-    Util, Score, ActividadesFinalizadasService) {
+    Util, Score, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 5; // Activity Id
     $scope.letter = ""; // Letter to play in level
     $scope.letterSrc = "";
@@ -12,7 +12,8 @@ angular.module('saan.controllers')
     $scope.checkingLetter = false;
     $scope.checkingWord = false;
     $scope.activityProgress = 0;
-
+    $scope.showText = false;
+    $scope.textSpeech = "";
 
     //Reproduces sound using TTSService
     $scope.speak = TTSService.speak;
@@ -21,8 +22,10 @@ angular.module('saan.controllers')
     var Ctrl5 = Ctrl5 || {};
     Ctrl5.selectedObject = ""; // Collects letters the user selects
     Ctrl5.playedLetters = []; // Collects words the user played
-    Ctrl5.level =  null; // Indicates activity level
+    Ctrl5.level = null; // Indicates activity level
     Ctrl5.score = 0;
+    Ctrl5.successPlayer;
+    Ctrl5.failurePlayer;
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, Ctrl5.level);
@@ -66,7 +69,7 @@ angular.module('saan.controllers')
     };
 
     Ctrl5.setUpScore = function() {
-      Ctrl5.score =Util.getScore($scope.activityId);
+      Ctrl5.score = Util.getScore($scope.activityId);
     };
 
     Ctrl5.setUpStatus = function() {
@@ -103,14 +106,45 @@ angular.module('saan.controllers')
         $scope.activityProgress = 100 * (Ctrl5.level - 1) / Ctrl5.totalLevels;
       }
 
+      //Success feeback player
+      var successFeedback = RandomLetter.getSuccessAudio();
+      Ctrl5.successText = successFeedback.text;
+      Ctrl5.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        function success() {
+          Ctrl5.successPlayer.release();
+          $scope.showText = false;
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl5.successPlayer.release();
+          $scope.showText = false;
+          $scope.checkingWord = false;
+        }
+      );
+
+      //Failure feeback player
+      var failureFeedback = RandomLetter.getFailureAudio();
+      Ctrl5.failureText = failureFeedback.text;
+      Ctrl5.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          Ctrl5.failurePlayer.release();
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl5.failurePlayer.release();
+          $scope.showText = false;
+        }
+      );
     };
 
     Ctrl5.success = function() {
       Ctrl5.playedLetters.push($scope.letter.toLowerCase());
       $timeout(function() {
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl5.successText;
+        Ctrl5.successPlayer.play();
         //wait for speak
         $timeout(function() {
           Ctrl5.levelUp(); //Advance level
@@ -126,7 +160,7 @@ angular.module('saan.controllers')
           } else if (Ctrl5.level <= Ctrl5.totalLevels) {
             Ctrl5.showDashboard(false);
           } else {
-            Ctrl5.level =  Ctrl5.initialLevel;
+            Ctrl5.level = Ctrl5.initialLevel;
             $state.go('lobby');
           }
         }, 1000);
@@ -139,9 +173,9 @@ angular.module('saan.controllers')
       //wait for speak
       $timeout(function() {
         $scope.checkingWord = false;
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl5.failureText;
+        Ctrl5.failurePlayer.play();
       }, 1000);
     };
 
