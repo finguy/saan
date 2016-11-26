@@ -110,6 +110,7 @@
     }
     ],
   "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
