@@ -1,5 +1,5 @@
 .activity9 {
-  background: url('../img/9-assets/background-wood.jpg') no-repeat fixed;
+  background: url('../assets/9/background-wood.jpg') no-repeat fixed;
   background-size: cover;
 
   .letter {
@@ -8,7 +8,7 @@
   }
 
   .icon-word.dropzone {
-    background-image: url('../img/9-assets/cuadro.png');
+    background-image: url('../assets/9/cuadro.png');
     border: 0;
     border-radius: 0;
     height: 17rem;
@@ -60,5 +60,21 @@
 
   .as-sortable-dragging {
     width: auto !important;
+  }
+
+  .character{
+    bottom: 8rem;
+    position: absolute;
+    right: 0;
+
+     img {
+      height: 10rem;
+      margin-left: auto;
+     }
+  }
+
+  .talk-bubble {
+    right: 8rem;
+    bottom: 8rem;
   }
 }
