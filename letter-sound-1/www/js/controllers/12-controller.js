@@ -2,7 +2,7 @@
   'use strict';
   angular.module('saan.controllers')
     .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
-      Util, Animations, Score, ActividadesFinalizadasService) {
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 12; // Activity Id
       $scope.img = "";
       $scope.assets = [];
@@ -11,11 +11,12 @@
       $scope.instructions = ""; // Instructions to read
       $scope.successMessages = [];
       $scope.errorMessages = [];
-      $scope.showText = false;
+      $scope.showReading = false;
       $scope.showQuestion = false;
       $scope.showOptions = false;
       $scope.dashboard = []; // Dashboard letters
-
+      $scope.showText = false;
+      $scope.textSpeech = "";
       $scope.level = null; // Indicates activity level
       $scope.totalLevels = 3;
       $scope.activityProgress = 0;
@@ -30,6 +31,8 @@
       });
 
       var Ctrl12 = Ctrl12 || {};
+      Ctrl12.successPlayer;
+      Ctrl12.failurePlayer;
 
       Ctrl12.setUpLevel = function() {
         if (!$scope.level) {
@@ -76,7 +79,7 @@
         var position = Util.getRandomNumber(textJson.questions.length);
         $scope.playedTexts.push(textJson.id);
         $scope.text = textJson.text;
-        $scope.showText = true;
+        $scope.showReading = true;
         $scope.showQuestion = false;
         $scope.showOptions = false;
         $scope.question = textJson.questions[position].question;
@@ -101,12 +104,44 @@
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
 
+        //Success feeback player
+        var successFeedback = RandomText.getSuccessAudio();
+        Ctrl12.successText = successFeedback.text;
+        Ctrl12.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function success() {
+            Ctrl12.successPlayer.release();
+            $scope.showText = false;
+          },
+          function error(err) {
+            $log.error(err);
+            Ctrl12.successPlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+          }
+        );
+
+        //Failure feeback player
+        var failureFeedback = RandomText.getFailureAudio();
+        Ctrl12.failureText = failureFeedback.text;
+        Ctrl12.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            Ctrl12.failurePlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            Ctrl12.failurePlayer.release();
+            $scope.showText = false;
+          }
+        );
       };
+
       Ctrl12.success = function() {
         $scope.checkingAnswer = true;
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl12.successText;
+        Ctrl12.successPlayer.play();
         $timeout(function() {
           //Advance level
           Ctrl12.levelUp(); //Advance level
@@ -132,9 +167,9 @@
         if (!$scope.finished) {
           $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
         }
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl12.failureText;
+        Ctrl12.failurePlayer.play();
         $timeout(function() {
           $scope.checkingAnswer = false;
         }, 1000);
@@ -150,7 +185,7 @@
       };
 
       $scope.displayQuestion = function() {
-        $scope.showText = false;
+        $scope.showReading = false;
         $scope.showQuestion = true;
         //Wait for UI to load
         $timeout(function() {

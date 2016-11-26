@@ -4,23 +4,23 @@
       "questions": [
         {"question": "What did Joe like?",
           "options": [
-              {"id":1, "img": "img/12-assets/assorted-objects/lemmon.png"},
-              {"id":2, "img": "img/12-assets/assorted-objects/apple.png"},
-              {"id":3, "img": "img/12-assets/assorted-objects/banana.png"},
-              {"id":4, "img": "img/12-assets/assorted-objects/orange.png"},
-              {"id":5, "img": "img/12-assets/assorted-objects/pear.png"},
-              {"id":6, "img": "img/12-assets/assorted-objects/strawberry.png"}
+              {"id":1, "img": "assets/12/assorted-objects/lemmon.png"},
+              {"id":2, "img": "assets/12/assorted-objects/apple.png"},
+              {"id":3, "img": "assets/12/assorted-objects/banana.png"},
+              {"id":4, "img": "assets/12/assorted-objects/orange.png"},
+              {"id":5, "img": "assets/12/assorted-objects/pear.png"},
+              {"id":6, "img": "assets/12/assorted-objects/strawberry.png"}
             ],
             "answer":2
         },
         {"question": "What did the rabbit's friend like?",
           "options": [
-            {"id":1, "img": "img/12-assets/assorted-objects/lemmon.png"},
-            {"id":2, "img": "img/12-assets/assorted-objects/apple.png"},
-            {"id":3, "img": "img/12-assets/assorted-objects/banana.png"},
-            {"id":4, "img": "img/12-assets/assorted-objects/orange.png"},
-            {"id":5, "img": "img/12-assets/assorted-objects/pear.png"},
-            {"id":6, "img": "img/12-assets/assorted-objects/strawberry.png"}
+            {"id":1, "img": "assets/12/assorted-objects/lemmon.png"},
+            {"id":2, "img": "assets/12/assorted-objects/apple.png"},
+            {"id":3, "img": "assets/12/assorted-objects/banana.png"},
+            {"id":4, "img": "assets/12/assorted-objects/orange.png"},
+            {"id":5, "img": "assets/12/assorted-objects/pear.png"},
+            {"id":6, "img": "assets/12/assorted-objects/strawberry.png"}
             ],
             "answer":3
         }
@@ -31,12 +31,12 @@
       "questions": [
         {"question": "What did Juno like?",
           "options": [
-              {"id":1, "img": "img/12-assets/assorted-objects/lemmon.png"},
-              {"id":2, "img": "img/12-assets/assorted-objects/apple.png"},
-              {"id":3, "img": "img/12-assets/assorted-objects/banana.png"},
-              {"id":4, "img": "img/12-assets/assorted-objects/orange.png"},
-              {"id":5, "img": "img/12-assets/assorted-objects/pear.png"},
-              {"id":6, "img": "img/12-assets/assorted-objects/strawberry.png"}
+              {"id":1, "img": "assets/12/assorted-objects/lemmon.png"},
+              {"id":2, "img": "assets/12/assorted-objects/apple.png"},
+              {"id":3, "img": "assets/12/assorted-objects/banana.png"},
+              {"id":4, "img": "assets/12/assorted-objects/orange.png"},
+              {"id":5, "img": "assets/12/assorted-objects/pear.png"},
+              {"id":6, "img": "assets/12/assorted-objects/strawberry.png"}
             ],
             "answer":5
         }
@@ -50,5 +50,17 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 2
+  "finalizationLevel": 2,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }
