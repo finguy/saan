@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
@@ -24,12 +24,16 @@ angular.module('saan.controllers')
   $scope.dropzone = [];
   $scope.hasDraggedLetter = [];
   $scope.phonemas = [];
-  $scope.imgBox = "img/6-assets/objects/treasure-chest-stars.png";
+  $scope.imgBox = "assets/6/objects/treasure-chest-stars.png";
+  $scope.showText = false;
+  $scope.textSpeech = "";
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
   //Shows Activity Dashboard
   var Ctrl6 = Ctrl6 || {};
+  Ctrl6.successPlayer;
+  Ctrl6.failurePlayer;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, $scope.level);
@@ -115,6 +119,39 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
     }
+
+    //Success feeback player
+    var successFeedback = RandomWordSix.getSuccessAudio();
+    Ctrl6.successText = successFeedback.text;
+    Ctrl6.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        Ctrl6.successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+
+    //Failure feeback player
+    var failureFeedback = RandomWordSix.getFailureAudio();
+    Ctrl6.failureText = failureFeedback.text;
+    Ctrl6.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        Ctrl6.failurePlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.failurePlayer.release();
+        $scope.showText = false;
+      }
+    );
+
   };
 
   //Verifies selected letters or and returns true if they match the word
@@ -138,9 +175,9 @@ angular.module('saan.controllers')
 
   Ctrl6.success = function() {
     var LAST_CHECK = $scope.phonemas.length === $scope.letters.length;
-    var position = Util.getRandomNumber($scope.successMessages.length);
-    var successMessage = $scope.successMessages[position];
-    $scope.speak(successMessage);
+    $scope.showText = true;
+    $scope.textSpeech = Ctrl6.successText;
+    Ctrl6.successPlayer.play();
     $timeout(function() {
       if (!$scope.finished) {
         $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
@@ -181,9 +218,9 @@ angular.module('saan.controllers')
     $scope.speak(name);
     //wait for speak
     $timeout(function() {
-      var position = Util.getRandomNumber($scope.errorMessages.length);
-      var errorMessage = $scope.errorMessages[position];
-      $scope.speak(errorMessage);
+      $scope.showText = true;
+      $scope.textSpeech = Ctrl6.failureText;
+      Ctrl6.failurePlayer.play();
     }, 000);
   };
 

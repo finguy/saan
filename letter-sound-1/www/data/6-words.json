@@ -2,51 +2,51 @@
   [{"word":"dog" ,
     "instruction":"Drag the letter you hear to the magic box",
     "imgs":[
-                "img/6-assets/objects/dog1.png",
-                "img/6-assets/objects/dog2.png",
-                "img/6-assets/objects/dog3.png"
+                "assets/6/objects/dog1.png",
+                "assets/6/objects/dog2.png",
+                "assets/6/objects/dog3.png"
       ]
     },
     {"word":"house" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/house1.png",
-                  "img/6-assets/objects/house2.png",
-                  "img/6-assets/objects/house3.png",
-                  "img/6-assets/objects/house4.png"
+                 "assets/6/objects/house1.png",
+                  "assets/6/objects/house2.png",
+                  "assets/6/objects/house3.png",
+                  "assets/6/objects/house4.png"
         ]
     },
     {"word":"bird" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/bird1.png",
-                  "img/6-assets/objects/bird2.png"
+                 "assets/6/objects/bird1.png",
+                  "assets/6/objects/bird2.png"
         ]
     },
     {"word":"ball" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/ball1.png",
-                  "img/6-assets/objects/ball2.png"
+                 "assets/6/objects/ball1.png",
+                  "assets/6/objects/ball2.png"
         ]
     },
     {"word":"tree" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/tree1.png"
+                 "assets/6/objects/tree1.png"
         ]
     },
     {"word":"tiger" ,
       "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/tiger1.png",
-                  "img/6-assets/objects/tiger2.png"
+                 "assets/6/objects/tiger1.png",
+                  "assets/6/objects/tiger2.png"
         ]
     },
     {"word":"apple" ,
       "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
-                 "img/6-assets/objects/apple.png"
+                 "assets/6/objects/apple.png"
         ]
     }
   ],
@@ -57,5 +57,17 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel" : 3
+  "finalizationLevel" : 3,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }

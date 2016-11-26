@@ -1,6 +1,10 @@
 <div class="dashboard text-center">
   <div as-sortable="sortableTargetOptions" data-ng-model="letters2" class="dropzone">
   </div>
+  <div class="character" ng-click="playWordAudio()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img src="assets/characters/mbott.png">
+  </div>
   <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
     <img src="{{imgSrc}}" ng-click="speak(currentPhonema)">
     <div ng-repeat="letter_obj in letters track by $index" >
