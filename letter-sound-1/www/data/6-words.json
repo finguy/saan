@@ -51,6 +51,7 @@
     }
   ],
   "instructions": "Drag the letter you hear to the magic box",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
