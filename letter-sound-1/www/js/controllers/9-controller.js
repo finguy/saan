@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 9; // Activity Id
   $scope.activityProgress = 0;
   $scope.words = [];
@@ -24,6 +24,7 @@ angular.module('saan.controllers')
   //Shows Activity Dashboard
   var Ctrl9 = Ctrl9 || {};
   Ctrl9.level = null;
+  Ctrl9.instructionsPlayer;
   Ctrl9.showDashboard = function(readInstructions) {
     Ctrl9.setUpLevel();
     Ctrl9.setUpScore();
@@ -37,7 +38,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl9.instructionsPlayer.play();
           }
         }, readWordTimeout);
       },
@@ -57,7 +58,7 @@ angular.module('saan.controllers')
     $scope.score = Util.getScore($scope.activityId);
   };
 
-  Ctrl9.setUpStatus = function() {    
+  Ctrl9.setUpStatus = function() {
     Ctrl9.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
 
@@ -99,6 +100,17 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * (Ctrl9.level - 1) / Ctrl9.totalLevels;
     }
+
+    Ctrl9.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success(){
+        Ctrl9.instructionsPlayer.release();
+        $scope.playWordAudio();
+      },
+      function error (err){
+        $log.error(err);
+        Ctrl9.instructionsPlayer.release();
+      }
+    );
   };
 
   Ctrl9.success = function() {
