@@ -1,92 +1,92 @@
 {"info":
   [ { "id": 1,
     "words": [{"word":"dog",
-    "imgs": ["assets/6/objects/dog1.png",
-                "assets/6/objects/dog2.png",
-                "assets/6/objects/dog3.png"
+    "imgs": ["objects/dog1.png",
+                "objects/dog2.png",
+                "objects/dog3.png"
               ],
     "instruction":"Select the image and drag the word"
     },
     {"word":"house" ,
-      "imgs": ["assets/6/objects/house1.png",
-                  "assets/6/objects/house2.png",
-                  "assets/6/objects/house3.png",
-                  "assets/6/objects/house4.png"
+      "imgs": ["objects/house1.png",
+                  "objects/house2.png",
+                  "objects/house3.png",
+                  "objects/house4.png"
                 ],
       "instruction": "Select the image and drag the word"
     },
     {"word":"bird" ,
-      "imgs": ["assets/6/objects/bird1.png",
-                  "assets/6/objects/bird2.png"
+      "imgs": ["objects/bird1.png",
+                  "objects/bird2.png"
                 ],
       "instruction": "Select the image and drag the word"
     },
     {"word":"ball" ,
-      "imgs": ["assets/6/objects/ball2.png",
-                  "assets/6/objects/ball1.png"
+      "imgs": ["objects/ball2.png",
+                  "objects/ball1.png"
                 ],
       "instruction": "Select the image and drag the word"
     },
     {"word":"tree" ,
-      "imgs": ["assets/6/objects/tree1.png"
+      "imgs": ["objects/tree1.png"
                 ],
       "instruction": "Select the image and drag the word"
     },
     {"word":"tiger" ,
-      "imgs": ["assets/6/objects/tiger1.png",
-                  "assets/6/objects/tiger2.png"
+      "imgs": ["objects/tiger1.png",
+                  "objects/tiger2.png"
                 ],
       "instruction":"Select the image and drag the word"
     },
     {"word":"apple" ,
       "imgs": [
-                  "assets/6/objects/apple.png"
+                  "objects/apple.png"
                 ],
       "instruction":"Select the image and drag the word"
 
     }]},
     { "id": 2,
       "words": [{"word":"dog",
-      "imgs": ["assets/6/objects/dog1.png",
-                  "assets/6/objects/dog2.png",
-                  "assets/6/objects/dog3.png"
+      "imgs": ["objects/dog1.png",
+                  "objects/dog2.png",
+                  "objects/dog3.png"
                 ],
       "instruction":"Select the image and drag the word"
       },
       {"word":"house" ,
-        "imgs": ["assets/6/objects/house1.png",
-                    "assets/6/objects/house2.png",
-                    "assets/6/objects/house3.png",
-                    "assets/6/objects/house4.png"
+        "imgs": ["objects/house1.png",
+                    "objects/house2.png",
+                    "objects/house3.png",
+                    "objects/house4.png"
                   ],
         "instruction": "Select the image and drag the word"
       },
       {"word":"bird" ,
-        "imgs": ["assets/6/objects/bird1.png",
-                    "assets/6/objects/bird2.png"
+        "imgs": ["objects/bird1.png",
+                    "objects/bird2.png"
                   ],
         "instruction": "Select the image and drag the word"
       },
       {"word":"ball" ,
-        "imgs": ["assets/6/objects/ball2.png",
-                    "assets/6/objects/ball1.png"
+        "imgs": ["objects/ball2.png",
+                    "objects/ball1.png"
                   ],
         "instruction": "Select the image and drag the word"
       }
       ]},
       { "id": 3,
         "words": [{"word":"dog",
-        "imgs": ["assets/6/objects/dog1.png",
-                    "assets/6/objects/dog2.png",
-                    "assets/6/objects/dog3.png"
+        "imgs": ["objects/dog1.png",
+                    "objects/dog2.png",
+                    "objects/dog3.png"
                   ],
         "instruction":"Select the image and drag the word"
         },
         {"word":"house" ,
-          "imgs": ["assets/6/objects/house1.png",
-                      "assets/6/objects/house2.png",
-                      "assets/6/objects/house3.png",
-                      "assets/6/objects/house4.png"
+          "imgs": ["objects/house1.png",
+                      "objects/house2.png",
+                      "objects/house3.png",
+                      "objects/house4.png"
                     ],
           "instruction": "Select the image and drag the word"
         }

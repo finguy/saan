@@ -3,6 +3,7 @@ angular.module('saan.controllers')
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 9; // Activity Id
+  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
   $scope.activityProgress = 0;
   $scope.words = [];
   $scope.imgs = [];

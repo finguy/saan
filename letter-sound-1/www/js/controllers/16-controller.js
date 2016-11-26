@@ -14,6 +14,7 @@ angular.module('saan.controllers')
   //Shows Activity Dashboard
   var Ctrl16 = Ctrl16 || {};
   $scope.activityId = 16; // Activity Id
+  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
   Ctrl16.totalLevels = 1;
   Ctrl16.level = null; // Indicates activity level
   $scope.activityProgress = 0;

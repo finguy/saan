@@ -5,16 +5,16 @@
   </div>
   <div class="dashboard">
     <div class="word-icons">
-      <div id="{{imgSrc}}" ng-repeat="item in imgs track by $index">
+      <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index">
         <div as-sortable="targetOptions" data-ng-model="item.dropzone">
-          <img class="dropzone icon" src="{{item.image}}" ng-show="item.dropzone.length == 1" ng-repeat="dummy in items" as-sortable-item/>
+          <img class="dropzone icon" src="{{assetsPath}}{{item.image}}" ng-show="item.dropzone.length == 1" ng-repeat="dummy in items" as-sortable-item/>
         </div>
       </div>
     </div>
     <div class="list-letters" as-sortable="sourceOptions" data-ng-model="letters">
       <div ng-repeat="data in letters">
         <div as-sortable-item as-sortable-item-handle>
-          <img class="letter" src="{{data.letterImage}}" />
+          <img class="letter" src="{{assetsPath}}{{data.letterImage}}" />
         </div>
       </div>
     </div>
