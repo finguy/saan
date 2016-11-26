@@ -13,20 +13,16 @@
     img { height: 30rem; }
   }
 
-  .dropzone {
-    border: .2rem dashed grey;
-    border-radius: 50%;
-    color: grey;
-    padding: 1.4rem;
 
-    .as-sortable-placeholder {
-      visibility: hidden;
-    }
+  .number-text {
+    font-size: 2em;
+    font-weight: bold;
+    position: relative;
   }
 
   .pattern-item {
     height: 8rem;
-    margin: auto 1rem 1rem;
+    margin: auto .5rem;
     width: 8rem;
 
     &.item-number {
@@ -36,13 +32,60 @@
     }
   }
 
+  .dropzone {
+    border: .2rem dashed grey;
+    border-radius: 50%;
+    color: grey;
+    margin: auto 1rem 1rem;
+    padding: 1.4rem;
+
+    .hook {
+      bottom: 5.6rem;
+      left: 1.4rem;
+      position: relative;
+    }
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
   .pattern-container {
     display: flex;
+    justify-content: center;
     padding-top: 5%;
+
+    .rope {
+      height: 2rem;
+      position: absolute;
+      width: 100%;
+    }
+
+    .item-number {
+      background: url('../assets/17/number-container.png') center center no-repeat;
+      height: 12rem;
+      width: 9rem;
+      z-index: 1;
+    }
+
+    .number-text {
+      top: 1.2rem;
+    }
+
   }
 
   .pattern-options {
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
+
+    .item-number {
+      background: url('../assets/17/numbers-to-choose.png') center center no-repeat;
+      height: 12rem;
+      width: 9rem;
+    }
+
+    .number-text {
+      bottom: .2rem;
+    }
   }
 
   .item-number {
