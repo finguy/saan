@@ -1,14 +1,14 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, $timeout, $state, RandomLetterThree, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+.controller('3Ctrl', function($scope, $log, $timeout, $state, RandomLetterThree, TTSService,
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.imgs = [];
   $scope.activityProgress = 0;
   var Ctrl3 = Ctrl3 || {};
   $scope.activityId = 3; // Activity Id
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
-
+  Ctrl3.instructionsPlayer;
 
   $scope.instructions = ""; // Instructions to read
   Ctrl3.successMessages = [];
@@ -49,12 +49,13 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl3.instructionsPlayer.play();
+            readInstructions = false;
           }
         }, readWordTimeout);
       },
       function error(error) {
-        console.log(error);
+        $log.error(error);
       }
     );
   };
@@ -106,6 +107,17 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
+
+    Ctrl3.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success(){
+        Ctrl3.instructionsPlayer.release();
+        $scope.playWordAudio();
+      },
+      function error (err){
+        $log.error(err);
+        Ctrl3.instructionsPlayer.release();
+      }
+    );
   };
 
   Ctrl3.success = function() {
