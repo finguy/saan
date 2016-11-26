@@ -2,7 +2,7 @@
   'use strict';
   angular.module('saan.controllers')
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
-      Util, Animations, Score, ActividadesFinalizadasService) {
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 10; // Activity Id
       $scope.word = []; // Letter to play in level
       $scope.wordStr = "";
@@ -27,6 +27,8 @@
       $scope.draggedLetters = [];
       $scope.imgsDragged = [];
       $scope.isWordOk = false;
+      $scope.showText = false;
+      $scope.textSpeech = "";
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
 
@@ -131,13 +133,45 @@
         } else {
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
+
+        //Success feeback player
+        var successFeedback = RandomWordTen.getSuccessAudio();
+        Ctrl10.successText = successFeedback.text;
+        Ctrl10.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function success() {
+            Ctrl10.successPlayer.release();
+            $scope.showText = false;
+          },
+          function error(err) {
+            $log.error(err);
+            Ctrl10.successPlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+          }
+        );
+
+        //Failure feeback player
+        var failureFeedback = RandomWordTen.getFailureAudio();
+        Ctrl10.failureText = failureFeedback.text;
+        Ctrl10.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            Ctrl10.failurePlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            Ctrl10.failurePlayer.release();
+            $scope.showText = false;
+          }
+        );
       };
 
       Ctrl10.success = function() {
         $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
+        $scope.showText = true;
+        $scope.textSpeech = Ctrl10.successText;
+        Ctrl10.successPlayer.play();
         $timeout(function() {
           $scope.draggedWord = false;
           Ctrl10.levelUp(); //Advance level
@@ -165,9 +199,9 @@
         }
         //wait for speak
         $timeout(function() {
-          var position = Util.getRandomNumber($scope.errorMessages.length);
-          var errorMessage = $scope.errorMessages[position];
-          $scope.speak(errorMessage);
+          $scope.showText = true;
+          $scope.textSpeech = Ctrl10.failureText;
+          Ctrl10.failurePlayer.play();
         }, 1000);
       };
 

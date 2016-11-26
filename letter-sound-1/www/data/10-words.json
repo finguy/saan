@@ -1,52 +1,52 @@
 {"info":
   [ {
     "word": "dog",
-    "imgs": ["img/10-assets/objects/dog1.png",
-                "img/10-assets/objects/dog2.png",
-                "img/10-assets/objects/dog3.png"
+    "imgs": ["assets/10/objects/dog1.png",
+                "assets/10/objects/dog2.png",
+                "assets/10/objects/dog3.png"
             ],
     "instruction":"Select the image and drag the word",
     "rimes": ["frog","blog","clog","cog"]
     },
     {"word":"house" ,
-      "imgs": ["img/10-assets/objects/house1.png",
-                  "img/10-assets/objects/house2.png",
-                  "img/10-assets/objects/house3.png",
-                  "img/10-assets/objects/house4.png"
+      "imgs": ["assets/10/objects/house1.png",
+                  "assets/10/objects/house2.png",
+                  "assets/10/objects/house3.png",
+                  "assets/10/objects/house4.png"
                 ],
       "instruction": "Select the image and drag the word",
       "rimes": ["mouse","spouse","prouse"]
     },
     {"word":"bird" ,
-      "imgs": ["img/10-assets/objects/bird1.png",
-                  "img/10-assets/objects/bird2.png"
+      "imgs": ["assets/10/objects/bird1.png",
+                  "assets/10/objects/bird2.png"
                 ],
       "instruction": "Select the image and drag the word",
       "rimes":["third","burd","curd","herd"]
     },
     {"word":"ball" ,
-      "imgs": ["img/10-assets/objects/ball2.png",
-                  "img/10-assets/objects/ball1.png"
+      "imgs": ["assets/10/objects/ball2.png",
+                  "assets/10/objects/ball1.png"
                 ],
       "instruction": "Select the image and drag the word",
       "rimes": ["all","doll","call","small"]
     },
     {"word":"tree" ,
-      "imgs": ["img/10-assets/objects/tree1.png"
+      "imgs": ["assets/10/objects/tree1.png"
                 ],
       "instruction": "Select the image and drag the word",
       "rimes": ["bee","glee","see","free"]
     },
     {"word":"tiger" ,
-      "imgs": ["img/10-assets/objects/tiger1.png",
-                  "img/10-assets/objects/tiger2.png"
+      "imgs": ["assets/10/objects/tiger1.png",
+                  "assets/10/objects/tiger2.png"
                 ],
       "instruction":"Select the image and drag the word",
       "rimes": ["giger","eiger"]
     },
     {"word":"apple" ,
       "imgs": [
-                  "img/10-assets/objects/apple.png"
+                  "assets/10/objects/apple.png"
                 ],
       "instruction":"Select the image and drag the word",
       "rimes": ["chapel","grappel","pineapple"]
@@ -60,5 +60,17 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 4
+  "finalizationLevel": 4,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }
