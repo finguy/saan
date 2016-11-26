@@ -3,6 +3,7 @@ angular.module('saan.controllers')
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
+  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
   $scope.letters2 = [];
@@ -24,7 +25,7 @@ angular.module('saan.controllers')
   $scope.dropzone = [];
   $scope.hasDraggedLetter = [];
   $scope.phonemas = [];
-  $scope.imgBox = "assets/6/objects/treasure-chest-stars.png";
+  $scope.imgBox = "objects/treasure-chest-stars.png";
   $scope.showText = false;
   $scope.textSpeech = "";
   //Reproduces sound using TTSService

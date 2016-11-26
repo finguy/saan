@@ -6,8 +6,10 @@ angular.module('saan.controllers')
   $scope.activityProgress = 0;
   $scope.showText = false;
   $scope.textSpeech = "";
+
   var Ctrl3 = Ctrl3 || {};
   $scope.activityId = 3; // Activity Id
+  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
 
@@ -225,8 +227,7 @@ angular.module('saan.controllers')
 
   $scope.selectLetter = function(name, objectNameSrc) {
     $scope.selectedObject = name;
-    var object = objectNameSrc.split("/");
-    var objectName = object[object.length - 1].replace(".png", "");
+    var objectName = objectNameSrc.replace(".png", "");
     $scope.speak(name + " in " + objectName);
     $timeout(function() {
       $scope.checkLetter(name);

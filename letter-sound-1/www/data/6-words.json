@@ -2,51 +2,51 @@
   [{"word":"dog" ,
     "instruction":"Drag the letter you hear to the magic box",
     "imgs":[
-                "assets/6/objects/dog1.png",
-                "assets/6/objects/dog2.png",
-                "assets/6/objects/dog3.png"
+                "objects/dog1.png",
+                "objects/dog2.png",
+                "objects/dog3.png"
       ]
     },
     {"word":"house" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/house1.png",
-                  "assets/6/objects/house2.png",
-                  "assets/6/objects/house3.png",
-                  "assets/6/objects/house4.png"
+                 "objects/house1.png",
+                  "objects/house2.png",
+                  "objects/house3.png",
+                  "objects/house4.png"
         ]
     },
     {"word":"bird" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/bird1.png",
-                  "assets/6/objects/bird2.png"
+                 "objects/bird1.png",
+                  "objects/bird2.png"
         ]
     },
     {"word":"ball" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/ball1.png",
-                  "assets/6/objects/ball2.png"
+                 "objects/ball1.png",
+                  "objects/ball2.png"
         ]
     },
     {"word":"tree" ,
       "instruction": "Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/tree1.png"
+                 "objects/tree1.png"
         ]
     },
     {"word":"tiger" ,
       "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/tiger1.png",
-                  "assets/6/objects/tiger2.png"
+                 "objects/tiger1.png",
+                  "objects/tiger2.png"
         ]
     },
     {"word":"apple" ,
       "instruction":"Drag the letter you hear to the magic box",
       "imgs":[
-                 "assets/6/objects/apple.png"
+                 "objects/apple.png"
         ]
     }
   ],

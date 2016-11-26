@@ -1,158 +1,158 @@
 {"letters":
   [{"letter":"a" ,
-    "upperCaseImg": "assets/3/letters-blue/letters-blue-a-uppercase.png",
-    "lowerCaseImg": "assets/3/letters-blue/letters-blue-a-lowercase.png",
+    "upperCaseImg": "letters-blue/letters-blue-a-uppercase.png",
+    "lowerCaseImg": "letters-blue/letters-blue-a-lowercase.png",
     "instruction":"Can you tap a?",
     "imgs":[
-      {"src": ["assets/3/animals/wale.png",
-                "assets/3/animals/aligator.png",
-                "assets/3/animals/cat.png",
-                "assets/3/animals/bat.png",
-                "assets/3/animals/cammel.png",
-                "assets/3/animals/bear.png",
-                "assets/3/animals/elephant.png",
-                "assets/3/animals/snake.png"
+      {"src": ["animals/wale.png",
+                "animals/aligator.png",
+                "animals/cat.png",
+                "animals/bat.png",
+                "animals/cammel.png",
+                "animals/bear.png",
+                "animals/elephant.png",
+                "animals/snake.png"
               ],
        "name" : "A"
      },
-     {"src": ["assets/3/animals/horse.png",
-              "assets/3/animals/tiger.png",
-              "assets/3/animals/monkey.png",
-              "assets/3/animals/sheep.png"
+     {"src": ["animals/horse.png",
+              "animals/tiger.png",
+              "animals/monkey.png",
+              "animals/sheep.png"
      ],
       "name" : "e"
     },
-    {"src": ["assets/3/animals/octopus.png",
-              "assets/3/animals/frog.png",
-              "assets/3/animals/dog.png",
-              "assets/3/animals/lion.png"
+    {"src": ["animals/octopus.png",
+              "animals/frog.png",
+              "animals/dog.png",
+              "animals/lion.png"
             ],
      "name" : "o"
    }
       ]
     },
     {"letter":"e" ,
-      "upperCaseImg": "assets/3/letters-blue/letters-blue-e-uppercase.png",
-      "lowerCaseImg": "assets/3/letters-blue/letters-blue-e-lowercase.png",
+      "upperCaseImg": "letters-blue/letters-blue-e-uppercase.png",
+      "lowerCaseImg": "letters-blue/letters-blue-e-lowercase.png",
       "instruction":"Can you tap e?",
       "imgs":[
-        {"src": ["assets/3/animals/wale.png",
-                "assets/3/animals/horse.png",
-                "assets/3/animals/tiger.png",
-                "assets/3/animals/cammel.png",
-                "assets/3/animals/bear.png",
-                "assets/3/animals/elephant.png",
-                "assets/3/animals/monkey.png",
-                "assets/3/animals/snake.png",
-                "assets/3/animals/sheep.png"
+        {"src": ["animals/wale.png",
+                "animals/horse.png",
+                "animals/tiger.png",
+                "animals/cammel.png",
+                "animals/bear.png",
+                "animals/elephant.png",
+                "animals/monkey.png",
+                "animals/snake.png",
+                "animals/sheep.png"
                 ],
          "name" : "E"
        },
-       {"src": ["assets/3/animals/aligator.png",
-                "assets/3/animals/fish.png",
-                "assets/3/animals/lion.png",
-                "assets/3/animals/bird.png",
-                "assets/3/animals/pig.png"
+       {"src": ["animals/aligator.png",
+                "animals/fish.png",
+                "animals/lion.png",
+                "animals/bird.png",
+                "animals/pig.png"
                 ],
         "name" : "i"
       },
-      {"src": ["assets/3/animals/octopus.png",
-                "assets/3/animals/turtle.png",
-                "assets/3/animals/duck.png"
+      {"src": ["animals/octopus.png",
+                "animals/turtle.png",
+                "animals/duck.png"
               ],
        "name" : "u"
      }
         ]
     },
     {"letter":"i" ,
-      "upperCaseImg": "assets/3/letters-blue/letters-blue-i-uppercase.png",
-      "lowerCaseImg": "assets/3/letters-blue/letters-blue-i-lowercase.png",
+      "upperCaseImg": "letters-blue/letters-blue-i-uppercase.png",
+      "lowerCaseImg": "letters-blue/letters-blue-i-lowercase.png",
       "instruction":"Can you tap i?",
       "imgs":[
-        {"src": ["assets/3/animals/aligator.png",
-                 "assets/3/animals/fish.png",
-                 "assets/3/animals/bird.png",
-                 "assets/3/animals/pig.png"],
+        {"src": ["animals/aligator.png",
+                 "animals/fish.png",
+                 "animals/bird.png",
+                 "animals/pig.png"],
          "name" : "I"
        },
-       {"src": ["assets/3/animals/horse.png",
-                 "assets/3/animals/frog.png",
-                 "assets/3/animals/dog.png"
+       {"src": ["animals/horse.png",
+                 "animals/frog.png",
+                 "animals/dog.png"
                  ],
         "name" : "o"
       },
-      {"src": ["assets/3/animals/octopus.png",
-                "assets/3/animals/turtle.png",
-                "assets/3/animals/duck.png"],
+      {"src": ["animals/octopus.png",
+                "animals/turtle.png",
+                "animals/duck.png"],
        "name" : "u"
      }
         ]
     },
     {"letter":"o" ,
-      "upperCaseImg": "assets/3/letters-blue/letters-blue-o-uppercase.png",
-      "lowerCaseImg": "assets/3/letters-blue/letters-blue-o-lowercase.png",
+      "upperCaseImg": "letters-blue/letters-blue-o-uppercase.png",
+      "lowerCaseImg": "letters-blue/letters-blue-o-lowercase.png",
       "instruction":"Can you tap o?",
       "imgs":[
-        {"src": ["assets/3/animals/octopus.png",
-                  "assets/3/animals/frog.png",
-                  "assets/3/animals/horse.png",
-                  "assets/3/animals/dog.png"
+        {"src": ["animals/octopus.png",
+                  "animals/frog.png",
+                  "animals/horse.png",
+                  "animals/dog.png"
                 ],
          "name" : "o"
        },
-       {"src": [ "assets/3/animals/wale.png",
-               "assets/3/animals/cammel.png",
-               "assets/3/animals/bear.png",
-               "assets/3/animals/elephant.png",
-               "assets/3/animals/snake.png"
+       {"src": [ "animals/wale.png",
+               "animals/cammel.png",
+               "animals/bear.png",
+               "animals/elephant.png",
+               "animals/snake.png"
                 ],
         "name" : "a"
       },
-      {"src": [ "assets/3/animals/tiger.png",
-              "assets/3/animals/cammel.png",
-              "assets/3/animals/bear.png",
-              "assets/3/animals/elephant.png",
-              "assets/3/animals/snake.png",
-              "assets/3/animals/sheep.png"
+      {"src": [ "animals/tiger.png",
+              "animals/cammel.png",
+              "animals/bear.png",
+              "animals/elephant.png",
+              "animals/snake.png",
+              "animals/sheep.png"
             ],
        "name" : "e"
      }
         ]
     },
   {"letter":"u" ,
-    "upperCaseImg": "assets/3/letters-blue/letters-blue-u-uppercase.png",
-    "lowerCaseImg": "assets/3/letters-blue/letters-blue-u-lowercase.png",
+    "upperCaseImg": "letters-blue/letters-blue-u-uppercase.png",
+    "lowerCaseImg": "letters-blue/letters-blue-u-lowercase.png",
     "instruction":"Can you tap u?",
     "imgs":[
-            {"src": [  "assets/3/animals/octopus.png",
-                        "assets/3/animals/turtle.png",
-                        "assets/3/animals/duck.png"
+            {"src": [  "animals/octopus.png",
+                        "animals/turtle.png",
+                        "animals/duck.png"
                     ],
              "name" : "u"
            },
-           {"src": ["assets/3/animals/wale.png",
-                   "assets/3/animals/horse.png",
-                   "assets/3/animals/cammel.png",
-                   "assets/3/animals/bear.png",
-                   "assets/3/animals/elephant.png",
-                   "assets/3/animals/monkey.png",
-                   "assets/3/animals/snake.png",
-                   "assets/3/animals/sheep.png"
+           {"src": ["animals/wale.png",
+                   "animals/horse.png",
+                   "animals/cammel.png",
+                   "animals/bear.png",
+                   "animals/elephant.png",
+                   "animals/monkey.png",
+                   "animals/snake.png",
+                   "animals/sheep.png"
                   ],
             "name" : "e"
           },
-          {"src": ["assets/3/animals/aligator.png",
-                   "assets/3/animals/fish.png",
-                   "assets/3/animals/bird.png",
-                   "assets/3/animals/pig.png"],
+          {"src": ["animals/aligator.png",
+                   "animals/fish.png",
+                   "animals/bird.png",
+                   "animals/pig.png"],
            "name" : "I"
          }
       ]
     }
     ],
-  "nextLetterImgSrc":"assets/3/back.png",
-  "previousLetterImgSrc":"assets/3/forward.png",
-  "srcAlphabetLetters": "assets/3/letters-blue/letters-blue-",
+  "nextLetterImgSrc":"back.png",
+  "previousLetterImgSrc":"forward.png",
+  "srcAlphabetLetters": "letters-blue/letters-blue-",
   "instructions": "Hi! Let's learn letters. Touch the boxes!",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],

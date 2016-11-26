@@ -4,6 +4,7 @@ angular.module('saan.controllers')
 
     var Ctrl4 = Ctrl4 || {};
     $scope.activityId = 4;
+    $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
     Ctrl4.playedNumbers = [];
     Ctrl4.level = null;
     Ctrl4.score = 0;

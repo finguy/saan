@@ -2,6 +2,7 @@ angular.module('saan.controllers')
   .controller('5Ctrl', function($scope, $timeout, $state, $log, RandomLetter, TTSService,
     Util, Score, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 5; // Activity Id
+    $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
     $scope.letter = ""; // Letter to play in level
     $scope.letterSrc = "";
     $scope.imgs = [];
@@ -208,9 +209,8 @@ angular.module('saan.controllers')
     $scope.selectLetter = function(name, objectNameSrc) {
       if (!$scope.checkingLetter && !$scope.checkingWord) {
         $scope.checkingLetter = true;
-        Ctrl5.selectedObject = name;
-        var object = objectNameSrc.split("/");
-        var objectName = object[object.length - 1].replace(".png", "");
+        Ctrl5.selectedObject = name;        
+        var objectName = objectNameSrc.replace(".png", "");
         $scope.speak($scope.letter + " in " + objectName);
         $timeout(function() {
           $scope.checkingLetter = false;
