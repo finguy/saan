@@ -26,8 +26,7 @@ angular.module('saan.services')
           return {
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,
-            instructionsText: data.instructionsText,
+            instructionsPath: data.instructionsPath,            
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,

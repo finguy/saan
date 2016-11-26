@@ -1,13 +1,13 @@
 angular.module('saan.controllers')
-  .controller('4Ctrl', function($scope, $state, $timeout, RandomNumber, TTSService,
-    Util, Animations, Score, ActividadesFinalizadasService) {
+  .controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber, TTSService,
+    Util, Animations, Score, ActividadesFinalizadasService,AssetsPath) {
 
     var Ctrl4 = Ctrl4 || {};
     $scope.activityId = 4;
     Ctrl4.playedNumbers = [];
     Ctrl4.level = null;
     Ctrl4.score = 0;
-
+    Ctrl4.instructionsPlayer;
     $scope.number = null;
     $scope.imgs = [];
     $scope.instructions = "";
@@ -54,7 +54,8 @@ angular.module('saan.controllers')
           //wait for UI to load
           $timeout(function() {
             if (readInstructions) {
-              $scope.speak(Ctrl4.instructions);
+              Ctrl4.instructionsPlayer.play();
+              readInstructions = false;
               $timeout(function() {
                 $scope.speak($scope.number);
               }, 8000);
@@ -65,7 +66,7 @@ angular.module('saan.controllers')
 
         },
         function error(error) {
-          console.log(error);
+          $log.error(error);
         }
       );
     };
@@ -109,6 +110,17 @@ angular.module('saan.controllers')
       } else {
         $scope.activityProgress = 100 * (Ctrl4.level - 1) / Ctrl4.totalLevels;
       }
+
+      Ctrl4.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+        function success(){
+          Ctrl4.instructionsPlayer.release();
+          $scope.playWordAudio();
+        },
+        function error (err){
+          $log.error(err);
+          Ctrl4.instructionsPlayer.release();
+        }
+      );
     };
 
     Ctrl4.success = function() {

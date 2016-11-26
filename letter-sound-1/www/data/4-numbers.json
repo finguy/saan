@@ -204,6 +204,7 @@
             "img/4-assets/assorted-objects/31.png"
         ],
   "instructions": "Hi! Drag the box to the number containing that quantity. Good Luck!",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
