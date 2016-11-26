@@ -2,7 +2,7 @@
   'use strict';
   angular.module('saan.controllers')
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
-      Util, Animations, Score, ActividadesFinalizadasService) {
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 10; // Activity Id
       $scope.word = []; // Letter to play in level
       $scope.wordStr = "";
@@ -35,6 +35,7 @@
       });
 
       var Ctrl10 = Ctrl10 || {};
+      Ctrl10.instructionsPlayer;
 
       Ctrl10.setUpLevel = function() {
         if (!$scope.level) {
@@ -66,7 +67,7 @@
             //wait for UI to load
             $timeout(function() {
               if (readInstructions) {
-                $scope.speak($scope.instructions);
+                Ctrl10.instructionsPlayer.play();
                 $timeout(function() {
                   $scope.speak($scope.wordStr);
                 }, 3000);
@@ -131,6 +132,17 @@
         } else {
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
+
+        Ctrl10.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+          function success(){
+            Ctrl10.instructionsPlayer.release();
+            $scope.playWordAudio();
+          },
+          function error (err){
+            $log.error(err);
+            Ctrl10.instructionsPlayer.release();
+          }
+        );
       };
 
       Ctrl10.success = function() {
