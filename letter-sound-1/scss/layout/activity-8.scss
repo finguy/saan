@@ -23,11 +23,16 @@
     justify-content: center;
   }
 
-  .as-sortable-item.match-card {
+  .match-card {
     @extend .match;
     border: 0;
     border-radius: 0;
     height: 15rem;
     width: 20rem;
+  }
+
+  .as-sortable-placeholder {
+    background-color: transparent;
+    border-color: transparent;
   }
 }

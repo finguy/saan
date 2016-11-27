@@ -2,50 +2,69 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('8Ctrl',['$scope','Util', 'NumberMatching', function($scope, Util, NumberMatching) {
-    $scope.activityId = '8';
+  .controller('8Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberMatching', 'ActividadesFinalizadasService', 'AssetsPath',
+  function($scope, $log, $state, $timeout, Util, NumberMatching, ActividadesFinalizadasService, AssetsPath) {
+    $scope.activityId = 8;
     $scope.dropzoneModel = [];
 
-    var config = '';
-    var matchesCount = 0;
+    var config;
     var Ctrl8 = Ctrl8 || {};
+    var level;
+    var stageNumber;
+    var stageData;
+    var readInstructions;
+    var instructionsPlayer;
+    var failurePlayer;
+    var successPlayer;
+    var checking = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      Ctrl8.getConfiguration();
+      level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = true;
+      Ctrl8.getConfiguration(level);
+    });
+
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, level);
     });
 
     Ctrl8.getConfiguration = function (level){
       NumberMatching.getConfig(level).then(function(data){
         config = data;
-        config.cards = parseInt(config.cards, 10);
-        config.top = parseInt(config.top, 10);
-        config.numberRange = parseInt(config.numberRange, 10);
+        Ctrl8.setStage();
         Ctrl8.setActivity();
+        if (readInstructions){
+          // play instructions of activity
+          instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
+            function(){ instructionsPlayer.release(); readInstructions = false; },
+            function(err){ $log.error(err); instructionsPlayer.release(); readInstructions = false; }
+          );
+
+          instructionsPlayer.play();
+        }
       });
     };
 
+    Ctrl8.clearValues = function(){
+      stageData = {};
+      config = {};
+    };
+
     Ctrl8.setActivity  = function (){
+      checking = false;
       $scope.matches = [];
       $scope.cards = [];
 
-      var number;
-      var index;
-      var valid;
-      matchesCount = 0;
+      _.each(stageData.tickets, function(element){
+        $scope.cards.push({value: element, dropzone: []});
+      });
 
-      for (var i = 0; i < config.cards; i++){
-        valid = false;
-        while (!valid){
-          number = Math.floor(Math.random() * 10);
-          index = _.findIndex($scope.cards, function(card){return card.value == number;}, number);
-          valid = (number !== 0 && index == -1);
-        }
+      $scope.matches = _.shuffle(stageData.tickets);
+    };
 
-        $scope.cards.push({value: number, dropzone: []});
-        $scope.matches.push(number);
-      }
-
-      $scope.matches = _.shuffle($scope.matches);
+    Ctrl8.setStage = function(){
+      stageData = config.level;
+      stageData.tickets = _.range(stageData.numberFrom, stageData.numberTo + 1); //numberTo+1 because range is top exclusive
     };
 
     $scope.sortableOptions = {
@@ -58,9 +77,16 @@
 
     $scope.sortableCloneOptions = {
       containment: '.activity-' + $scope.activityId + '-content',
-      clone: true,
+      clone: false,
+      accept: false,
+      dragEnd: function(eventObj) {
+        //check that item was correctly moved
+        if (Ctrl8.checkDragEnd(eventObj.source.itemScope.modelValue)){
+          Ctrl8.failure();
+        }
+      },
       itemMoved: function(eventObj) {
-        Ctrl8.moveMatch(eventObj);
+        Ctrl8.success(eventObj);
       }
     };
 
@@ -72,18 +98,68 @@
       return parseInt(destSortableScope.element[0].parentElement.innerText, 10) == parseInt(sourceItemHandleScope.modelValue, 10);
     };
 
-    Ctrl8.moveMatch = function(eventObj) {
-      var item = $scope.dropzoneModel.pop();
-      var index = _.findIndex($scope.cards,
-                              function(card){return card.value == item;},
-                              item);
-      $scope.cards[index].dropzone.push(item);
-      matchesCount++;
+    Ctrl8.checkDragEnd = function(movedValue){
+      return _.contains($scope.matches, movedValue);
+    };
 
-      if (matchesCount == config.cards){
-        Ctrl8.setActivity();
+    Ctrl8.success = function(eventObj) {
+      if (!checking){
+        checking = true;
+        var item = $scope.dropzoneModel.pop();
+        var index = _.findIndex($scope.cards,
+                                function(card){return card.value == item;},
+                                item);
+        $scope.cards[index].dropzone.push(item);
+        var successFeedback = NumberMatching.getSuccessAudio();
+
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function(){ successPlayer.release(); $scope.showText = false; $scope.$apply();},
+          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
+        );
+
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+
+        successPlayer.play();
+
+        if ($scope.matches.length === 0){
+          if (level == NumberMatching.getMinLevel() &&
+            !ActividadesFinalizadasService.finalizada($scope.activityId)){
+            // if player reached minimum for setting activity as finished
+            ActividadesFinalizadasService.add($scope.activityId);
+            level++;
+            $state.go('lobby');
+          }
+          else {
+            if (level == NumberMatching.getMaxLevel()){
+              level = 1;
+              $state.go('lobby');
+            }
+            else {
+              $timeout(function(){
+                Util.saveLevel($scope.activityId, ++level);
+                Ctrl8.getConfiguration(level);
+              }, 1000);
+            }
+          }
+        }
+        checking = false;
       }
     };
 
+    Ctrl8.failure = function(){
+      if (!checking){
+        var failureFeedback = NumberMatching.getFailureAudio();
+
+        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); checking = false;},
+          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
+        );
+
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        failurePlayer.play();
+      }
+    };
   }]);
 })();
