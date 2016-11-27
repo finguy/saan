@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
@@ -30,6 +30,7 @@ angular.module('saan.controllers')
 
   //Shows Activity Dashboard
   var Ctrl6 = Ctrl6 || {};
+  Ctrl6.instructionsPlayer;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, $scope.level);
@@ -48,7 +49,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+              Ctrl6.instructionsPlayer.play();
           }
 
           $timeout(function() {
@@ -115,6 +116,17 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
     }
+
+    Ctrl6.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success(){
+        Ctrl6.instructionsPlayer.release();
+        $scope.playWordAudio();
+      },
+      function error (err){
+        $log.error(err);
+        Ctrl6.instructionsPlayer.release();
+      }
+    );
   };
 
   //Verifies selected letters or and returns true if they match the word

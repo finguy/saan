@@ -2,7 +2,7 @@
   'use strict';
   angular.module('saan.controllers')
     .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
-      Util, Animations, Score, ActividadesFinalizadasService) {
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 12; // Activity Id
       $scope.img = "";
       $scope.assets = [];
@@ -30,7 +30,7 @@
       });
 
       var Ctrl12 = Ctrl12 || {};
-
+      Ctrl12.instructionsPlayer;
       Ctrl12.setUpLevel = function() {
         if (!$scope.level) {
           $scope.level = Util.getLevel($scope.activityId);
@@ -60,7 +60,7 @@
             //wait for UI to load
             $timeout(function() {
               if (readInstructions) {
-                $scope.speak($scope.instructions);
+                Ctrl12.instructionsPlayer.play();
               }
             }, readWordTimeout);
 
@@ -101,6 +101,16 @@
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
 
+        Ctrl12.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+          function success(){
+            Ctrl12.instructionsPlayer.release();
+            $scope.playWordAudio();
+          },
+          function error (err){
+            $log.error(err);
+            Ctrl12.instructionsPlayer.release();
+          }
+        );
       };
       Ctrl12.success = function() {
         $scope.checkingAnswer = true;

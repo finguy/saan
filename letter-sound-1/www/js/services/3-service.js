@@ -1,12 +1,13 @@
 angular.module('saan.services')
 
 .factory('RandomLetterThree', function($http,$log, LevelsThree, Util) {
+  var data;
   return {
     letter: function(level, playedLetters) {
       var src = LevelsThree.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
-          var data = response.data;
+          data = response.data;
           var lettersNotPlayed = [];
           if (playedLetters.length === 0 ){
             lettersNotPlayed = data.letters;
@@ -25,6 +26,7 @@ angular.module('saan.services')
           return {
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
+            instructionsPath: data.instructionsPath,            
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,

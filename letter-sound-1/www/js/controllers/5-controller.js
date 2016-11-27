@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
   .controller('5Ctrl', function($scope, $timeout, $state, $log, RandomLetter, TTSService,
-    Util, Score, ActividadesFinalizadasService) {
+    Util, Score, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 5; // Activity Id
     $scope.letter = ""; // Letter to play in level
     $scope.letterSrc = "";
@@ -23,6 +23,7 @@ angular.module('saan.controllers')
     Ctrl5.playedLetters = []; // Collects words the user played
     Ctrl5.level =  null; // Indicates activity level
     Ctrl5.score = 0;
+    Ctrl5.instructionsPlayer;
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, Ctrl5.level);
@@ -43,7 +44,7 @@ angular.module('saan.controllers')
           //wait for UI to load
           $timeout(function() {
             if (readInstructions) {
-              $scope.speak($scope.instructions);
+              Ctrl5.instructionsPlayer.play();
               $timeout(function() {
                 $scope.speak($scope.letter);
               }, 7000);
@@ -103,6 +104,16 @@ angular.module('saan.controllers')
         $scope.activityProgress = 100 * (Ctrl5.level - 1) / Ctrl5.totalLevels;
       }
 
+      Ctrl5.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+        function success(){
+          Ctrl5.instructionsPlayer.release();
+          $scope.playWordAudio();
+        },
+        function error (err){
+          $log.error(err);
+          Ctrl5.instructionsPlayer.release();
+        }
+      );
     };
 
     Ctrl5.success = function() {

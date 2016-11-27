@@ -25,6 +25,7 @@ angular.module('saan.services')
           return {
             number : numbersNotPlayed[position],
             instructions : data.instructions,
+            instructionsPath: data.instructionsPath,  
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,

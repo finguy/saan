@@ -54,6 +54,7 @@
     }],
   "allWords": ["frog","blog","clog","cog","mouse","spouse","prouse","third","burd","curd","herd","chapel","grappel","pineapple","giger","eiger","bee","glee","see","free","all","doll","call","small"],
   "instructions": "Drag the word that rimes",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {

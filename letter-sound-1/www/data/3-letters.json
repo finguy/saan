@@ -154,6 +154,7 @@
   "previousLetterImgSrc":"img/3-assets/forward.png",
   "srcAlphabetLetters": "img/3-assets/letters-blue/letters-blue-",
   "instructions": "Hi! Let's learn letters. Touch the boxes!",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {

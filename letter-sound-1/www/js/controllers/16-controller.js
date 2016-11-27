@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('16Ctrl', function($scope,$state, $log, $timeout, RandomWordsSixteen, TTSService,
-  Util, Score, ActividadesFinalizadasService) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath) {
 
   $scope.letters = [];
   $scope.imgs = [];
@@ -17,6 +17,7 @@ angular.module('saan.controllers')
   $scope.activityProgress = 0;
   Ctrl16.letterOk = false;
   Ctrl16.playedLetters = [];
+  Ctrl16.instructionsPlayer;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, Ctrl16.level);
@@ -36,7 +37,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl16.instructionsPlayer.play();
           }
         }, readWordTimeout);
       },
@@ -97,6 +98,17 @@ angular.module('saan.controllers')
     } else {
       $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
     }
+
+    Ctrl16.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success(){
+        Ctrl16.instructionsPlayer.release();
+        $scope.playWordAudio();
+      },
+      function error (err){
+        $log.error(err);
+        Ctrl16.instructionsPlayer.release();
+      }
+    );
   };
 
 
