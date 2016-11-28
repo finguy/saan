@@ -27,6 +27,7 @@ angular.module('saan.services')
           return {
             textJson: textsNotPlayed[index],
             instructions : data.instructions,
+            instructionsPath: data.instructionsPath,  
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,

@@ -1,5 +1,6 @@
 angular.module('saan.services')
 
+
 .factory('RandomLetterThree', function($http, $log, LevelsThree, Util) {
     var data;
     return {
@@ -22,13 +23,11 @@ angular.module('saan.services')
               }
             }
 
-
-
             var position = Util.getRandomNumber(lettersNotPlayed.length);
-            console.log(data);
             return {
               letter: lettersNotPlayed[position],
               instructions: data.instructions,
+              instructionsPath: data.instructionsPath,
               errorMessages: data.errorMessages,
               successMessages: data.successMessages,
               scoreSetUp: data.scoreSetUp,
@@ -36,7 +35,7 @@ angular.module('saan.services')
               previousLetterImgSrc: data.previousLetterImgSrc,
               srcAlphabetLetters: data.srcAlphabetLetters,
               finalizationLevel: data.finalizationLevel,
-              totalLevels: data.letters.length              
+              totalLevels: data.letters.length
             };
           },
           function error() {

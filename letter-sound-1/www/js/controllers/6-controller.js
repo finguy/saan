@@ -33,12 +33,50 @@ angular.module('saan.controllers')
 
   //Shows Activity Dashboard
   var Ctrl6 = Ctrl6 || {};
-  Ctrl6.successPlayer;
-  Ctrl6.failurePlayer;
+  Ctrl6.instructionsPlayer;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, $scope.level);
   });
+
+  Ctrl6.successFeedback = function() {
+    //Success feeback player
+    var successFeedback = RandomWordSix.getSuccessAudio();
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+    successPlayer.play();
+  };
+
+  Ctrl6.errorFeedback = function() {
+    //Failure feeback player
+    var failureFeedback = RandomWordSix.getFailureAudio();
+    $scope.textSpeech = failureFeedback.text;
+    $scope.showText = true;
+    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        failurePlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        failurePlayer.release();
+        $scope.showText = false;
+      });
+    failurePlayer.play();
+  };
 
   Ctrl6.showDashboard = function(readInstructions) {
 
@@ -53,7 +91,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl6.instructionsPlayer.play();
           }
 
           $timeout(function() {
@@ -121,38 +159,17 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
     }
 
-    //Success feeback player
-    var successFeedback = RandomWordSix.getSuccessAudio();
-    Ctrl6.successText = successFeedback.text;
-    Ctrl6.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+
+    Ctrl6.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
       function success() {
-        Ctrl6.successPlayer.release();
-        $scope.showText = false;
+        Ctrl6.instructionsPlayer.release();
+        $scope.playWordAudio();
       },
       function error(err) {
         $log.error(err);
-        Ctrl6.successPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
+        Ctrl6.instructionsPlayer.release();
       }
     );
-
-    //Failure feeback player
-    var failureFeedback = RandomWordSix.getFailureAudio();
-    Ctrl6.failureText = failureFeedback.text;
-    Ctrl6.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-      function success() {
-        Ctrl6.failurePlayer.release();
-        $scope.showText = false;
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl6.failurePlayer.release();
-        $scope.showText = false;
-      }
-    );
-
   };
 
   //Verifies selected letters or and returns true if they match the word
@@ -176,9 +193,7 @@ angular.module('saan.controllers')
 
   Ctrl6.success = function() {
     var LAST_CHECK = $scope.phonemas.length === $scope.letters.length;
-    $scope.showText = true;
-    $scope.textSpeech = Ctrl6.successText;
-    Ctrl6.successPlayer.play();
+    Ctrl6.successFeedback();
     $timeout(function() {
       if (!$scope.finished) {
         $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
@@ -219,9 +234,7 @@ angular.module('saan.controllers')
     $scope.speak(name);
     //wait for speak
     $timeout(function() {
-      $scope.showText = true;
-      $scope.textSpeech = Ctrl6.failureText;
-      Ctrl6.failurePlayer.play();
+      Ctrl6.errorFeedback();
     }, 000);
   };
 

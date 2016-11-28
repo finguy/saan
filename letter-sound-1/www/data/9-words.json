@@ -93,6 +93,7 @@
         ]}
   ],
   "instructions": "Drag the word to the image",
+  "instructionsPath": "Duck_Hunt.mp3",
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {

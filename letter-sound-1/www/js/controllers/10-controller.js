@@ -38,6 +38,7 @@
       });
 
       var Ctrl10 = Ctrl10 || {};
+      Ctrl10.instructionsPlayer;
 
       Ctrl10.setUpLevel = function() {
         if (!$scope.level) {
@@ -54,7 +55,45 @@
         $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
       };
 
-      //Shows Activity Dashboard
+      Ctrl10.successFeedback = function() {
+        //Success feeback player
+        var successFeedback = RandomWordTen.getSuccessAudio();
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+        var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function success() {
+            successPlayer.release();
+            $scope.showText = false;
+          },
+          function error(err) {
+            $log.error(err);
+            successPlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+          }
+        );
+        successPlayer.play();
+      };
+
+      Ctrl10.errorFeedback = function() {
+          //Failure feeback player
+          var failureFeedback = RandomWordTen.getFailureAudio();
+          $scope.textSpeech  = failureFeedback.text;
+          $scope.showText = true;
+          var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+            function success() {
+              failurePlayer.release();
+              $scope.showText = false;
+              $scope.$apply();
+            },
+            function error(err) {
+              $log.error(err);
+              failurePlayer.release();
+              $scope.showText = false;
+            });
+          failurePlayer.play();
+        };
+        //Shows Activity Dashboard
       Ctrl10.showDashboard = function(readInstructions) {
 
         Ctrl10.setUpLevel();
@@ -69,7 +108,7 @@
             //wait for UI to load
             $timeout(function() {
               if (readInstructions) {
-                $scope.speak($scope.instructions);
+                Ctrl10.instructionsPlayer.play();
                 $timeout(function() {
                   $scope.speak($scope.wordStr);
                 }, 3000);
@@ -135,44 +174,20 @@
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
 
-        //Success feeback player
-        var successFeedback = RandomWordTen.getSuccessAudio();
-        Ctrl10.successText = successFeedback.text;
-        Ctrl10.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        Ctrl10.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
           function success() {
-            Ctrl10.successPlayer.release();
-            $scope.showText = false;
+            Ctrl10.instructionsPlayer.release();
           },
           function error(err) {
             $log.error(err);
-            Ctrl10.successPlayer.release();
-            $scope.showText = false;
-            $scope.checkingWord = false;
-          }
-        );
-
-        //Failure feeback player
-        var failureFeedback = RandomWordTen.getFailureAudio();
-        Ctrl10.failureText = failureFeedback.text;
-        Ctrl10.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function success() {
-            Ctrl10.failurePlayer.release();
-            $scope.showText = false;
-            $scope.$apply();
-          },
-          function error(err) {
-            $log.error(err);
-            Ctrl10.failurePlayer.release();
-            $scope.showText = false;
+            Ctrl10.instructionsPlayer.release();
           }
         );
       };
 
       Ctrl10.success = function() {
         $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-        $scope.showText = true;
-        $scope.textSpeech = Ctrl10.successText;
-        Ctrl10.successPlayer.play();
+        Ctrl10.successFeedback();
         $timeout(function() {
           $scope.draggedWord = false;
           Ctrl10.levelUp(); //Advance level
@@ -188,7 +203,7 @@
           } else if ($scope.level <= $scope.totalLevels) {
             Ctrl10.showDashboard(true);
           } else {
-            $scope.level =  Ctrl10.initialLevel;
+            $scope.level = Ctrl10.initialLevel;
             $state.go('lobby');
           }
         }, 1000);
@@ -200,9 +215,7 @@
         }
         //wait for speak
         $timeout(function() {
-          $scope.showText = true;
-          $scope.textSpeech = Ctrl10.failureText;
-          Ctrl10.failurePlayer.play();
+          Ctrl10.errorFeedback();
         }, 1000);
       };
 

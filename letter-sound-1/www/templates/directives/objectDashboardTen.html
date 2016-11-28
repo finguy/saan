@@ -3,7 +3,7 @@
     <img ng-src="{{assetsPath}}{{img}}"/>
     <img class="word" ng-repeat="letter in word track by $index" ng-src="assets/3/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
     <br/>
-    <img class="letter letterDragged" ng-repeat="letter in selectedRimeLetters track by $index" "assets/alphabet-buttons/{{letter}}.png" ng-show="isWordOk"/>
+    <img class="letter letterDragged" ng-repeat="letter in selectedRimeLetters track by $index" ng-src="assets/alphabet-buttons/{{letter}}.png" ng-show="isWordOk"/>
   </div>
 
   <div data-ng-model="words" class="list-words text-center" as-sortable="sortableSourceOptions">

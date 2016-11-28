@@ -12,7 +12,7 @@ angular.module('saan.controllers')
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
-
+  Ctrl3.instructionsPlayer;
 
   $scope.instructions = ""; // Instructions to read
   Ctrl3.successMessages = [];
@@ -58,12 +58,13 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl3.instructionsPlayer.play();
+            readInstructions = false;
           }
         }, readWordTimeout);
       },
       function error(error) {
-        console.log(error);
+        $log.error(error);
       }
     );
   };
@@ -116,45 +117,60 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
 
+    Ctrl3.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success() {
+        Ctrl3.instructionsPlayer.release();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.instructionsPlayer.release();
+      }
+    );
+  };
+
+  Ctrl3.successFeedback = function() {
     //Success feeback player
     var successFeedback = RandomLetterThree.getSuccessAudio();
-    Ctrl3.successText = successFeedback.text;
-    Ctrl3.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
       function success() {
-        Ctrl3.successPlayer.release();
+        successPlayer.release();
         $scope.showText = false;
       },
       function error(err) {
         $log.error(err);
-        Ctrl3.successPlayer.release();
+        successPlayer.release();
         $scope.showText = false;
         $scope.checkingWord = false;
       }
     );
+    successPlayer.play();
+  };
 
+  Ctrl3.errorFeedback = function() {
     //Failure feeback player
     var failureFeedback = RandomLetterThree.getFailureAudio();
-    Ctrl3.failureText = failureFeedback.text;
-    Ctrl3.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+    $scope.textSpeech = failureFeedback.text;
+    $scope.showText = true;
+    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
-        Ctrl3.failurePlayer.release();
+        failurePlayer.release();
         $scope.showText = false;
         $scope.$apply();
       },
       function error(err) {
         $log.error(err);
-        Ctrl3.failurePlayer.release();
+        failurePlayer.release();
         $scope.showText = false;
-      }
-    );
+      });
+    failurePlayer.play();
   };
 
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     $timeout(function() {
-      $scope.showText = true;
-      $scope.textSpeech = Ctrl3.successText;
-      Ctrl3.successPlayer.play();
+      Ctrl3.successFeedback();
       //wait for speak
       $timeout(function() {
         Ctrl3.levelUp(); //Advance level
@@ -184,9 +200,7 @@ angular.module('saan.controllers')
     }
     //wait for speak
     $timeout(function() {
-      $scope.showText = true;
-      $scope.textSpeech = Ctrl3.failureText;
-      Ctrl3.failurePlayer.play();
+      Ctrl3.errorFeedback();
     }, 1000);
   };
 
@@ -227,7 +241,7 @@ angular.module('saan.controllers')
 
   $scope.selectLetter = function(name, objectNameSrc) {
     $scope.selectedObject = name;
-    var objectName = objectNameSrc.replace("animals/","").replace(".png", "");
+    var objectName = objectNameSrc.replace("animals/", "").replace(".png", "");
     $scope.speak(name + " in " + objectName);
     $timeout(function() {
       $scope.checkLetter(name);

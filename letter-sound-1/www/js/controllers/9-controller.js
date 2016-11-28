@@ -27,9 +27,7 @@ angular.module('saan.controllers')
   //Shows Activity Dashboard
   var Ctrl9 = Ctrl9 || {};
   Ctrl9.level = null;
-  Ctrl9.successPlayer;
-  Ctrl9.failurePlayer;
-
+  Ctrl9.instructionsPlayer;
   Ctrl9.showDashboard = function(readInstructions) {
     Ctrl9.setUpLevel();
     Ctrl9.setUpScore();
@@ -43,7 +41,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
-            $scope.speak($scope.instructions);
+            Ctrl9.instructionsPlayer.play();
           }
         }, readWordTimeout);
       },
@@ -66,6 +64,45 @@ angular.module('saan.controllers')
   Ctrl9.setUpStatus = function() {
     Ctrl9.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
+
+  Ctrl9.successFeedback = function() {
+    //Success feeback player
+    var successFeedback = RandomWordsNine.getSuccessAudio();
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+    successPlayer.play();
+  };
+
+  Ctrl9.errorFeedback = function() {
+      //Failure feeback player
+      var failureFeedback = RandomWordsNine.getFailureAudio();
+      $scope.textSpeech  = failureFeedback.text;
+      $scope.showText = true;
+      var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          failurePlayer.release();
+          $scope.showText = false;
+        });
+      failurePlayer.play();
+    };
 
   Ctrl9.setUpContextVariables = function(data) {
     var wordsJson = data;
@@ -106,35 +143,14 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl9.level - 1) / Ctrl9.totalLevels;
     }
 
-    //Success feeback player
-    var successFeedback = RandomWordsNine.getSuccessAudio();
-    Ctrl9.successText = successFeedback.text;
-    Ctrl9.successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-      function success() {
-        Ctrl9.successPlayer.release();
-        $scope.showText = false;
+    Ctrl9.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      function success(){
+        Ctrl9.instructionsPlayer.release();
+        $scope.playWordAudio();
       },
-      function error(err) {
+      function error (err){
         $log.error(err);
-        Ctrl9.successPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
-      }
-    );
-
-    //Failure feeback player
-    var failureFeedback = RandomWordsNine.getFailureAudio();
-    Ctrl9.failureText = failureFeedback.text;
-    Ctrl9.failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-      function success() {
-        Ctrl9.failurePlayer.release();
-        $scope.showText = false;
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl9.failurePlayer.release();
-        $scope.showText = false;
+        Ctrl9.instructionsPlayer.release();
       }
     );
   };
@@ -142,9 +158,7 @@ angular.module('saan.controllers')
   Ctrl9.success = function() {
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
-    $scope.showText = true;
-    $scope.textSpeech = Ctrl9.successText;
-    Ctrl9.successPlayer.play();
+    Ctrl9.successFeedback();
     $timeout(function() {
       if (LAST_CHECK) {
         Ctrl9.levelUp(); //Advance level
@@ -176,9 +190,7 @@ angular.module('saan.controllers')
     if (!Ctrl9.finished) {
       $scope.score = Score.update(-$scope.substractScore, $scope.activityId, Ctrl9.finished);
     }
-    $scope.showText = true;
-    $scope.textSpeech = Ctrl9.failureText;
-    Ctrl9.failurePlayer.play();
+    Ctrl9.errorFeedback();
   };
 
   $scope.handleProgress = function(isWordOk) {

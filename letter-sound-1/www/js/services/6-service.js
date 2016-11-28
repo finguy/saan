@@ -25,6 +25,7 @@ angular.module('saan.services')
           return {
             word : wordsNotPlayed[index],
             instructions : data.instructions,
+            instructionsPath: data.instructionsPath,  
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,
