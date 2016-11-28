@@ -3,19 +3,19 @@
   </div>
   <div class="character" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img src="assets/characters/mbott.png">
+    <img"assets/characters/mbott.png">
   </div>
   <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
-    <img src="{{assetsPath}}{{imgSrc}}" ng-click="speak(currentPhonema)">
+    <img"{{assetsPath}}{{imgSrc}}" ng-click="speak(currentPhonema)">
     <div ng-repeat="letter_obj in letters track by $index" >
-      <img src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )"
+      <img"img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )"
       class="letters-list" as-sortable-item as-sortable-item-handle>
     </div>
   </div>
   <div class="row">
    <div class="col activity-{{activityId}}-dragged-phonemas" ng-repeat="letter in lettersDragged track by $index">
      &nbsp;
-     <img src="img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas" ng-click="speakConditional(letter, $index )">
+     <img"img/alphabet-buttons-pressed/{{letter}}.png"  ng-show="isDragged(letter, $index )" class="dragged-phonemas" ng-click="speakConditional(letter, $index )">
    </div>
   </div>
 </div>

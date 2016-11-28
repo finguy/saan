@@ -4,7 +4,7 @@
     .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 12; // Activity Id
-      $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
+      $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.img = "";
       $scope.assets = [];
       $scope.playedTexts = [];

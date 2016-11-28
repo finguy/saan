@@ -12,7 +12,7 @@
       getGeneralAudio: getGeneralAudio,
       getSuccessAudio: getSuccessAudio,
       getFailureAudio: getFailureAudio,
-      getPathAssetsActivity: getPathAssetsActivity
+      getImgs: getImgs
     };
 
     function getActivityAudio(id) {
@@ -35,7 +35,7 @@
       return MAIN_PATH + id + "/audio/feedback/failure/";
     }
 
-    function getPathAssetsActivity(id) {
+    function getImgs(id) {
       return ASSETS_RELATIVE_PATH + id + "/";
     }
   }

@@ -1,19 +1,19 @@
 <ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity{{activityId}}-content">
   <activity-status></activity-status>
   <div class="content">
-    <img src="img/ic_record_voice_over.png" class="material-icons btn-play-word" ng-click="speak(instructions)" />
+    <img"img/ic_record_voice_over.png" class="material-icons btn-play-word" ng-click="speak(instructions)" />
     <div class="row" id="activity">
       <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name,img.src)">
         <div class="activity-{{activityId}}-box-shadow">
           <div class="letter"> {{img.name}} </div>
           <br/>
-          <img src="{{assetsPath}}{{img.src}}" />
+          <img"{{assetsPath}}{{img.src}}" />
         </div>
       </div>
     </div>
   </div>
   <div class="character" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img src="assets/characters/mbott.png">
+    <img"assets/characters/mbott.png">
   </div>
 </ion-view>

@@ -3,7 +3,7 @@ angular.module('saan.controllers')
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
-  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
+  $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
   $scope.letters2 = [];

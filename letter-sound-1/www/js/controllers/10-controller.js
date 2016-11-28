@@ -4,7 +4,7 @@
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 10; // Activity Id
-      $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
+      $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.word = []; // Letter to play in level
       $scope.wordStr = "";
       $scope.rimes = [];

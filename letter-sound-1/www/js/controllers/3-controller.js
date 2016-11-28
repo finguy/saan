@@ -9,7 +9,7 @@ angular.module('saan.controllers')
 
   var Ctrl3 = Ctrl3 || {};
   $scope.activityId = 3; // Activity Id
-  $scope.assetsPath = AssetsPath.getPathAssetsActivity($scope.activityId);
+  $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
 
