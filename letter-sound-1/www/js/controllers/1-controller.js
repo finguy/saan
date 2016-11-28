@@ -186,8 +186,8 @@
         var failureFeedback = WordBuilding.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); $scope.checkingWord = false;},
-          function(err){ $log.error(err); failurePlayer.release(); $scope.showText = false; $scope.checkingWord = false;}
+          function(){ failurePlayer.release(); $scope.showText = false; $scope.checkingWord = false; $scope.$apply();},
+          function(err){ $log.error(err); failurePlayer.release(); $scope.showText = false; $scope.checkingWord = false; $scope.$apply();}
         );
 
         $scope.textSpeech = failureFeedback.text;
