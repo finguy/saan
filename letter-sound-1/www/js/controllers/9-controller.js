@@ -3,6 +3,7 @@ angular.module('saan.controllers')
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 9; // Activity Id
+  $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.activityProgress = 0;
   $scope.words = [];
   $scope.imgs = [];
@@ -14,11 +15,13 @@ angular.module('saan.controllers')
   $scope.playedWords = [];
   $scope.selectedItem = null;
   $scope.items = ['dummy'];
+  $scope.showText = false;
+  $scope.textSpeech = "";
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
   $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel(Ctrl3.activityId, Ctrl3.level);
+    Util.saveLevel(Ctrl9.activityId, Ctrl9.level);
   });
 
   //Shows Activity Dashboard
@@ -61,6 +64,45 @@ angular.module('saan.controllers')
   Ctrl9.setUpStatus = function() {
     Ctrl9.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
+
+  Ctrl9.successFeedback = function() {
+    //Success feeback player
+    var successFeedback = RandomWordsNine.getSuccessAudio();
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+    successPlayer.play();
+  };
+
+  Ctrl9.errorFeedback = function() {
+      //Failure feeback player
+      var failureFeedback = RandomWordsNine.getFailureAudio();
+      $scope.textSpeech  = failureFeedback.text;
+      $scope.showText = true;
+      var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          failurePlayer.release();
+          $scope.showText = false;
+        });
+      failurePlayer.play();
+    };
 
   Ctrl9.setUpContextVariables = function(data) {
     var wordsJson = data;
@@ -116,9 +158,7 @@ angular.module('saan.controllers')
   Ctrl9.success = function() {
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
-    var position = Util.getRandomNumber($scope.successMessages.length);
-    var successMessage = $scope.successMessages[position];
-    $scope.speak(successMessage);
+    Ctrl9.successFeedback();
     $timeout(function() {
       if (LAST_CHECK) {
         Ctrl9.levelUp(); //Advance level
@@ -150,9 +190,7 @@ angular.module('saan.controllers')
     if (!Ctrl9.finished) {
       $scope.score = Score.update(-$scope.substractScore, $scope.activityId, Ctrl9.finished);
     }
-    var position = Util.getRandomNumber($scope.errorMessages.length);
-    var errorMessage = $scope.errorMessages[position];
-    $scope.speak(errorMessage);
+    Ctrl9.errorFeedback();
   };
 
   $scope.handleProgress = function(isWordOk) {

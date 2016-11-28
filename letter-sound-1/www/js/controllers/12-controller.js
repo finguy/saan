@@ -4,6 +4,7 @@
     .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 12; // Activity Id
+      $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.img = "";
       $scope.assets = [];
       $scope.playedTexts = [];
@@ -11,11 +12,12 @@
       $scope.instructions = ""; // Instructions to read
       $scope.successMessages = [];
       $scope.errorMessages = [];
-      $scope.showText = false;
+      $scope.showReading = false;
       $scope.showQuestion = false;
       $scope.showOptions = false;
       $scope.dashboard = []; // Dashboard letters
-
+      $scope.showText = false;
+      $scope.textSpeech = "";
       $scope.level = null; // Indicates activity level
       $scope.totalLevels = 3;
       $scope.activityProgress = 0;
@@ -44,6 +46,45 @@
       Ctrl12.setUpStatus = function() {
         $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
       };
+
+      Ctrl12.successFeedback = function() {
+        //Success feeback player
+        var successFeedback = RandomText.getSuccessAudio();
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+        var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function success() {
+            successPlayer.release();
+            $scope.showText = false;
+          },
+          function error(err) {
+            $log.error(err);
+            successPlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+          }
+        );
+        successPlayer.play();
+      }
+
+      Ctrl12.errorFeedback = function() {
+          //Failure feeback player
+          var failureFeedback = RandomText.getFailureAudio();
+          $scope.textSpeech  = failureFeedback.text;
+          $scope.showText = true;
+          var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+            function success() {
+              failurePlayer.release();
+              $scope.showText = false;
+              $scope.$apply();
+            },
+            function error(err) {
+              $log.error(err);
+              failurePlayer.release();
+              $scope.showText = false;
+            });
+          failurePlayer.play();
+        }
 
       //Shows Activity Dashboard
       Ctrl12.showDashboard = function(readInstructions) {
@@ -76,7 +117,7 @@
         var position = Util.getRandomNumber(textJson.questions.length);
         $scope.playedTexts.push(textJson.id);
         $scope.text = textJson.text;
-        $scope.showText = true;
+        $scope.showReading = true;
         $scope.showQuestion = false;
         $scope.showOptions = false;
         $scope.question = textJson.questions[position].question;
@@ -101,10 +142,10 @@
           $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
         }
 
+
         Ctrl12.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
           function success(){
-            Ctrl12.instructionsPlayer.release();
-            $scope.playWordAudio();
+            Ctrl12.instructionsPlayer.release();             
           },
           function error (err){
             $log.error(err);
@@ -112,11 +153,10 @@
           }
         );
       };
+
       Ctrl12.success = function() {
         $scope.checkingAnswer = true;
-        var position = Util.getRandomNumber($scope.successMessages.length);
-        var successMessage = $scope.successMessages[position];
-        $scope.speak(successMessage);
+        Ctrl12.successFeedback();
         $timeout(function() {
           //Advance level
           Ctrl12.levelUp(); //Advance level
@@ -142,9 +182,7 @@
         if (!$scope.finished) {
           $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
         }
-        var position = Util.getRandomNumber($scope.errorMessages.length);
-        var errorMessage = $scope.errorMessages[position];
-        $scope.speak(errorMessage);
+        Ctrl12.errorFeedback();
         $timeout(function() {
           $scope.checkingAnswer = false;
         }, 1000);
@@ -160,7 +198,7 @@
       };
 
       $scope.displayQuestion = function() {
-        $scope.showText = false;
+        $scope.showReading = false;
         $scope.showQuestion = true;
         //Wait for UI to load
         $timeout(function() {

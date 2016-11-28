@@ -1,5 +1,5 @@
 .activity3-content {
-  background-image: url('../img/3-assets/background.jpg');
+  background-image: url('../assets/3/background.jpg');
 
     .content {
       text-align: center;
@@ -19,6 +19,22 @@
       width:400px;
       height: 200px;
       font-family: learningNumbers;
+    }
+
+    .character{
+      bottom: 8rem;
+      position: absolute;
+      right: 0;
+
+       img {
+        height: 20rem;
+        margin-left: auto;
+       }
+    }
+
+    .talk-bubble {
+      right: 22rem;
+      bottom: 15rem;
     }
 
 }

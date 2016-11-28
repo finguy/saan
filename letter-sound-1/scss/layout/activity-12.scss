@@ -34,4 +34,20 @@ $color : #00bfff;
       text-align: justify;
       width: 80rem;
     }
+
+    .character{
+      bottom: 8rem;
+      position: absolute;
+      right: 0;
+
+       img {
+        height: 10rem;
+        margin-left: auto;
+       }
+    }
+
+    .talk-bubble {
+      right: 11rem;
+      bottom: 15rem;
+    }
 }

@@ -1,11 +1,12 @@
 angular.module('saan.services')
 .factory('RandomNumber', function($http, LevelsFour, Util) {
+  var data;
   return {
     number: function(level, playedNumbers) {
       var src = LevelsFour.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
-          var data = response.data;
+          data = response.data;
           var numbersNotPlayed = [];
           console.log(data);
           if (playedNumbers.length === 0 ){
@@ -39,6 +40,14 @@ angular.module('saan.services')
           console.log("error");
         }
       );
+    },
+    getSuccessAudio: function() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    },
+    getFailureAudio: function() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   };
 })

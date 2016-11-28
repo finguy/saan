@@ -1,17 +1,20 @@
 angular.module('saan.controllers')
 
-.controller('16Ctrl', function($scope,$state, $log, $timeout, RandomWordsSixteen, TTSService,
+.controller('16Ctrl', function($scope, $state, $log, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
 
   $scope.letters = [];
   $scope.imgs = [];
   $scope.dropzone = [];
   $scope.items = ['dummy'];
+  $scope.showText = false;
+  $scope.textSpeech = "";
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
   //Shows Activity Dashboard
   var Ctrl16 = Ctrl16 || {};
   $scope.activityId = 16; // Activity Id
+  $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   Ctrl16.totalLevels = 1;
   Ctrl16.level = null; // Indicates activity level
   $scope.activityProgress = 0;
@@ -54,12 +57,51 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.setUpScore = function() {
-    Ctrl16.score =Util.getScore($scope.activityId);
+    Ctrl16.score = Util.getScore($scope.activityId);
   };
 
   Ctrl16.setUpStatus = function() {
     Ctrl16.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   };
+
+  Ctrl16.successFeedback = function() {
+    //Success feeback player
+    var successFeedback = RandomWordsSixteen.getSuccessAudio();
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        successPlayer.release();
+        $scope.showText = false;
+      },
+      function error(err) {
+        $log.error(err);
+        successPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+    successPlayer.play();
+  };
+
+  Ctrl16.errorFeedback = function() {
+    //Failure feeback player
+    var failureFeedback = RandomWordsSixteen.getFailureAudio();
+    $scope.textSpeech = failureFeedback.text;
+    $scope.showText = true;
+    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        failurePlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        failurePlayer.release();
+        $scope.showText = false;
+      });
+    failurePlayer.play();
+  }
 
   Ctrl16.setUpContextVariables = function(data) {
     var wordsJson = data;
@@ -100,13 +142,13 @@ angular.module('saan.controllers')
     }
 
     Ctrl16.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
-      function success(){
-        Ctrl16.instructionsPlayer.release();
-        $scope.playWordAudio();
+      function success() {
+        Ctrl16.instructionsPlayer.release();        
       },
-      function error (err){
+      function error(err) {
         $log.error(err);
         Ctrl16.instructionsPlayer.release();
+
       }
     );
   };
@@ -117,9 +159,7 @@ angular.module('saan.controllers')
     $scope.speak($scope.letter);
     //wait for speak
     $timeout(function() {
-      var position = Util.getRandomNumber(Ctrl16.successMessages.length);
-      var successMessage = Ctrl16.successMessages[position];
-      $scope.speak(successMessage);
+      Ctrl16.successFeedback();
       $timeout(function() {
         if (LAST_CHECK) {
           Ctrl16.levelUp(); //Advance level
@@ -132,14 +172,14 @@ angular.module('saan.controllers')
             } else if (Ctrl16.level <= Ctrl16.totalLevels) {
               Ctrl16.showDashboard(false);
             } else {
-              Ctrl16.level =  Ctrl16.initialLevel;
+              Ctrl16.level = Ctrl16.initialLevel;
               $state.go('lobby');
             }
           } else {
             if (Ctrl16.level <= Ctrl16.totalLevels) {
               Ctrl16.showDashboard(false);
             } else {
-              Ctrl16.level =  Ctrl16.initialLevel;
+              Ctrl16.level = Ctrl16.initialLevel;
               $state.go('lobby');
             }
           }
@@ -155,10 +195,8 @@ angular.module('saan.controllers')
     $scope.speak(name);
     //wait for speak
     $timeout(function() {
-      var position = Util.getRandomNumber(Ctrl16.errorMessages.length);
-      var errorMessage = Ctrl16.errorMessages[position];
-      $scope.speak(errorMessage);
-    }, 000);
+      Ctrl16.errorFeedback();
+    }, 1000);
   };
 
   Ctrl16.handleProgress = function(isLetterOk) {

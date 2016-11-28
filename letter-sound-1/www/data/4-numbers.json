@@ -171,37 +171,37 @@
           ]
       }
   ],
-  "assets": [ "img/4-assets/assorted-objects/1.png",
-            "img/4-assets/assorted-objects/2.png",
-            "img/4-assets/assorted-objects/3.png",
-            "img/4-assets/assorted-objects/4.png",
-            "img/4-assets/assorted-objects/5.png",
-            "img/4-assets/assorted-objects/6.png",
-            "img/4-assets/assorted-objects/7.png",
-            "img/4-assets/assorted-objects/8.png",
-            "img/4-assets/assorted-objects/9.png",
-            "img/4-assets/assorted-objects/10.png",
-            "img/4-assets/assorted-objects/11.png",
-            "img/4-assets/assorted-objects/12.png",
-            "img/4-assets/assorted-objects/13.png",
-            "img/4-assets/assorted-objects/14.png",
-            "img/4-assets/assorted-objects/15.png",
-            "img/4-assets/assorted-objects/16.png",
-            "img/4-assets/assorted-objects/17.png",
-            "img/4-assets/assorted-objects/18.png",
-            "img/4-assets/assorted-objects/19.png",
-            "img/4-assets/assorted-objects/20.png",
-            "img/4-assets/assorted-objects/21.png",
-            "img/4-assets/assorted-objects/22.png",
-            "img/4-assets/assorted-objects/23.png",
-            "img/4-assets/assorted-objects/24.png",
-            "img/4-assets/assorted-objects/25.png",
-            "img/4-assets/assorted-objects/26.png",
-            "img/4-assets/assorted-objects/27.png",
-            "img/4-assets/assorted-objects/28.png",
-            "img/4-assets/assorted-objects/29.png",
-            "img/4-assets/assorted-objects/30.png",
-            "img/4-assets/assorted-objects/31.png"
+  "assets": [ "assorted-objects/1.png",
+            "assorted-objects/2.png",
+            "assorted-objects/3.png",
+            "assorted-objects/4.png",
+            "assorted-objects/5.png",
+            "assorted-objects/6.png",
+            "assorted-objects/7.png",
+            "assorted-objects/8.png",
+            "assorted-objects/9.png",
+            "assorted-objects/10.png",
+            "assorted-objects/11.png",
+            "assorted-objects/12.png",
+            "assorted-objects/13.png",
+            "assorted-objects/14.png",
+            "assorted-objects/15.png",
+            "assorted-objects/16.png",
+            "assorted-objects/17.png",
+            "assorted-objects/18.png",
+            "assorted-objects/19.png",
+            "assorted-objects/20.png",
+            "assorted-objects/21.png",
+            "assorted-objects/22.png",
+            "assorted-objects/23.png",
+            "assorted-objects/24.png",
+            "assorted-objects/25.png",
+            "assorted-objects/26.png",
+            "assorted-objects/27.png",
+            "assorted-objects/28.png",
+            "assorted-objects/29.png",
+            "assorted-objects/30.png",
+            "assorted-objects/31.png"
         ],
   "instructions": "Hi! Drag the box to the number containing that quantity. Good Luck!",
   "instructionsPath": "Duck_Hunt.mp3",
@@ -212,5 +212,17 @@
     "substract": 1,
     "minScore": 10
   },
-  "finalizationLevel" : 3
+  "finalizationLevel" : 3,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
 }
