@@ -227,7 +227,7 @@ angular.module('saan.controllers')
 
   $scope.selectLetter = function(name, objectNameSrc) {
     $scope.selectedObject = name;
-    var objectName = objectNameSrc.replace(".png", "");
+    var objectName = objectNameSrc.replace("animals/","").replace(".png", "");
     $scope.speak(name + " in " + objectName);
     $timeout(function() {
       $scope.checkLetter(name);

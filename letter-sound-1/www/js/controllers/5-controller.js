@@ -209,8 +209,8 @@ angular.module('saan.controllers')
     $scope.selectLetter = function(name, objectNameSrc) {
       if (!$scope.checkingLetter && !$scope.checkingWord) {
         $scope.checkingLetter = true;
-        Ctrl5.selectedObject = name;        
-        var objectName = objectNameSrc.replace(".png", "");
+        Ctrl5.selectedObject = name;
+        var objectName = objectNameSrc.replace(".png", "").replace("animals/","");
         $scope.speak($scope.letter + " in " + objectName);
         $timeout(function() {
           $scope.checkingLetter = false;
