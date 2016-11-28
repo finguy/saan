@@ -1,6 +1,6 @@
 <ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
   <div class="pattern-container mode-{{mode}}">
-    <img"assets/2/rope.png" class="rope">
+    <img src="assets/2/rope.png" class="rope">
     <img class="feather" ng-repeat="item in patternLeft track by $index" ng-src="assets/2/feathers/{{item}}.png">
 
     <div class="dropzone"
@@ -27,6 +27,6 @@
   </div>
   <div class="character">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img"assets/characters/thioye.png">
+    <img src="assets/characters/thioye.png">
   </div>
 </ion-view>
