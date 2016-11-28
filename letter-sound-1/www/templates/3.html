@@ -7,13 +7,13 @@
         <div class="activity-{{activityId}}-box-shadow">
           <div class="letter"> {{img.name}} </div>
           <br/>
-          <img"{{assetsPath}}{{img.src}}" />
+          <img ng-src="{{assetsPath}}{{img.src}}" />
         </div>
       </div>
     </div>
   </div>
   <div class="character" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img"assets/characters/mbott.png">
+    <img ng-src="assets/characters/mbott.png">
   </div>
 </ion-view>

@@ -13,7 +13,7 @@
          <div data-ng-model="imgs" class="col-container" as-sortable="sortableSourceOptions">
           <div class="img-container" ng-repeat="img in imgs" as-sortable-item as-sortable-item-handle>
             <div class="box-container">
-                <img ng-repeat="srcPath in img.src track by $index""{{assetsPath}}{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
+                <img ng-repeat="srcPath in img.src track by $index" ng-src="{{assetsPath}}{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
             </div>
           </div>
         </div>
@@ -21,6 +21,6 @@
     </center>
     <div class="character" ng-click="playWordAudio()">
       <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-      <img"assets/characters/mbott.png">
+      <img ng-src="assets/characters/mbott.png">
     </div>
 </ion-view>

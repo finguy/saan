@@ -4,10 +4,10 @@
     <p class="text" ng-bind-html="question" ng-show="showQuestion"></p>
   </div>
   <div class="options-container" ng-show="showOptions">
-    <img class="options" id="{{opt.id}}" ng-repeat="opt in options""{{assetsPath}}{{opt.img}}" ng-click="selectAnswer(opt.id)">
+    <img class="options" id="{{opt.id}}" ng-repeat="opt in options" ng-src="{{assetsPath}}{{opt.img}}" ng-click="selectAnswer(opt.id)">
     <div class="character" ng-click="playWordAudio()">
       <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-      <img"assets/characters/mbott.png">
+      <img ng-src="assets/characters/mbott.png">
     </div>
   </div>
 </div>
