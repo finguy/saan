@@ -25,10 +25,7 @@ angular.module('saan.controllers')
   Ctrl3.status = false;
   Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
   Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
-  Ctrl3.srcAlphabetLetters = "";
-  Ctrl3.successPlayer;
-  Ctrl3.failurePlayer;
-
+  Ctrl3.srcAlphabetLetters = ""; 
 
   Ctrl3.showDashboard = function(readInstructions) {
 
@@ -195,13 +192,11 @@ angular.module('saan.controllers')
   Ctrl3.levelUp = function() {
     Ctrl3.level++;
     Ctrl3.dashboard = [];
-    $scope.selectedLetters = [];
   };
 
   Ctrl3.levelDown = function() {
     Ctrl3.level = (level > 1) ? (level - 1) : 1;
     Ctrl3.dashboard = [];
-    $scope.selectedLetters = [];
   };
 
   $scope.showPage = function() {
@@ -213,7 +208,7 @@ angular.module('saan.controllers')
   }
 
   $scope.selectLetter = function(name, objectNameSrc) {
-    $scope.selectedObject = name;    
+    $scope.selectedObject = name;
     $scope.speak(name);
     $timeout(function() {
       $scope.checkLetter(name);
