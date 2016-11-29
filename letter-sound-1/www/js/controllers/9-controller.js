@@ -2,27 +2,20 @@ angular.module('saan.controllers')
 
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
-  $scope.activityId = 9; // Activity Id
+  $scope.activityId = 9; 
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.activityProgress = 0;
   $scope.words = [];
   $scope.imgs = [];
   $scope.dropzone = [];
-  $scope.isPhonemaOk = false;
-  $scope.imgsDragged = [];
-  $scope.currentWord = "";
   $scope.draggedImgs = [];
   $scope.playedWords = [];
-  $scope.selectedItem = null;
   $scope.items = ['dummy'];
   $scope.showText = false;
   $scope.textSpeech = "";
-  //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
 
-
-  //Shows Activity Dashboard
   var Ctrl9 = Ctrl9 || {};
   Ctrl9.level = null;
   Ctrl9.instructionsPlayer;
@@ -35,7 +28,6 @@ angular.module('saan.controllers')
     RandomWordsNine.words(Ctrl9.level, $scope.playedWords).then(
       function success(data) {
         Ctrl9.setUpContextVariables(data);
-        //wait for UI to load
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
@@ -64,7 +56,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.successFeedback = function() {
-    //Success feeback player
     var successFeedback = RandomWordsNine.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
     $scope.showText = true;
@@ -84,7 +75,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.errorFeedback = function() {
-    //Failure feeback player
     var failureFeedback = RandomWordsNine.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
@@ -105,7 +95,6 @@ angular.module('saan.controllers')
   Ctrl9.setUpContextVariables = function(data) {
     var wordsJson = data;
     $scope.words = _.shuffle(wordsJson.words.words);
-
     $scope.imgs = [];
     $scope.draggedImgs = [];
     $scope.playedWords.push(wordsJson.words.id);
@@ -124,9 +113,6 @@ angular.module('saan.controllers')
 
     $scope.imgs = _.shuffle($scope.imgs);
     $scope.totalWords = $scope.imgs.length;
-    $scope.instructions = data.instructions;
-    $scope.successMessages = data.successMessages;
-    $scope.errorMessages = data.errorMessages;
     $scope.addScore = data.scoreSetUp.add;
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.minScore = data.scoreSetUp.minScore;
@@ -157,31 +143,29 @@ angular.module('saan.controllers')
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     Ctrl9.successFeedback();
-    $timeout(function() {
-      if (LAST_CHECK) {
-        Ctrl9.levelUp(); //Advance level
-        if (!Ctrl9.finished) { //Aumento puntaje
-          $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
-          Ctrl9.finished = Ctrl9.level >= Ctrl9.finalizationLevel;
-          if (Ctrl9.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
-            ActividadesFinalizadasService.add($scope.activityId);
-            $state.go('lobby');
-          } else if (Ctrl9.level <= Ctrl9.totalLevels) {
-            Ctrl9.showDashboard(false);
-          } else {
-            Ctrl9.level = Ctrl9.initialLevel;
-            $state.go('lobby');
-          }
+    if (LAST_CHECK) {
+      Ctrl9.levelUp();
+      if (!Ctrl9.finished) {
+        $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
+        Ctrl9.finished = Ctrl9.level >= Ctrl9.finalizationLevel;
+        if (Ctrl9.finished) {
+          ActividadesFinalizadasService.add($scope.activityId);
+          $state.go('lobby');
+        } else if (Ctrl9.level <= Ctrl9.totalLevels) {
+          Ctrl9.showDashboard(false);
         } else {
-          if (Ctrl9.level <= Ctrl9.totalLevels) {
-            Ctrl9.showDashboard(false);
-          } else {
-            Ctrl9.level = Ctrl9.initialLevel;
-            $state.go('lobby');
-          }
+          Ctrl9.level = Ctrl9.initialLevel;
+          $state.go('lobby');
+        }
+      } else {
+        if (Ctrl9.level <= Ctrl9.totalLevels) {
+          Ctrl9.showDashboard(false);
+        } else {
+          Ctrl9.level = Ctrl9.initialLevel;
+          $state.go('lobby');
         }
       }
-    }, 1000);
+    }
   };
 
   Ctrl9.error = function() {
@@ -199,23 +183,15 @@ angular.module('saan.controllers')
     }
   };
 
-  //Advance one level
   Ctrl9.levelUp = function() {
     Ctrl9.level++;
-    $scope.letters = [];
-    $scope.dashboard = [];
-    $scope.selectedLetters = [];
   };
 
-  // Goes back one level
   Ctrl9.levelDown = function() {
     Ctrl9.level = (Ctrl9.level > 1) ? (Ctrl9.level - 1) : 1;
-    $scope.letters = [];
-    $scope.dashboard = [];
-    $scope.selectedLetters = [];
   };
+
   /*************** ACTIONS **************************/
-  //Show Dashboard
   $scope.$on('$ionicView.beforeEnter', function() {
     Ctrl9.showDashboard(true);
   });
