@@ -25,7 +25,7 @@ angular.module('saan.controllers')
   Ctrl3.status = false;
   Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
   Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
-  Ctrl3.srcAlphabetLetters = ""; 
+  Ctrl3.srcAlphabetLetters = "";
 
   Ctrl3.showDashboard = function(readInstructions) {
 
@@ -174,9 +174,7 @@ angular.module('saan.controllers')
       Ctrl3.score = Score.update(-Ctrl3.substractScore, $scope.activityId, Ctrl3.finished);
       Util.saveScore($scope.activityId, Ctrl3.score);
     }
-    $timeout(function() {
-      Ctrl3.errorFeedback();
-    }, 1000);
+    Ctrl3.errorFeedback();
   };
 
   $scope.checkLetter = function(selectedObject) {
