@@ -173,10 +173,8 @@ angular.module('saan.controllers')
   Ctrl4.error = function() {
     if (!Ctrl4.finished) {
       Ctrl4.score = Score.update(-Ctrl4.substractScore, $scope.activityId, Ctrl4.finished);
-    }
-    $timeout(function() {
-      Ctrl4.errorFeedback();
-    }, 1000);
+    }    
+    Ctrl4.errorFeedback();
   };
 
   Ctrl4.handleProgress = function(numberOk) {
