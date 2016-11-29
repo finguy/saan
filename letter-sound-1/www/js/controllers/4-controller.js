@@ -173,7 +173,7 @@ angular.module('saan.controllers')
   Ctrl4.error = function() {
     if (!Ctrl4.finished) {
       Ctrl4.score = Score.update(-Ctrl4.substractScore, $scope.activityId, Ctrl4.finished);
-    }    
+    }
     Ctrl4.errorFeedback();
   };
 

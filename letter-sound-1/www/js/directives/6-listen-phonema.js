@@ -45,7 +45,7 @@
          };
          scope.speakConditional = function(letter, index) {
            if (scope.isDragged(letter, index)) {
-             //scope.speak(letter);
+             scope.speak(letter);
            }
          };
        }

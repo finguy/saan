@@ -139,24 +139,22 @@ angular.module('saan.controllers')
     Ctrl5.success = function() {
       Ctrl5.playedLetters.push($scope.letter.toLowerCase());
       Ctrl5.successFeedback();
-      $timeout(function() {
-        Ctrl5.levelUp();
-        if (!Ctrl5.finished) {
-          Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
-          Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
-          if (Ctrl5.finished) {
-            ActividadesFinalizadasService.add($scope.activityId);
-            $state.go('lobby');
-          } else {
-            Ctrl5.showDashboard(false);
-          }
-        } else if (Ctrl5.level <= Ctrl5.totalLevels) {
-          Ctrl5.showDashboard(false);
-        } else {
-          Ctrl5.level = Ctrl5.initialLevel;
+      Ctrl5.levelUp();
+      if (!Ctrl5.finished) {
+        Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
+        Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
+        if (Ctrl5.finished) {
+          ActividadesFinalizadasService.add($scope.activityId);
           $state.go('lobby');
+        } else {
+          Ctrl5.showDashboard(false);
         }
-      }, 1000);
+      } else if (Ctrl5.level <= Ctrl5.totalLevels) {
+        Ctrl5.showDashboard(false);
+      } else {
+        Ctrl5.level = Ctrl5.initialLevel;
+        $state.go('lobby');
+      }
     };
 
     Ctrl5.error = function() {

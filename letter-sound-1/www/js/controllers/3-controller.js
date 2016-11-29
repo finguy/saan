@@ -66,7 +66,7 @@ angular.module('saan.controllers')
   }
 
   Ctrl3.setUpContextVariables = function(data) {
-    var letterJson = data.letter;  
+    var letterJson = data.letter;
     Ctrl3.addScore = data.scoreSetUp.add;
     Ctrl3.substractScore = data.scoreSetUp.substract;
     Ctrl3.finalizationLevel = data.finalizationLevel;
@@ -146,24 +146,22 @@ angular.module('saan.controllers')
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     Ctrl3.successFeedback();
-    $timeout(function() {
-      Ctrl3.levelUp();
-      if (!Ctrl3.finished) {
-        Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
-        Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
-        if (Ctrl3.finished) {
-          ActividadesFinalizadasService.add($scope.activityId);
-          $state.go('lobby');
-        } else {
-          Ctrl3.showDashboard(true);
-        }
-      } else if (Ctrl3.level <= Ctrl3.totalLevels) {
-        Ctrl3.showDashboard(true);
-      } else {
-        Ctrl3.level = Ctrl3.initialLevel;
+    Ctrl3.levelUp();
+    if (!Ctrl3.finished) {
+      Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
+      Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
+      if (Ctrl3.finished) {
+        ActividadesFinalizadasService.add($scope.activityId);
         $state.go('lobby');
+      } else {
+        Ctrl3.showDashboard(true);
       }
-    }, 1000);
+    } else if (Ctrl3.level <= Ctrl3.totalLevels) {
+      Ctrl3.showDashboard(true);
+    } else {
+      Ctrl3.level = Ctrl3.initialLevel;
+      $state.go('lobby');
+    }
   };
 
   Ctrl3.error = function() {
