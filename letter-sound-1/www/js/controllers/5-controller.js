@@ -13,7 +13,6 @@ angular.module('saan.controllers')
     $scope.textSpeech = "";
     $scope.speak = TTSService.speak;
 
-    //Shows Activity Dashboard
     var Ctrl5 = Ctrl5 || {};
     Ctrl5.selectedObject = ""; // Collects letters the user selects
     Ctrl5.playedLetters = []; // Collects words the user played
@@ -102,11 +101,7 @@ angular.module('saan.controllers')
     Ctrl5.setUpContextVariables = function(data) {
       var letterJson = data.letter;
       $scope.letterSrc = letterJson.letterSrc;
-      $scope.instructions = data.instructions;
-      $scope.successMessages = data.successMessages;
-      $scope.errorMessages = data.errorMessages;
       $scope.letter = letterJson.letter;
-
       Ctrl5.addScore = data.scoreSetUp.add;
       Ctrl5.substractScore = data.scoreSetUp.substract;
       Ctrl5.finalizationLevel = data.finalizationLevel;

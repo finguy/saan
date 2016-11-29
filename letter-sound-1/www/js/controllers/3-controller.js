@@ -66,10 +66,7 @@ angular.module('saan.controllers')
   }
 
   Ctrl3.setUpContextVariables = function(data) {
-    var letterJson = data.letter;
-    $scope.instructions = data.instructions;
-    Ctrl3.successMessages = data.successMessages;
-    Ctrl3.errorMessages = data.errorMessages;
+    var letterJson = data.letter;  
     Ctrl3.addScore = data.scoreSetUp.add;
     Ctrl3.substractScore = data.scoreSetUp.substract;
     Ctrl3.finalizationLevel = data.finalizationLevel;
