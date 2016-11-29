@@ -33,9 +33,7 @@
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
 
-      $scope.$on('$ionicView.beforeLeave', function() {
-        Util.saveLevel($scope.activityId, $scope.level);
-      });
+
 
       var Ctrl10 = Ctrl10 || {};
       Ctrl10.instructionsPlayer;
@@ -76,24 +74,24 @@
       };
 
       Ctrl10.errorFeedback = function() {
-          //Failure feeback player
-          var failureFeedback = RandomWordTen.getFailureAudio();
-          $scope.textSpeech  = failureFeedback.text;
-          $scope.showText = true;
-          var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-            function success() {
-              failurePlayer.release();
-              $scope.showText = false;
-              $scope.$apply();
-            },
-            function error(err) {
-              $log.error(err);
-              failurePlayer.release();
-              $scope.showText = false;
-            });
-          failurePlayer.play();
-        };
-        //Shows Activity Dashboard
+        //Failure feeback player
+        var failureFeedback = RandomWordTen.getFailureAudio();
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            failurePlayer.release();
+            $scope.showText = false;
+          });
+        failurePlayer.play();
+      };
+      //Shows Activity Dashboard
       Ctrl10.showDashboard = function(readInstructions) {
 
         Ctrl10.setUpLevel();
@@ -246,6 +244,11 @@
 
       //*************** ACTIONS **************************/
       //Show Dashboard
-      Ctrl10.showDashboard(true);
+      $scope.$on('$ionicView.beforeEnter', function() {
+        Ctrl10.showDashboard(true);
+      });
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Util.saveLevel($scope.activityId, $scope.level);
+      });
     });
 })();

@@ -20,9 +20,7 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel(Ctrl9.activityId, Ctrl9.level);
-  });
+
 
   //Shows Activity Dashboard
   var Ctrl9 = Ctrl9 || {};
@@ -86,23 +84,23 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.errorFeedback = function() {
-      //Failure feeback player
-      var failureFeedback = RandomWordsNine.getFailureAudio();
-      $scope.textSpeech  = failureFeedback.text;
-      $scope.showText = true;
-      var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-        function success() {
-          failurePlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        },
-        function error(err) {
-          $log.error(err);
-          failurePlayer.release();
-          $scope.showText = false;
-        });
-      failurePlayer.play();
-    };
+    //Failure feeback player
+    var failureFeedback = RandomWordsNine.getFailureAudio();
+    $scope.textSpeech = failureFeedback.text;
+    $scope.showText = true;
+    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        failurePlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        failurePlayer.release();
+        $scope.showText = false;
+      });
+    failurePlayer.play();
+  };
 
   Ctrl9.setUpContextVariables = function(data) {
     var wordsJson = data;
@@ -144,11 +142,11 @@ angular.module('saan.controllers')
     }
 
     Ctrl9.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
-      function success(){
+      function success() {
         Ctrl9.instructionsPlayer.release();
         $scope.playWordAudio();
       },
-      function error (err){
+      function error(err) {
         $log.error(err);
         Ctrl9.instructionsPlayer.release();
       }
@@ -171,7 +169,7 @@ angular.module('saan.controllers')
           } else if (Ctrl9.level <= Ctrl9.totalLevels) {
             Ctrl9.showDashboard(false);
           } else {
-            Ctrl9.level =  Ctrl9.initialLevel;
+            Ctrl9.level = Ctrl9.initialLevel;
             $state.go('lobby');
           }
         } else {
@@ -218,5 +216,10 @@ angular.module('saan.controllers')
   };
   /*************** ACTIONS **************************/
   //Show Dashboard
-  Ctrl9.showDashboard(true);
+  $scope.$on('$ionicView.beforeEnter', function() {
+    Ctrl9.showDashboard(true);
+  });
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel(Ctrl9.activityId, Ctrl9.level);
+  });
 });

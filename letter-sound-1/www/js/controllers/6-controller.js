@@ -35,9 +35,7 @@ angular.module('saan.controllers')
   var Ctrl6 = Ctrl6 || {};
   Ctrl6.instructionsPlayer;
 
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, $scope.level);
-  });
+
 
   Ctrl6.successFeedback = function() {
     //Success feeback player
@@ -273,5 +271,11 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   //Show Dashboard
-  Ctrl6.showDashboard(true);
+  $scope.$on('$ionicView.beforeEnter', function() {
+    Ctrl6.showDashboard(true);
+  });
+
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, $scope.level);
+  });
 });

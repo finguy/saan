@@ -39,10 +39,6 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
 
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, Ctrl3.level);
-  });
-
   //Shows Activity Dashboard
   Ctrl3.showDashboard = function(readInstructions) {
 
@@ -250,5 +246,10 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   //Show Dashboard
-  Ctrl3.showDashboard(true);
+  $scope.$on('$ionicView.beforeEnter', function() {
+    Ctrl3.showDashboard(true);
+  });
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, Ctrl3.level);
+  });
 });

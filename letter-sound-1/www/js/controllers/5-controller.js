@@ -27,10 +27,6 @@ angular.module('saan.controllers')
     Ctrl5.score = 0;
     Ctrl5.instructionsPlayer;
 
-    $scope.$on('$ionicView.beforeLeave', function() {
-      Util.saveLevel($scope.activityId, Ctrl5.level);
-    });
-
     Ctrl5.showDashboard = function(readInstructions) {
       $scope.checkingWord = false;
 
@@ -238,4 +234,8 @@ angular.module('saan.controllers')
     $scope.$on('$ionicView.beforeEnter', function() {
       Ctrl5.showDashboard(true);
     });
+    $scope.$on('$ionicView.beforeLeave', function() {
+      Util.saveLevel($scope.activityId, Ctrl5.level);
+    });
+
   });

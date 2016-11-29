@@ -27,9 +27,7 @@
       //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
 
-      $scope.$on('$ionicView.beforeLeave', function() {
-        Util.saveLevel($scope.activityId, $scope.level);
-      });
+
 
       var Ctrl12 = Ctrl12 || {};
       Ctrl12.instructionsPlayer;
@@ -68,23 +66,23 @@
       }
 
       Ctrl12.errorFeedback = function() {
-          //Failure feeback player
-          var failureFeedback = RandomText.getFailureAudio();
-          $scope.textSpeech  = failureFeedback.text;
-          $scope.showText = true;
-          var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-            function success() {
-              failurePlayer.release();
-              $scope.showText = false;
-              $scope.$apply();
-            },
-            function error(err) {
-              $log.error(err);
-              failurePlayer.release();
-              $scope.showText = false;
-            });
-          failurePlayer.play();
-        }
+        //Failure feeback player
+        var failureFeedback = RandomText.getFailureAudio();
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            failurePlayer.release();
+            $scope.showText = false;
+          });
+        failurePlayer.play();
+      }
 
       //Shows Activity Dashboard
       Ctrl12.showDashboard = function(readInstructions) {
@@ -144,10 +142,10 @@
 
 
         Ctrl12.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
-          function success(){
-            Ctrl12.instructionsPlayer.release();             
+          function success() {
+            Ctrl12.instructionsPlayer.release();
           },
-          function error (err){
+          function error(err) {
             $log.error(err);
             Ctrl12.instructionsPlayer.release();
           }
@@ -231,6 +229,11 @@
 
       //*************** ACTIONS **************************/
       //Show Dashboard
-      Ctrl12.showDashboard(true);
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Ctrl12.showDashboard(true);
+      });
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Util.saveLevel($scope.activityId, $scope.level);
+      });
     });
 })();

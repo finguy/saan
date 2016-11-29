@@ -22,9 +22,7 @@ angular.module('saan.controllers')
   Ctrl16.playedLetters = [];
   Ctrl16.instructionsPlayer;
 
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, Ctrl16.level);
-  });
+
 
   Ctrl16.showDashboard = function(readInstructions) {
 
@@ -143,7 +141,7 @@ angular.module('saan.controllers')
 
     Ctrl16.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
       function success() {
-        Ctrl16.instructionsPlayer.release();        
+        Ctrl16.instructionsPlayer.release();
       },
       function error(err) {
         $log.error(err);
@@ -249,8 +247,10 @@ angular.module('saan.controllers')
   };
 
   $scope.$on('$ionicView.beforeEnter', function() {
-    /*************** ACTIONS **************************/
-    //Show Dashboard
     Ctrl16.showDashboard(true);
+  });
+  
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, Ctrl16.level);
   });
 });
