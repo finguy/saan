@@ -11,6 +11,11 @@
     right: 0;
 
     img { height: 30rem; }
+
+    .talk-bubble {
+      bottom: 26rem;
+      right: 10rem;
+    }
   }
 
 
@@ -36,12 +41,10 @@
     border: .2rem dashed grey;
     border-radius: 50%;
     color: grey;
-    margin: auto 1rem 1rem;
-    padding: 1.4rem;
+    margin: 3.6rem 1rem 1rem;
 
     .hook {
-      bottom: 5.6rem;
-      left: 1.4rem;
+      bottom: 4rem;
       position: relative;
     }
 

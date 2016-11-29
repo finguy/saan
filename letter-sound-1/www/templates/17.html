@@ -1,12 +1,12 @@
 <ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
-  <div class="pattern-container mode-{{mode}}">
+  <div class="pattern-container">
     <img src="assets/2/rope.png" class="rope">
     <div class="pattern-item item-number"
       ng-repeat="item in patternLeft track by $index">
       <span class="number-text">{{item}}</span>
     </div>
 
-    <div class="dropzone flex pattern-item"
+    <div class="dropzone pattern-item text-center"
       as-sortable="sortableOptions"
       data-ng-model="patternLeft"
       ng-hide="hideDropzone">

@@ -121,7 +121,7 @@
       clone: $scope.mode == MODE_FILLIN,
       dragEnd: function(eventObj) {
         //check that item was correctly moved
-        if (Ctrl17.checkDragEnd(eventObj.source.itemScope.modelValue)){
+        if (!Ctrl17.checkDragEnd(eventObj.source.itemScope.modelValue)){
           Ctrl17.failure();
         }
       },
@@ -143,6 +143,7 @@
 
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
           function(){
+            $scope.showText = false;
             if (Ctrl17.stageFinished()){
               stageNumber++;
               $timeout(function(){
@@ -175,6 +176,8 @@
           function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
         );
 
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
         successPlayer.play();
       }
     };
@@ -194,7 +197,7 @@
         return _.contains($scope.patternOptions, movedValue);
       }
       else {
-        return $scope.patternLeft.length + $scope.patternRight.length == 2 * stageData.patternLength;
+        return $scope.patternLeft.length + $scope.patternRight.length == stageData.patternLength;
       }
     };
 
@@ -203,7 +206,7 @@
         var failureFeedback = NumberPattern.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); checking = false;},
+          function(){ failurePlayer.release(); $scope.showText = false; checking = false; $scope.$apply();},
           function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
         );
 
