@@ -1,9 +1,5 @@
 {
   "numberOfOptions": 4,
-  "instructionsPath": "Duck_Hunt.mp3",
-  "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
   "minLevel": 4,
   "levels": [
     {
@@ -72,16 +68,43 @@
       "completions": 2
     }
   ],
+  "instructions": {
+    "intro": [
+      { "path": "intro_1.mp3" },
+      { "path": "intro_2.mp3" }
+    ],
+    "tap": { "path": "tap_instruction.mp3" }
+  },
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
     }
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
+      "path": "try_again.mp3",
       "text": "Try again!"
+    },
+    {
+      "path": "not_the_correct_chip.mp3",
+      "text": "I'm not sure that's the correct chip"
+    },
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Take a closer look at the ordered chips and try again!"
     }
+  ],
+  "endingAudio" : [
+    { "path": "end_1.mp3" },
+    { "path": "end_2.mp3" }
   ]
 }

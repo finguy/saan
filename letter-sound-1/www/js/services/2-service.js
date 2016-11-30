@@ -15,8 +15,7 @@
       getFillinPattern: getFillinPattern,
       getMinLevel: getMinLevel,
       getSuccessAudio: getSuccessAudio,
-      getFailureAudio: getFailureAudio,
-      getEndAudio: getEndAudio
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -87,15 +86,6 @@
     function getFailureAudio() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
-    }
-
-    function getEndAudio(mode) {
-      if (mode >= 1){
-        return data.endingAudio[mode-1];
-      }
-      else {
-        $log.error("invalid mode value");
-      }
     }
   }
 })();

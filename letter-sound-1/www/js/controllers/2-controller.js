@@ -60,14 +60,17 @@
 
         Ctrl2.setActivity();
         if (readInstructions){
-          var introPath = config.instructions.intro[$scope.mode - 1].path;
-          // play instructions of activity
-          instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-            function(){ instructionsPlayer.release(); readInstructions = false; },
-            function(err){ $log.error(err); instructionsPlayer.release(); readInstructions = false; }
-          );
+          $timeout(function () {
+            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            // play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+              function(){ instructionsPlayer.release(); },
+              function(err){ $log.error(err); instructionsPlayer.release(); }
+            );
 
-          instructionsPlayer.play();
+            instructionsPlayer.play();
+            readInstructions = false;
+          }, 1000);
         }
       });
     };
@@ -211,7 +214,7 @@
         var failureFeedback = ColorPattern.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); checking = false;},
+          function(){ failurePlayer.release(); $scope.showText = false; checking = false; $scope.$apply();},
           function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
         );
 
@@ -249,7 +252,7 @@
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
       $scope.finished = true;
-      // $scope.$apply();
+      $scope.$apply();
       level++;
 
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,

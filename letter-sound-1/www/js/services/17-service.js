@@ -25,10 +25,10 @@
           function success(response) {
             data = response.data;
             return {
-              "numberOfOptions": data.numberOfOptions,
-              "instructionsPath": data.instructionsPath,
-              "instructionsText": data.instructionsText,
-              "level": data.levels[level-1]
+              numberOfOptions: data.numberOfOptions,
+              instructions: data.instructions,
+              ending: data.endingAudio,
+              level: data.levels[level-1]
             };
           },
           function error() {

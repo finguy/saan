@@ -13,11 +13,20 @@
     img { height: 30rem; }
 
     .talk-bubble {
-      bottom: 26rem;
-      right: 10rem;
+      align-self: flex-start;
+      bottom: 2rem;
+      position: relative;
+      right: -4rem;
+      z-index: 0;
+
+      &::after {
+        border-color: white transparent transparent white;
+        bottom: initial;
+        right: -2rem;
+        top: 4rem;
+      }
     }
   }
-
 
   .number-text {
     font-size: 2em;
