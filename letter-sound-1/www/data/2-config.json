@@ -1,9 +1,5 @@
 {
   "colors": ["blue", "green", "purple", "red", "yellow"],
-  "instructionsPath": "Duck_Hunt.mp3",
-  "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
   "minLevel": 2,
   "levels": [
     {
@@ -35,16 +31,43 @@
       "stages": 1
     }
   ],
+  "instructions": {
+    "intro": [
+      { "path": "intro_1.mp3" },
+      { "path": "intro_2.mp3" }
+    ],
+    "tap": { "path": "tap_instruction.mp3" }
+  },
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
     }
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
+      "path": "try_again.mp3",
       "text": "Try again!"
+    },
+    {
+      "path": "not_the_color.mp3",
+      "text": "That's a nice color but not the one we have to use right now"
+    },
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Check the colored feathers and try again!"
     }
+  ],
+  "endingAudio" : [
+    { "path": "end_1.mp3" },
+    { "path": "end_2.mp3" }
   ]
 }
