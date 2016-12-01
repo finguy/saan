@@ -1,34 +1,34 @@
 {
   "colors": ["blue", "green", "purple", "red", "yellow"],
-  "minLevel": 2,
+  "minLevel": 3,
   "levels": [
     {
       "number": 1,
       "mode": 1,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 2,
       "mode": 1,
       "numberOfColors": 3,
       "patternLength": 6,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 3,
       "mode": 2,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 1
+      "stages": 4
     },
     {
       "number": 4,
       "mode": 2,
       "numberOfColors": 3,
       "patternLength": 6,
-      "stages": 1
+      "stages": 4
     }
   ],
   "instructions": {

@@ -40,6 +40,10 @@
 
     $scope.$on('$ionicView.beforeLeave', function() {
       tapPlayer.release();
+      instructionsPlayer.release();
+      successPlayer.release();
+      failurePlayer.release();
+      endPlayer.release();
       Util.saveLevel($scope.activityId, level);
     });
 

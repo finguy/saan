@@ -60,7 +60,7 @@
     }
 
     function getFillinData(step, length){
-      var digits = Math.pow(10, _.random(1,3));
+      var digits = Math.pow(10, _.random(1,2));
 
       var base = Math.random() * digits;
       var pattern = [Math.floor(base)];
