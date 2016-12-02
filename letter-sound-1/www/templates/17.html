@@ -1,6 +1,6 @@
 <ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
   <div class="pattern-container">
-    <img src="assets/2/rope.png" class="rope">
+    <img src="{{imagePath}}rope.png" class="rope">
     <div class="pattern-item item-number"
       ng-repeat="item in patternLeft track by $index">
       <span class="number-text">{{item}}</span>
@@ -10,7 +10,7 @@
       as-sortable="sortableOptions"
       data-ng-model="patternLeft"
       ng-hide="hideDropzone">
-      <img src="assets/17/hook.png" class="hook">
+      <img src="{{imagePath}}hook.png" class="hook">
       <div ng-repeat="item in dropzone" as-sortable-item></div>
     </div>
 
@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div class="character">
+  <div class="character flex" ng-click="tapInstruction()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
     <img src="assets/characters/thioye-color.png">
   </div>

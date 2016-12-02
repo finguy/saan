@@ -46,7 +46,8 @@ $pattern-colors: (color-red, $red),
   }
 
   .item-label {
-    font-size: 2em;
+    font-size: 2.5em;
+    font-weight: bold;
   }
 
   .pattern-container {
@@ -67,7 +68,8 @@ $pattern-colors: (color-red, $red),
   }
 
   .pattern-options {
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
+    z-index: 1;
   }
 
   .options-container {
@@ -109,7 +111,17 @@ $pattern-colors: (color-red, $red),
   }
 
   .talk-bubble {
-    bottom: 26rem;
-    right: 10rem;
+    align-self: flex-start;
+    bottom: 2rem;
+    position: relative;
+    right: -4rem;
+    z-index: 0;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 4rem;
+    }
   }
 }

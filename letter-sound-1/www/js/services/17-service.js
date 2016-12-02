@@ -25,10 +25,10 @@
           function success(response) {
             data = response.data;
             return {
-              "numberOfOptions": data.numberOfOptions,
-              "instructionsPath": data.instructionsPath,
-              "instructionsText": data.instructionsText,
-              "level": data.levels[level-1]
+              numberOfOptions: data.numberOfOptions,
+              instructions: data.instructions,
+              ending: data.endingAudio,
+              level: data.levels[level-1]
             };
           },
           function error() {
@@ -60,7 +60,7 @@
     }
 
     function getFillinData(step, length){
-      var digits = Math.pow(10, _.random(1,3));
+      var digits = Math.pow(10, _.random(1,2));
 
       var base = Math.random() * digits;
       var pattern = [Math.floor(base)];

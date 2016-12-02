@@ -26,8 +26,8 @@
             data = response.data;
             return {
               colors: data.colors,
-              instructionsPath: data.instructionsPath,
-              instructionsText: data.instructionsText,
+              instructions: data.instructions,
+              ending: data.endingAudio,
               level: data.levels[level-1]
             };
           },

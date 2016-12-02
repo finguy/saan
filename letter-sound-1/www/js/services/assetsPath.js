@@ -12,6 +12,8 @@
       getGeneralAudio: getGeneralAudio,
       getSuccessAudio: getSuccessAudio,
       getFailureAudio: getFailureAudio,
+      getInstructionsAudio: getInstructionsAudio,
+      getEndingAudio: getEndingAudio,
       getImgs: getImgs
     };
 
@@ -27,12 +29,20 @@
       return MAIN_PATH + "audio/";
     }
 
+    function getInstructionsAudio(id) {
+      return getActivityAudio(id) + "instructions/";
+    }
+
     function getSuccessAudio(id) {
-      return MAIN_PATH + id + "/audio/feedback/success/";
+      return getActivityAudio(id) + "feedback/success/";
     }
 
     function getFailureAudio(id) {
-      return MAIN_PATH + id + "/audio/feedback/failure/";
+      return getActivityAudio(id) + "feedback/failure/";
+    }
+
+    function getEndingAudio(id) {
+      return getActivityAudio(id) + "end/";
     }
 
     function getImgs(id) {
