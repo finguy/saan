@@ -1,61 +1,81 @@
 .activity-16-content {
-
-  .letter {
-    height: 6rem;
-    width: 6rem;
-  }
-
-  .icon.dropzone {
-    background-image: url('../assets/9/cuadro.png');
-    border: 0;
-    border-radius: 0;
-    height: 17rem;
-    width: 17rem;
-  }
-
-
-  .list-letters {
-    display: flex;
-    justify-content: center;
-  }
-
-
-  .word-icons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15rem;
-    padding: 1.5rem;
-  }
-
-  .instructions {
+  background: url("../assets/16/background-organization.png") no-repeat center center fixed;
+  .letterAsset {
     height: 10rem;
     width: 10rem;
+    margin-left: 3rem;
+  }
+  .dropzoneContainer {
+    background-image: url("../assets/16/library.png");
+    background-repeat: no-repeat;
+    min-height: 20rem;
+    max-height: 20rem;
+    min-width: 100rem;
+    max-width: 100rem;
+    margin-left: 20rem;
+
+    .as-sortable-item {
+      display: inline;
+      margin-top: 0;
+      margin-left: 23%;
+      width: 5%;
+    }
+
+    &:nth-child(1) {
+      background-image: url("../assets/16/firstShelf.png");
+      background-repeat: no-repeat;
+      min-height: 24rem;
+      .as-sortable-item {
+        margin-top: 4.4%;
+        display: inline;
+        margin-left: 23%;
+        width: 5%;
+      }
+    }
+    .dropzone {
+      width: 100rem;
+      height: 10rem;
+    }
+  }
+  .shelfContainer {
+    .letterAsset {
+      width: 10em;
+      margin-left: 7%;
+      position: relative;
+      top: -6rem;
+    }
+  }
+  .listAssets {
+    display: flex;
+    justify-content: center;
+  }
+  .word-icons {
+    justify-content: center;
+    padding: 1.5rem;
   }
 
   .as-sortable-item {
     background-color: inherit;
     border: inherit;
-  }
+    border-radius: 0;
 
+  }
   .as-sortable-placeholder {
     display: none !important;
   }
-
   .as-sortable-dragging {
     width: auto;
+    margin: 0 !important;
   }
-
-  .character{
+  .character {
     bottom: 8rem;
     position: absolute;
     right: 0;
-
-     img {
+    img {
       height: 20rem;
       margin-left: auto;
-     }
+    }
   }
-
   .talk-bubble {
     right: 22rem;
     bottom: 15rem;

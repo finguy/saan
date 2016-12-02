@@ -1,98 +1,63 @@
 {"info":
   [{"id":1,
     "letters": [
-      { "name":"a",
-        "letterImg": "letters-blue/letters-blue-a-lowercase.png",
-        "assets": [ "animals/wale.png",
-                  "animals/aligator.png",
-                  "animals/cat.png",
-                  "animals/bat.png",
-                  "animals/cammel.png",
-                  "animals/bear.png",
-                  "animals/elephant.png",
-                  "animals/snake.png"
+      { "name":"b",
+        "letterImg": "Letras/b.png",
+        "assets": [ "items/bed.png"
                 ]
       },
-      { "name":"e",
-        "letterImg": "letters-blue/letters-blue-e-lowercase.png",
+      { "name":"c",
+        "letterImg": "Letras/c.png",
         "assets": [
-                   "animals/tiger.png",
-                   "animals/monkey.png",
-                   "animals/sheep.png"
-                  ]
+                    "items/clock.png"]
       },
-      { "name":"i",
-        "letterImg":"letters-blue/letters-blue-i-lowercase.png",
-        "assets":["animals/aligator.png",
-                 "animals/fish.png",
-                 "animals/bird.png",
-                 "animals/pig.png"]
-      },
-      {  "name":"o",
-         "letterImg":"letters-blue/letters-blue-o-lowercase.png",
-         "assets":["animals/octopus.png",
-                "animals/frog.png",
-                "animals/dog.png"
-                ]
+      { "name":"r",
+        "letterImg":"Letras/r.png",
+        "assets":[ "items/radio.png" ]
       }
     ]
   },
   {"id":2,
     "letters": [
-      { "name":"u",
-        "letterImg": "letters-blue/letters-blue-u-lowercase.png",
-        "assets": [  "animals/octopus.png",
-                     "animals/turtle.png",
-                     "animals/duck.png"
+      { "name":"d",
+        "letterImg": "Letras/d.png",
+        "assets": [  "items/dishes.png"
                 ]
       },
-      { "name":"m",
-        "letterImg": "letters-blue/letters-blue-m-lowercase.png",
+      { "name":"p",
+        "letterImg": "Letras/p.png",
         "assets": [
-                   "animals/cammel.png"
+                   "items/pillow.png",
+                   "items/pot.png",
+                   "items/photos.png"
+
                   ]
       },
-      { "name":"h",
-        "letterImg":"letters-blue/letters-blue-h-lowercase.png",
-        "assets":["animals/elephant.png",
-                 "animals/fish.png"
+      { "name":"k",
+        "letterImg":"Letras/k.png",
+        "assets":["items/key.png"
                  ]
-      },
-      {  "name":"g",
-         "letterImg":"letters-blue/letters-blue-g-uppercase.png",
-         "assets":["animals/pig.png",
-                "animals/frog.png",
-                "animals/dog.png"
-                ]
       }
     ]
   },
   {"id":3,
     "letters": [
-      { "name":"t",
-        "letterImg": "letters-blue/letters-blue-t-lowercase.png",
-        "assets": [  "animals/octopus.png",
-                     "animals/turtle.png"
-                  ]
-      },
-      { "name":"p",
-        "letterImg": "letters-blue/letters-blue-p-lowercase.png",
-        "assets": [
-                   "animals/sheep.png",
-                   "animals/pig.png"
-                  ]
-      },
       { "name":"f",
-        "letterImg":"letters-blue/letters-blue-f-uppercase.png",
+        "letterImg": "Letras/f.png",
+        "assets": [  "items/flowers.png",
+                    "items/food.png"
+                  ]
+      },
+      { "name":"s",
+        "letterImg":"Letras/s.png",
         "assets":[
-                 "animals/fish.png",
-                 "animals/frog.png"
+                 "items/soap.png"
                  ]
       },
-      {  "name":"d",
-         "letterImg":"letters-blue/letters-blue-g-lowercase.png",
+      {  "name":"t",
+         "letterImg":"Letras/t.png",
          "assets":[
-                "animals/dog.png"
+                "items/table.png"
                 ]
       }
     ]

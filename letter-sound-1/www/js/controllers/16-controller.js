@@ -3,12 +3,13 @@ angular.module('saan.controllers')
 .controller('16Ctrl', function($scope, $state, $log, $timeout, RandomWordsSixteen, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
 
-  $scope.letters = [];
+  $scope.assets = [];
   $scope.imgs = [];
   $scope.dropzone = [];
   $scope.items = ['dummy'];
   $scope.showText = false;
   $scope.textSpeech = "";
+  $scope.draggedAssets = [];
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
   //Shows Activity Dashboard
@@ -106,26 +107,29 @@ angular.module('saan.controllers')
   Ctrl16.setUpContextVariables = function(data) {
     var wordsJson = data;
     var imgs = [];
-    var letters = [];
+    var assets = [];
     Ctrl16.playedLetters.push(wordsJson.info.id);
-    $scope.letters = [];
+    $scope.assets = [];
     for (var i in wordsJson.info.letters) {
       if (wordsJson.info.letters[i]) {
-        var index = Util.getRandomNumber(wordsJson.info.letters[i].assets.length);
         imgs.push({
-          image: wordsJson.info.letters[i].assets[index],
+          image: wordsJson.info.letters[i].letterImg,
+          assets:  wordsJson.info.letters[i].assets,
           dropzone: [wordsJson.info.letters[i].name]
         });
-        letters.push({
-          name: wordsJson.info.letters[i].name,
-          letterImage: wordsJson.info.letters[i].letterImg
+        var letterAssets = wordsJson.info.letters[i].assets.map(function(asset) {
+          return {
+            name: wordsJson.info.letters[i].name,
+            assetImage: asset
+          }
         });
+        assets = assets.concat(letterAssets);
       }
     }
 
     $scope.imgs = imgs;
     $scope.imgs = _.shuffle($scope.imgs);
-    $scope.letters = letters;
+    $scope.assets = assets;
     $scope.draggedImgs = [];
     $scope.instructions = data.instructions;
     Ctrl16.successMessages = data.successMessages;
@@ -143,7 +147,7 @@ angular.module('saan.controllers')
 
     Ctrl16.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
       function success() {
-        Ctrl16.instructionsPlayer.release();        
+        Ctrl16.instructionsPlayer.release();
       },
       function error(err) {
         $log.error(err);
@@ -155,7 +159,7 @@ angular.module('saan.controllers')
 
 
   Ctrl16.handleSuccess = function() {
-    var LAST_CHECK = $scope.draggedImgs.length === $scope.letters.length;
+    var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
     $scope.speak($scope.letter);
     //wait for speak
     $timeout(function() {
@@ -210,7 +214,7 @@ angular.module('saan.controllers')
   //Advance one level
   Ctrl16.levelUp = function() {
     Ctrl16.level++;
-    $scope.letters = [];
+    $scope.assets = [];
   };
 
   // Goes back one level
@@ -243,10 +247,19 @@ angular.module('saan.controllers')
   $scope.targetOptions = {
     containment: '.activity16',
     accept: function(sourceItemHandleScope, destSortableScope) {
-      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0];
+      if (typeof destSortableScope.modelValue[0] === "string") {
+        Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0];
+      } else {
+        Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0].name;
+      }
+      $scope.draggedAssets[sourceItemHandleScope.modelValue.assetImage] = Ctrl16.letterOk;
       return Ctrl16.letterOk;
     }
   };
+
+  $scope.isDragged = function(assetSrc) {
+    return $scope.draggedAssets[assetSrc] === true;
+  }
 
   $scope.$on('$ionicView.beforeEnter', function() {
     /*************** ACTIONS **************************/

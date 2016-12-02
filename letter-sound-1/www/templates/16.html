@@ -1,20 +1,19 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity-{{activityId}}-content content-margin">
-  <activity-status></activity-status>
-  <div class="text-center">
-    <img ng-src="assets/9/radio.png" class="instructions" ng-click="speak(instructions)">
-  </div>
   <div class="dashboard">
     <div class="word-icons">
-      <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index">
-        <div as-sortable="targetOptions" data-ng-model="item.dropzone">
-          <img class="dropzone icon" ng-src="{{assetsPath}}{{item.image}}" ng-show="item.dropzone.length == 1" ng-repeat="dummy in items" as-sortable-item/>
+      <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index" class="dropzoneContainer">
+        <div as-sortable="targetOptions" data-ng-model="item.dropzone" class="dropzone icon">
+           <img class="" ng-src="{{assetsPath}}{{item.image}}" ng-repeat="dummy in items" as-sortable-item class="letterNameBox"/>
+        </div>
+        <div class="shelfContainer">
+          <img ng-repeat="asset in item.assets track by $index" src="{{assetsPath}}{{asset}}" class="letterAsset" ng-show="isDragged(asset)"/>
         </div>
       </div>
     </div>
-    <div class="list-letters" as-sortable="sourceOptions" data-ng-model="letters">
-      <div ng-repeat="data in letters">
+    <div class="listAssets" as-sortable="sourceOptions" data-ng-model="assets">
+      <div ng-repeat="data in assets">
         <div as-sortable-item as-sortable-item-handle>
-          <img class="letter" ng-src="{{assetsPath}}{{data.letterImage}}" />
+          <img class="letterAsset" ng-src="{{assetsPath}}{{data.assetImage}}" />
         </div>
       </div>
     </div>
