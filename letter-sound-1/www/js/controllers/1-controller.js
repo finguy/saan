@@ -12,6 +12,7 @@
       $scope.showText = false;
       $scope.checkingWord = false;
       $scope.checkingLetter = false;
+      $scope.imagePath = AssetsPath.getImgs($scope.activityId);
 
       var Ctrl1 = Ctrl1 || {};
       var instructionsPlayer;
@@ -24,28 +25,52 @@
       var stageData;
       var stageNumber;
       var readInstructions;
-
-      var playingWord = false;
-
-      //Reproduces sound using TTSService
-      $scope.speak = TTSService.speak;
+      var letterPlayers = [];
+      var endPlayer;
 
       $scope.$on('$ionicView.beforeEnter', function() {
         stageNumber = 1;
         level = Util.getLevel($scope.activityId) || 1;
-        readInstructions = true;
+        $scope.readInstructions = true;
+
+        for (var i = 0; i < 26; i++){
+          letterPlayers[i] = new Media(AssetsPath.getActivityAudio($scope.activityId) +
+            "letters/" + String.fromCharCode(i + "a".charCodeAt(0)) + ".mp3",
+            function(){},
+            function(err){Ctrl1.letterPlayerFailure(err);}
+          );
+        }
+
         Ctrl1.getConfiguration(level);
       });
 
       $scope.$on('$ionicView.beforeLeave', function() {
         Util.saveLevel($scope.activityId, level);
+
+        // releasing loose players
+        _.each(letterPlayers, function(element){
+          element.release();
+        });
+
+        if (!angular.isUndefined(instructionsPlayer))
+          instructionsPlayer.release();
+
+        if (!angular.isUndefined(wordPlayer))
+          wordPlayer.release();
+
+        if (!angular.isUndefined(successPlayer))
+          successPlayer.release();
+
+        if (!angular.isUndefined(failurePlayer))
+          failurePlayer.release();
       });
 
       $scope.selectLetter = function(position, letter) {
-        if (!$scope.checkingLetter && !$scope.checkingWord){
+        if (!$scope.readInstructions && !$scope.checkingLetter && !$scope.checkingWord){
+          var pos = letter.toLowerCase().charCodeAt(0) - "a".charCodeAt(0);
+          letterPlayers[pos].play();
           $scope.checkingLetter = true;
           selectedLetters[position] = letter;
-          $scope.speak(letter);
 
            if (selectedLetters.length === stageData.text.split("").length) {
              Ctrl1.checkWord();
@@ -55,19 +80,15 @@
       };
 
       $scope.playWordAudio = function() {
-        if (!playingWord){
-          playingWord = true;
-          wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
-            function(){ wordPlayer.release(); playingWord = false;},
-            function(err){ $log.error(err); wordPlayer.release(); playingWord = false;}
-          );
+        wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
+          function(){ wordPlayer.release();},
+          function(err){ $log.error(err); wordPlayer.release();}
+        );
 
-          wordPlayer.play();
-        }
+        wordPlayer.play();
       };
 
       Ctrl1.getConfiguration = function (level){
-        // $scope.loading = true;
         WordBuilding.getConfig(level).then(function(data){
           config = data;
           config.levelData.words = _.shuffle(config.levelData.words);
@@ -83,16 +104,22 @@
         Ctrl1.buildDashboard();
 
         //play instructions of activity
-        if (readInstructions){
-          instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + config.instructionsPath,
-            function(){
-              instructionsPlayer.release();
-              $scope.playWordAudio();
-            },
-            function(err){ $log.error(err); instructionsPlayer.release();}
-          );
-          instructionsPlayer.play();
-          readInstructions = false;
+        if ($scope.readInstructions){
+          $timeout(function () {
+            var introPath = config.instructions.path;
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+              function(){
+                instructionsPlayer.release();
+                $scope.readInstructions = false;
+                $timeout(function(){
+                  $scope.playWordAudio();
+                }, 500);
+              },
+              function(err){ $log.error(err); instructionsPlayer.release(); $scope.readInstructions = false;}
+            );
+            instructionsPlayer.play();
+
+          }, 1000);
         }
         else {
           $scope.playWordAudio();
@@ -119,16 +146,16 @@
       Ctrl1.checkWord = function() {
         $scope.checkingWord = true;
         var builtWord = selectedLetters.join("");
-        $scope.speak(builtWord);
         $timeout(function(){
           if (builtWord.toLowerCase() === stageData.text.toLowerCase()) {
-            Ctrl1.success();
+            $scope.playWordAudio();
+            $timeout(function(){Ctrl1.success();}, 1000);
           }
           else {
             Ctrl1.failure();
           }
 
-        }, 500);
+        }, 1000);
       };
 
       Ctrl1.success = function(){
@@ -140,20 +167,17 @@
           function(){
             successPlayer.release();
             $scope.showText = false;
+            $scope.$apply();
 
             if (stageNumber > config.levelData.words.length){ //if level finished
               if (level == WordBuilding.getMinLevel() &&
                 !ActividadesFinalizadasService.finalizada($scope.activityId)){
-                // if player reached minimum for setting activity as finished
-                ActividadesFinalizadasService.add($scope.activityId);
-                level++;
-                $state.go('lobby');
+                Ctrl1.minReached();
               }
               else {
                 if (level == WordBuilding.getMaxLevel()){
                   // if player finished all available levels
-                  level = 1;
-                  $state.go('lobby');
+                  Ctrl1.maxReached();
                 }
                 else {
                   // player still has levels to play
@@ -201,6 +225,37 @@
         }else{
           $log.error("Invalid stage number");
         }
+      };
+
+      Ctrl1.letterPlayerFailure = function(err){
+        $log.error(err);
+      };
+
+      Ctrl1.minReached = function(){
+        // if player reached minimum for setting activity as finished
+        ActividadesFinalizadasService.add($scope.activityId);
+        $scope.finished = true;
+        $scope.$apply();
+        level++;
+
+        endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+          function(){
+            endPlayer.release();
+            $state.go('lobby');
+          }, function(err){ $log.error(err);}
+        );
+
+        endPlayer.play();
+      };
+
+      Ctrl1.maxReached = function(){
+        level = 1;
+        endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+          function(){ endPlayer.release(); $state.go('lobby'); },
+          function(err){ $log.error(err);}
+        );
+
+        endPlayer.play();
       };
     }]
   );
