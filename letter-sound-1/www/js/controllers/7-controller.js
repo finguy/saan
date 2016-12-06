@@ -2,24 +2,45 @@
   'use strict';
   angular.module('saan.controllers')
 
-  .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService',
-  function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService) {
+  .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService', 'AssetsPath',
+  function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
 
+    var Ctrl7 = Ctrl7 || {} ;
     var config = '';
     var level;
-    var Ctrl7 = Ctrl7 || {} ;
+    var instructionsPlayer;
+    var successPlayer;
+    var failurePlayer;
+    var tapPlayer;
+    var endPlayer;
+    var readInstructions;
 
     $scope.$on('$ionicView.beforeEnter', function() {
-      //TODO: Get current level in order to get the proper configuration
       level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = false; //TODO set this to true
       Ctrl7.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, level);
+
+      if (!angular.isUndefined(instructionsPlayer))
+          instructionsPlayer.release();
+
+      if (!angular.isUndefined(successPlayer))
+        successPlayer.release();
+
+      if (!angular.isUndefined(failurePlayer))
+        failurePlayer.release();
+
+      if (!angular.isUndefined(tapPlayer))
+        tapPlayer.release();
+
+      if (!angular.isUndefined(endPlayer))
+        endPlayer.release();
     });
 
     Ctrl7.getConfiguration = function(level){
@@ -27,6 +48,19 @@
         config = data;
         $scope.size = config.level.numberOfCards;
         $scope.buildDeck();
+        if (readInstructions){
+          $timeout(function () {
+            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            // play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+              function(){ instructionsPlayer.release(); },
+              function(err){ $log.error(err); instructionsPlayer.release(); }
+            );
+
+            instructionsPlayer.play();
+            readInstructions = false;
+          }, 1000);
+        }
       });
     };
 
@@ -65,15 +99,11 @@
     $scope.deckCompleted = function(){
       if (level == DeckBuilder.getMinLevel() &&
         !ActividadesFinalizadasService.finalizada($scope.activityId)){
-        // if player reached minimum for setting activity as finished
-        ActividadesFinalizadasService.add($scope.activityId);
-        level++;
-        $state.go('lobby');
+        Ctrl7.minReached();
       }
       else {
         if (level == DeckBuilder.getMaxLevel()){
-          level = 1;
-          $state.go('lobby');
+          Ctrl7.maxReached();
         }
         else {
           Util.saveLevel($scope.activityId, ++level);
@@ -82,5 +112,36 @@
       }
     };
 
+    $scope.tapInstruction = function() {
+      tapPlayer.play();
+    };
+
+    Ctrl7.minReached = function(){
+      // if player reached minimum for setting activity as finished
+      ActividadesFinalizadasService.add($scope.activityId);
+      $scope.$apply();
+      level++;
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+      //   function(){
+      //     endPlayer.release();
+      //     $state.go('lobby');
+      //   }, function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
+    };
+
+    Ctrl7.maxReached = function(){
+      level = 1;
+      $state.go('lobby'); // TODO remove this line after getting media assets
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+      //   function(){ endPlayer.release(); $state.go('lobby'); },
+      //   function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
+    };
   }]);
 })();
