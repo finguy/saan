@@ -3,39 +3,25 @@
   angular.module('saan.controllers')
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
       Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
-      $scope.activityId = 10; // Activity Id
+      $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
-      $scope.word = []; // Letter to play in level
+      $scope.word = [];
       $scope.wordStr = "";
       $scope.rimes = [];
       $scope.selectedRimeLetters = [];
       $scope.words = [];
       $scope.img = "";
-      $scope.assets = [];
       $scope.playedWords = [];
-      $scope.instructions = ""; // Instructions to read
-      $scope.successMessages = [];
-      $scope.errorMessages = [];
-      $scope.numbers = []; // Word letters
-      $scope.dashboard = []; // Dashboard letters
-      $scope.selectedObject = ""; // Collects letters the user selects
-      $scope.playedWords = []; // Collects words the user played
-      $scope.level = null; // Indicates activity level
+      $scope.level = null;
       $scope.totalLevels = 1;
       $scope.activityProgress = 0;
       $scope.score = 0;
       $scope.draggedWord = false;
-      $scope.draggedLetters = [];
       $scope.imgsDragged = [];
       $scope.isWordOk = false;
       $scope.showText = false;
       $scope.textSpeech = "";
-      //Reproduces sound using TTSService
       $scope.speak = TTSService.speak;
-
-      $scope.$on('$ionicView.beforeLeave', function() {
-        Util.saveLevel($scope.activityId, $scope.level);
-      });
 
       var Ctrl10 = Ctrl10 || {};
       Ctrl10.instructionsPlayer;
@@ -56,7 +42,6 @@
       };
 
       Ctrl10.successFeedback = function() {
-        //Success feeback player
         var successFeedback = RandomWordTen.getSuccessAudio();
         $scope.textSpeech = successFeedback.text;
         $scope.showText = true;
@@ -76,26 +61,24 @@
       };
 
       Ctrl10.errorFeedback = function() {
-          //Failure feeback player
-          var failureFeedback = RandomWordTen.getFailureAudio();
-          $scope.textSpeech  = failureFeedback.text;
-          $scope.showText = true;
-          var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-            function success() {
-              failurePlayer.release();
-              $scope.showText = false;
-              $scope.$apply();
-            },
-            function error(err) {
-              $log.error(err);
-              failurePlayer.release();
-              $scope.showText = false;
-            });
-          failurePlayer.play();
-        };
-        //Shows Activity Dashboard
-      Ctrl10.showDashboard = function(readInstructions) {
+        var failureFeedback = RandomWordTen.getFailureAudio();
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            failurePlayer.release();
+            $scope.showText = false;
+          });
+        failurePlayer.play();
+      };
 
+      Ctrl10.showDashboard = function(readInstructions) {
         Ctrl10.setUpLevel();
         Ctrl10.setUpScore();
         Ctrl10.setUpStatus();
@@ -104,8 +87,6 @@
           function success(data) {
             Ctrl10.setUpContextVariables(data);
             var readWordTimeout = (readInstructions) ? 2000 : 1000;
-
-            //wait for UI to load
             $timeout(function() {
               if (readInstructions) {
                 Ctrl10.instructionsPlayer.play();
@@ -128,7 +109,6 @@
         $scope.playedWords.push(wordJson.word);
         $scope.wordStr = wordJson.word;
         $scope.word = wordJson.word.split("");
-
         $scope.rimesStr = wordJson.rimes.join(",");
         var index = Util.getRandomNumber(wordJson.rimes.length);
         var rime = wordJson.rimes[index];
@@ -160,14 +140,12 @@
         $scope.errorMessages = data.errorMessages;
         var imageIndex = Util.getRandomNumber(wordJson.imgs.length);
         $scope.img = wordJson.imgs[imageIndex];
-        $scope.dashboard = [$scope.number];
-        $scope.assets = data.assets;
         $scope.addScore = data.scoreSetUp.add;
         $scope.substractScore = data.scoreSetUp.substract;
-        Ctrl10.finalizationLevel = data.finalizationLevel;
-        Ctrl10.initialLevel = 1;
         $scope.totalLevels = data.totalLevels;
         $scope.checkingNumber = false;
+        Ctrl10.finalizationLevel = data.finalizationLevel;
+        Ctrl10.initialLevel = 1;
         if ($scope.finished) {
           $scope.activityProgress = 100;
         } else {
@@ -190,7 +168,7 @@
         Ctrl10.successFeedback();
         $timeout(function() {
           $scope.draggedWord = false;
-          Ctrl10.levelUp(); //Advance level
+          Ctrl10.levelUp();
           if (!$scope.finished) {
             $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
             $scope.finished = $scope.level >= Ctrl10.finalizationLevel;
@@ -213,10 +191,7 @@
         if (!$scope.finished) {
           $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
         }
-        //wait for speak
-        $timeout(function() {
-          Ctrl10.errorFeedback();
-        }, 1000);
+        Ctrl10.errorFeedback();
       };
 
       $scope.handleProgress = function(isWordOk) {
@@ -228,24 +203,20 @@
         }
       };
 
-      //Advance one level
       Ctrl10.levelUp = function() {
         $scope.level++;
-        $scope.letters = [];
-        $scope.dashboard = [];
-        $scope.selectedLetters = [];
       };
 
-      // Goes back one level
       Ctrl10.levelDown = function() {
         $scope.level = (level > 1) ? (level - 1) : 1;
-        $scope.numbers = [];
-        $scope.dashboard = [];
-        $scope.selectedNumbers = [];
       };
 
       //*************** ACTIONS **************************/
-      //Show Dashboard
-      Ctrl10.showDashboard(true);
+      $scope.$on('$ionicView.beforeEnter', function() {
+        Ctrl10.showDashboard(true);
+      });
+      $scope.$on('$ionicView.beforeLeave', function() {
+        Util.saveLevel($scope.activityId, $scope.level);
+      });
     });
 })();

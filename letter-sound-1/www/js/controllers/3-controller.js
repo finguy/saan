@@ -6,44 +6,27 @@ angular.module('saan.controllers')
   $scope.activityProgress = 0;
   $scope.showText = false;
   $scope.textSpeech = "";
-
-  var Ctrl3 = Ctrl3 || {};
+  $scope.instructions = ""; // Instructions to read
+  $scope.speak = TTSService.speak;
+  $scope.selectedObject = ""; // Collects letters the user selects
   $scope.activityId = 3; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
+
+  var Ctrl3 = Ctrl3 || {};
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
   Ctrl3.instructionsPlayer;
-
-  $scope.instructions = ""; // Instructions to read
   Ctrl3.successMessages = [];
   Ctrl3.errorMessages = [];
-
-  //Ctrl3.letters = []; // Word letters
   Ctrl3.dashboard = []; // Dashboard letters
-  $scope.selectedObject = ""; // Collects letters the user selects
   Ctrl3.playedLetters = []; // Collects words the user played
   Ctrl3.level = null; // Indicates activity level
-
-
-
   Ctrl3.score = 0;
   Ctrl3.status = false;
   Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
   Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
   Ctrl3.srcAlphabetLetters = "";
-  Ctrl3.successPlayer;
-  Ctrl3.failurePlayer;
 
-
-
-  //Reproduces sound using TTSService
-  $scope.speak = TTSService.speak;
-
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, Ctrl3.level);
-  });
-
-  //Shows Activity Dashboard
   Ctrl3.showDashboard = function(readInstructions) {
 
     Ctrl3.setUpLevel();
@@ -53,8 +36,6 @@ angular.module('saan.controllers')
     RandomLetterThree.letter(Ctrl3.level, Ctrl3.playedLetters).then(
       function success(data) {
         Ctrl3.setUpContextVariables(data);
-
-        //wait for UI to load
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         $timeout(function() {
           if (readInstructions) {
@@ -86,9 +67,6 @@ angular.module('saan.controllers')
 
   Ctrl3.setUpContextVariables = function(data) {
     var letterJson = data.letter;
-    $scope.instructions = data.instructions;
-    Ctrl3.successMessages = data.successMessages;
-    Ctrl3.errorMessages = data.errorMessages;
     Ctrl3.addScore = data.scoreSetUp.add;
     Ctrl3.substractScore = data.scoreSetUp.substract;
     Ctrl3.finalizationLevel = data.finalizationLevel;
@@ -129,7 +107,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl3.successFeedback = function() {
-    //Success feeback player
     var successFeedback = RandomLetterThree.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
     $scope.showText = true;
@@ -149,7 +126,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl3.errorFeedback = function() {
-    //Failure feeback player
     var failureFeedback = RandomLetterThree.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
@@ -169,28 +145,23 @@ angular.module('saan.controllers')
 
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
-    $timeout(function() {
-      Ctrl3.successFeedback();
-      //wait for speak
-      $timeout(function() {
-        Ctrl3.levelUp(); //Advance level
-        if (!Ctrl3.finished) {
-          Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
-          Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
-          if (Ctrl3.finished) {
-            ActividadesFinalizadasService.add($scope.activityId);
-            $state.go('lobby');
-          } else {
-            Ctrl3.showDashboard(true);
-          }
-        } else if (Ctrl3.level <= Ctrl3.totalLevels) {
-          Ctrl3.showDashboard(true);
-        } else {
-          Ctrl3.level = Ctrl3.initialLevel;
-          $state.go('lobby');
-        }
-      }, 1000);
-    }, 1000);
+    Ctrl3.successFeedback();
+    Ctrl3.levelUp();
+    if (!Ctrl3.finished) {
+      Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
+      Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
+      if (Ctrl3.finished) {
+        ActividadesFinalizadasService.add($scope.activityId);
+        $state.go('lobby');
+      } else {
+        Ctrl3.showDashboard(true);
+      }
+    } else if (Ctrl3.level <= Ctrl3.totalLevels) {
+      Ctrl3.showDashboard(true);
+    } else {
+      Ctrl3.level = Ctrl3.initialLevel;
+      $state.go('lobby');
+    }
   };
 
   Ctrl3.error = function() {
@@ -198,13 +169,9 @@ angular.module('saan.controllers')
       Ctrl3.score = Score.update(-Ctrl3.substractScore, $scope.activityId, Ctrl3.finished);
       Util.saveScore($scope.activityId, Ctrl3.score);
     }
-    //wait for speak
-    $timeout(function() {
-      Ctrl3.errorFeedback();
-    }, 1000);
+    Ctrl3.errorFeedback();
   };
 
-  //Verifies selected letters and returns true if they match the word
   $scope.checkLetter = function(selectedObject) {
     var ER = new RegExp(Ctrl3.letter, "i");
     var name = selectedObject.toLowerCase();
@@ -215,20 +182,14 @@ angular.module('saan.controllers')
     }
   };
 
-  //Advance one level
   Ctrl3.levelUp = function() {
     Ctrl3.level++;
-    //Ctrl3.letters = [];
     Ctrl3.dashboard = [];
-    $scope.selectedLetters = [];
   };
 
-  // Goes back one level
   Ctrl3.levelDown = function() {
     Ctrl3.level = (level > 1) ? (level - 1) : 1;
-    //Ctrl3.letters = [];
     Ctrl3.dashboard = [];
-    $scope.selectedLetters = [];
   };
 
   $scope.showPage = function() {
@@ -241,14 +202,17 @@ angular.module('saan.controllers')
 
   $scope.selectLetter = function(name, objectNameSrc) {
     $scope.selectedObject = name;
-    var objectName = objectNameSrc.replace("animals/", "").replace(".png", "");
-    $scope.speak(name + " in " + objectName);
+    $scope.speak(name);
     $timeout(function() {
       $scope.checkLetter(name);
     }, 1000);
   };
 
   //*************** ACTIONS **************************/
-  //Show Dashboard
-  Ctrl3.showDashboard(true);
+  $scope.$on('$ionicView.beforeEnter', function() {
+    Ctrl3.showDashboard(true);
+  });
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, Ctrl3.level);
+  });
 });
