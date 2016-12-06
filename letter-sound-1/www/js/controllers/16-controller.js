@@ -297,8 +297,7 @@ angular.module('saan.controllers')
   $scope.targetOptions = {
     containment: '.activity16',
     accept: function(sourceItemHandleScope, destSortableScope) {
-      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.element[0].getAttribute('data-name');
-      $scope.draggedAssets[sourceItemHandleScope.modelValue.assetImage] = Ctrl16.letterOk;
+      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.element[0].getAttribute('data-name');      
       return Ctrl16.letterOk;
     }
   };
