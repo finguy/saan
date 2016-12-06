@@ -41,7 +41,10 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
+            $scope.showText = true;
             Ctrl16.instructionsPlayer.play();
+          } else {
+           $scope.showText = false;
           }
         }, readWordTimeout);
       },
@@ -74,6 +77,7 @@ angular.module('saan.controllers')
       function success() {
         successPlayer.release();
         $scope.showText = false;
+        $scope.$apply();
       },
       function error(err) {
         $log.error(err);
@@ -83,6 +87,28 @@ angular.module('saan.controllers')
       }
     );
     successPlayer.play();
+  };
+
+  Ctrl16.endingFeedback = function() {
+    //Success feeback player
+    var endingFeedback = RandomWordsSixteen.getEndingAudio();
+    $scope.textSpeech = endingFeedback.text;
+        console.log(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path);
+    $scope.showText = true;
+    var endingPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+      function success() {
+        endingPlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        endingPlayer.release();
+        $scope.showText = false;
+        $scope.checkingWord = false;
+      }
+    );
+    endingPlayer.play();
   };
 
   Ctrl16.errorFeedback = function() {
@@ -146,14 +172,32 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
     }
 
-    Ctrl16.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    $scope.textSpeech = data.instructionsPath.intro.text;
+    Ctrl16.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl16.instructionsPlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
       },
       function error(err) {
         $log.error(err);
         Ctrl16.instructionsPlayer.release();
+        $scope.showText = false;
 
+      }
+    );
+
+    $scope.textSpeech = data.instructionsPath.tap.text;
+    Ctrl16.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
+      function success() {
+        Ctrl16.tapInstructionsPlayer.release();
+        $scope.showText = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl16.tapInstructionsPlayer.release();
+        $scope.showText = false;
       }
     );
   };
@@ -161,11 +205,12 @@ angular.module('saan.controllers')
 
   Ctrl16.handleSuccess = function() {
     var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
-    $scope.speak($scope.letter);
+    var timeout = 1000;
     //wait for speak
     $timeout(function() {
      if (LAST_CHECK) {
-      Ctrl16.successFeedback();
+      Ctrl16.endingFeedback();
+      timeout = 4000;
      } else {
        // TODO: Musica de exito
      }
@@ -193,7 +238,7 @@ angular.module('saan.controllers')
             }
           }
         }
-      }, 1000);
+      }, timeout);
     }, 1000);
   };
 
@@ -258,8 +303,9 @@ angular.module('saan.controllers')
     }
   };
 
-  $scope.isDragged = function(assetSrc) {
-    return $scope.draggedAssets[assetSrc] === true;
+  $scope.tapInstructions = function() {
+   $scope.showText = true;
+   Ctrl16.tapInstructionsPlayer.play();
   }
 
   $scope.$on('$ionicView.beforeEnter', function() {

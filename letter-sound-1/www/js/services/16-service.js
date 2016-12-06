@@ -29,7 +29,7 @@ angular.module('saan.services')
           return {
             info: lettersNotPlayed[index],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
@@ -42,6 +42,10 @@ angular.module('saan.services')
           $log.error("error");
         }
       );
+    },
+    getEndingAudio: function() {
+      var index = _.random(0, data.endingFeedback.length - 1);
+      return data.endingFeedback[index];
     },
     getSuccessAudio: function() {
       var index = _.random(0, data.successFeedback.length - 1);

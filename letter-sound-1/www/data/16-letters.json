@@ -63,7 +63,10 @@
     ]
   }],
   "instructions": "Drag the letter to the animal having the letter in its name",
-  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsPath": {
+       "intro": {"path": "instructions/intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/tap.mp3", "text":"....."}
+      },
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
@@ -73,14 +76,32 @@
   "finalizationLevel": 2,
   "successFeedback": [
     {
-      "path": "great.ogg",
-      "text": "Great!"
+      "path": "end2.mp3",
+      "text": "......"
+    },
+    {
+      "path": "end1.mp3",
+      "text": "......"
+    }
+  ],
+  "endingFeedback": [
+    {
+      "path": "end2.mp3",
+      "text": "......"
+    },
+    {
+      "path": "end1.mp3",
+      "text": "......"
     }
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
-      "text": "Try again!"
+      "path": "almost.mp3",
+      "text": "......"
+    },
+    {
+      "path": "notSure.mp3",
+      "text": "......"
     }
   ]
 }
