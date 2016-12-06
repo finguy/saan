@@ -1,19 +1,26 @@
 .activity-16-content {
   background: url("../assets/16/background-organization.png") no-repeat center center fixed;
+  padding-top: 0;
+  .letterNameBox {
+   width: 15rem;
+   margin-left: 22rem;
+  }
+
   .letterAsset {
-    height: 10rem;
-    width: 10rem;
+    height: 12rem;
     margin-left: 3rem;
+    float: left;
+  }
+  .dropzone {
+   min-height: 13rem;
+   max-height: 13rem;
+   width: 200rem;
   }
   .dropzoneContainer {
     background-image: url("../assets/16/library.png");
     background-repeat: no-repeat;
-    min-height: 20rem;
-    max-height: 20rem;
-    min-width: 100rem;
-    max-width: 100rem;
-    margin-left: 20rem;
-
+    margin-left: 32rem;
+    width: 60rem;
     .as-sortable-item {
       display: inline;
       margin-top: 0;
@@ -31,20 +38,12 @@
         margin-left: 23%;
         width: 5%;
       }
-    }
-    .dropzone {
-      width: 100rem;
-      height: 10rem;
-    }
-  }
-  .shelfContainer {
-    .letterAsset {
-      width: 10em;
-      margin-left: 7%;
-      position: relative;
-      top: -6rem;
+      .letterNameBox {
+       margin-top: 4.4rem;
+      }
     }
   }
+
   .listAssets {
     display: flex;
     justify-content: center;
@@ -68,7 +67,7 @@
     margin: 0 !important;
   }
   .character {
-    bottom: 8rem;
+    bottom: 20rem;
     position: absolute;
     right: 0;
     img {

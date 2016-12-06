@@ -1,12 +1,12 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity-{{activityId}}-content content-margin">
+<ion-view view-title="Dashboard (level: {{level}})" class="activity-{{activityId}}-content">
   <div class="dashboard">
     <div class="word-icons">
       <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index" class="dropzoneContainer">
-        <div as-sortable="targetOptions" data-ng-model="item.dropzone" class="dropzone icon">
-           <img class="" ng-src="{{assetsPath}}{{item.image}}" ng-repeat="dummy in items" as-sortable-item class="letterNameBox"/>
-        </div>
-        <div class="shelfContainer">
-          <img ng-repeat="asset in item.assets track by $index" src="{{assetsPath}}{{asset}}" class="letterAsset" ng-show="isDragged(asset)"/>
+       <img  ng-src="{{assetsPath}}{{item.image}}" class="letterNameBox" />
+        <div as-sortable="targetOptions" data-ng-model="item.dropzone" class="dropzone icon" data-name="{{item.name}}">
+          <div ng-repeat="elem in item.dropzone" as-sortable-item>
+            <img class="letterAsset" ng-src="{{assetsPath}}{{elem.assetImage}}" />
+          </div>
         </div>
       </div>
     </div>

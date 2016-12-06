@@ -115,7 +115,8 @@ angular.module('saan.controllers')
         imgs.push({
           image: wordsJson.info.letters[i].letterImg,
           assets:  wordsJson.info.letters[i].assets,
-          dropzone: [wordsJson.info.letters[i].name]
+          dropzone: [],
+          name: wordsJson.info.letters[i].name
         });
         var letterAssets = wordsJson.info.letters[i].assets.map(function(asset) {
           return {
@@ -163,7 +164,11 @@ angular.module('saan.controllers')
     $scope.speak($scope.letter);
     //wait for speak
     $timeout(function() {
+     if (LAST_CHECK) {
       Ctrl16.successFeedback();
+     } else {
+       // TODO: Musica de exito
+     }
       $timeout(function() {
         if (LAST_CHECK) {
           Ctrl16.levelUp(); //Advance level
@@ -247,11 +252,7 @@ angular.module('saan.controllers')
   $scope.targetOptions = {
     containment: '.activity16',
     accept: function(sourceItemHandleScope, destSortableScope) {
-      if (typeof destSortableScope.modelValue[0] === "string") {
-        Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0];
-      } else {
-        Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.modelValue[0].name;
-      }
+      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.element[0].getAttribute('data-name');
       $scope.draggedAssets[sourceItemHandleScope.modelValue.assetImage] = Ctrl16.letterOk;
       return Ctrl16.letterOk;
     }
