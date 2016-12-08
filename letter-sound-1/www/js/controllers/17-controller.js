@@ -237,6 +237,10 @@
       }
     };
 
+    $scope.tapInstruction = function() {
+      tapPlayer.play();
+    };
+
     Ctrl17.minReached = function(){
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
