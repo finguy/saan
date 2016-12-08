@@ -16,14 +16,36 @@
     var itemCount = 0;
     var instructionsTime = 2000;
     var level;
+    var instructionsPlayer;
+    var successPlayer;
+    var failurePlayer;
+    var tapPlayer;
+    var endPlayer;
+    var readInstructions;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = false; //TODO set this to true
       Ctrl13.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, level);
+
+      if (!angular.isUndefined(instructionsPlayer))
+          instructionsPlayer.release();
+
+      if (!angular.isUndefined(successPlayer))
+        successPlayer.release();
+
+      if (!angular.isUndefined(failurePlayer))
+        failurePlayer.release();
+
+      if (!angular.isUndefined(tapPlayer))
+        tapPlayer.release();
+
+      if (!angular.isUndefined(endPlayer))
+        endPlayer.release();
     });
 
     Ctrl13.getConfiguration = function (level){
@@ -31,7 +53,23 @@
         config = data;
         $scope.showButton = !config.level.autoCheck;
         $scope.number = config.level.numberFrom;
-        Ctrl13.startTutorial();
+
+        if (readInstructions){
+          $timeout(function () {
+            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            // play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+              function(){ instructionsPlayer.release(); },
+              function(err){ $log.error(err); instructionsPlayer.release(); }
+            );
+
+            instructionsPlayer.play();
+            readInstructions = false;
+          }, 1000);
+        }
+        else {
+          Ctrl13.startTutorial();
+        }
       });
     };
 
@@ -85,14 +123,11 @@
         if (level == LearningNumber.getMinLevel() &&
           !ActividadesFinalizadasService.finalizada($scope.activityId)){
           // if player reached minimum for setting activity as finished
-          ActividadesFinalizadasService.add($scope.activityId);
-          level++;
-          $timeout(function(){ $state.go('lobby');}, 1000);
+          $timeout(function(){ Ctrl13.minReached();}, 1000);
         }
         else {
           if (level == LearningNumber.getMaxLevel()){
-            level = 1;
-            $timeout(function(){ $state.go('lobby');}, 1000);
+            $timeout(function(){ Ctrl13.maxReached();}, 1000);
           }
           else {
             Util.saveLevel($scope.activityId, ++level);
@@ -100,6 +135,38 @@
           }
         }
       }
+    };
+
+    $scope.tapInstruction = function() {
+      tapPlayer.play();
+    };
+
+    Ctrl13.minReached = function(){
+      // if player reached minimum for setting activity as finished
+      ActividadesFinalizadasService.add($scope.activityId);
+      $scope.$apply();
+      level++;
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+      //   function(){
+      //     endPlayer.release();
+      //     $state.go('lobby');
+      //   }, function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
+    };
+
+    Ctrl13.maxReached = function(){
+      level = 1;
+      $state.go('lobby'); // TODO remove this line after getting media assets
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+      //   function(){ endPlayer.release(); $state.go('lobby'); },
+      //   function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
     };
 
   }]);
