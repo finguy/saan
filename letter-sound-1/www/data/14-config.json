@@ -2,10 +2,7 @@
   "numberRange": 9,
   "mode": 2,
   "options": 4,
-  "optionsRange": 5,
-  "instructions": "Hi! Look at the color sequence and try to complete it",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
+  "optionsRange": 5,  
   "minLevel": 2,
   "levels": [
     {
@@ -26,5 +23,36 @@
       "optionImages": false,
       "numberImages": false
     }
+  ],
+  "instructions": {
+    "path": "intro.mp3"
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Try listening the word again"
+    },
+    {
+      "path": "not_what.mp3",
+      "text": "That's not what we're looking for now"
+    }
+  ],
+  "endingAudio" : [
+    { "path": "end_1.mp3" },
+    { "path": "end_2.mp3" }
   ]
 }
