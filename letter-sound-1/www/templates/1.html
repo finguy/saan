@@ -7,13 +7,13 @@
           class="letter-button letter-{{letter}}"
           on-tap="selectLetter($parent.$index, letter)"
           ng-checked=""
-          ng-disabled="checkingWord || checkingLetter">
+          ng-disabled="readInstructions || checkingWord || checkingLetter">
       </ion-radio>
     </div>
   </div>
   <div class="footer">
     <div class="item-collection">
-      <img class="shadow" ng-repeat="item in items" ng-src="assets/1/items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
+      <img class="shadow" ng-repeat="item in items" ng-src="{{imagePath}}items/{{item.img}}" ng-class="{'completed':$index+1<stageNumber}">
     </div>
     <div class="character" ng-click="playWordAudio()">
       <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
