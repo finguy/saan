@@ -20,11 +20,12 @@ angular.module('saan.controllers')
   Ctrl16.level = null; // Indicates activity level
   $scope.activityProgress = 0;
   Ctrl16.letterOk = false;
-  Ctrl16.playedLetters = [];
   Ctrl16.instructionsPlayer;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, Ctrl16.level);
+    Ctrl16.instructionsPlayer.release();
+    Ctrl16.tapInstructionsPlayer.release();
   });
 
   Ctrl16.showDashboard = function(readInstructions) {
@@ -33,7 +34,7 @@ angular.module('saan.controllers')
     Ctrl16.setUpScore();
     Ctrl16.setUpStatus();
 
-    RandomWordsSixteen.letters(Ctrl16.level, Ctrl16.playedLetters).then(
+    RandomWordsSixteen.letters(Ctrl16.level).then(
       function success(data) {
         Ctrl16.setUpContextVariables(data);
 
@@ -44,7 +45,7 @@ angular.module('saan.controllers')
             $scope.showText = true;
             Ctrl16.instructionsPlayer.play();
           } else {
-           $scope.showText = false;
+            $scope.showText = false;
           }
         }, readWordTimeout);
       },
@@ -91,9 +92,8 @@ angular.module('saan.controllers')
 
   Ctrl16.endingFeedback = function() {
     //Success feeback player
-    var endingFeedback = RandomWordsSixteen.getEndingAudio();
+    var endingFeedback = RandomWordsSixteen.getEndingAudio(Ctrl16.level, Ctrl16.totalLevels);
     $scope.textSpeech = endingFeedback.text;
-        console.log(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path);
     $scope.showText = true;
     var endingPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
       function success() {
@@ -134,13 +134,12 @@ angular.module('saan.controllers')
     var wordsJson = data;
     var imgs = [];
     var assets = [];
-    Ctrl16.playedLetters.push(wordsJson.info.id);
     $scope.assets = [];
     for (var i in wordsJson.info.letters) {
       if (wordsJson.info.letters[i]) {
         imgs.push({
           image: wordsJson.info.letters[i].letterImg,
-          assets:  wordsJson.info.letters[i].assets,
+          assets: wordsJson.info.letters[i].assets,
           dropzone: [],
           name: wordsJson.info.letters[i].name
         });
@@ -158,7 +157,6 @@ angular.module('saan.controllers')
     $scope.imgs = _.shuffle($scope.imgs);
     $scope.assets = assets;
     $scope.draggedImgs = [];
-    $scope.instructions = data.instructions;
     Ctrl16.successMessages = data.successMessages;
     Ctrl16.errorMessages = data.errorMessages;
     Ctrl16.addScore = data.scoreSetUp.add;
@@ -205,41 +203,46 @@ angular.module('saan.controllers')
 
   Ctrl16.handleSuccess = function() {
     var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
-    var timeout = 1000;
-    //wait for speak
-    $timeout(function() {
-     if (LAST_CHECK) {
-      Ctrl16.endingFeedback();
-      timeout = 4000;
-     } else {
-       // TODO: Musica de exito
-     }
-      $timeout(function() {
-        if (LAST_CHECK) {
-          Ctrl16.levelUp(); //Advance level
-          if (!Ctrl16.finished) { //Aumento puntaje
-            Ctrl16.score = Score.update(Ctrl16.addScore, $scope.activityId, Ctrl16.finished);
-            Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
-            if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
-              ActividadesFinalizadasService.add($scope.activityId);
-              $state.go('lobby');
-            } else if (Ctrl16.level <= Ctrl16.totalLevels) {
-              Ctrl16.showDashboard(false);
-            } else {
-              Ctrl16.level = Ctrl16.initialLevel;
-              $state.go('lobby');
-            }
-          } else {
-            if (Ctrl16.level <= Ctrl16.totalLevels) {
-              Ctrl16.showDashboard(false);
-            } else {
-              Ctrl16.level = Ctrl16.initialLevel;
-              $state.go('lobby');
-            }
-          }
+
+    if (LAST_CHECK) {
+      Ctrl16.levelUp(); //Advance level
+      if (!Ctrl16.finished) { //Aumento puntaje
+        Ctrl16.score = Score.update(Ctrl16.addScore, $scope.activityId, Ctrl16.finished);
+        Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
+        if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
+          ActividadesFinalizadasService.add($scope.activityId);
+          Ctrl16.endingFeedback();
+          $timeout(function() {
+            $state.go('lobby');
+          }, 4000);
+        } else if (Ctrl16.level <= Ctrl16.totalLevels) {
+          Ctrl16.successFeedback();
+          $timeout(function() {
+            Ctrl16.showDashboard(false);
+          }, 1000);
+        } else {
+          Ctrl16.level = Ctrl16.initialLevel;
+          Ctrl16.endingFeedback();
+          $timeout(function() {
+            $state.go('lobby');
+          }, 4000);
         }
-      }, timeout);
-    }, 1000);
+      } else {
+        if (Ctrl16.level <= Ctrl16.totalLevels) {
+          Ctrl16.successFeedback();
+          $timeout(function() {
+            Ctrl16.showDashboard(false);
+          }, 1000);
+        } else {
+          Ctrl16.level = Ctrl16.initialLevel;
+          Ctrl16.endingFeedback();
+          $timeout(function() {
+            $state.go('lobby');
+          }, 4000);
+        }
+      }
+    }
+
   };
 
   Ctrl16.handleError = function() {
@@ -297,14 +300,14 @@ angular.module('saan.controllers')
   $scope.targetOptions = {
     containment: '.activity16',
     accept: function(sourceItemHandleScope, destSortableScope) {
-      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.element[0].getAttribute('data-name');      
+      Ctrl16.letterOk = sourceItemHandleScope.modelValue.name == destSortableScope.element[0].getAttribute('data-name');
       return Ctrl16.letterOk;
     }
   };
 
   $scope.tapInstructions = function() {
-   $scope.showText = true;
-   Ctrl16.tapInstructionsPlayer.play();
+    $scope.showText = true;
+    Ctrl16.tapInstructionsPlayer.play();
   }
 
   $scope.$on('$ionicView.beforeEnter', function() {

@@ -2,17 +2,17 @@
   [{"id":1,
     "letters": [
       { "name":"b",
-        "letterImg": "Letras/b.png",
+        "letterImg": "Letters/b.png",
         "assets": [ "items/bed.png"
                 ]
       },
       { "name":"c",
-        "letterImg": "Letras/c.png",
+        "letterImg": "Letters/c.png",
         "assets": [
                     "items/clock.png"]
       },
       { "name":"r",
-        "letterImg":"Letras/r.png",
+        "letterImg":"Letters/r.png",
         "assets":[ "items/radio.png" ]
       }
     ]
@@ -20,12 +20,12 @@
   {"id":2,
     "letters": [
       { "name":"d",
-        "letterImg": "Letras/d.png",
+        "letterImg": "Letters/d.png",
         "assets": [  "items/dishes.png"
                 ]
       },
       { "name":"p",
-        "letterImg": "Letras/p.png",
+        "letterImg": "Letters/p.png",
         "assets": [
                    "items/pillow.png",
                    "items/pot.png",
@@ -34,7 +34,7 @@
                   ]
       },
       { "name":"k",
-        "letterImg":"Letras/k.png",
+        "letterImg":"Letters/k.png",
         "assets":["items/key.png"
                  ]
       }
@@ -43,26 +43,25 @@
   {"id":3,
     "letters": [
       { "name":"f",
-        "letterImg": "Letras/f.png",
+        "letterImg": "Letters/f.png",
         "assets": [  "items/flowers.png",
                     "items/food.png"
                   ]
       },
       { "name":"s",
-        "letterImg":"Letras/s.png",
+        "letterImg":"Letters/s.png",
         "assets":[
                  "items/soap.png"
                  ]
       },
       {  "name":"t",
-         "letterImg":"Letras/t.png",
+         "letterImg":"Letters/t.png",
          "assets":[
                 "items/table.png"
                 ]
       }
     ]
   }],
-  "instructions": "Drag the letter to the animal having the letter in its name",
   "instructionsPath": {
        "intro": {"path": "instructions/intro.mp3", "text":"....."},
        "tap": {"path": "instructions/tap.mp3", "text":"....."}
@@ -76,32 +75,37 @@
   "finalizationLevel": 2,
   "successFeedback": [
     {
-      "path": "end2.mp3",
-      "text": "......"
+      "path": "amazin.mp3",
+      "text": "Amazing!"
     },
     {
-      "path": "end1.mp3",
-      "text": "......"
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!"
     }
   ],
   "endingFeedback": [
     {
-      "path": "end2.mp3",
-      "text": "......"
+     "path": "end1.mp3",
+     "text": "......"
     },
     {
-      "path": "end1.mp3",
+      "path": "end2.mp3",
       "text": "......"
     }
+
   ],
   "failureFeedback": [
     {
       "path": "almost.mp3",
-      "text": "......"
+      "text": "Almost"
     },
     {
       "path": "notSure.mp3",
-      "text": "......"
+      "text": "Not sure"
     }
   ]
 }
