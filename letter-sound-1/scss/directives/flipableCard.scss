@@ -1,11 +1,11 @@
 flipable-card {
   .memory-card {
     font-size: 1.6em;
-    height: 16rem;
+    height: 18rem;
     margin: 1rem;
     position: relative;
     text-align: center;
-    width: 16rem;
+    width: 18rem;
   }
 
   .memory-card-front,
@@ -15,17 +15,18 @@ flipable-card {
     left: 0;
     position: absolute;
     top: 0;
-    transition: transform .3s;
     width: 100%;
   }
 
   .memory-card-front {
-    background-color: #ff5078;
+    background: url('../assets/7/closed-box.png');
+    background-size: cover;
   }
 
   .memory-card-back {
     align-items: center;
-    background-color: $blue;
+    background: url('../assets/7/empty-box.png');
+    background-size: cover;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -42,9 +43,9 @@ flipable-card {
     }
   }
 
-  .memory-card-text {
-    background: url('../img/7-assets/cookie.png') no-repeat center / contain;
-  }
+  // .memory-card-text {
+  //   background: url('../assets/7/cookie.png') no-repeat center / contain;
+  // }
 
   .number-image {
     margin: .5rem;

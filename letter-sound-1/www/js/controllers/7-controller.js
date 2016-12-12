@@ -7,6 +7,7 @@
     $scope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
+    $scope.imagePath = AssetsPath.getImgs($scope.activityId);
 
     var Ctrl7 = Ctrl7 || {} ;
     var config = '';

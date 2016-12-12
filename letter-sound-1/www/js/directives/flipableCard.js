@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.directives')
-  .directive('flipableCard', function(){
+  .directive('flipableCard', function(AssetsPath){
     return {
       require: '^^memoryDeck',
       restrict: "E",
@@ -32,6 +32,8 @@
             return _.range(scope.card.key);
           }
         };
+
+        scope.imagePath = AssetsPath.getImgs(7);
       }
     };
   });
