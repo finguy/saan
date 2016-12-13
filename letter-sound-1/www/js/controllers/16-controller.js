@@ -13,6 +13,9 @@ angular.module('saan.controllers')
   //Reproduces sound using TTSService
   $scope.speak = TTSService.speak;
   //Shows Activity Dashboard
+  var successPlayer;
+  var endingPlayer;
+  var failurePlayer;
   var Ctrl16 = Ctrl16 || {};
   $scope.activityId = 16; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
@@ -21,11 +24,15 @@ angular.module('saan.controllers')
   $scope.activityProgress = 0;
   Ctrl16.letterOk = false;
   Ctrl16.instructionsPlayer;
+  $scope.speaking = false;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, Ctrl16.level);
     Ctrl16.instructionsPlayer.release();
     Ctrl16.tapInstructionsPlayer.release();
+    successPlayer.release();
+    endingPlayer.release();
+    failurePlayer.release();
   });
 
   Ctrl16.showDashboard = function(readInstructions) {
@@ -36,16 +43,18 @@ angular.module('saan.controllers')
 
     RandomWordsSixteen.letters(Ctrl16.level).then(
       function success(data) {
-        Ctrl16.setUpContextVariables(data);
+        Ctrl16.setUpContextVariables(data, readInstructions);
 
         //wait for UI to load
-        var readWordTimeout = (readInstructions) ? 4000 : 1000;
+        var readWordTimeout = (readInstructions) ? 2000 : 1000;
         $timeout(function() {
           if (readInstructions) {
             $scope.showText = true;
+            $scope.speaking = true;
             Ctrl16.instructionsPlayer.play();
           } else {
             $scope.showText = false;
+            $scope.speaking = false;
           }
         }, readWordTimeout);
       },
@@ -70,14 +79,15 @@ angular.module('saan.controllers')
   };
 
   Ctrl16.successFeedback = function() {
-    //Success feeback player
+    if (!$scope.speaking) {
     var successFeedback = RandomWordsSixteen.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
     $scope.showText = true;
-    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+    successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
       function success() {
         successPlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
         $scope.$apply();
       },
       function error(err) {
@@ -85,52 +95,64 @@ angular.module('saan.controllers')
         successPlayer.release();
         $scope.showText = false;
         $scope.checkingWord = false;
+        $scope.speaking = false;
       }
     );
+    $scope.speaking = true;
     successPlayer.play();
+
+   }
   };
 
   Ctrl16.endingFeedback = function() {
-    //Success feeback player
-    var endingFeedback = RandomWordsSixteen.getEndingAudio(Ctrl16.level, Ctrl16.totalLevels);
-    $scope.textSpeech = endingFeedback.text;
-    $scope.showText = true;
-    var endingPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
-      function success() {
-        endingPlayer.release();
-        $scope.showText = false;
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        endingPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
-      }
-    );
-    endingPlayer.play();
+    if (!$scope.speaking) {
+      var endingFeedback = RandomWordsSixteen.getEndingAudio(Ctrl16.level, Ctrl16.totalLevels);
+      $scope.textSpeech = endingFeedback.text;
+      $scope.showText = true;
+      endingPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          endingPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          endingPlayer.release();
+          $scope.showText = false;
+          $scope.checkingWord = false;
+          $scope.speaking = false;
+        }
+      );
+      $scope.speaking = true;
+      endingPlayer.play();
+     }
   };
 
   Ctrl16.errorFeedback = function() {
-    //Failure feeback player
-    var failureFeedback = RandomWordsSixteen.getFailureAudio();
-    $scope.textSpeech = failureFeedback.text;
-    $scope.showText = true;
-    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-      function success() {
-        failurePlayer.release();
-        $scope.showText = false;
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        failurePlayer.release();
-        $scope.showText = false;
-      });
-    failurePlayer.play();
+    if (!$scope.speaking) {
+      var failureFeedback = RandomWordsSixteen.getFailureAudio();
+      $scope.textSpeech = failureFeedback.text;
+      $scope.showText = true;
+      failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+        });
+      $scope.speaking = true;
+      failurePlayer.play();
+     }
   }
 
-  Ctrl16.setUpContextVariables = function(data) {
+  Ctrl16.setUpContextVariables = function(data, readInstructions) {
     var wordsJson = data;
     var imgs = [];
     var assets = [];
@@ -170,32 +192,37 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl16.level - 1) / Ctrl16.totalLevels;
     }
 
-    $scope.textSpeech = data.instructionsPath.intro.text;
+    if (readInstructions) {
+      $scope.textSpeech = data.instructionsPath.intro.text;
+    }
     Ctrl16.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl16.instructionsPlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
         $scope.$apply();
       },
       function error(err) {
         $log.error(err);
         Ctrl16.instructionsPlayer.release();
         $scope.showText = false;
-
+        $scope.speaking = false;
       }
     );
 
-    $scope.textSpeech = data.instructionsPath.tap.text;
+
     Ctrl16.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
       function success() {
         Ctrl16.tapInstructionsPlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
         $scope.$apply();
       },
       function error(err) {
         $log.error(err);
         Ctrl16.tapInstructionsPlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
       }
     );
   };
@@ -307,6 +334,7 @@ angular.module('saan.controllers')
 
   $scope.tapInstructions = function() {
     $scope.showText = true;
+    $scope.speaking = true;
     Ctrl16.tapInstructionsPlayer.play();
   }
 

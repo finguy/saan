@@ -10,15 +10,15 @@
         </div>
       </div>
     </div>
-    <div class="listAssets" as-sortable="sourceOptions" data-ng-model="assets">
+    <div class="listAssets" as-sortable="sourceOptions" data-ng-model="assets" is-disabled="speaking">
       <div ng-repeat="data in assets">
-        <div as-sortable-item as-sortable-item-handle>
+        <div as-sortable-item as-sortable-item-handle >
           <img class="letterAsset" ng-src="{{assetsPath}}{{data.assetImage}}" />
         </div>
       </div>
     </div>
   </div>
-  <div class="character" ng-click="playWordAudio()">
+  <div class="character flex" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
     <img ng-src="assets/characters/mbott.png" ng-click="tapInstructions()">
   </div>

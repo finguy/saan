@@ -66,8 +66,7 @@
        "intro": {"path": "instructions/intro.mp3", "text":"....."},
        "tap": {"path": "instructions/tap.mp3", "text":"....."}
       },
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
+
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
@@ -75,7 +74,7 @@
   "finalizationLevel": 2,
   "successFeedback": [
     {
-      "path": "amazin.mp3",
+      "path": "amazing.mp3",
       "text": "Amazing!"
     },
     {
@@ -101,11 +100,11 @@
   "failureFeedback": [
     {
       "path": "almost.mp3",
-      "text": "Almost"
+      "text": "Almost! Take a close look at the labels"
     },
     {
       "path": "notSure.mp3",
-      "text": "Not sure"
+      "text": "I am not sure that object belongs there"
     }
   ]
 }
