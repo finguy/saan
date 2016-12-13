@@ -43,9 +43,15 @@ flipable-card {
     }
   }
 
-  // .memory-card-text {
-  //   background: url('../assets/7/cookie.png') no-repeat center / contain;
-  // }
+  .value {
+    background-image: url('../assets/7/paper.png');
+    background-size: cover;
+    font-size: 3.5rem;
+    font-weight: bold;
+    height: 5rem;
+    line-height: initial;
+    width: 10rem;
+  }
 
   .number-image {
     margin: .5rem;

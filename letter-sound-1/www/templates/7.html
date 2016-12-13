@@ -2,4 +2,8 @@
   <div class="deck-container horizontal-center vertical-center">
     <memory-deck deck="deck" map="map" deck-completed="deckCompleted()" size="size"></memory-deck>
   </div>
+  <div class="character flex" ng-click="tapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img src="assets/characters/thioye-color.png">
+  </div>
 </ion-view>

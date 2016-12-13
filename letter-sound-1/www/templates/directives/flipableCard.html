@@ -3,6 +3,6 @@
   </div>
   <div class="memory-card-back">
     <img ng-if="card.value !== card.key" ng-repeat="item in range()" ng-src="{{imagePath}}cookie.png" class="number-image">
-    <span ng-if="card.value === card.key">{{card.value}}</span>
+    <span ng-if="card.value === card.key" class="value">{{card.value}}</span>
   </div>
 </div>
