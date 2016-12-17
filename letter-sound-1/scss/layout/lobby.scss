@@ -1,0 +1,18 @@
+.activities-container {
+  display: flex;
+  align-items: center;
+
+  .activity-card {
+    background-color: rgba(205, 220, 57, 0.4);
+  }
+
+  .info {
+    width: 100%;
+    font-size: 3em;
+    text-align: center;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
