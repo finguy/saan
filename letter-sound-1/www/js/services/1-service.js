@@ -24,9 +24,9 @@
           function success(response) {
             data = response.data;
             return {
-              "instructionsPath": data.instructionsPath,
-              "instructionsText": data.instructionsText,
-              "levelData": data.levels[level-1],
+              instructions: data.instructions,
+              ending: data.endingAudio,
+              levelData: data.levels[level-1]
             };
           },
           function error() {
@@ -50,7 +50,7 @@
 
     function getRandomLetters(cant, word) {
       var differentLetters = [];
-      var cantLetters = 24;
+      var cantLetters = 26;
       if (word) {
         differentLetters = word.split("");
       }

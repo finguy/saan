@@ -3,49 +3,22 @@ angular.module('saan.controllers')
 .controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber, TTSService,
   Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
 
-  var Ctrl4 = Ctrl4 || {};
   $scope.activityId = 4;
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
+  $scope.number = null;
+  $scope.imgs = [];
+  $scope.activityProgress = 0;
+  $scope.numberDragged = [];
+  $scope.showText = false;
+  $scope.textSpeech = "";
+  $scope.speak = TTSService.speak;
+
+  var Ctrl4 = Ctrl4 || {};
   Ctrl4.playedNumbers = [];
   Ctrl4.level = null;
   Ctrl4.score = 0;
   Ctrl4.instructionsPlayer;
 
-  $scope.number = null;
-  $scope.imgs = [];
-  $scope.instructions = "";
-  $scope.successMessages = [];
-  $scope.errorMessages = [];
-  $scope.activityProgress = 0;
-  $scope.checkingNumber = false;
-  $scope.numberDragged = [];
-  $scope.showText = false;
-  $scope.textSpeech = "";
-
-  //Reproduces sound using TTSService
-  $scope.speak = TTSService.speak;
-
-
-
-  Ctrl4.setUpLevel = function() {
-    if (!Ctrl4.level) {
-      Ctrl4.level = Util.getLevel($scope.activityId);
-    }
-  };
-
-  Ctrl4.setUpScore = function() {
-    Ctrl4.score = Util.getScore($scope.activityId);
-  };
-
-  Ctrl4.setUpStatus = function() {
-    Ctrl4.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
-  }
-
-  $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, Ctrl4.level);
-  });
-
-  //Shows Activity Dashboard
   Ctrl4.showDashboard = function(readInstructions) {
     Ctrl4.setUpLevel();
     Ctrl4.setUpScore();
@@ -75,17 +48,28 @@ angular.module('saan.controllers')
       }
     );
   };
+
+  Ctrl4.setUpLevel = function() {
+    if (!Ctrl4.level) {
+      Ctrl4.level = Util.getLevel($scope.activityId);
+    }
+  };
+
+  Ctrl4.setUpScore = function() {
+    Ctrl4.score = Util.getScore($scope.activityId);
+  };
+
+  Ctrl4.setUpStatus = function() {
+    Ctrl4.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
+  }
+
   Ctrl4.setUpContextVariables = function(data) {
     var numberJson = data.number;
     $scope.number = numberJson.number;
     $scope.imgs = [];
-    Ctrl4.instructions = data.instructions;
-    Ctrl4.successMessages = data.successMessages;
-    Ctrl4.errorMessages = data.errorMessages;
     Ctrl4.assets = data.assets;
     Ctrl4.addScore = data.scoreSetUp.add;
     Ctrl4.substractScore = data.scoreSetUp.substract;
-    Ctrl4.minScore = data.scoreSetUp.minScore;
     Ctrl4.finalizationLevel = data.finalizationLevel;
     Ctrl4.initialLevel = 1;
     Ctrl4.totalLevels = data.totalLevels;
@@ -111,7 +95,7 @@ angular.module('saan.controllers')
     }
 
     if (Ctrl4.finished) {
-      $scope.activityProgress = 100; // If finalized show all progress
+      $scope.activityProgress = 100;
     } else {
       $scope.activityProgress = 100 * (Ctrl4.level - 1) / Ctrl4.totalLevels;
     }
@@ -129,7 +113,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl4.successFeedback = function() {
-    //Success feeback player
     var successFeedback = RandomNumber.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
     $scope.showText = true;
@@ -149,7 +132,6 @@ angular.module('saan.controllers')
   };
 
   Ctrl4.errorFeedback = function() {
-    //Failure feeback player
     var failureFeedback = RandomNumber.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
@@ -169,35 +151,30 @@ angular.module('saan.controllers')
 
   Ctrl4.success = function() {
     Ctrl4.playedNumbers.push($scope.number);
-    //wait for speak
-    $timeout(function() {
-      Ctrl4.successFeedback();
-      Ctrl4.levelUp(); //Advance level
-      if (!Ctrl4.finished) {
-        Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
-        Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
-        if (Ctrl4.finished) {
-          ActividadesFinalizadasService.add($scope.activityId);
-          $state.go('lobby');
-        } else {
-          Ctrl4.showDashboard(false);
-        }
-      } else if (Ctrl4.level <= Ctrl4.totalLevels) {
-        Ctrl4.showDashboard(false);
-      } else {
-        Ctrl4.level = Ctrl4.initialLevel;
+    Ctrl4.successFeedback();
+    Ctrl4.levelUp();
+    if (!Ctrl4.finished) {
+      Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
+      Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
+      if (Ctrl4.finished) {
+        ActividadesFinalizadasService.add($scope.activityId);
         $state.go('lobby');
+      } else {
+        Ctrl4.showDashboard(false);
       }
-    }, 1000);
+    } else if (Ctrl4.level <= Ctrl4.totalLevels) {
+      Ctrl4.showDashboard(false);
+    } else {
+      Ctrl4.level = Ctrl4.initialLevel;
+      $state.go('lobby');
+    }
   };
 
   Ctrl4.error = function() {
     if (!Ctrl4.finished) {
       Ctrl4.score = Score.update(-Ctrl4.substractScore, $scope.activityId, Ctrl4.finished);
     }
-    $timeout(function() {
-      Ctrl4.errorFeedback();
-    }, 1000);
+    Ctrl4.errorFeedback();
   };
 
   Ctrl4.handleProgress = function(numberOk) {
@@ -206,10 +183,8 @@ angular.module('saan.controllers')
     } else {
       Ctrl4.error();
     }
-  }
+  };
 
-
-  //Advance one level
   Ctrl4.levelUp = function() {
     Ctrl4.level++;
     Ctrl4.numbers = [];
@@ -217,7 +192,6 @@ angular.module('saan.controllers')
     Ctrl4.imgs = [];
   };
 
-  // Goes back one level
   Ctrl4.levelDown = function() {
     Ctrl4.level = (level > 1) ? (level - 1) : 1;
     Ctrl4.numbers = [];
@@ -225,8 +199,6 @@ angular.module('saan.controllers')
     Ctrl4.imgs = [];
   };
 
-
-  //Drag
   $scope.sortableSourceOptions = {
     containment: '.activity4-content',
     containerPositioning: 'relative',
@@ -243,7 +215,6 @@ angular.module('saan.controllers')
     }
   };
 
-  //Drop
   $scope.sortableTargetOptions = {
     accept: function(sourceItemHandleScope, destSortableScope) {
       return sourceItemHandleScope.modelValue.name == $scope.number;
@@ -253,5 +224,10 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   //Show Dashboard
-  Ctrl4.showDashboard(true);
+  $scope.$on('$ionicView.beforeEnter', function() {
+    Ctrl4.showDashboard(true);
+  });
+  $scope.$on('$ionicView.beforeLeave', function() {
+    Util.saveLevel($scope.activityId, Ctrl4.level);
+  });
 });
