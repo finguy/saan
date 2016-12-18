@@ -11,7 +11,9 @@
     return {
       getConfig: getConfig,
       getMaxLevel: getMaxLevel,
-      getMinLevel: getMinLevel
+      getMinLevel: getMinLevel,
+      getSuccessAudio: getSuccessAudio,
+      getFailureAudio: getFailureAudio
     };
 
     function getConfig(level) {
@@ -21,14 +23,13 @@
           function success(response) {
             data = response.data;
             return {
-              instructions : data.instructions,
-              errorMessages : data.errorMessages,
-              successMessages: data.successMessages,
+              instructions: data.instructions,
+              ending: data.endingAudio,
+              levelConfig: data.levels[level-1],              
               numberRange : data.numberRange,
               options: data.options,
               optionsRange: data.optionsRange,
-              mode: data.mode,
-              levelConfig: data.levels[level-1]
+              mode: data.mode
             };
           },
           function error() {
@@ -47,6 +48,16 @@
     }
     function getMaxLevel(){
       return data.levels.length;
+    }
+
+    function getSuccessAudio() {
+      var index = _.random(0, data.successFeedback.length - 1);
+      return data.successFeedback[index];
+    }
+
+    function getFailureAudio() {
+      var index = _.random(0, data.failureFeedback.length - 1);
+      return data.failureFeedback[index];
     }
   }
 })();

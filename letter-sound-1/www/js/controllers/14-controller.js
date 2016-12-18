@@ -15,15 +15,37 @@
     var stageNumber;
     var level;
     var Ctrl14 = Ctrl14 || {};
+    var instructionsPlayer;
+    var successPlayer;
+    var failurePlayer;
+    var tapPlayer;
+    var endPlayer;
+    var readInstructions;
 
     $scope.$on('$ionicView.beforeEnter', function(){
       stageNumber = 1; //TODO: retrieve and load from local storage
       level = Util.getLevel($scope.activityId) || 1;
+      readInstructions = false; //TODO set this to true
       Ctrl14.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, level);
+
+      if (!angular.isUndefined(instructionsPlayer))
+          instructionsPlayer.release();
+
+      if (!angular.isUndefined(successPlayer))
+        successPlayer.release();
+
+      if (!angular.isUndefined(failurePlayer))
+        failurePlayer.release();
+
+      if (!angular.isUndefined(tapPlayer))
+        tapPlayer.release();
+
+      if (!angular.isUndefined(endPlayer))
+        endPlayer.release();
     });
 
     Ctrl14.getConfiguration = function (level) {
@@ -31,6 +53,20 @@
         config = data;
         $scope.levelConfig = config.levelConfig;
         Ctrl14.setActivity();
+
+        if (readInstructions){
+          $timeout(function () {
+            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            // play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+              function(){ instructionsPlayer.release(); },
+              function(err){ $log.error(err); instructionsPlayer.release(); }
+            );
+
+            instructionsPlayer.play();
+            readInstructions = false;
+          }, 1000);
+        }
       });
     };
 
@@ -45,7 +81,7 @@
     $scope.sortableCloneOptions = {
       containment: '.activity-' + $scope.activityId + '-content',
       clone: true,
-      dragEnd: function(eventObj) {
+      dragEnd: function(eventObj){
         if (!$scope.sortableOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
           $log.error("wrong!!");
         }
@@ -115,14 +151,11 @@
         if (level == NumberOperations.getMinLevel() &&
           !ActividadesFinalizadasService.finalizada($scope.activityId)){
           // if player reached minimum for setting activity as finished
-          ActividadesFinalizadasService.add($scope.activityId);
-          level++;
-          $state.go('lobby');
+          Ctrl14.minReached();
         }
         else {
           if (level == NumberOperations.getMaxLevel()){
-            level = 1;
-            $state.go('lobby');
+            Ctrl14.maxReached();
           }
           else {
             stageNumber = 1;
@@ -134,6 +167,38 @@
       else {
         Ctrl14.setActivity();
       }
+    };
+
+    $scope.tapInstruction = function() {
+      tapPlayer.play();
+    };
+
+    Ctrl14.minReached = function(){
+      // if player reached minimum for setting activity as finished
+      ActividadesFinalizadasService.add($scope.activityId);
+      $scope.$apply();
+      level++;
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+      //   function(){
+      //     endPlayer.release();
+      //     $state.go('lobby');
+      //   }, function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
+    };
+
+    Ctrl14.maxReached = function(){
+      level = 1;
+      $state.go('lobby'); // TODO remove this line after getting media assets
+      //TODO uncomment this after getting media assets
+      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+      //   function(){ endPlayer.release(); $state.go('lobby'); },
+      //   function(err){ $log.error(err);}
+      // );
+      //
+      // endPlayer.play();
     };
 
   }]);
