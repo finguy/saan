@@ -1,106 +1,72 @@
 {"info":
   [{"id":1,
     "letters": [
-      { "name":"a",
-        "letterImg": "letters-blue/letters-blue-a-lowercase.png",
-        "assets": [ "animals/wale.png",
-                  "animals/aligator.png",
-                  "animals/cat.png",
-                  "animals/bat.png",
-                  "animals/cammel.png",
-                  "animals/bear.png",
-                  "animals/elephant.png",
-                  "animals/snake.png"
+      { "name":"b",
+        "letterImg": "Letters/b.png",
+        "assets": [ "items/bed.png"
                 ]
       },
-      { "name":"e",
-        "letterImg": "letters-blue/letters-blue-e-lowercase.png",
+      { "name":"c",
+        "letterImg": "Letters/c.png",
         "assets": [
-                   "animals/tiger.png",
-                   "animals/monkey.png",
-                   "animals/sheep.png"
-                  ]
+                    "items/clock.png"]
       },
-      { "name":"i",
-        "letterImg":"letters-blue/letters-blue-i-lowercase.png",
-        "assets":["animals/aligator.png",
-                 "animals/fish.png",
-                 "animals/bird.png",
-                 "animals/pig.png"]
-      },
-      {  "name":"o",
-         "letterImg":"letters-blue/letters-blue-o-lowercase.png",
-         "assets":["animals/octopus.png",
-                "animals/frog.png",
-                "animals/dog.png"
-                ]
+      { "name":"r",
+        "letterImg":"Letters/r.png",
+        "assets":[ "items/radio.png" ]
       }
     ]
   },
   {"id":2,
     "letters": [
-      { "name":"u",
-        "letterImg": "letters-blue/letters-blue-u-lowercase.png",
-        "assets": [  "animals/octopus.png",
-                     "animals/turtle.png",
-                     "animals/duck.png"
+      { "name":"d",
+        "letterImg": "Letters/d.png",
+        "assets": [  "items/dishes.png"
                 ]
       },
-      { "name":"m",
-        "letterImg": "letters-blue/letters-blue-m-lowercase.png",
+      { "name":"p",
+        "letterImg": "Letters/p.png",
         "assets": [
-                   "animals/cammel.png"
+                   "items/pillow.png",
+                   "items/pot.png",
+                   "items/photos.png"
+
                   ]
       },
-      { "name":"h",
-        "letterImg":"letters-blue/letters-blue-h-lowercase.png",
-        "assets":["animals/elephant.png",
-                 "animals/fish.png"
+      { "name":"k",
+        "letterImg":"Letters/k.png",
+        "assets":["items/key.png"
                  ]
-      },
-      {  "name":"g",
-         "letterImg":"letters-blue/letters-blue-g-uppercase.png",
-         "assets":["animals/pig.png",
-                "animals/frog.png",
-                "animals/dog.png"
-                ]
       }
     ]
   },
   {"id":3,
     "letters": [
-      { "name":"t",
-        "letterImg": "letters-blue/letters-blue-t-lowercase.png",
-        "assets": [  "animals/octopus.png",
-                     "animals/turtle.png"
-                  ]
-      },
-      { "name":"p",
-        "letterImg": "letters-blue/letters-blue-p-lowercase.png",
-        "assets": [
-                   "animals/sheep.png",
-                   "animals/pig.png"
-                  ]
-      },
       { "name":"f",
-        "letterImg":"letters-blue/letters-blue-f-uppercase.png",
+        "letterImg": "Letters/f.png",
+        "assets": [  "items/flowers.png",
+                    "items/food.png"
+                  ]
+      },
+      { "name":"s",
+        "letterImg":"Letters/s.png",
         "assets":[
-                 "animals/fish.png",
-                 "animals/frog.png"
+                 "items/soap.png"
                  ]
       },
-      {  "name":"d",
-         "letterImg":"letters-blue/letters-blue-g-lowercase.png",
+      {  "name":"t",
+         "letterImg":"Letters/t.png",
          "assets":[
-                "animals/dog.png"
+                "items/table.png"
                 ]
       }
     ]
   }],
-  "instructions": "Drag the letter to the animal having the letter in its name",
-  "instructionsPath": "Duck_Hunt.mp3",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
+  "instructionsPath": {
+       "intro": {"path": "instructions/intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/tap.mp3", "text":"....."}
+      },
+
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
@@ -108,14 +74,37 @@
   "finalizationLevel": 2,
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!"
     }
+  ],
+  "endingFeedback": [
+    {
+     "path": "end1.mp3",
+     "text": "......"
+    },
+    {
+      "path": "end2.mp3",
+      "text": "......"
+    }
+
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
-      "text": "Try again!"
+      "path": "almost.mp3",
+      "text": "Almost! Take a close look at the labels"
+    },
+    {
+      "path": "notSure.mp3",
+      "text": "I am not sure that object belongs there"
     }
   ]
 }
