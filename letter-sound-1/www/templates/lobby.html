@@ -1,8 +1,8 @@
 <ion-view view-title="Lobby">
-  <ion-scroll zooming="true" direction="x">
+  <ion-scroll zooming="true" direction="x" class="lobby-scroll">
     <div class="activities-container">
       <div class="activity-card" ng-repeat="actividad in actividadesDisponibles">
-        <img class="lobby-item" ui-sref="activity({activityId:actividad})" src="assets/characters/thioye-color.png">
+        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
         <div class="info">{{actividad}}</div>
       </div ng-repeat-end>
     </div>
