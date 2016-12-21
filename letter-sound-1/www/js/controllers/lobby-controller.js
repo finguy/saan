@@ -1,5 +1,8 @@
 angular.module('saan.controllers')
-.controller('LobbyCtrl', function($scope, $rootScope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _){
+.controller('LobbyCtrl', function($scope, $rootScope, $window, actividadesConfiguradas, ActividadesFinalizadasService, _,
+  $ionicScrollDelegate ){
+
+  var SCROLL_OFFSET = 800;
 
   var chequearActividadesDisponibles = function(){
     var actividadesDisponibles = [];
@@ -38,5 +41,13 @@ angular.module('saan.controllers')
   $scope.$on('$ionicView.leave', function() {
     $rootScope.isInLobby = false;
   });
+
+  $scope.scrollForward = function(){
+    $ionicScrollDelegate.scrollBy(SCROLL_OFFSET, 0, true);
+  };
+
+  $scope.scrollBackward = function(){
+    $ionicScrollDelegate.scrollBy(-SCROLL_OFFSET, 0, true);
+  };
 
 });

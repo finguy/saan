@@ -1,4 +1,4 @@
-<ion-view view-title="Lobby">
+<ion-view view-title="Lobby" class="lobby">
   <ion-scroll zooming="true" direction="x" class="lobby-scroll">
     <div class="activities-container">
       <div class="activity-card" ng-repeat="actividad in actividadesDisponibles">
@@ -7,4 +7,6 @@
       </div ng-repeat-end>
     </div>
   </ion-scroll>
+  <button class="button forward" ng-click="scrollForward()"> > </button>
+  <button class="button backward" ng-click="scrollBackward()"> < </button>
 </ion-view>
