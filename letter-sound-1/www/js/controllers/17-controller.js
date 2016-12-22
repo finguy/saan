@@ -2,8 +2,9 @@
   'use strict';
   angular.module('saan.controllers')
   .controller('17Ctrl', ['$scope', '$timeout', '$state', '$log', 'NumberPattern',
-  'ActividadesFinalizadasService', 'Util', 'AssetsPath',
-  function ($scope, $timeout, $state, $log, NumberPattern, ActividadesFinalizadasService, Util, AssetsPath) {
+  'ActividadesFinalizadasService', 'Util', 'AssetsPath', 'AppSounds',
+  function ($scope, $timeout, $state, $log, NumberPattern, ActividadesFinalizadasService,
+    Util, AssetsPath, AppSounds) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
     $scope.activityId = 17;
@@ -142,6 +143,7 @@
         }
       },
       itemMoved: function (eventObj) {
+        AppSounds.playTap();
         if ($scope.mode == MODE_FILLIN ||
            $scope.mode == MODE_SEQUENCE && $scope.patternOptions.length === 0){
           Ctrl17.success();

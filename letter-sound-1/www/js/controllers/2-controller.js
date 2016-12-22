@@ -2,8 +2,9 @@
   'use strict';
   angular.module('saan.controllers')
   .controller('2Ctrl', ['$scope', '$timeout', '$state', '$log', 'ColorPattern',
-  'ActividadesFinalizadasService', 'Util', 'AssetsPath',
-  function ($scope, $timeout, $state, $log, ColorPattern, ActividadesFinalizadasService, Util, AssetsPath) {
+  'ActividadesFinalizadasService', 'Util', 'AssetsPath', 'AppSounds',
+  function ($scope, $timeout, $state, $log, ColorPattern, ActividadesFinalizadasService,
+    Util, AssetsPath, AppSounds) {
     var MODE_SEQUENCE = 1;
     var MODE_FILLIN = 2;
 
@@ -155,6 +156,7 @@
         }
       },
       itemMoved: function (eventObj) {
+        AppSounds.playTap();
         $scope.dummyDropzone.splice(0,1);
         if ($scope.mode == MODE_SEQUENCE){
           if (position + 1 >= stageData.patternLength){
