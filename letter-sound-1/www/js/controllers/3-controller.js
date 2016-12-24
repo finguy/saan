@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, $timeout, $state, RandomLetterThree, TTSService,
+.controller('3Ctrl', function($scope, $timeout,$log, $state, RandomLetterThree, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.imgs = [];
   $scope.activityProgress = 0;
@@ -26,7 +26,7 @@ angular.module('saan.controllers')
   Ctrl3.alphabet = "abcdefghijklmnopqrstuvwxyz";
   Ctrl3.aplhabetLetters = Ctrl3.alphabet.split("");
   Ctrl3.srcAlphabetLetters = "";
-
+  Ctrl3.letterPath = "";
   Ctrl3.showDashboard = function(readInstructions) {
 
     Ctrl3.setUpLevel();
@@ -37,19 +37,31 @@ angular.module('saan.controllers')
       function success(data) {
         Ctrl3.setUpContextVariables(data);
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
+        var instructionsTimeout = 0;
         $timeout(function() {
+
           if (readInstructions) {
             Ctrl3.instructionsPlayer.play();
             readInstructions = false;
+            instructionsTimeout = 21000;
+            $scope.readTapInstruction(instructionsTimeout);
+          } else {
+            Ctrl3.letterPlayer.play();
           }
-        }, readWordTimeout);
+
       },
       function error(error) {
         $log.error(error);
       }
     );
+   });
   };
 
+  $scope.readTapInstruction = function(instructionsTimeout) {
+   $timeout(function() {
+         Ctrl3.instructionsPlayer2.play();
+        },instructionsTimeout);
+  };
   Ctrl3.setUpLevel = function() {
     if (!Ctrl3.level) {
       Ctrl3.level = Util.getLevel($scope.activityId);
@@ -74,8 +86,7 @@ angular.module('saan.controllers')
     Ctrl3.initialLevel = 1;
 
     Ctrl3.letter = letterJson.letter;
-    Ctrl3.letterTutorial = letterJson.letter;
-
+    Ctrl3.letterTutorial = letterJson.letter.toUpperCase() +".mp3";
     $scope.imgs = [];
     for (var i in letterJson.imgs) {
       if (letterJson.imgs[i]) {
@@ -95,13 +106,33 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
 
-    Ctrl3.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    Ctrl3.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl3.instructionsPlayer.release();
       },
       function error(err) {
         $log.error(err);
         Ctrl3.instructionsPlayer.release();
+      }
+    );
+    Ctrl3.instructionsPlayer2 = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.action[0].path,
+      function success() {
+        Ctrl3.instructionsPlayer2.release();
+        Ctrl3.letterPlayer.play();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.instructionsPlayer2.release();
+      }
+    );
+
+    Ctrl3.letterPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.action[1].path + Ctrl3.letterTutorial,
+      function success() {
+        Ctrl3.letterPlayer.release();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.letterPlayer.release();
       }
     );
   };
@@ -129,6 +160,7 @@ angular.module('saan.controllers')
     var failureFeedback = RandomLetterThree.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
+    console.log(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path);
     var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
         failurePlayer.release();
@@ -146,22 +178,24 @@ angular.module('saan.controllers')
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     Ctrl3.successFeedback();
-    Ctrl3.levelUp();
-    if (!Ctrl3.finished) {
-      Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
-      Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
-      if (Ctrl3.finished) {
-        ActividadesFinalizadasService.add($scope.activityId);
-        $state.go('lobby');
-      } else {
-        Ctrl3.showDashboard(true);
-      }
-    } else if (Ctrl3.level <= Ctrl3.totalLevels) {
-      Ctrl3.showDashboard(true);
-    } else {
-      Ctrl3.level = Ctrl3.initialLevel;
-      $state.go('lobby');
-    }
+    $timeout(function () {
+     Ctrl3.levelUp();
+     if (!Ctrl3.finished) {
+       Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
+       Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
+       if (Ctrl3.finished) {
+         ActividadesFinalizadasService.add($scope.activityId);
+         $state.go('lobby');
+       } else {
+         Ctrl3.showDashboard(false);
+       }
+     } else if (Ctrl3.level <= Ctrl3.totalLevels) {
+       Ctrl3.showDashboard(false);
+     } else {
+       Ctrl3.level = Ctrl3.initialLevel;
+       $state.go('lobby');
+     }
+    }, 2000);
   };
 
   Ctrl3.error = function() {
@@ -202,10 +236,7 @@ angular.module('saan.controllers')
 
   $scope.selectLetter = function(name, objectNameSrc) {
     $scope.selectedObject = name;
-    $scope.speak(name);
-    $timeout(function() {
-      $scope.checkLetter(name);
-    }, 1000);
+    $scope.checkLetter(name);
   };
 
   //*************** ACTIONS **************************/
