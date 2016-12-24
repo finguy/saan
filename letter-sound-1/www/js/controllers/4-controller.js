@@ -204,20 +204,19 @@ angular.module('saan.controllers')
     containerPositioning: 'relative',
     clone: false,
     dragEnd: function(eventObj) {
-      if (!$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)) {
-        Ctrl4.handleProgress(false);
+      if ($scope.draggedOk){
+        Ctrl4.handleProgress(true);
       } else {
-        console.log("move again!");
+        Ctrl4.handleProgress(false);
       }
     },
-    itemMoved: function(eventObj) {
-      Ctrl4.handleProgress(true);
-    }
   };
 
   $scope.sortableTargetOptions = {
+   clone: false,
     accept: function(sourceItemHandleScope, destSortableScope) {
-      return sourceItemHandleScope.modelValue.name == $scope.number;
+      $scope.draggedOk = destSortableScope.modelValue == $scope.number;
+      return $scope.draggedOk;
     }
   };
 

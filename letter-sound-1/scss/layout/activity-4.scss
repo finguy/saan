@@ -14,7 +14,27 @@ $blue: #0460ab;
    }
 
    .dashboard {
-     margin-top: 5rem;
+
+    .number-container {
+       background-image: url('../assets/4/assorted-objects/paper.png');
+       background-repeat:no-repeat;
+       background-position: center;
+       background-color:transparent;
+       border: 0;
+       min-height: 15rem;
+       width: 30rem;
+       position:absolute;
+       left: 35%;
+       top: 25%;
+       padding-top: 6rem;
+       font-size: 10em;
+       color: $blue;
+       font-weight: bold;
+       font-family: Source Sans Pro;
+       .as-sortable-placeholder {
+         display: none;
+       }
+      }
    }
 
    .col-container {
@@ -23,16 +43,35 @@ $blue: #0460ab;
      position: absolute;
      top: 55%;
      left: 15%;
+    }
 
-     .as-sortable-placeholder {
-       display: none;
-     }
 
-     .as-sortable-dragging {
-       width: auto;
-     }
+   .number-container.as-sortable-dragging {
+    background: 0;
+    background-image: url('../assets/4/assorted-objects/paper.png');
+    background-repeat:no-repeat;
+    background-position: center;
+    border: 0;
+    min-height: 15rem;
+    width: 30rem;
+    position:absolute;
+    left: 35%;
+    top: 25%;
+    padding-top: 6rem;
+    font-size: 10em;
+    color: $blue;
+    font-weight: bold;
+    font-family: Source Sans Pro;
    }
 
+   .as-sortable-item {
+     background-color: transparent;
+     border-color: transparent;
+   }
+
+   .as-sortable-placeholder {
+     visibility: hidden;
+   }
    .box-container {
       clear:both;
       float:left;
@@ -49,37 +88,6 @@ $blue: #0460ab;
        min-width: 2rem;
        min-height: 2rem;
       }
-    }
-
-   .number-container {
-     background-image: url('../assets/4/assorted-objects/paper.png');
-     background-repeat:no-repeat;
-     background-position: center;
-     min-height: 15rem;
-     width: 30rem;
-     position:absolute;
-     left: 35%;
-     top: 25%;
-     padding-top: 6rem;
-     font-size: 10em;
-     color: $blue;
-     font-weight: bold;
-     font-family: Source Sans Pro;
-     .as-sortable-placeholder {
-       display: none;
-     }
-
-    }
-
-    .gradient-number {
-      background: #5E2B26;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .as-sortable-item {
-      background-color: inherit;
-      border: inherit;
     }
 
     .character{
