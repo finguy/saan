@@ -202,7 +202,7 @@ angular.module('saan.controllers')
   $scope.sortableSourceOptions = {
     containment: '.activity4-content',
     containerPositioning: 'relative',
-    clone: false,
+    clone: true,
     dragEnd: function(eventObj) {
       if ($scope.draggedOk){
         Ctrl4.handleProgress(true);

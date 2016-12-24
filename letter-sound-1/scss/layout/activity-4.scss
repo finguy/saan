@@ -23,10 +23,11 @@ $blue: #0460ab;
        border: 0;
        min-height: 15rem;
        width: 30rem;
-       position:absolute;
-       left: 35%;
-       top: 25%;
+       margin-top: 13%;
+       display: flex;
+       flex-direction: center;
        padding-top: 6rem;
+       padding-left: 12rem;
        font-size: 10em;
        color: $blue;
        font-weight: bold;
@@ -40,9 +41,8 @@ $blue: #0460ab;
    .col-container {
      display: flex;
      justify-content: flex-start;
-     position: absolute;
-     top: 55%;
-     left: 15%;
+     margin-left: 20%;
+     margin-top: 5%;
     }
 
 
@@ -78,6 +78,7 @@ $blue: #0460ab;
       max-width: 25rem;
       padding: 5rem;
       display: flex;
+      flex-direction: center;
       flex-wrap: wrap;
       align-items: center;
       img {
