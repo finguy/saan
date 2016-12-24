@@ -192,5 +192,15 @@
      "path":"Almost.mp3",
      "text": "Almost! Try listening to the letters again"
     }
+  ],
+  "endFeedback": [
+    {
+      "path": "Fin1.mp3",
+      "text": ""
+    },
+    {
+      "path": "Fin2.mp3",
+      "text": ""
+    }
   ]
 }

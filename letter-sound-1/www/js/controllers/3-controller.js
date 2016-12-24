@@ -135,8 +135,36 @@ angular.module('saan.controllers')
         Ctrl3.letterPlayer.release();
       }
     );
+
+    var endingFeedback1 = RandomLetterThree.getEndingAudio(0);
+    $scope.textSpeech1 = endingFeedback1.text;
+
+    Ctrl3.endPlayer1 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback1.path ,
+      function success() {
+        Ctrl3.endPlayer1.release();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.endPlayer1.release();
+      }
+    );
+
+    var endingFeedback2 = RandomLetterThree.getEndingAudio(1);
+    $scope.textSpeech2 = endingFeedback2.text;
+
+    Ctrl3.endPlayer2 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback2.path,
+      function success() {
+        Ctrl3.endPlayer2.release();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl3.endPlayer2.release();
+      }
+    );
   };
 
+   //end players
+   //release em
   Ctrl3.successFeedback = function() {
     var successFeedback = RandomLetterThree.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
@@ -160,7 +188,7 @@ angular.module('saan.controllers')
     var failureFeedback = RandomLetterThree.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
-    console.log(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path);
+
     var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
         failurePlayer.release();
@@ -185,7 +213,11 @@ angular.module('saan.controllers')
        Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
        if (Ctrl3.finished) {
          ActividadesFinalizadasService.add($scope.activityId);
-         $state.go('lobby');
+         Ctrl3.endPlayer1.play();
+         $timeout(function () {
+           $state.go('lobby');
+         }, 10000);
+
        } else {
          Ctrl3.showDashboard(false);
        }
@@ -193,7 +225,10 @@ angular.module('saan.controllers')
        Ctrl3.showDashboard(false);
      } else {
        Ctrl3.level = Ctrl3.initialLevel;
-       $state.go('lobby');
+       Ctrl3.endPlayer2.play();
+       $timeout(function () {
+         $state.go('lobby');
+       }, 10000);
      }
     }, 2000);
   };
