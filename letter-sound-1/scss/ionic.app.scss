@@ -45,6 +45,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-15';
 @import 'layout/activity-16';
 @import 'layout/activity-17';
+@import 'layout/lobby';
 
 html {
   font-size: 62.5%;
@@ -53,10 +54,10 @@ html {
 body {
   font-family: Source Sans Pro;
   font-size: 1rem;
+  line-height: initial;
 }
 
 .content-margin {
-  line-height: initial;
   padding-top: 4.4rem;
 }
 

@@ -1,9 +1,15 @@
-<ion-view view-title="Lobby">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="actividad in actividadesDisponibles" href="#/activity/{{actividad}}">
-        {{actividad}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view view-title="Lobby" class="lobby">
+  <ion-scroll zooming="true" direction="x" class="lobby-scroll">
+    <div class="activities-container">
+      <div class="activity-card" ng-repeat="actividad in actividadesDisponibles">
+        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
+        <div class="info">{{actividad}}</div>
+      </div ng-repeat-end>
+      <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles">
+        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
+      </div ng-repeat-end>
+    </div>
+  </ion-scroll>
+  <button class="button forward" ng-click="scrollForward()"> > </button>
+  <button class="button backward" ng-click="scrollBackward()"> < </button>
 </ion-view>
