@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('16Ctrl', function($scope, $state, $log, $timeout, RandomWordsSixteen, TTSService,
-  Util, Score, ActividadesFinalizadasService, AssetsPath) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
 
   $scope.assets = [];
   $scope.imgs = [];
@@ -59,7 +59,7 @@ angular.module('saan.controllers')
         }, readWordTimeout);
       },
       function error(error) {
-        $log.error(error)
+        $log.error(error);
       }
     );
   };
@@ -150,7 +150,7 @@ angular.module('saan.controllers')
       $scope.speaking = true;
       failurePlayer.play();
      }
-  }
+  };
 
   Ctrl16.setUpContextVariables = function(data, readInstructions) {
     var wordsJson = data;
@@ -169,7 +169,7 @@ angular.module('saan.controllers')
           return {
             name: wordsJson.info.letters[i].name,
             assetImage: asset
-          }
+          };
         });
         assets = assets.concat(letterAssets);
       }
@@ -229,6 +229,7 @@ angular.module('saan.controllers')
 
 
   Ctrl16.handleSuccess = function() {
+    AppSounds.playTap();
     var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
 
     if (LAST_CHECK) {
@@ -275,7 +276,7 @@ angular.module('saan.controllers')
   Ctrl16.handleError = function() {
     if (!Ctrl16.finished) {
       Ctrl16.score = Score.update(-Ctrl16.substractScore, $scope.activityId, Ctrl16.finished);
-    }    
+    }
     Ctrl16.errorFeedback();
   };
 
@@ -339,7 +340,7 @@ angular.module('saan.controllers')
     $scope.showText = true;
     $scope.speaking = true;
     Ctrl16.tapInstructionsPlayer.play();
-  }
+  };
 
   $scope.$on('$ionicView.beforeEnter', function() {
     /*************** ACTIONS **************************/
