@@ -29,17 +29,17 @@ angular.module('saan.controllers')
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
           Ctrl5.setUpContextVariables(data);
-          var readWordTimeout = (readInstructions) ? 2000 : 1000;
-          $timeout(function() {
+          var readWordTimeout = (readInstructions) ? 10000 : 1000;
+//          $timeout(function() {
             if (readInstructions) {
               Ctrl5.instructionsPlayer.play();
               $timeout(function() {
                 $scope.speak($scope.letter);
-              }, 7000);
+              }, 10000);
             } else {
               $scope.speak($scope.letter);
             }
-          }, readWordTimeout);
+   //       }, readWordTimeout);
         },
         function error(error) {
           $log.error(error);
@@ -123,8 +123,7 @@ angular.module('saan.controllers')
       } else {
         $scope.activityProgress = 100 * (Ctrl5.level - 1) / Ctrl5.totalLevels;
       }
-
-      Ctrl5.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+      Ctrl5.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
         function success() {
           Ctrl5.instructionsPlayer.release();
           $scope.playWordAudio();
@@ -134,18 +133,45 @@ angular.module('saan.controllers')
           Ctrl5.instructionsPlayer.release();
         }
       );
+
+      var endingFeedback1 = RandomLetter.getEndingAudio(0);
+      Ctrl5.endPlayer1 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback1.path ,
+        function success() {
+          Ctrl5.endPlayer1.release();
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl5.endPlayer1.release();
+        }
+      );
+
+      var endingFeedback2 = RandomLetter.getEndingAudio(1);
+      $scope.textSpeech2 = endingFeedback2.text;
+
+      Ctrl5.endPlayer2 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback2.path,
+        function success() {
+          Ctrl5.endPlayer2.release();
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl5.endPlayer2.release();
+        }
+      );
     };
 
     Ctrl5.success = function() {
       Ctrl5.playedLetters.push($scope.letter.toLowerCase());
-      Ctrl5.successFeedback();
+      //Ctrl5.successFeedback(); for now
       Ctrl5.levelUp();
       if (!Ctrl5.finished) {
         Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
         Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
         if (Ctrl5.finished) {
           ActividadesFinalizadasService.add($scope.activityId);
-          $state.go('lobby');
+          Ctrl5.endPlayer1.play();
+          $timeout(function () {
+            $state.go('lobby');
+          }, 10000);
         } else {
           Ctrl5.showDashboard(false);
         }
@@ -153,7 +179,10 @@ angular.module('saan.controllers')
         Ctrl5.showDashboard(false);
       } else {
         Ctrl5.level = Ctrl5.initialLevel;
-        $state.go('lobby');
+        Ctrl5.endPlayer2.play();
+        $timeout(function () {
+          $state.go('lobby');
+        }, 10000);
       }
     };
 
