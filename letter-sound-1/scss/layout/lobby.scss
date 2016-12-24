@@ -35,6 +35,10 @@
       height: 30rem;
       object-fit: contain;
     }
+
+    &.locked img {
+      filter: contrast(0) brightness(45%);
+    }
   }
 
   .button {

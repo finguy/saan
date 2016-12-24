@@ -5,6 +5,9 @@
         <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
         <div class="info">{{actividad}}</div>
       </div ng-repeat-end>
+      <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles">
+        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
+      </div ng-repeat-end>
     </div>
   </ion-scroll>
   <button class="button forward" ng-click="scrollForward()"> > </button>

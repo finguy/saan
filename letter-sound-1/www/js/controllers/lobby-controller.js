@@ -7,6 +7,7 @@ angular.module('saan.controllers')
   var chequearActividadesDisponibles = function(){
     var actividadesDisponibles = [];
     var actividadesFinalizadas = ActividadesFinalizadasService.get();
+    var actividadesNoDisponibles = [];
     _.each(actividadesConfiguradas,function(key, actividadConfigurada){
       if (_.findIndex(actividadesDisponibles, function(activity){ return activity == actividadConfigurada; }) == -1){
       if(actividadesConfiguradas[actividadConfigurada]){
@@ -17,13 +18,15 @@ angular.module('saan.controllers')
           var actividadesNecesarias = actividadesConfiguradas[actividadConfigurada].dependencies;
           if(_.difference(actividadesNecesarias,actividadesFinalizadas).length === 0){
             actividadesDisponibles.push(actividadConfigurada);
+          } else {
+            actividadesNoDisponibles.push(actividadConfigurada);
           }
         }
       }
     }
     });
 
-
+    $scope.actividadesNoDisponibles = actividadesNoDisponibles;
     $scope.actividadesDisponibles = _.sortBy(actividadesDisponibles, "order");
     console.log("lobby check");
   };
