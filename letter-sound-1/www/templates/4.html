@@ -1,19 +1,14 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}}-content">
- <activity-status></activity-status>
     <center>
       <div class="dashboard">
-        <div class="text-center number-container" as-sortable="sortableTargetOptions" data-ng-model="numberDragged">
-          <span
-            class="material-icons btn-play-word gradient-number"
-            ng-click="speak(number)">
-            {{number}}
-          </span>
+        <div class="text-center number-container" as-sortable="sortableSourceOptions" data-ng-model="numberDragged" as-sortable-item as-sortable-item-handle>
+          {{number}}
         </div>
 
-         <div data-ng-model="imgs" class="col-container" as-sortable="sortableSourceOptions">
-          <div class="img-container" ng-repeat="img in imgs" as-sortable-item as-sortable-item-handle>
+         <div  class="col-container" >
+          <div class="img-container" ng-repeat="img in imgs" as-sortable="sortableTargetOptions" data-ng-model="img.name">
             <div class="box-container">
-                <img ng-repeat="srcPath in img.src track by $index" ng-src="{{assetsPath}}{{srcPath}}" width="12%" height="12%" id="img-{{img.name}}"/>
+                <img ng-repeat="srcPath in img.src track by $index" ng-src="{{assetsPath}}{{srcPath}}" width="{{ (100 / img.name) >= 50 && img.name >1 ? 40 : (100 / img.name) }}%" height="{{(100 / img.name) >= 50 && img.name >1? 40 : (100 / img.name)}}%" id="img-{{img.name}}"/>
             </div>
           </div>
         </div>
@@ -21,6 +16,6 @@
     </center>
     <div class="character" ng-click="playWordAudio()">
       <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-      <img ng-src="assets/characters/mbott.png">
+      <img ng-src="assets/characters/Golo.png">
     </div>
 </ion-view>

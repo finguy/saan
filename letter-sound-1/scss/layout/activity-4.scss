@@ -1,75 +1,117 @@
 $darkBrown: #5E2B26;
 $lightbrow:#e7ddc4;
+$blue: #0460ab;
 .activity4-content {
-  background-image: url('../assets/4/background.jpg');
+  background-image: url('../assets/4/background.png');
+  background-repeat:no-repeat;
 
   .img-container {
-    @include image-container-1(2rem, $darkBrown, $lightbrow);
+   background-image: url('../assets/4/assorted-objects/empty-box.png');
+   background-repeat:no-repeat;
+   background-size: 25rem 25rem;
+   min-height: 25rem;
+   min-width: 25rem;
+   margin: 3rem;
    }
 
    .dashboard {
-     margin-top: 5rem;
+
+    .number-container {
+       background-image: url('../assets/4/assorted-objects/paper.png');
+       background-repeat:no-repeat;
+       background-position: center;
+       background-color:transparent;
+       border: 0;
+       min-height: 15rem;
+       width: 30rem;
+       margin-top: 13%;
+       display: flex;
+       flex-direction: center;
+       padding-top: 6rem;
+       padding-left: 12rem;
+       font-size: 10em;
+       color: $blue;
+       font-weight: bold;
+       font-family: Source Sans Pro;
+       .as-sortable-placeholder {
+         display: none;
+       }
+      }
    }
 
    .col-container {
      display: flex;
-     justify-content: center;
+     justify-content: flex-start;
+     margin-left: 15%;
+     margin-top: 5%;
+    }
 
-     .as-sortable-placeholder {
-       display: none;
-     }
 
-     .as-sortable-dragging {
-       width: auto;
-     }
+   .number-container.as-sortable-dragging {
+    background: 0;
+    background-image: url('../assets/4/assorted-objects/paper.png');
+    background-repeat:no-repeat;
+    background-position: center;
+    border: 0;
+    min-height: 15rem;
+    width: 30rem;
+    position:absolute;
+    left: 35%;
+    top: 25%;
+    padding-top: 6rem;
+    font-size: 10em;
+    color: $blue;
+    font-weight: bold;
+    font-family: Source Sans Pro;
    }
 
+   .as-sortable-item {
+     background-color: transparent;
+     border-color: transparent;
+   }
+
+   .as-sortable-placeholder {
+     visibility: hidden;
+   }
    .box-container {
       clear:both;
       float:left;
-      max-width:40rem;
-      border-top: 2rem solid transparent;
-      padding: 1.5rem;
-      border-image-source: url("../assets/4/store-2.png");
-      border-image-repeat: repeat;
-      border-image-slice: 30;
-    }
-
-   .number-container {
-     @include innerCircle-1 (1rem, #4ec0e0, #ed3f36, 17rem,17em, 7rem, 50%, 45%);
-     font-family: learningNumbers;
-     margin-bottom: 5rem;
-
-     .as-sortable-placeholder {
-       display: none;
-     }
-
-    }
-
-    .gradient-number {
-      background: #5E2B26;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .as-sortable-item {
-      background-color: inherit;
-      border: inherit;
+      max-width: 25rem;
+      padding: 5rem;
+      display: flex;
+      flex-direction: center;
+      flex-wrap: wrap;
+      align-items: center;
+      img {
+       margin-left:10%;
+       margin-top:1%;
+       min-width: 2rem;
+       min-height: 2rem;
+       min-width: 2rem;
+       min-height: 2rem;
+      }
     }
 
     .character{
-      bottom: 8rem;
+      bottom: 3rem;
       position: absolute;
-      right: 0;
-
+      right: 1rem;
        img {
-        height: 20rem;
+        height: 30rem;
         margin-left: auto;
        }
     }
 
     .talk-bubble {
-      right: 22rem;
-      bottom: 15rem;
+      right: 10rem;
+      bottom: 10rem;
+      width: 100%;
+
+      &::after {
+        border-color: white transparent transparent white;
+        bottom: initial;
+        right: -2rem;
+        top: 6rem;
+      }
     }
 }

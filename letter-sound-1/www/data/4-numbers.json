@@ -156,52 +156,12 @@
           "name" : 2
          }
           ]
-      },
-      {"number":11,
-        "imgs":[
-          {"src": [],
-           "name" : 1
-         },
-          {"src": [],
-           "name" : 11
-         },
-         {"src": [],
-          "name" : 2
-         }
-          ]
       }
   ],
-  "assets": [ "assorted-objects/1.png",
-            "assorted-objects/2.png",
-            "assorted-objects/3.png",
-            "assorted-objects/4.png",
-            "assorted-objects/5.png",
-            "assorted-objects/6.png",
-            "assorted-objects/7.png",
-            "assorted-objects/8.png",
-            "assorted-objects/9.png",
-            "assorted-objects/10.png",
-            "assorted-objects/11.png",
-            "assorted-objects/12.png",
-            "assorted-objects/13.png",
-            "assorted-objects/14.png",
-            "assorted-objects/15.png",
-            "assorted-objects/16.png",
-            "assorted-objects/17.png",
-            "assorted-objects/18.png",
-            "assorted-objects/19.png",
-            "assorted-objects/20.png",
-            "assorted-objects/21.png",
-            "assorted-objects/22.png",
-            "assorted-objects/23.png",
-            "assorted-objects/24.png",
-            "assorted-objects/25.png",
-            "assorted-objects/26.png",
-            "assorted-objects/27.png",
-            "assorted-objects/28.png",
-            "assorted-objects/29.png",
-            "assorted-objects/30.png",
-            "assorted-objects/31.png"
+  "assets": [ "assorted-objects/banana.png",
+            "assorted-objects/bean.png",
+            "assorted-objects/tomato.png"
+
         ],
   "instructions": "Hi! Drag the box to the number containing that quantity. Good Luck!",
   "instructionsPath": "Duck_Hunt.mp3",
