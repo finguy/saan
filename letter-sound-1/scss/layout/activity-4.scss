@@ -11,6 +11,7 @@ $blue: #0460ab;
    background-size: 25rem 25rem;
    min-height: 25rem;
    min-width: 25rem;
+   margin: 3rem;
    }
 
    .dashboard {
@@ -41,7 +42,7 @@ $blue: #0460ab;
    .col-container {
      display: flex;
      justify-content: flex-start;
-     margin-left: 20%;
+     margin-left: 15%;
      margin-top: 5%;
     }
 
@@ -92,9 +93,9 @@ $blue: #0460ab;
     }
 
     .character{
-      bottom: 2rem;
+      bottom: 3rem;
       position: absolute;
-      right: 10rem;
+      right: 1rem;
        img {
         height: 30rem;
         margin-left: auto;
@@ -103,6 +104,14 @@ $blue: #0460ab;
 
     .talk-bubble {
       right: 10rem;
-      bottom: 15rem;
+      bottom: 10rem;
+      width: 100%;
+
+      &::after {
+        border-color: white transparent transparent white;
+        bottom: initial;
+        right: -2rem;
+        top: 6rem;
+      }
     }
 }

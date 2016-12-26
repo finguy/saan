@@ -23,7 +23,6 @@ angular.module('saan.controllers')
     Ctrl4.setUpLevel();
     Ctrl4.setUpScore();
     Ctrl4.setUpStatus();
-
     //GET number
     RandomNumber.number(Ctrl4.level, Ctrl4.playedNumbers).then(
       function success(data) {
@@ -31,6 +30,7 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 2000 : 1000;
         //wait for UI to load
         $timeout(function() {
+          $scope.showText = false;
           if (readInstructions) {
             Ctrl4.instructionsPlayer.play();
             readInstructions = false;
@@ -67,6 +67,7 @@ angular.module('saan.controllers')
     var numberJson = data.number;
     $scope.number = numberJson.number;
     $scope.imgs = [];
+
     Ctrl4.assets = data.assets;
     Ctrl4.addScore = data.scoreSetUp.add;
     Ctrl4.substractScore = data.scoreSetUp.substract;
