@@ -19,7 +19,9 @@ angular.module('saan.controllers')
     Ctrl5.level = null; // Indicates activity level
     Ctrl5.score = 0;
     Ctrl5.instructionsPlayer;
+    Ctrl5.speaking = false;
 
+    var failurePlayer;
     Ctrl5.showDashboard = function(readInstructions) {
       $scope.checkingWord = false;
       Ctrl5.setUpLevel();
@@ -29,17 +31,13 @@ angular.module('saan.controllers')
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
           Ctrl5.setUpContextVariables(data);
-          var readWordTimeout = (readInstructions) ? 10000 : 1000;
-//          $timeout(function() {
-            if (readInstructions) {
-              Ctrl5.instructionsPlayer.play();
-              $timeout(function() {
-                $scope.speak($scope.letter);
-              }, 10000);
-            } else {
-              $scope.speak($scope.letter);
-            }
-   //       }, readWordTimeout);
+          if (readInstructions) {
+            Ctrl5.instructionsPlayer.play();
+            Ctrl5.speaking = true;
+          } else {
+            Ctrl5.letterPlayer.play();
+            Ctrl5.speaking = false;
+          }
         },
         function error(error) {
           $log.error(error);
@@ -62,51 +60,65 @@ angular.module('saan.controllers')
     };
 
     Ctrl5.successFeedback = function() {
-      var successFeedback = RandomLetter.getSuccessAudio();
-      $scope.textSpeech = successFeedback.text;
-      $scope.showText = true;
-      var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-        function success() {
-          successPlayer.release();
-          $scope.showText = false;
-        },
-        function error(err) {
-          $log.error(err);
-          successPlayer.release();
-          $scope.showText = false;
-          $scope.checkingWord = false;
-        }
-      );
-      successPlayer.play();
+     if (!Ctrl5.speaking) {
+        var successFeedback = RandomLetter.getSuccessAudio();
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+        Ctrl5.speaking = true;
+        var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function success() {
+            successPlayer.release();
+            $scope.showText = false;
+            Ctrl5.speaking = false;
+          },
+          function error(err) {
+            $log.error(err);
+            successPlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+            Ctrl5.speaking = false;
+          }
+        );
+        Ctrl5.speaking = true;
+        successPlayer.play();
+      }
     };
 
     Ctrl5.errorFeedback = function() {
-      var failureFeedback = RandomLetter.getFailureAudio();
-      $scope.textSpeech = failureFeedback.text;
-      $scope.showText = true;
-      var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-        function success() {
-          failurePlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        },
-        function error(err) {
-          $log.error(err);
-          failurePlayer.release();
-          $scope.showText = false;
-        });
-      failurePlayer.play();
+     if (!Ctrl5.speaking) {
+        var failureFeedback = RandomLetter.getFailureAudio();
+        $scope.textSpeech = failureFeedback.text;
+        $scope.showText = true;
+        Ctrl5.speaking = true;
+        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+          function success() {
+            failurePlayer.release();
+            $scope.showText = false;
+            Ctrl5.speaking = false;
+            $scope.$apply();
+          },
+          function error(err) {
+            $log.error(err);
+            failurePlayer.release();
+            $scope.showText = false;
+            Ctrl5.speaking = false;
+          });
+        Ctrl5.speaking = true;
+        failurePlayer.play();
+       }
     };
 
     Ctrl5.setUpContextVariables = function(data) {
       var letterJson = data.letter;
       $scope.letterSrc = letterJson.letterSrc;
       $scope.letter = letterJson.letter;
+      Ctrl5.letterTutorial = $scope.letter.toUpperCase() + ".mp3";
       Ctrl5.addScore = data.scoreSetUp.add;
       Ctrl5.substractScore = data.scoreSetUp.substract;
       Ctrl5.finalizationLevel = data.finalizationLevel;
       Ctrl5.totalLevels = data.totalLevels;
       Ctrl5.initialLevel = 1;
+
 
       $scope.imgs = [];
       for (var i in letterJson.imgs) {
@@ -126,11 +138,25 @@ angular.module('saan.controllers')
       Ctrl5.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
         function success() {
           Ctrl5.instructionsPlayer.release();
-          $scope.playWordAudio();
+          Ctrl5.letterPlayer.play();
+          Ctrl5.speaking = false;
         },
         function error(err) {
           $log.error(err);
           Ctrl5.instructionsPlayer.release();
+          Ctrl5.speaking = false;
+        }
+      );
+
+      Ctrl5.letterPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.action.path + Ctrl5.letterTutorial,
+        function success() {
+          Ctrl5.letterPlayer.release();
+          Ctrl5.speaking = false;
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl5.letterPlayer.release();
+          Ctrl5.speaking = false;
         }
       );
 
@@ -138,10 +164,12 @@ angular.module('saan.controllers')
       Ctrl5.endPlayer1 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback1.path ,
         function success() {
           Ctrl5.endPlayer1.release();
+          Ctrl5.speaking = false;
         },
         function error(err) {
           $log.error(err);
           Ctrl5.endPlayer1.release();
+          Ctrl5.speaking = false;
         }
       );
 
@@ -151,10 +179,12 @@ angular.module('saan.controllers')
       Ctrl5.endPlayer2 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback2.path,
         function success() {
           Ctrl5.endPlayer2.release();
+          Ctrl5.speaking = false;
         },
         function error(err) {
           $log.error(err);
           Ctrl5.endPlayer2.release();
+          Ctrl5.speaking = false;
         }
       );
     };
@@ -171,7 +201,7 @@ angular.module('saan.controllers')
           Ctrl5.endPlayer1.play();
           $timeout(function () {
             $state.go('lobby');
-          }, 10000);
+          }, 8000);
         } else {
           Ctrl5.showDashboard(false);
         }
@@ -182,7 +212,7 @@ angular.module('saan.controllers')
         Ctrl5.endPlayer2.play();
         $timeout(function () {
           $state.go('lobby');
-        }, 10000);
+        }, 8000);
       }
     };
 
@@ -213,24 +243,31 @@ angular.module('saan.controllers')
     };
 
     $scope.selectLetter = function(name, objectNameSrc) {
-      if (!$scope.checkingLetter && !$scope.checkingWord) {
-        $scope.checkingLetter = true;
+      if (!$scope.checkingLetter && !$scope.checkingWord && !Ctrl5.speaking) {
         Ctrl5.selectedObject = name;
-        var objectName = objectNameSrc.replace(".png", "").replace("animals/", "");
-        $scope.speak($scope.letter + " in " + objectName);
-        $timeout(function() {
-          $scope.checkingLetter = false;
-          Ctrl5.handleProgress(name);
-        }, 500);
+        Ctrl5.handleProgress(name);
+        $scope.checkingLetter = false;
       }
     };
 
+    $scope.readTapInstruction = function() {
+        if (!Ctrl5.speaking) {
+          Ctrl5.speaking = true;
+          Ctrl5.letterPlayer.play();
+        }
+    };
     //*************** ACTIONS **************************/
     $scope.$on('$ionicView.beforeEnter', function() {
       Ctrl5.showDashboard(true);
     });
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, Ctrl5.level);
+      Ctrl5.instructionsPlayer.release();
+      Ctrl5.endPlayer1.release();
+      Ctrl5.endPlayer2.release();
+      failurePlayer.release();
+      instructionsPlayer.release();
+      Ctrl5.letterPlayer.release();
     });
 
   });

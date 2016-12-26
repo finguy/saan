@@ -111,7 +111,9 @@
     ],
 
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"....."}
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "action": {"path": "letters/", "text":""}
+
       },
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
