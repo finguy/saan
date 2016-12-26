@@ -1,4 +1,4 @@
-{  
+{
   "minLevel": 1,
   "levels": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "level": 2,
-      "numberFrom": 10,
+      "numberFrom": 6,
       "numberTo": 10,
       "autoCheck": false
     }

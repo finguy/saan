@@ -2,13 +2,14 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('13Ctrl',['$scope', '$log', '$timeout', '$state', 'Util', 'LearningNumber', 'ActividadesFinalizadasService',
-  function($scope, $log, $timeout, $state, Util, LearningNumber, ActividadesFinalizadasService) {
+  .controller('13Ctrl',['$scope', '$log', '$timeout', '$state', 'Util', 'LearningNumber', 'ActividadesFinalizadasService', 'AssetsPath',
+  function($scope, $log, $timeout, $state, Util, LearningNumber, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 13;
     $scope.dropzone = [];
     $scope.items = ['dummy'];
     $scope.step = 1;
     $scope.dragDisabled = false;
+    $scope.imgPath = AssetsPath.getImgs($scope.activityId);
 
     var Ctrl13 = Ctrl13 || {};
     var totalSteps = 3;
@@ -68,20 +69,15 @@
           }, 1000);
         }
         else {
-          Ctrl13.startTutorial();
+          Ctrl13.startStage();
         }
       });
     };
 
-    Ctrl13.startTutorial = function(){
+    Ctrl13.startStage = function(){
       $scope.dropzone = [];
       $scope.step = 0;
       itemCount = 0;
-
-      for (var i = 1; i <= totalSteps; i++){
-        $timeout(function(){Ctrl13.readInstructions(i)}, i * instructionsTime);
-      }
-      $scope.dragDisabled = false;
     };
 
     Ctrl13.readInstructions = function(step){
@@ -94,7 +90,11 @@
 
     $scope.sortableOptions = {
       containment: '.activity-13-content',
-      allowDuplicates: true
+      allowDuplicates: true,
+      dragEnd: function(eventObj){
+        $scope.dropzone.pop();
+        itemCount--;
+      }
     };
 
     $scope.sortableCloneOptions = {
@@ -115,9 +115,11 @@
     };
 
     Ctrl13.success = function(){
-      $scope.dragDisabled = true;
+      // $scope.dragDisabled = true;
       if ($scope.number < config.level.numberTo){
-        $timeout(function(){ $scope.number++; Ctrl13.startTutorial();}, 1000);
+        $timeout(function(){ $scope.number++;
+          Ctrl13.startStage();
+        }, 1000);
       }
       else {
         if (level == LearningNumber.getMinLevel() &&
@@ -146,6 +148,7 @@
       ActividadesFinalizadasService.add($scope.activityId);
       $scope.$apply();
       level++;
+      $state.go('lobby');
       //TODO uncomment this after getting media assets
       // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
       //   function(){

@@ -6,7 +6,8 @@
       restrict: "E",
       templateUrl: "templates/directives/talkBubble.html",
       scope: {
-        text: '='
+        text: '=',
+        text2: '='
       }
     };
   });

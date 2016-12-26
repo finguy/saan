@@ -1,4 +1,29 @@
 .activity-13-content {
+  background: url('../assets/13/background.png') no-repeat center center fixed;
+  background-size: cover;
+
+  .character {
+    bottom: 2rem;
+    position: absolute;
+    right: 2rem;
+
+    img { height: 30rem; }
+
+    .talk-bubble {
+      align-self: flex-start;
+      bottom: -2rem;
+      position: relative;
+      right: -4rem;
+      z-index: 0;
+
+      &::after {
+        border-color: white transparent transparent white;
+        bottom: initial;
+        right: -2rem;
+        top: 4rem;
+      }
+    }
+  }
 
   .number-container {
     display: flex;
@@ -6,16 +31,25 @@
     font-size: 5em;
   }
 
+  .as-sortable-item {
+    background: 0;
+    border: 0;
+  }
+
+  .as-sortable-dragging {
+    margin: 0 !important;
+  }
+
   .item-dropzone {
     align-items: center;
-    border: dotted black .4rem;
-    border-radius: 2rem;
     display: flex;
     flex-wrap: wrap;
+    height: 21rem;
     justify-content: center;
-    margin-left: 4rem;
-    min-height: 20rem;
-    width: 40rem;
+    margin-left: 3.5rem;
+    margin-top: 13rem;
+    padding-top: 2rem;
+    width: 17rem;
 
     .as-sortable-placeholder {
       visibility: hidden;
@@ -23,42 +57,51 @@
   }
 
   .item-container {
-    margin-left: 20rem;
+    background: url('../assets/13/empty-box.png');
+    background-size: cover;
+    height: 18rem;
+    width: 18rem;
+
+    div {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
   }
 
-  .animate-if.ng-enter {
-    transition: all cubic-bezier(.250, .460, .450, .940) .5s;
-  }
-
-  .animate-if.ng-enter,
-  .animate-if.ng-leave.ng-leave-active {
-    opacity: 0;
-  }
-
-  .animate-if.ng-leave,
-  .animate-if.ng-enter.ng-enter-active {
-    opacity: 1;
-  }
-
-  .pattern-item {
-    height: 8rem;
-    width: 8rem;
-  }
-
-  .pattern-item {
-    border: 0;
-    border-radius: 50%;
-    height: 8.2rem;
+  .sortable-cookie {
     margin: auto;
-    width: 8.2rem;
-  }
-
-  .color-red{
-    background-color: $red;
+    width: 6rem;
   }
 
   .check-button {
-    height: 5rem;
-    margin-bottom: 10rem;
+    align-self: flex-start;
+    background: url('../assets/13/fork.png');
+    background-size: contain;
+    height: 12rem;
+    width: 12rem;
+  }
+
+  .cub {
+    background: url('../assets/characters/baby-lion.png');
+    background-size: cover;
+    height: 38rem;
+    margin: 0 5rem;
+    width: 24rem;
+
+    .talk-bubble {
+      bottom: initial;
+      min-width: 15rem;
+      right: 61rem;
+      top: 12rem;
+    }
+
+    .btn-position .talk-bubble {
+      right: 66rem;
+    }
+
+    .sortable-cookie {
+      width: 5rem;
+    }
   }
 }
