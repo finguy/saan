@@ -33,7 +33,7 @@
           }
         };
 
-        scope.imagePath = AssetsPath.getImgs(7);
+        scope.miscPath = AssetsPath.getMiscPath();
       }
     };
   });

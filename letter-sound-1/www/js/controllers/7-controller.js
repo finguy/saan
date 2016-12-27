@@ -29,7 +29,7 @@
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(successPlayer))
         successPlayer.release();
@@ -98,6 +98,8 @@
     };
 
     $scope.deckCompleted = function(){
+      var successFeedback = DeckBuilder.getSuccessAudio();
+
       if (level == DeckBuilder.getMinLevel() &&
         !ActividadesFinalizadasService.finalizada($scope.activityId)){
         Ctrl7.minReached();
@@ -111,6 +113,30 @@
           Ctrl7.getConfiguration(level);
         }
       }
+
+      // successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      //   function(){
+            // $scope.showText = false;
+      //     if (level == DeckBuilder.getMinLevel() &&
+      //       !ActividadesFinalizadasService.finalizada($scope.activityId)){
+      //       Ctrl7.minReached();
+      //     }
+      //     else {
+      //       if (level == DeckBuilder.getMaxLevel()){
+      //         Ctrl7.maxReached();
+      //       }
+      //       else {
+      //         Util.saveLevel($scope.activityId, ++level);
+      //         Ctrl7.getConfiguration(level);
+      //       }
+      //     }
+      //   },
+      //   function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
+      // );
+
+      $scope.textSpeech = successFeedback.text;
+      $scope.showText = true;
+      // successPlayer.play();
     };
 
     $scope.tapInstruction = function() {
