@@ -32,18 +32,26 @@
   }
 
   .character{
-    bottom: 40rem;
+    bottom: 0rem;
     position: absolute;
     right: 0;
 
      img {
-      height: 20rem;
+      height: 30rem;
       margin-left: auto;
      }
   }
 
   .talk-bubble {
-    right: 22rem;
-    bottom: 15rem;
+    width: 20rem;
+    right: 13rem;
+    bottom: 10rem;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 6rem;
+    }
   }
 }
