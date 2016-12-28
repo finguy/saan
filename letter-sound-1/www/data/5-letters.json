@@ -109,8 +109,12 @@
       ]
     }
     ],
-  "instructions": "Hi! Listen to the letter and then select the figure having the letter in its name. Good Luck!",
-  "instructionsPath": "Duck_Hunt.mp3",
+
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "action": {"path": "letters/", "text":""}
+
+      },
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
@@ -118,16 +122,32 @@
     "substract": 1
   },
   "finalizationLevel": 3,
-  "successFeedback": [
-    {
-      "path": "great.ogg",
-      "text": "Great!"
-    }
-  ],
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  },
+  {
+    "path": "Great.mp3",
+    "text": "Great!"
+  },
+  {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
-      "text": "Try again!"
+      "path": "NotComing.mp3",
+      "text": ""
+    }
+  ],
+  "endFeedback": [
+    {
+      "path": "Fin1.mp3",
+      "text": ""
+    },
+    {
+      "path": "Fin2.mp3",
+      "text": ""
     }
   ]
 }

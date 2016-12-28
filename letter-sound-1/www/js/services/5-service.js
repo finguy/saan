@@ -24,7 +24,7 @@ angular.module('saan.services')
           return {
             letter: lettersNotPlayed[position],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
@@ -45,6 +45,9 @@ angular.module('saan.services')
     getFailureAudio: function() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
+    },
+    getEndingAudio: function(index) {
+      return data.endFeedback[index];
     }
   };
 })
