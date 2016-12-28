@@ -1,0 +1,92 @@
+{"info":
+  [ { "id": 1,
+    "words": [
+    {"word":"ball" ,
+      "imgs": ["objects/ball.png"
+                ],
+      "instruction": "Select the image and drag the word"
+    },
+    {"word":"cups" ,
+     "imgs": ["objects/cups.png"
+                ],
+      "instruction": "Select the image and drag the word"
+    },
+    {"word":"dishes" ,
+      "imgs": ["objects/dishes.png"
+                ],
+      "instruction": "Select the image and drag the word"
+    },
+    {"word":"hats" ,
+      "imgs": ["objects/hats.png"
+                ],
+      "instruction": "Select the image and drag the word"
+    }]},
+    { "id": 2,
+     "words": [
+     {"word":"ball" ,
+       "imgs": ["objects/ball.png"
+                 ],
+       "instruction": "Select the image and drag the word"
+     },
+     {"word":"cups" ,
+      "imgs": ["objects/cups.png"
+                 ],
+       "instruction": "Select the image and drag the word"
+     },
+     {"word":"dishes" ,
+       "imgs": ["objects/dishes.png"
+                 ],
+       "instruction": "Select the image and drag the word"
+     },
+     {"word":"hats" ,
+       "imgs": ["objects/hats.png"
+                 ],
+       "instruction": "Select the image and drag the word"
+     }]
+      },
+      { "id": 3,
+        "words": [
+        {"word":"ball" ,
+          "imgs": ["objects/ball.png"
+                    ],
+          "instruction": "Select the image and drag the word"
+        },
+        {"word":"cups" ,
+         "imgs": ["objects/cups.png"
+                    ],
+          "instruction": "Select the image and drag the word"
+        },
+        {"word":"dishes" ,
+          "imgs": ["objects/dishes.png"
+                    ],
+          "instruction": "Select the image and drag the word"
+        },
+        {"word":"hats" ,
+          "imgs": ["objects/hats.png"
+                    ],
+          "instruction": "Select the image and drag the word"
+        }]}
+  ],
+  "instructions": "Drag the word to the image",
+  "instructionsPath": "Duck_Hunt.mp3",
+  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
+  "errorMessages": ["Try again!"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "limit":4,
+  "finalizationLevel": 2,
+  "successFeedback": [
+    {
+      "path": "great.ogg",
+      "text": "Great!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.ogg",
+      "text": "Try again!"
+    }
+  ]
+}

@@ -2,7 +2,7 @@ angular.module('saan.controllers')
 
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
-  $scope.activityId = 9; 
+  $scope.activityId = 9;
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.activityProgress = 0;
   $scope.words = [];
@@ -101,8 +101,7 @@ angular.module('saan.controllers')
     var cantOpciones = 1;
     for (var i in $scope.words) {
       if ($scope.words[i] && cantOpciones <= wordsJson.limit) {
-        cantOpciones++;
-        $scope.words[i].letters = $scope.words[i].word.split("");
+        cantOpciones++;        
         var index = Util.getRandomNumber($scope.words[i].imgs.length);
         $scope.imgs.push({
           image: $scope.words[i].imgs[index],

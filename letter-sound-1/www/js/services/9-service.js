@@ -30,7 +30,7 @@ angular.module('saan.services')
           return {
             words: wordsNotPlayed[index],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
@@ -61,10 +61,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/9-words.json';
+            src = 'data/9-config.json';
             break;
           default:
-            src = 'data/9-words.json';
+            src = 'data/9-config.json';
         }
         return src;
       },
