@@ -85,8 +85,14 @@ $black: #000000;
   }
 
   .talk-bubble {
-    width: 100%;
-    right: 8rem;
-    bottom: 8rem;
+    width: 100% !important;
+    right: 15rem;
+    bottom: 10rem;
+
+    &::after {
+      border-color: white transparent transparent white;
+      right: -1.38rem;
+      top: 70%;
+    }
   }
 }

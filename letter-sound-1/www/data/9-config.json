@@ -67,10 +67,10 @@
           "instruction": "Select the image and drag the word"
         }]}
   ],
-  "instructions": "Drag the word to the image",
-  "instructionsPath": "Duck_Hunt.mp3",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
+  "instructionsPath": {
+       "intro": {"path": "instructions/intro.mp3", "text":"Hi!"},
+       "tap": {"path": "instructions/tap.mp3", "text":"Hi!"}
+      },
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
@@ -79,14 +79,41 @@
   "finalizationLevel": 2,
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
     }
+  ],
+  "endingFeedback": [
+    {
+     "path": "end1.mp3",
+     "text": "Thank you!"
+    },
+    {
+      "path": "end2.mp3",
+      "text": "Thank you!"
+    }
+
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
-      "text": "Try again!"
+      "path": "Almost.mp3",
+      "text": "Almost! Take your time to read the words and try again"
+    },
+    {
+      "path": "Not_Correct.mp3",
+      "text": "Well, I am not sure that's a correct match"
+    },
+    {
+      "path": "Try_again.mp3",
+      "text": "Try again"
     }
   ]
 }
