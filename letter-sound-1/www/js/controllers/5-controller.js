@@ -138,6 +138,7 @@ angular.module('saan.controllers')
           function success() {
             Ctrl5.endPlayer.release();
             Ctrl5.speaking = false;
+            $state.go('lobby');
           },
           function error(err) {
             $log.error(err);
@@ -154,6 +155,7 @@ angular.module('saan.controllers')
           function success() {
             Ctrl5.endPlayer.release();
             Ctrl5.speaking = false;
+            $state.go('lobby');
           },
           function error(err) {
             $log.error(err);
@@ -198,9 +200,6 @@ angular.module('saan.controllers')
         if (Ctrl5.finished) {
           ActividadesFinalizadasService.add($scope.activityId);
           Ctrl5.endPlayer.play();
-          $timeout(function() {
-            $state.go('lobby');
-          }, 8000);
         } else {
           Ctrl5.showDashboard(false);
         }
@@ -209,9 +208,6 @@ angular.module('saan.controllers')
       } else {
         Ctrl5.level = Ctrl5.initialLevel;
         Ctrl5.endPlayer.play();
-        $timeout(function() {
-          $state.go('lobby');
-        }, 8000);
       }
     };
 
