@@ -39,10 +39,12 @@ angular.module('saan.controllers')
 
     RandomLetterThree.letter(Ctrl3.level, Ctrl3.playedLetters).then(
       function success(data) {
+
+
         Ctrl3.setUpContextVariables(data);
-        var readWordTimeout = (readInstructions) ? 2000 : 1000;
+        var readWordTimeout = 1000;
         var instructionsTimeout = 0;
-        $timeout(function() {
+        $timeout(function loadUI() {
           if (readInstructions) {
             Ctrl3.speaking = true;
             Ctrl3.instructionsPlayer.play();
@@ -54,12 +56,12 @@ angular.module('saan.controllers')
             Ctrl3.speaking = true;
           }
 
-      },
+      }, instructionsTimeout);
+     },
       function error(error) {
         $log.error(error);
       }
-    );
-   });
+    );   
   };
 
   $scope.readTapInstruction = function() {
@@ -117,7 +119,9 @@ angular.module('saan.controllers')
       Ctrl3.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
         function success() {
           Ctrl3.instructionsPlayer.release();
-          Ctrl3.instructionsPlayer2.play();
+          $timeout(function() {
+           Ctrl3.instructionsPlayer2.play();
+          },500);
         },
         function error(err) {
           $log.error(err);

@@ -31,6 +31,7 @@ angular.module('saan.controllers')
 
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
+         $timeout(function loadUI() {          
           Ctrl5.setUpContextVariables(data);
           if (readInstructions) {
             Ctrl5.instructionsPlayer.play();
@@ -39,6 +40,7 @@ angular.module('saan.controllers')
             Ctrl5.letterPlayer.play();
             Ctrl5.speaking = false;
           }
+         },1000);
         },
         function error(error) {
           $log.error(error);
@@ -167,8 +169,10 @@ angular.module('saan.controllers')
       Ctrl5.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
         function success() {
           Ctrl5.instructionsPlayer.release();
-          Ctrl5.letterPlayer.play();
           Ctrl5.speaking = false;
+          $timeout(function() {
+            Ctrl5.letterPlayer.play();
+          }, 500);
         },
         function error(err) {
           $log.error(err);
