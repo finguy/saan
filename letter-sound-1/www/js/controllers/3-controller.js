@@ -11,8 +11,10 @@ angular.module('saan.controllers')
   $scope.selectedObject = ""; // Collects letters the user selects
   $scope.activityId = 3; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
+  $scope.textSpeech = "";
   var successPlayer;
   var failurePlayer;
+  var endingFeedback;
   var Ctrl3 = Ctrl3 || {};
   Ctrl3.letter = ""; // Letter to play in level
   Ctrl3.letterTutorial = "";
@@ -48,7 +50,7 @@ angular.module('saan.controllers')
             instructionsTimeout = 21000;
 
           } else {
-            Ctrl3.letterPlayer.play();
+            Ctrl3.instructionsPlayer2.play();
             Ctrl3.speaking = true;
           }
 
@@ -60,12 +62,10 @@ angular.module('saan.controllers')
    });
   };
 
-  $scope.readTapInstruction = function(instructionsTimeout) {
+  $scope.readTapInstruction = function() {
    if (!Ctrl3.speaking){
-     $timeout(function() {
-           Ctrl3.instructionsPlayer2.play();
-           Ctrl3.speaking = true;
-          },instructionsTimeout);
+     Ctrl3.instructionsPlayer2.play();
+     Ctrl3.speaking = true;
    }
   };
 
@@ -113,18 +113,20 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl3.level - 1) / Ctrl3.totalLevels;
     }
 
-    Ctrl3.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
-      function success() {
-        Ctrl3.instructionsPlayer.release();
-        //Ctrl3.speaking = false;
-        Ctrl3.instructionsPlayer2.play();
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl3.instructionsPlayer.release();
-        Ctrl3.speaking = false;
-      }
-    );
+    if (!Ctrl3.instructionsPlayer) {
+      Ctrl3.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
+        function success() {
+          Ctrl3.instructionsPlayer.release();
+          Ctrl3.instructionsPlayer2.play();
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl3.instructionsPlayer.release();
+          Ctrl3.speaking = false;
+        }
+      );
+    }
+
     Ctrl3.instructionsPlayer2 = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.action[0].path,
       function success() {
         Ctrl3.instructionsPlayer2.release();
@@ -150,35 +152,37 @@ angular.module('saan.controllers')
       }
     );
 
-    var endingFeedback1 = RandomLetterThree.getEndingAudio(0);
-    $scope.textSpeech1 = endingFeedback1.text;
+    if (!Ctrl3.finished) {
+    var endingFeedback = RandomLetterThree.getEndingAudio(0);
+    $scope.textSpeech = endingFeedback.text;
 
-    Ctrl3.endPlayer1 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback1.path ,
+    Ctrl3.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path ,
       function success() {
-        Ctrl3.endPlayer1.release();
+        Ctrl3.endPlayer.release();
         Ctrl3.speaking = false;
       },
       function error(err) {
         $log.error(err);
-        Ctrl3.endPlayer1.release();
+        Ctrl3.endPlayer.release();
         Ctrl3.speaking = false;
       }
     );
+   } else {
+      endingFeedback = RandomLetterThree.getEndingAudio(1);
+      $scope.textSpeech = endingFeedback.text;
 
-    var endingFeedback2 = RandomLetterThree.getEndingAudio(1);
-    $scope.textSpeech2 = endingFeedback2.text;
-
-    Ctrl3.endPlayer2 = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback2.path,
-      function success() {
-        Ctrl3.endPlayer2.release();
-        Ctrl3.speaking = false;
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl3.endPlayer2.release();
-        Ctrl3.speaking = false;
-      }
-    );
+      Ctrl3.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          Ctrl3.endPlayer.release();
+          Ctrl3.speaking = false;
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl3.endPlayer.release();
+          Ctrl3.speaking = false;
+        }
+      );
+    }
   };
 
    //end players
@@ -240,7 +244,7 @@ angular.module('saan.controllers')
        Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
        if (Ctrl3.finished) {
          ActividadesFinalizadasService.add($scope.activityId);
-         Ctrl3.endPlayer1.play();
+         Ctrl3.endPlayer.play();
          $timeout(function () {
            $state.go('lobby');
          }, 10000);
@@ -252,7 +256,7 @@ angular.module('saan.controllers')
        Ctrl3.showDashboard(false);
      } else {
        Ctrl3.level = Ctrl3.initialLevel;
-       Ctrl3.endPlayer2.play();
+       Ctrl3.endPlayer.play();
        $timeout(function () {
          $state.go('lobby');
        }, 10000);
@@ -307,16 +311,20 @@ angular.module('saan.controllers')
   $scope.$on('$ionicView.beforeEnter', function() {
     Ctrl3.showDashboard(true);
   });
+
+  Ctrl3.releasePlayer = function (player) {
+    if (player) {
+      player.release();
+    }
+  };
+
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, Ctrl3.level);
-    Ctrl3.instructionsPlayer.release();
-    Ctrl3.instructionsPlayer2.release();
-    Ctrl3.letterPlayer.release();
-    Ctrl3.endPlayer1.release();
-    Ctrl3.endPlayer2.release();
-    successPlayer.release();
-    failurePlayer.release();
-    Ctrl3.endPlayer1.release();
-    Ctrl3.endPlayer2.release();
+    Ctrl3.releasePlayer(Ctrl3.instructionsPlayer);
+    Ctrl3.releasePlayer(Ctrl3.instructionsPlayer2);
+    Ctrl3.releasePlayer(Ctrl3.letterPlayer);
+    Ctrl3.releasePlayer(Ctrl3.endPlayer);
+    Ctrl3.releasePlayer(successPlayer);
+    Ctrl3.releasePlayer(failurePlayer);
   });
 });
