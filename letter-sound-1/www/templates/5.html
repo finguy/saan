@@ -1,5 +1,4 @@
 <ion-view class="activity-{{activityId}}-content content-margin">
-  <activity-status></activity-status>
   <div class="letter-container">
     <span class="material-icons btn-play-word" ng-click="speak(instructions + ' ' + letter)">
       <img ng-src="{{assetsPath}}{{letterSrc}}" class="img-letter" />
@@ -15,6 +14,6 @@
   </div>
   <div class="character" ng-click="readTapInstruction()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img ng-src="assets/characters/mbott.png">
+    <img ng-src="assets/characters/tortuga.png">
   </div>
 </ion-view>

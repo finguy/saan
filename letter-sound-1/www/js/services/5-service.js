@@ -57,10 +57,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/5-letters.json';
+            src = 'data/5-config.json';
             break;
           default:
-            src = 'data/5-letters.json';
+            src = 'data/5-config.json';
         }
         return src;
       },
