@@ -122,7 +122,18 @@
     "substract": 1
   },
   "finalizationLevel": 3,
-  "successFeedback": [],
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  },
+  {
+    "path": "Great.mp3",
+    "text": "Great!"
+  },
+  {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
   "failureFeedback": [
     {
       "path": "NotComing.mp3",
