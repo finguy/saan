@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.directives')
-  .directive('flipableCard', function(AssetsPath){
+  .directive('flipableCard', function($rootScope, AssetsPath){
     return {
       require: '^^memoryDeck',
       restrict: "E",
@@ -24,16 +24,7 @@
           return deckCtrl.isCardMatched(scope.row, scope.col);
         };
 
-        scope.range = function(){
-          if (Number.isInteger(scope.card.value)){
-            return 1;
-          }
-          else {
-            return _.range(scope.card.key);
-          }
-        };
-
-        scope.miscPath = AssetsPath.getMiscPath();
+        scope.imgPath = AssetsPath.getImgs($rootScope.activityId);
       }
     };
   });

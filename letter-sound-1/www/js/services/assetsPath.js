@@ -14,8 +14,7 @@
       getFailureAudio: getFailureAudio,
       getInstructionsAudio: getInstructionsAudio,
       getEndingAudio: getEndingAudio,
-      getImgs: getImgs,
-      getMiscPath: getMiscPath
+      getImgs: getImgs
     };
 
     function getActivityAudio(id) {
@@ -28,10 +27,6 @@
 
     function getGeneralAudio() {
       return MAIN_PATH + "audio/";
-    }
-
-    function getMiscPath() {
-      return ASSETS_RELATIVE_PATH + "misc/"
     }
 
     function getInstructionsAudio(id) {
