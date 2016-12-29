@@ -1,7 +1,7 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">    
+<ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">
   <object-dashboard-nine class="horizontal-center"></object-dashboard-nine>
   <div class="character" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img ng-src="assets/characters/Gaynde.png">
+    <img ng-src="assets/characters/Gaynde.png" ng-click="readInstructions()">
   </div>
 </ion-view>

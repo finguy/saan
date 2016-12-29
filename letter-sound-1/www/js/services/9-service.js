@@ -10,25 +10,16 @@ angular.module('saan.services')
           data = response.data;
           var json = data.info;
           var wordsNotPlayed = [];
-          if (playedWords.length === 0 ){
-            wordsNotPlayed = json;
-          } else {
-            var playedWordsStr = playedWords.toString();
-            for (var i in json) { //FIXME: try to use underscore
-              if (json[i]) {
-
-                var ER = new RegExp(json[i].id, "i");
-                if (!ER.test(playedWordsStr) && json[i].words) {
-                  wordsNotPlayed.push(json[i]);
-                }
-              }
-            }
+          var json = data.info;
+          var index;
+          if (level <= json.length) {
+              index = level - 1;
+            } else {
+              index = 0; //Start all over
           }
-
-          var index = Util.getRandomNumber(wordsNotPlayed.length);
-
+                  
           return {
-            words: wordsNotPlayed[index],
+            words: json[index],
             instructions : data.instructions,
             instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
@@ -52,6 +43,9 @@ angular.module('saan.services')
     getFailureAudio: function() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
+    },
+    getEndingAudio: function(index) {
+      return data.endFeedback[index];
     }
   };
 })

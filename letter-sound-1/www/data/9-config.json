@@ -67,7 +67,7 @@
           "instruction": "Select the image and drag the word"
         }]}
   ],
-  "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],     
+  "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
@@ -80,7 +80,7 @@
       "text": "Amazing!"
     },
     {
-      "path": "great.mp3",
+      "path": "Great.mp3",
       "text": "Great!"
     },
     {
@@ -88,13 +88,13 @@
       "text": "Well done!"
     }
   ],
-  "endingFeedback": [
+  "endFeedback": [
     {
-     "path": "end1.mp3",
+     "path": "End1.mp3",
      "text": "Thank you!"
     },
     {
-      "path": "end2.mp3",
+      "path": "End2.mp3",
       "text": "Thank you!"
     }
 
@@ -109,7 +109,7 @@
       "text": "Well, I am not sure that's a correct match"
     },
     {
-      "path": "Try_again.mp3",
+      "path": "Try_Again.mp3",
       "text": "Try again"
     }
   ]

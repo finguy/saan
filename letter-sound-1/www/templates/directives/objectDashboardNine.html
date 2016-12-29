@@ -9,10 +9,10 @@
     </div>
   </div>
 
-  <div class="list-words" as-sortable="sourceOptions" data-ng-model="words">
+  <div class="list-words" as-sortable="sourceOptions" data-ng-model="words" is-disabled="speaking">
     <div class="words" ng-repeat="data in words">
       <div class="list-letters" as-sortable-item as-sortable-item-handle>
-        <div class="letter">{{data.word}} </div>        
+        <div class="letter">{{data.word}} </div>
       </div>
     </div>
   </div>
