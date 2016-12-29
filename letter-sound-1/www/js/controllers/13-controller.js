@@ -9,6 +9,7 @@
     $scope.items = ['dummy'];
     $scope.step = 1;
     $scope.dragDisabled = false;
+    $scope.showNumber = false;
     $scope.imgPath = AssetsPath.getImgs($scope.activityId);
 
     var Ctrl13 = Ctrl13 || {};
@@ -18,15 +19,17 @@
     var instructionsTime = 2000;
     var level;
     var instructionsPlayer;
-    var successPlayer;
-    var failurePlayer;
+    var feedbackPlayer;
     var tapPlayer;
     var endPlayer;
     var readInstructions;
+    var mode;
+    var numberPlayer;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false; //TODO set this to true
+      readInstructions = true;
+      Ctrl13.startStage();
       Ctrl13.getConfiguration(level);
     });
 
@@ -34,54 +37,76 @@
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(successPlayer))
-        successPlayer.release();
-
-      if (!angular.isUndefined(failurePlayer))
-        failurePlayer.release();
+        feedbackPlayer.release();
 
       if (!angular.isUndefined(tapPlayer))
         tapPlayer.release();
 
       if (!angular.isUndefined(endPlayer))
         endPlayer.release();
+
+      if (!angular.isUndefined(numberPlayer))
+        numberPlayer.release();
     });
 
     Ctrl13.getConfiguration = function (level){
       LearningNumber.getConfig(level).then(function(data){
         config = data;
-        $scope.showButton = !config.level.autoCheck;
+        $scope.autoCheck = config.level.autoCheck;
+        mode = $scope.autoCheck ? 0 : 1;
+
         $scope.number = config.level.numberFrom;
+        $scope.dragDisabled = readInstructions;
+
+        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap[mode].path,
+          function(){}, function(err){ $log.error(err);}
+        );
 
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            var intro = config.instructions.intro[mode];
             // play instructions of activity
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-              function(){ instructionsPlayer.release(); },
-              function(err){ $log.error(err); instructionsPlayer.release(); }
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
+              function(){
+                instructionsPlayer.release();
+                $scope.showText = false;
+                $scope.dragDisabled = false;
+                $scope.showNumber = true;
+                $scope.tapNumber();
+                $scope.$apply();
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.showText = false;
+                $scope.dragDisabled = false;
+                $scope.showNumber = true;
+                $scope.$apply();
+              }
             );
 
+            $scope.textSpeech = intro.text;
+            $scope.showText = true;
             instructionsPlayer.play();
-            readInstructions = false;
+
           }, 1000);
         }
         else {
-          Ctrl13.startStage();
+          $scope.showNumber = true;
+          $scope.tapNumber();
         }
       });
     };
 
     Ctrl13.startStage = function(){
       $scope.dropzone = [];
-      $scope.step = 0;
       itemCount = 0;
-    };
-
-    Ctrl13.readInstructions = function(step){
-      $scope.step++;
+      $scope.dragDisabled = false;
+      if (!angular.isUndefined(numberPlayer))
+        numberPlayer.release();
     };
 
     $scope.numberToWords = function(number){
@@ -109,15 +134,45 @@
     };
 
     $scope.checkValue = function(){
-      if (itemCount == $scope.number){
-        Ctrl13.success();
+      var feedback;
+      var feedbackPath;
+
+      if ($scope.number == itemCount){
+        feedback = LearningNumber.getSuccessAudio();
+        feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
       }
+      else if (!$scope.autoCheck){
+        feedback = LearningNumber.getFailureAudio();
+        feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
+      }
+
+      feedbackPath = feedbackPath + feedback.path;
+
+      feedbackPlayer = new Media(feedbackPath,
+        function(){
+          feedbackPlayer.release();
+          $scope.showText = false;
+          $scope.$apply();
+          if ($scope.number == itemCount){
+            Ctrl13.success();
+          }
+        },
+        function(err){
+          $log.error(err);
+          feedbackPlayer.release();
+          $scope.showText = false;
+        });
+
+      $scope.textSpeech = feedback.text;
+      $scope.showText = true;
+      feedbackPlayer.play();
     };
 
     Ctrl13.success = function(){
-      // $scope.dragDisabled = true;
+      $scope.dragDisabled = true;
       if ($scope.number < config.level.numberTo){
-        $timeout(function(){ $scope.number++;
+        $timeout(function(){
+          $scope.number++;
           Ctrl13.startStage();
         }, 1000);
       }
@@ -133,43 +188,62 @@
           }
           else {
             Util.saveLevel($scope.activityId, ++level);
-            $timeout(function(){ Ctrl13.getConfiguration(level);}, 1000);
+            $timeout(function(){$scope.dragDisabled = false; Ctrl13.getConfiguration(level);}, 1000);
           }
         }
       }
     };
 
     $scope.tapInstruction = function() {
-      tapPlayer.play();
+      if (!$scope.dragDisabled)
+        tapPlayer.play();
+    };
+
+    $scope.tapNumber = function(){
+      numberPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId)+config.instructions.numbers[$scope.number-1]);
+      numberPlayer.play();
     };
 
     Ctrl13.minReached = function(){
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
-      $scope.$apply();
-      level++;
-      $state.go('lobby');
-      //TODO uncomment this after getting media assets
-      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
-      //   function(){
-      //     endPlayer.release();
-      //     $state.go('lobby');
-      //   }, function(err){ $log.error(err);}
-      // );
-      //
-      // endPlayer.play();
+      var minAudio = AssetsPath.getEndingAudio($scope.activityId) +  config.ending[0];
+      endPlayer = new Media(minAudio.path,
+        function(){
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');
+        }, function(err){
+          $log.error(err);
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');}
+      );
+
+      $scope.textSpeech = minAudio.text;
+      $scope.showText = true;
+      endPlayer.play();
     };
 
     Ctrl13.maxReached = function(){
       level = 1;
-      $state.go('lobby'); // TODO remove this line after getting media assets
-      //TODO uncomment this after getting media assets
-      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
-      //   function(){ endPlayer.release(); $state.go('lobby'); },
-      //   function(err){ $log.error(err);}
-      // );
-      //
-      // endPlayer.play();
+      var maxAudio = AssetsPath.getEndingAudio($scope.activityId) + config.ending[1];
+      endPlayer = new Media(maxAudio.path,
+        function(){
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');
+        },
+        function(err){
+          $log.error(err);
+          $scope.showText = false;
+          $state.go('lobby');
+        }
+      );
+
+      $scope.textSpeech = maxAudio.text;
+      $scope.showText = true;
+      endPlayer.play();
     };
 
   }]);

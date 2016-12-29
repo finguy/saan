@@ -9,14 +9,15 @@
     </div>
 
     <div class="cub">
-      <talk-bubble text="number" text2="numberToWords(number)" class="text-center" ng-class="{'btn-position':showButton}"></talk-bubble>
+      <talk-bubble ng-show="showNumber" text="number" text2="numberToWords(number)" ng-click="tapNumber()"
+        class="text-center" ng-class="{'btn-position':!autoCheck}"></talk-bubble>
       <div class="item-dropzone" data-ng-model="dropzone" as-sortable="sortableOptions">
         <img ng-repeat="item in dropzone track by $index" src="{{imgPath}}cookie.png"
         class="sortable-cookie" as-sortable-item as-sortable-item-handle>
       </div>
     </div>
 
-    <button ng-show="showButton" class="button check-button" ng-click="checkValue()"></button>
+    <button ng-show="!autoCheck" class="button check-button" ng-click="checkValue()"></button>
   </div>
 
   <div class="character flex" ng-click="tapInstruction()">
