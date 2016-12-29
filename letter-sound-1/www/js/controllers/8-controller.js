@@ -20,7 +20,7 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = true;
+      readInstructions = false;
       Ctrl8.getConfiguration(level);
     });
 
@@ -59,7 +59,9 @@
         $scope.cards.push({value: element, dropzone: []});
       });
 
-      $scope.matches = _.shuffle(stageData.tickets);
+      // $scope.matches = _.shuffle(stageData.tickets);
+      stageData.tickets = _.shuffle(stageData.tickets);
+      $scope.matches.push(stageData.tickets.pop());
     };
 
     Ctrl8.setStage = function(){
@@ -112,17 +114,17 @@
         $scope.cards[index].dropzone.push(item);
         var successFeedback = NumberMatching.getSuccessAudio();
 
-        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-          function(){ successPlayer.release(); $scope.showText = false; $scope.$apply();},
-          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
-        );
+        // successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        //   function(){ successPlayer.release(); $scope.showText = false; $scope.$apply();},
+        //   function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
+        // );
 
-        $scope.textSpeech = successFeedback.text;
-        $scope.showText = true;
+        // $scope.textSpeech = successFeedback.text;
+        // $scope.showText = true;
+        //
+        // successPlayer.play();
 
-        successPlayer.play();
-
-        if ($scope.matches.length === 0){
+        if (stageData.tickets.length === 0){
           if (level == NumberMatching.getMinLevel() &&
             !ActividadesFinalizadasService.finalizada($scope.activityId)){
             // if player reached minimum for setting activity as finished
@@ -142,6 +144,10 @@
               }, 1000);
             }
           }
+        }
+        else {
+          $scope.matches.push(stageData.tickets.pop());
+          // $scope.$apply();
         }
         checking = false;
       }

@@ -1,38 +1,64 @@
 .activity-8-content {
+  background: url('../assets/8/background.png') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: center;
 
   .card-container {
     display: flex;
     justify-content: space-around;
+    flex-flow: wrap;
+    margin-top: 15rem;
   }
 
   .match-container {
     align-items: center;
     display: flex;
-    flex-grow: 1;
     justify-content: center;
+    height: 15rem;
+    margin-top: auto;
+    margin-bottom: 4em;
   }
 
-  .match {
-    align-items: center;
-    background-color: #e4de90;
-    display: flex;
-    font-size: 4em;
-    justify-content: center;
-  }
 
   .match-card {
-    @extend .match;
+    background: url('../assets/8/invitation.png');
+    background-size: contain;
+    background-repeat: no-repeat;
     border: 0;
     border-radius: 0;
-    height: 15rem;
-    width: 20rem;
+    height: 16rem;
+    width: 28rem;
+    margin: 0;
+    align-items: center;
+    display: flex;
+    font-size: 4em;
+    font-weight: bold;
+    justify-content: center;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  number-card {
+    margin: 1rem;
   }
 
   .as-sortable-placeholder {
-    background-color: transparent;
-    border-color: transparent;
+    display: none;
+  }
+
+  .character {
+    bottom: 4rem;
+    position: absolute;
+    right: 2rem;
+
+    img { height: 30rem; }
+  }
+
+  .talk-bubble {
+    bottom: 4rem;
+    right: 14rem;
   }
 }
