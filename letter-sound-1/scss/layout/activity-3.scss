@@ -38,15 +38,15 @@ $brown: #7c3900;
     }
 
     .talk-bubble {
-      width: 20rem;
-      right: 13rem;
-      bottom: 10rem;
+     width: 20rem;
+     right: 15rem;
+     bottom: 12rem;
 
       &::after {
         border-color: white transparent transparent white;
         bottom: initial;
         right: -2rem;
-        top: 6rem;
+        top: 2rem;
       }
     }
 
