@@ -52,7 +52,7 @@ angular.module('saan.services')
         var index = _.random(0, data.failureFeedback.length - 1);
         return data.failureFeedback[index];
       },
-      getEndingAudio: function(index) {        
+      getEndingAudio: function(index) {
         return data.endFeedback[index];
       }
     };
@@ -63,10 +63,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/3-letters.json';
+            src = 'data/3-config.json';
             break;
           default:
-            src = 'data/3-letters.json';
+            src = 'data/3-config.json';
         }
         return src;
       },

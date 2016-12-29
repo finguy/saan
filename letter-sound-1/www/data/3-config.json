@@ -186,20 +186,20 @@
     },
     {
       "path": "Not_Sure.mp3",
-      "text": "I am not sure that's the correct letter"
+      "text": "I'm not sure that's the correct letter"
     },
     {
      "path":"Almost.mp3",
-     "text": "Almost! Try listening to the letters again"
+     "text": "Almost! Try listening to the letter again"
     }
   ],
   "endFeedback": [
     {
-      "path": "Fin1.mp3",
+      "path": "End1.mp3",
       "text": ""
     },
     {
-      "path": "Fin2.mp3",
+      "path": "End2.mp3",
       "text": ""
     }
   ]
