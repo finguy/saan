@@ -15,7 +15,8 @@ angular.module('saan.controllers')
   $scope.textSpeech = "";
   $scope.speak = TTSService.speak;
 
-
+  var failurePlayer;
+  var successPlayer;
   var Ctrl9 = Ctrl9 || {};
   Ctrl9.level = null;
   Ctrl9.instructionsPlayer;
@@ -31,7 +32,10 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
+            $scope.showText = true;
+            $scope.textSpeech = "Hi!";
             Ctrl9.instructionsPlayer.play();
+            console.log("after instruction player");
           }
         }, readWordTimeout);
       },
@@ -58,8 +62,8 @@ angular.module('saan.controllers')
   Ctrl9.successFeedback = function() {
     var successFeedback = RandomWordsNine.getSuccessAudio();
     $scope.textSpeech = successFeedback.text;
-    $scope.showText = true;
-    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+    $scope.showText = true;    
+    successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
       function success() {
         successPlayer.release();
         $scope.showText = false;
@@ -78,7 +82,7 @@ angular.module('saan.controllers')
     var failureFeedback = RandomWordsNine.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
-    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+    failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
         failurePlayer.release();
         $scope.showText = false;
@@ -101,7 +105,7 @@ angular.module('saan.controllers')
     var cantOpciones = 1;
     for (var i in $scope.words) {
       if ($scope.words[i] && cantOpciones <= wordsJson.limit) {
-        cantOpciones++;        
+        cantOpciones++;
         var index = Util.getRandomNumber($scope.words[i].imgs.length);
         $scope.imgs.push({
           image: $scope.words[i].imgs[index],
@@ -126,7 +130,7 @@ angular.module('saan.controllers')
       $scope.activityProgress = 100 * (Ctrl9.level - 1) / Ctrl9.totalLevels;
     }
 
-    Ctrl9.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    Ctrl9.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath[0],
       function success() {
         Ctrl9.instructionsPlayer.release();
         $scope.playWordAudio();
@@ -141,8 +145,8 @@ angular.module('saan.controllers')
   Ctrl9.success = function() {
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
-    Ctrl9.successFeedback();
     if (LAST_CHECK) {
+      Ctrl9.successFeedback();
       Ctrl9.levelUp();
       if (!Ctrl9.finished) {
         $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);

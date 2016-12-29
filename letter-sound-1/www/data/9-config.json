@@ -67,10 +67,7 @@
           "instruction": "Select the image and drag the word"
         }]}
   ],
-  "instructionsPath": {
-       "intro": {"path": "instructions/intro.mp3", "text":"Hi!"},
-       "tap": {"path": "instructions/tap.mp3", "text":"Hi!"}
-      },
+  "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],     
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
