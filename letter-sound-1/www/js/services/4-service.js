@@ -26,7 +26,7 @@ angular.module('saan.services')
           return {
             number : numbersNotPlayed[position],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,
@@ -57,10 +57,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/4-numbers.json';
+            src = 'data/4-config.json';
             break;
           default:
-            src = 'data/4-numbers.json';
+            src = 'data/4-config.json';
         }
         return src;
       },
