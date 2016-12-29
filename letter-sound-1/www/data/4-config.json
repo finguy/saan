@@ -38,33 +38,7 @@
           "name" : 2
          }
           ]
-      },
-      {"number":3,
-        "imgs":[
-          {"src": [],
-           "name" : 1
-         },
-          {"src": [],
-           "name" : 3
-         },
-         {"src": [],
-          "name" : 2
-         }
-          ]
-      },
-      {"number":3,
-        "imgs":[
-          {"src": [],
-           "name" : 1
-         },
-          {"src": [],
-           "name" : 3
-         },
-         {"src": [],
-          "name" : 2
-         }
-          ]
-      },
+      },     
       {"number":4,
         "imgs":[
           {"src": [],
@@ -201,7 +175,7 @@
   "failureFeedback": [
     {
       "path": "Almost.mp3",
-      "text": "Almost! Take a close look at the labels"
+      "text": "Almost! Carefully count the ingredients on the other boxes and try again"
     },
     {
       "path": "Not_Correct.mp3",

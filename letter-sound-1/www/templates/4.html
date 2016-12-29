@@ -1,7 +1,7 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}}-content">
     <center>
       <div class="dashboard">
-        <div class="text-center number-container" as-sortable="sortableSourceOptions" data-ng-model="numberDragged" as-sortable-item as-sortable-item-handle>
+        <div class="text-center number-container" as-sortable="sortableSourceOptions" data-ng-model="numberDragged" as-sortable-item as-sortable-item-handle is-disabled="speaking">
           {{number}}
         </div>
 
@@ -14,7 +14,7 @@
         </div>
       </div>
     </center>
-    <div class="character" ng-click="playWordAudio()">
+    <div class="character" ng-click="playInstructions()">
       <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
       <img ng-src="assets/characters/Golo.png">
     </div>
