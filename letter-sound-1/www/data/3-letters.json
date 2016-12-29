@@ -154,9 +154,12 @@
   "previousLetterImgSrc":"forward.png",
   "srcAlphabetLetters": "letters-blue/letters-blue-",
   "instructions": "Hi! Let's learn letters. Touch the boxes!",
-  "instructionsPath": "Duck_Hunt.mp3",
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "action": [{"path": "instructions/tap_letter.mp3", "text":""},
+                  {"path": "letters/", "text":""}
+                 ]
+      },
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
@@ -164,14 +167,40 @@
   "finalizationLevel": 3,
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
     }
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
+      "path": "Try_Again.mp3",
       "text": "Try again!"
+    },
+    {
+      "path": "Not_Sure.mp3",
+      "text": "I am not sure that's the correct letter"
+    },
+    {
+     "path":"Almost.mp3",
+     "text": "Almost! Try listening to the letters again"
+    }
+  ],
+  "endFeedback": [
+    {
+      "path": "Fin1.mp3",
+      "text": ""
+    },
+    {
+      "path": "Fin2.mp3",
+      "text": ""
     }
   ]
 }
