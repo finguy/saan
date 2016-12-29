@@ -1,4 +1,21 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">
-  <activity-status></activity-status>
-  <object-dashboard-ten></object-dashboard-ten>
+ <div class="dashboard">
+   <div class="data-container" as-sortable="sortableTargetOptions" data-ng-model="imgsDragged" ng-click="speak(wordStr)">
+     <img ng-src="{{assetsPath}}{{img}}"/>
+     <img class="word" ng-repeat="letter in word track by $index" ng-src="assets/3/letters-blue/letters-blue-{{letter}}-uppercase.png"/>
+     <br/>
+     <img class="letter letterDragged" ng-repeat="letter in selectedRimeLetters track by $index" ng-src="assets/alphabet-buttons/{{letter}}.png" ng-show="isWordOk"/>
+   </div>
+
+   <div data-ng-model="words" class="list-words text-center" as-sortable="sortableSourceOptions">
+     <div ng-repeat="data in words" class="list-letters" as-sortable-item as-sortable-item-handle>
+         <div class="wordToPlay"> {{data.word}}</div>
+         <img class="letter" ng-repeat="letter in data.letters track by $index" ng-src="assets/alphabet-buttons/{{letter}}.png"/>
+     </div>
+   </div>
+   <div class="character" ng-click="playWordAudio()">
+     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+     <img ng-src="assets/characters/tarabu.png">
+   </div>
+ </div>
 </ion-view>
