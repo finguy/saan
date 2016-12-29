@@ -1,3 +1,4 @@
+$darkBlue: #1e1e4c;
 .activity10 {
   background: url('../assets/10/background.png');
   background-size: cover;
@@ -16,19 +17,50 @@
     padding-left: 10rem;
   }
 
-  .letter {
-    
-  }
+  .wordToPlay {
+       background-image: url('../assets/10/sheet-second-word.png');
+       background-position: center;
+       background-color:transparent;
+       border: 0;
+       min-height: 15rem;
+       width: 30rem;
+       display: flex;
+       flex-direction: center;
+       padding-left: 10rem;
+       padding-top: 5rem;
+       font-size: 4em;
+       color: $darkBlue;
+       font-weight: bold;
+   }
 
+  .wordToRime {
+   background-image: url('../assets/10/sheet-first-word.png');
+   background-position: center;
+   background-color:transparent;
+   border: 0;
+   min-height: 15rem;
+   width: 30rem;
+   display: flex;
+   flex-direction: center;
+   padding-left: 10rem;
+   padding-top: 5rem;
+   font-size: 4em;
+   color: $darkBlue;
+   font-weight: bold;
+  }
   .data-container {
-    @include image-container-1(2rem, #5E2B26, #e7ddc4);
-    margin: 5% auto 15rem;
+    margin: 0;
     padding: 1rem;
+    width: 40rem;
+    height: 30rem;
+    position:absolute;
+    left: 50rem;
   }
 
   .list-letters {
     display: inline;
     margin: 2rem;
+
   }
 
 
@@ -45,6 +77,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    position: absolute;
+    top: 50%;
   }
 
   .as-sortable-dragging {
@@ -52,18 +86,19 @@
   }
 
   .character{
-    bottom: 8rem;
+    bottom: 0rem;
     position: absolute;
     right: 0;
 
      img {
-      height: 10rem;
+      height: 20rem;
       margin-left: auto;
      }
   }
 
   .talk-bubble {
-    right: 8rem;
-    bottom: 8rem;
+    width: 20rem;
+    right: 14rem;
+    bottom: 12rem;
   }
 }

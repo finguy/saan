@@ -6,7 +6,7 @@
       $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.word = [];
-      $scope.wordStr = "";
+      $scope.word = "";
       $scope.rimes = [];
       $scope.selectedRimeLetters = [];
       $scope.words = [];
@@ -17,7 +17,7 @@
       $scope.activityProgress = 0;
       $scope.score = 0;
       $scope.draggedWord = false;
-      $scope.imgsDragged = [];
+      $scope.rimesDragged = [];
       $scope.isWordOk = false;
       $scope.showText = false;
       $scope.textSpeech = "";
@@ -91,10 +91,10 @@
               if (readInstructions) {
                 Ctrl10.instructionsPlayer.play();
                 $timeout(function() {
-                  $scope.speak($scope.wordStr);
+                  $scope.speak($scope.word);
                 }, 3000);
               } else {
-                $scope.speak($scope.wordStr);
+                $scope.speak($scope.word);
               }
             }, readWordTimeout);
 
@@ -107,12 +107,11 @@
       Ctrl10.setUpContextVariables = function(data) {
         var wordJson = data.wordJson;
         $scope.playedWords.push(wordJson.word);
-        $scope.wordStr = wordJson.word;
-        $scope.word = wordJson.word.split("");
+        $scope.rimesDragged = [];
+        $scope.word = wordJson.word;
         $scope.rimesStr = wordJson.rimes.join(",");
         var index = Util.getRandomNumber(wordJson.rimes.length);
-        var rime = wordJson.rimes[index];
-        $scope.selectedRimeLetters = rime.split("");
+        $scope.selectedRime = wordJson.rimes[index];
         $scope.isWordOk = false;
         var wordsToPlay = [];
 
@@ -120,7 +119,7 @@
           if (data.allWords[j]) {
             var ER = new RegExp(data.allWords[j], "i");
             if (!ER.test($scope.rimesStr)) {
-              wordsToPlay.push({                
+              wordsToPlay.push({
                 "word": data.allWords[j]
               });
             }
@@ -129,7 +128,7 @@
 
         wordsToPlay.length = 3;
         wordsToPlay.push({
-          "word": rime
+          "word": $scope.selectedRime
         });
         $scope.words = _.shuffle(wordsToPlay);
 
