@@ -2,7 +2,7 @@
   'use strict';
   angular.module('saan.controllers')
     .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen,
-      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
       $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.word = "";
@@ -263,6 +263,7 @@
       };
 
       $scope.handleProgress = function(isWordOk) {
+        AppSounds.playTap();
         $scope.isWordOk = isWordOk;
         if (isWordOk) {
           Ctrl10.success();
