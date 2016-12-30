@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('9Ctrl', function($scope, $timeout, $log, $state, RandomWordsNine, TTSService,
-  Util, Score, ActividadesFinalizadasService, AssetsPath) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
   $scope.activityId = 9;
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.activityProgress = 0;
@@ -207,6 +207,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.success = function() {
+    AppSounds.playTap();
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     if (LAST_CHECK) {
