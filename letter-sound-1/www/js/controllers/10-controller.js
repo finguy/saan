@@ -6,7 +6,7 @@
       $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.word = "";
-      $scope.rimes = [];      
+      $scope.rimes = [];
       $scope.words = [];
       $scope.playedWords = [];
       $scope.rimesDragged = [];
@@ -327,6 +327,7 @@
       });
       $scope.$on('$ionicView.beforeLeave', function() {
         Util.saveLevel($scope.activityId, Ctrl10.level);
+        Ctrl10.releasePlayer(Ctrl10.wordPlayer);
         Ctrl10.releasePlayer(Ctrl10.instructionsPlayer);
         Ctrl10.releasePlayer(Ctrl10.tapInstructionsPlayer);
         Ctrl10.releasePlayer(Ctrl10.endPlayer);
