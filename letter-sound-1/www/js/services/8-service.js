@@ -23,10 +23,9 @@
           function success(response) {
             data = response.data;
             return {
-              instructionsPath: data.instructionsPath,
-              instructionsText: data.instructionsText,
+              instructions: data.instructions,
               options: data.options,
-              level: data.levels[level-1]
+              level: data.levels[level-1]              
             };
           },
           function error() {
