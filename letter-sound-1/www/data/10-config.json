@@ -1,0 +1,85 @@
+{"info":
+  [ {
+    "word": "frog",
+    "audio": "Frog.mp3",
+    "rimes": ["blog","clog","cog"]
+    },
+    {"word":"mouse" ,
+      "audio":"Mouse.mp3",
+      "rimes": ["spouse","prouse"]
+    },
+    {"word":"third" ,
+     "audio":"Third.mp3",
+      "rimes":["burd","curd","herd"]
+    },
+    {"word":"all" ,
+     "audio":"All.mp3",
+      "rimes": ["doll","call","small"]
+    },
+    {"word":"bee" ,
+     "audio":"Bee.mp3",
+      "rimes": ["glee","see","free"]
+    },
+    {"word":"giger" ,
+     "audio": "Giger.mp3",
+      "rimes": ["eiger"]
+    },
+    {"word":"chapel",
+     "audio":"Chapel.mp3",
+     "rimes": ["grappel","pineapple"]
+
+    }],
+  "allWords": ["frog","blog","clog","cog","mouse","spouse","prouse","third","burd","curd","herd","chapel","grappel","pineapple","giger","eiger","bee","glee","see","free","all","doll","call","small"],
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/Tap.mp3", "text":"....."}
+  },
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "finalizationLevel": 2,
+  "successFeedback": [
+    {
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "endFeedback": [
+    {
+     "path": "End1.mp3",
+     "text": "......"
+    },
+    {
+      "path": "End2.mp3",
+      "text": "......"
+    }
+
+  ],
+  "failureFeedback": [
+    {
+      "path": "Almost.mp3",
+      "text": "Almost! Try reading the words aloud and try again"
+    },
+    {
+      "path": "Not_Rhyming.mp3",
+      "text": "Hmm I like how this word sounds, but it's not rhyming"
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again"
+    },
+    {
+      "path": "Try_Again2.mp3",
+      "text": "Almost, you should read the words aloud and try again"
+    }
+  ]
+}

@@ -55,6 +55,7 @@ $darkBlue: #1e1e4c;
     height: 30rem;
     position:absolute;
     left: 50rem;
+    top: 10rem;
   }
 
   .list-letters {
@@ -70,7 +71,8 @@ $darkBlue: #1e1e4c;
   }
 
   .as-sortable-placeholder {
-    display: none;
+    //display: none;
+    opacity: 0;
   }
 
   .list-words {
@@ -97,8 +99,15 @@ $darkBlue: #1e1e4c;
   }
 
   .talk-bubble {
-    width: 20rem;
-    right: 14rem;
-    bottom: 12rem;
+    width: 100%;
+    bottom: 20%;
+    right: 17rem;
+    z-index: 0;
+
+    &::after {
+      border-color: white transparent transparent white;
+      right: -1.38rem;
+      top: 60%;
+    }
   }
 }
