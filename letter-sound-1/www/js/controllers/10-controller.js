@@ -6,13 +6,9 @@
       $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
       $scope.word = "";
-      $scope.rimes = [];
-      //$scope.selectedRimeLetters = [];
+      $scope.rimes = [];      
       $scope.words = [];
-      //$scope.img = "";
       $scope.playedWords = [];
-
-      //$scope.draggedWord = false;
       $scope.rimesDragged = [];
       $scope.isWordOk = false;
       $scope.showText = false;
@@ -227,7 +223,6 @@
       Ctrl10.success = function() {
         Ctrl10.successFeedback();
         $timeout(function() {
-          //$scope.draggedWord = false;
           if (!Ctrl10.finished) {
             Ctrl10.levelUp();
             Ctrl10.score = Score.update($scope.addScore, $scope.activityId, Ctrl10.finished);
@@ -252,7 +247,7 @@
             $scope.textSpeech = "Thank you!";
             Ctrl10.endPlayer.play();
           }
-        }, 1000);
+        }, 1500);
       };
 
       Ctrl10.error = function() {
@@ -288,7 +283,6 @@
         dragEnd: function(eventObj) {
           if (!$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
             $scope.handleProgress(false);
-           // $scope.draggedWord = false;
           }
         },
         itemMoved: function (eventObj) {
