@@ -143,8 +143,11 @@
 
         Ctrl10.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
           function success() {
-            Ctrl10.instructionsPlayer.release();
-            Ctrl10.wordPlayer.play();
+            Ctrl10.instructionsPlayer.release();            
+           if (!Ctrl10.beforeLeave) {
+              Ctrl10.wordPlayer.play();
+            }
+
             $scope.showText = false;
             $scope.speaking = false;
             $scope.$apply();
@@ -326,6 +329,7 @@
         Ctrl10.showDashboard(true);
       });
       $scope.$on('$ionicView.beforeLeave', function() {
+        Ctrl10.beforeLeave = true;
         Util.saveLevel($scope.activityId, Ctrl10.level);
         Ctrl10.releasePlayer(Ctrl10.wordPlayer);
         Ctrl10.releasePlayer(Ctrl10.instructionsPlayer);
