@@ -71,7 +71,7 @@ $blue: #0460ab;
    }
 
    .as-sortable-placeholder {
-     visibility: hidden;
+     display: none !important;
    }
    .box-container {
       clear:both;

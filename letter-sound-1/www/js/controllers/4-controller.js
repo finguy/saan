@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber, TTSService,
+.controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber,
   Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
 
   $scope.activityId = 4;
@@ -11,7 +11,6 @@ angular.module('saan.controllers')
   $scope.numberDragged = [];
   $scope.showText = false;
   $scope.textSpeech = "";
-  $scope.speak = TTSService.speak;
   $scope.speaking = false;
 
   var successPlayer;
@@ -42,7 +41,6 @@ angular.module('saan.controllers')
             Ctrl4.instructionsPlayer.play();
           } else {
             $scope.showText = false;
-            $scope.speak($scope.number);
           }
         }, readWordTimeout);
 
@@ -105,7 +103,6 @@ angular.module('saan.controllers')
         $scope.showText = false;
         $scope.speaking = false;
         $scope.$apply();
-        $scope.speak($scope.number);
       },
       function error(err) {
         $log.error(err);
