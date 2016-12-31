@@ -29,7 +29,8 @@
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
       readInstructions = true;
-      Ctrl13.startStage();
+      $scope.autoCheck = false;
+
       Ctrl13.getConfiguration(level);
     });
 
@@ -53,6 +54,7 @@
     });
 
     Ctrl13.getConfiguration = function (level){
+      Ctrl13.startStage();
       LearningNumber.getConfig(level).then(function(data){
         config = data;
         $scope.autoCheck = config.level.autoCheck;
@@ -91,7 +93,7 @@
             $scope.textSpeech = intro.text;
             $scope.showText = true;
             instructionsPlayer.play();
-
+            readInstructions = false;
           }, 1000);
         }
         else {
@@ -105,8 +107,6 @@
       $scope.dropzone = [];
       itemCount = 0;
       $scope.dragDisabled = false;
-      if (!angular.isUndefined(numberPlayer))
-        numberPlayer.release();
     };
 
     $scope.numberToWords = function(number){
@@ -146,26 +146,28 @@
         feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
       }
 
-      feedbackPath = feedbackPath + feedback.path;
+      if (feedbackPath){
+        feedbackPath = feedbackPath + feedback.path;
 
-      feedbackPlayer = new Media(feedbackPath,
-        function(){
-          feedbackPlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-          if ($scope.number == itemCount){
-            Ctrl13.success();
-          }
-        },
-        function(err){
-          $log.error(err);
-          feedbackPlayer.release();
-          $scope.showText = false;
-        });
+        feedbackPlayer = new Media(feedbackPath,
+          function(){
+            feedbackPlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+            if ($scope.number == itemCount){
+              Ctrl13.success();
+            }
+          },
+          function(err){
+            $log.error(err);
+            feedbackPlayer.release();
+            $scope.showText = false;
+          });
 
-      $scope.textSpeech = feedback.text;
-      $scope.showText = true;
-      feedbackPlayer.play();
+        $scope.textSpeech = feedback.text;
+        $scope.showText = true;
+        feedbackPlayer.play();
+      }
     };
 
     Ctrl13.success = function(){
@@ -174,6 +176,7 @@
         $timeout(function(){
           $scope.number++;
           Ctrl13.startStage();
+          $scope.tapNumber();
         }, 1000);
       }
       else {
@@ -200,15 +203,18 @@
     };
 
     $scope.tapNumber = function(){
-      numberPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId)+config.instructions.numbers[$scope.number-1]);
+      numberPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+"numbers/"+config.instructions.numbers[$scope.number-1],
+        function() { numberPlayer.release(); },
+        function(err){ numberPlayer.release(); });
+
       numberPlayer.play();
     };
 
     Ctrl13.minReached = function(){
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
-      var minAudio = AssetsPath.getEndingAudio($scope.activityId) +  config.ending[0];
-      endPlayer = new Media(minAudio.path,
+      var minAudio = AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path;
+      endPlayer = new Media(minAudio,
         function(){
           endPlayer.release();
           $scope.showText = false;
@@ -220,15 +226,16 @@
           $state.go('lobby');}
       );
 
-      $scope.textSpeech = minAudio.text;
+      $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
     Ctrl13.maxReached = function(){
       level = 1;
-      var maxAudio = AssetsPath.getEndingAudio($scope.activityId) + config.ending[1];
-      endPlayer = new Media(maxAudio.path,
+      var maxAudio = AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path;
+      endPlayer = new Media(maxAudio,
         function(){
           endPlayer.release();
           $scope.showText = false;
@@ -241,8 +248,9 @@
         }
       );
 
-      $scope.textSpeech = maxAudio.text;
+      $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
