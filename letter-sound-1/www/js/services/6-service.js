@@ -46,6 +46,9 @@ angular.module('saan.services')
     getFailureAudio: function() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
+    },
+    getEndingAudio: function(index) {
+      return data.endingFeedback[index];
     }
   };
 })

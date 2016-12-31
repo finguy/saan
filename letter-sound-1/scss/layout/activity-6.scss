@@ -41,7 +41,7 @@
     border:0;
 
     .as-sortable-placeholder {
-      visibility: hidden;
+      display: none !important;
     }
   }
 
@@ -55,7 +55,9 @@
     margin-right: auto;
     display: block;
   }
-
+  .as-sortable-placeholder {
+   display: none !important;
+  }
   .as-sortable-dragging{
     background: 0;
     border: 0;
@@ -74,7 +76,15 @@
   }
 
   .talk-bubble {
-    right: 6rem;
-    bottom: 6rem;
+    right: 14rem;
+    bottom: 10rem;
+    width: 100%;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 6rem;
+    }
   }
 }
