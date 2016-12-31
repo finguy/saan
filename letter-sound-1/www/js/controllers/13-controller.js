@@ -2,8 +2,10 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('13Ctrl',['$scope', '$log', '$timeout', '$state', 'Util', 'LearningNumber', 'ActividadesFinalizadasService', 'AssetsPath',
-  function($scope, $log, $timeout, $state, Util, LearningNumber, ActividadesFinalizadasService, AssetsPath) {
+  .controller('13Ctrl',['$scope', '$log', '$timeout', '$state', 'Util', 'LearningNumber',
+  'ActividadesFinalizadasService', 'AssetsPath', 'AppSounds',
+  function($scope, $log, $timeout, $state, Util, LearningNumber, ActividadesFinalizadasService,
+    AssetsPath, AppSounds) {
     $scope.activityId = 13;
     $scope.dropzone = [];
     $scope.items = ['dummy'];
@@ -26,6 +28,8 @@
     var mode;
     var numberPlayer;
 
+    var leaving= false;
+
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
       readInstructions = true;
@@ -35,6 +39,8 @@
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
+
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
@@ -74,11 +80,13 @@
             instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
               function(){
                 instructionsPlayer.release();
-                $scope.showText = false;
-                $scope.dragDisabled = false;
-                $scope.showNumber = true;
-                $scope.tapNumber();
-                $scope.$apply();
+                if (!leaving){
+                  $scope.showText = false;
+                  $scope.dragDisabled = false;
+                  $scope.showNumber = true;
+                  $scope.tapNumber();
+                  $scope.$apply();
+                }
               },
               function(err){
                 $log.error(err);
@@ -126,6 +134,7 @@
       containment: '.activity-13-content',
       clone: true,
       itemMoved: function (eventObj) {
+        AppSounds.playTap();
         itemCount++;
         if (config.level.autoCheck){
           $scope.checkValue();
@@ -138,6 +147,7 @@
       var feedbackPath;
 
       if ($scope.number == itemCount){
+        $scope.dragDisabled = true;
         feedback = LearningNumber.getSuccessAudio();
         feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
       }
@@ -171,7 +181,6 @@
     };
 
     Ctrl13.success = function(){
-      $scope.dragDisabled = true;
       if ($scope.number < config.level.numberTo){
         $timeout(function(){
           $scope.number++;
