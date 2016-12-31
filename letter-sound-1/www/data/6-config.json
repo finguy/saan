@@ -50,8 +50,10 @@
         ]
     }
   ],
-  "instructions": "Drag the letter you hear to the magic box",
-  "instructionsPath": "Duck_Hunt.mp3",
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/tapInstructions.mp3", "text":"....."}
+      },
   "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
   "errorMessages": ["Try again!"],
   "scoreSetUp" : {
@@ -61,14 +63,41 @@
   "finalizationLevel" : 3,
   "successFeedback": [
     {
-      "path": "great.ogg",
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
       "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
     }
+  ],
+  "endingFeedback": [
+    {
+     "path": "End1.mp3",
+     "text": "......"
+    },
+    {
+      "path": "End2.mp3",
+      "text": "......"
+    }
+
   ],
   "failureFeedback": [
     {
-      "path": "try_again.ogg",
-      "text": "Try again!"
+      "path": "Almost.mp3",
+      "text": "Almost! Try listening to the letter again"
+    },
+    {
+      "path": "Not_Correct_Letter.mp3",
+      "text": "I am not sure this is the correct letter"
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again"
     }
   ]
 }

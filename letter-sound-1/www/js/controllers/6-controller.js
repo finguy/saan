@@ -68,11 +68,13 @@ angular.module('saan.controllers')
         var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
           if (readInstructions) {
+           $scope.textSpeech = "Hi!";
+           $scope.showText = false;
+           $scope.speaking = false;
             Ctrl6.instructionsPlayer.play();
           }
-
           $timeout(function() {
-            $scope.speak($scope.currentPhonema);
+            Ctrl6.phonemaPlayer.play();
           }, readWordTimeout);
         }, readWordTimeout);
       },
@@ -123,14 +125,45 @@ angular.module('saan.controllers')
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
 
-    Ctrl6.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl6.instructionsPlayer.release();
-        $scope.playWordAudio();
+        $scope.showText = false;
+        $scope.speaking = false;
       },
       function error(err) {
         $log.error(err);
         Ctrl6.instructionsPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      }
+    );
+
+    Ctrl6.instructionsTapPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
+      function success() {
+        Ctrl6.instructionsTapPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.instructionsTapPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      }
+    );
+
+    Ctrl6.phonemaPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "letters/" + $scope.currentPhonema.toUpperCase(),
+      function success() {
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
       }
     );
   };
@@ -238,14 +271,11 @@ angular.module('saan.controllers')
     clone: true,// ACA si es false se rompe todo!!!!
     allowDuplicates: true,
     dragEnd: function(eventObj) {
-      console.log("dragEnd!");
-      console.log(scope.isPhonemaOk);
       if (!$scope.isPhonemaOk){
          $scope.handleProgress(false);
       }
     },
     itemMoved: function (eventObj) {
-      console.log("itemMoved");
       var jsonInfo = eventObj.source.itemScope.modelValue;
       var letter_index = jsonInfo.index;
       var letter_value = jsonInfo.letter;
