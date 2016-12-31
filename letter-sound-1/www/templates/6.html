@@ -2,10 +2,10 @@
  <center>
  <div class="dashboard text-center">
    <div as-sortable="sortableTargetOptions" data-ng-model="letters2" class="dropzone">
+   <img class="dragged-letter" ng-repeat="item in letters2 track by $index" ng-src="img/alphabet-buttons/{{item.letter}}.png"/>
    </div>
 
    <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
-     <img"{{assetsPath}}{{imgSrc}}" ng-click="speak(currentPhonema)">
      <div ng-repeat="letter_obj in letters track by $index" >
        <img ng-src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )"
        class="letters-list" as-sortable-item as-sortable-item-handle>

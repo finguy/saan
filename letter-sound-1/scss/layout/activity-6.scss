@@ -8,19 +8,28 @@
   }
 
   .activity-6-letterContainer{
-    @include image-container-1(2rem, #5E2B26, #e7ddc4);
     display: inline-flex;
-    margin-bottom: 10rem;
+    position: absolute;
+    bottom:0;
+    left: 30%;
     padding: 1rem;
   }
 
   .letters-list.as-sortable-item{
     height: 10rem;
     width: 10rem;
+    float: left;
+    bottom: 0;
     background: transparent;
     border: 0;
   }
-
+ .dragged-letter {
+  height: 10rem;
+  width: 10rem;
+  background: transparent;
+  border: 0;
+  margin-top: 10rem;
+ }
   .icon-phonema {
     padding: 5rem;
   }
@@ -54,12 +63,12 @@
   }
 
   .character{
-    bottom: 20rem;
+    bottom: 0rem;
     position: absolute;
     right: 0;
 
      img {
-      height: 10rem;
+      height: 40rem;
       margin-left: auto;
      }
   }

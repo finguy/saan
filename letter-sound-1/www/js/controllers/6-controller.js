@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
+.controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
@@ -8,19 +8,14 @@ angular.module('saan.controllers')
   $scope.letters = [];
   $scope.letters2 = [];
   $scope.lettersDragged = [];
-  $scope.imgSrc = "";
   $scope.playedWords = []; // Collects words the user played
-  $scope.level = null; // Indicates activity level
-  $scope.activityProgress = 0;
-  $scope.letterInstruction = "";
-  $scope.score = 0;
   $scope.dropzone = [];
-  $scope.hasDraggedLetter = [];
+
   $scope.phonemas = [];
   $scope.imgBox = "magic-pot.png";
   $scope.showText = false;
   $scope.textSpeech = "";
-  $scope.speak = TTSService.speak;
+
 
   var Ctrl6 = Ctrl6 || {};
   Ctrl6.instructionsPlayer;
@@ -121,21 +116,12 @@ angular.module('saan.controllers')
         $scope.hasDraggedLetter[letter + "_" + j] = false;
       }
     }
+    $scope.letters2 = [];
 
-    $scope.letters = _.shuffle($scope.letters);
-    $scope.lettersDragged = wordJson.word.split("");
     var letterJSON = Util.getRandomElemFromArray($scope.letters);
     $scope.currentPhonema = letterJSON.letter;
-    $scope.imgSrc = Util.getRandomElemFromArray(wordJson.imgs);
-    $scope.wordInstruction = wordJson.instruction;
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
-    if ($scope.finished) {
-      $scope.activityProgress = 100;
-    } else {
-      $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
-    }
-
 
     Ctrl6.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
       function success() {
