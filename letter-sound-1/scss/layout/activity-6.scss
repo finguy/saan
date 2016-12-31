@@ -26,8 +26,9 @@
   }
 
   .dropzone {
-    background: url('../assets/6/objects/treasure-chest-stars.png') no-repeat center / contain;
-    height: 30rem;
+    background: url('../assets/6/magic-pot.png') no-repeat center / contain;
+    min-height: 50rem;
+    background-size: 50rem;
     border:0;
 
     .as-sortable-placeholder {
@@ -35,15 +36,6 @@
     }
   }
 
-  .activity-6-dragged-phonemas {
-      background-image: url('../assets/6/ice-cube.png');
-      background-repeat: no-repeat;
-      min-height: 19rem;
-      margin: .5rem;
-      border: 0;
-      border-radius: 0;
-      width: 20rem;
-  }
 
   .dragged-phonemas {
     height: 8rem;

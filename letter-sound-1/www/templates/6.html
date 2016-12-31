@@ -1,4 +1,20 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">
-  <activity-status></activity-status>
-    <object-dashboard-six></object-dashboard-six>
+ <center>
+ <div class="dashboard text-center">
+   <div as-sortable="sortableTargetOptions" data-ng-model="letters2" class="dropzone">
+   </div>
+
+   <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters">
+     <img"{{assetsPath}}{{imgSrc}}" ng-click="speak(currentPhonema)">
+     <div ng-repeat="letter_obj in letters track by $index" >
+       <img ng-src="img/alphabet-buttons/{{letter_obj.letter}}.png" ng-show="!isDragged(letter_obj.letter, letter_obj.index )"
+       class="letters-list" as-sortable-item as-sortable-item-handle>
+     </div>
+   </div>
+ </div>
+</center>
+ <div class="character" ng-click="playWordAudio()">
+   <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+   <img ng-src="assets/characters/Golo.png">
+ </div>
 </ion-view>
