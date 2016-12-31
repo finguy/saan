@@ -114,7 +114,14 @@ angular.module('saan.controllers')
     $scope.word = wordJson.word;
     $scope.playedWords.push(wordJson.word);
     Ctrl6.initialLevel = 1;
-    $scope.letters = wordJson.word.split("");
+    $scope.letters = [];
+    var letters = wordJson.word.split("");
+    for (var i in letters) {
+     if (letters[i]) {
+      $scope.letters.push({"index": i, "letter": letters[i]});
+     }
+    }
+
     $scope.letters2 = [];
     $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
     $scope.totalLevels = data.totalLevels;
@@ -211,12 +218,8 @@ angular.module('saan.controllers')
   };
 
   $scope.checkPhonema = function(selectedObject) {
-    var ER = new RegExp($scope.currentPhonema, "i");
-    var name = selectedObject.toLowerCase();
-    console.log("checkPhonema");
-    console.log($scope.currentPhonema);
-    console.log(name);
-    console.log(ER.test(name));
+    var ER = new RegExp($scope.currentPhonema.letter, "i");    
+    var name = selectedObject.letter.toLowerCase();
     return ER.test(name);
   };
 
@@ -225,17 +228,15 @@ angular.module('saan.controllers')
    console.log($scope.letters);
     $scope.phonemas.push($scope.currentPhonema);
     var selected = true;
-    var ER = new RegExp($scope.letters2.toString(),"i");
+
     var totalLetters = $scope.letters.length;
     var i  = 0;
-    console.log(ER);
 
     while (selected && i < totalLetters) {
       $scope.currentPhonema = $scope.letters[i];
-      selected = $scope.hasDraggedLetter[$scope.currentPhonema + "_" + i];
+      selected = $scope.hasDraggedLetter[$scope.currentPhonema.letter + "_" + $scope.currentPhonema.index];
       i++;
     }
-    $scope.hasDraggedLetter[$scope.currentPhonema + "_" + i] = true;
     Ctrl6.phonemaPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "letters/" + $scope.currentPhonema.toUpperCase() + ".mp3",
       function success() {
         Ctrl6.phonemaPlayer.release();
@@ -252,6 +253,7 @@ angular.module('saan.controllers')
     );
     $scope.speaking = true;
     Ctrl6.phonemaPlayer.play();
+
   };
 
 
@@ -354,9 +356,13 @@ angular.module('saan.controllers')
       }
     },
     itemMoved: function (eventObj) {
-      var letter = eventObj.source.itemScope.modelValue;
+     console.log('itemMoved');
+      var item = eventObj.source.itemScope.modelValue;
+      $scope.hasDraggedLetter[item.letter + "_" + item.index] = true;
       $scope.getNewPhonema();
-      $scope.handleProgress(true,letter);
+      console.log("currentPhonema:");
+       console.log($scope.currentPhonema);
+      $scope.handleProgress(true,item.letter);
     }
   };
   $scope.isDragged = function(letter , index) {
