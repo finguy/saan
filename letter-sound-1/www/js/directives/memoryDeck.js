@@ -17,7 +17,7 @@
         var CARD_BACK = 0;
         var CARD_FRONT = 1;
         var CARD_MATCHED = 2;
-        var CARD_CHECK_DELAY = 1000;
+        var CARD_CHECK_DELAY = 1500;
 
         var flipEnabled = true;
         var matchedCards = 0;

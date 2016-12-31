@@ -39,8 +39,11 @@
     }
   ],
   "instructions": {
-    "path": "intro.mp3",
-    "text": "Hi!"
+    "intro": {
+      "path": "intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": { "path": "tap_instruction.mp3" }
   },
   "successFeedback": [
     {

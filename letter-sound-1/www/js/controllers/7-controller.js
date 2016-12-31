@@ -2,7 +2,8 @@
   'use strict';
   angular.module('saan.controllers')
 
-  .controller('7Ctrl', ['$rootScope', '$scope', '$log', '$state', '$timeout', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService', 'AssetsPath',
+  .controller('7Ctrl', ['$rootScope', '$scope', '$log', '$state', '$timeout', 'DeckBuilder', 'Util',
+  'ActividadesFinalizadasService', 'AssetsPath',
   function($rootScope, $scope, $log, $state, $timeout, DeckBuilder, Util, ActividadesFinalizadasService, AssetsPath) {
     $rootScope.activityId = 7;
     $scope.deck = [];
@@ -14,7 +15,6 @@
     var level;
     var instructionsPlayer;
     var successPlayer;
-    var failurePlayer;
     var tapPlayer;
     var endPlayer;
     var readInstructions;
@@ -37,9 +37,6 @@
       if (!angular.isUndefined(successPlayer))
         successPlayer.release();
 
-      if (!angular.isUndefined(failurePlayer))
-        failurePlayer.release();
-
       if (!angular.isUndefined(tapPlayer))
         tapPlayer.release();
 
@@ -54,7 +51,7 @@
         $scope.buildDeck();
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.path;
+            var introPath = config.instructions.intro.path;
             // play instructions of activity
             instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
               function(){
@@ -71,13 +68,19 @@
               }
             );
 
-            $scope.textSpeech = config.instructions.text;
+            $scope.textSpeech = config.instructions.intro.text;
             $scope.showText = true;
             instructionsPlayer.play();
             readInstructions = false;
           }, 1000);
         }
-        else { activityReady = true; }
+        else {
+          activityReady = true;
+        }
+
+        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+          function(){}, function(err){ $log.error(err);}
+        );
       });
     };
 
@@ -135,7 +138,9 @@
     };
 
     $scope.tapInstruction = function() {
-      tapPlayer.play();
+      if (activityReady){
+        tapPlayer.play();
+      }
     };
 
     Ctrl7.minReached = function(){
@@ -149,6 +154,7 @@
 
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
@@ -161,6 +167,7 @@
 
       $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
@@ -168,8 +175,7 @@
       if (success){
         var successFeedback = DeckBuilder.getSuccessAudio();
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-          function(){ $scope.showText = false; $scope.$apply();
-          },
+          function(){ $scope.showText = false; $scope.$apply(); },
           function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
         );
 
@@ -177,7 +183,6 @@
         $scope.showText = true;
         successPlayer.play();
       }
-      //TODO buscar un sonido para el error
     };
   }]);
 })();
