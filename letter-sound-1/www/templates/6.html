@@ -5,7 +5,7 @@
    <img class="dragged-letter" ng-repeat="item in letters2 track by $index" ng-src="img/alphabet-buttons/{{item.letter}}.png"/>
    </div>
 
-   <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters" >
+   <div class="activity-{{activityId}}-letterContainer" as-sortable="sortableSourceOptions" ng-model="letters"  is-disabled="speaking">
      <div ng-repeat="item in letters track by $index" >
        <img ng-src="img/alphabet-buttons/{{item.letter}}.png"  ng-show="!isDragged(item.letter,item.index )"
        class="letters-list"  as-sortable-item as-sortable-item-handle>

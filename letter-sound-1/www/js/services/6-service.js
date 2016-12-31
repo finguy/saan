@@ -2,28 +2,22 @@ angular.module('saan.services')
 .factory('RandomWordSix', function($http, LevelsSix, Util) {
   var data;
   return {
-    word: function(level, playedWords) {
+    word: function(level) {
       var src = LevelsSix.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
+
           data = response.data;
-          var wordsNotPlayed = [];
-          if (playedWords.length === 0 ){
-            wordsNotPlayed = data.words;
+          var json = data.words;
+          var index;
+          if (level <= json.length) {
+            index = level - 1;
           } else {
-            var playedWordsStr = playedWords.toString();
-            for (var i in data.words) { //FIXME: try to use underscore
-              if (data.words[i]) {
-                var ER = new RegExp(data.words[i].word, "i");
-                if (!ER.test(playedWordsStr)) {
-                  wordsNotPlayed.push(data.words[i]);
-                }
-              }
-            }
+            index = 0; //Start all over
           }
-          var index = Util.getRandomNumber(wordsNotPlayed.length);
+
           return {
-            word : wordsNotPlayed[index],
+            word : json[index],
             instructions : data.instructions,
             instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
