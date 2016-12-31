@@ -240,7 +240,7 @@ angular.module('saan.controllers')
           Ctrl9.endPlayer.play();
         }
       }
-     }, 1000);
+     }, 2000);
 
     }
   };
@@ -271,6 +271,39 @@ angular.module('saan.controllers')
   Ctrl9.releasePlayer = function(player) {
     if (player) {
       player.release();
+    }
+  };
+
+  //Drag
+  $scope.sourceOptions = {
+    containment: '.activity9',
+    containerPositioning: 'relative',
+    dragEnd: function(eventObj) {
+      if (!$scope.wordOk){
+        console.log("wrong!!");
+        //Remove element from where it was added
+        eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+        //Add elemebt back again   Note:
+        eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
+        $scope.handleProgress(false);
+      } else{
+        console.log("move again");
+      }
+    },
+    itemMoved: function (eventObj) {
+      $scope.handleProgress(true);
+    },
+    accept: function(sourceItemHandleScope, destSortableScope){
+      return false;
+    }
+  };
+
+  //Drop
+  $scope.targetOptions = {
+    containment: '.activity9',
+    accept: function(sourceItemHandleScope, destSortableScope){
+      $scope.wordOk = sourceItemHandleScope.modelValue.word == destSortableScope.modelValue[0];
+      return $scope.wordOk;
     }
   };
 
