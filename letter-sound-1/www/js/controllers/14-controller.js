@@ -2,11 +2,13 @@
   'use strict';
 
 	angular.module('saan.controllers')
-	.controller('14Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberOperations', 'ActividadesFinalizadasService',
-  function($scope, $log, $state, $timeout, Util, NumberOperations, ActividadesFinalizadasService) {
+	.controller('14Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberOperations',
+  'ActividadesFinalizadasService','AssetsPath',
+  function($scope, $log, $state, $timeout, Util, NumberOperations, ActividadesFinalizadasService, AssetsPath) {
     $scope.activityId = 14;
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
+    $scope.imgPath = AssetsPath.getImgs($scope.activityId);
 
     var result;
     var config = '';
@@ -33,7 +35,7 @@
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(successPlayer))
         successPlayer.release();
