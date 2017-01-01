@@ -30,7 +30,7 @@
     $scope.$on('$ionicView.beforeEnter', function(){
       stageNumber = 1; //TODO: retrieve and load from local storage
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false; //TODO set this to true
+      readInstructions = false;
       Ctrl14.getConfiguration(level);
     });
 
@@ -176,9 +176,8 @@
 
           if (stageNumber < config.levelConfig.stages){
             stageNumber++;
-            $timeout(function(){
-              Ctrl14.setActivity();
-            }, 1000);
+            Ctrl14.setActivity();
+            $scope.$apply();
           }
           else{
             if (level == NumberOperations.getMinLevel() &&

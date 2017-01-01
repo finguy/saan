@@ -1,6 +1,6 @@
 <ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content">
   <div class="operation-container">
-    <div class="number-container">
+    <div class="number-container" ng-class="{'closed': !levelConfig.numberImages}">
       <div class="number text-center"> {{numbers[0]}} </div>
       <div class="number-image" ng-if="levelConfig.numberImages">
         <img ng-src="{{imgPath}}cookies/{{numbers[0]}}-cookie.png">
@@ -8,7 +8,7 @@
     </div>
 
     <div class="operator symbol"> {{operator}} </div>
-    <div class="number-container">
+    <div class="number-container" ng-class="{'closed': !levelConfig.numberImages}">
       <div class="number text-center"> {{numbers[1]}} </div>
       <div class="number-image" ng-if="levelConfig.numberImages">
         <img ng-src="{{imgPath}}cookies/{{numbers[1]}}-cookie.png">
@@ -17,8 +17,9 @@
 
     <div class="equals symbol"> = </div>
     <div class="placeholder" ng-class="{'hidden': dropzoneModel.length >= 1}"></div>
-    <div class="dropzone" as-sortable="sortableOptions" data-ng-model="dropzoneModel" ng-class="{'completed': dropzoneModel.length > 1}">
-      <div ng-repeat="res in dropzoneModel" as-sortable-item class="number-container">
+    <div class="dropzone" as-sortable="sortableOptions" data-ng-model="dropzoneModel">
+      <div ng-repeat="res in dropzoneModel" as-sortable-item class="number-container"
+        ng-class="{'closed': !levelConfig.optionImages}">
         <div class="number text-center"> {{res}} </div>
         <div class="number-image" ng-if="levelConfig.optionImages">
           <img ng-src="{{imgPath}}cookies/{{res}}-cookie.png">
@@ -28,7 +29,8 @@
   </div>
 
   <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results" is-disabled="dropzoneModel > 0">
-    <div ng-repeat="number in results" as-sortable-item as-sortable-item-handle class="number-container match-card">
+    <div ng-repeat="number in results" as-sortable-item as-sortable-item-handle
+      class="number-container match-card" ng-class="{'closed': !levelConfig.optionImages}">
       <div class="number text-center"> {{number}} </div>
       <div class="number-image" ng-if="levelConfig.optionImages">
         <img ng-src="{{imgPath}}cookies/{{number}}-cookie.png">
@@ -36,7 +38,7 @@
     </div>
   </div>
 
-  <div class="character flex" ng-click="tapInstruction()">
+  <div class="character flex" ng-click="playWordAudio()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
     <img src="assets/characters/leuk.png">
   </div>
