@@ -2,7 +2,7 @@
   "numberRange": 9,
   "mode": 2,
   "options": 4,
-  "optionsRange": 5,  
+  "optionsRange": 5,
   "minLevel": 2,
   "levels": [
     {
@@ -25,7 +25,13 @@
     }
   ],
   "instructions": {
-    "path": "intro.mp3"
+    "intro": {
+      "path": "intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": {
+      "path": "tap_instruction.mp3"
+    }
   },
   "successFeedback": [
     {
@@ -44,11 +50,15 @@
   "failureFeedback": [
     {
       "path": "almost.mp3",
-      "text": "Almost! Try listening the word again"
+      "text": "Almost! Check the numbers and try again!"
     },
     {
-      "path": "not_what.mp3",
-      "text": "That's not what we're looking for now"
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    },
+    {
+      "path": "not_correct.mp3",
+      "text": "I'm not sure this is the correct number"
     }
   ],
   "endingAudio" : [
