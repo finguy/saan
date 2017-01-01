@@ -16,6 +16,7 @@
     var config = '';
     var ADD = 1;
     var SUBTRACT = 2;
+    var MIXED = 3;
     var stageNumber;
     var level;
     var Ctrl14 = Ctrl14 || {};
@@ -26,6 +27,7 @@
     var endPlayer;
     var readInstructions;
     var activityReady = false;
+    var mode;
 
     $scope.$on('$ionicView.beforeEnter', function(){
       stageNumber = 1; //TODO: retrieve and load from local storage
@@ -121,14 +123,15 @@
     };
 
     Ctrl14.setActivity  = function(){
-      console.log("lalalal");
       $scope.dropzoneModel = [];
       var results = [];
       var numbers = [];
 
+      mode = (config.levelConfig.mode == MIXED) ? _.random(ADD, SUBTRACT) : config.levelConfig.mode;
+
       // select the two numbers to add/subtract
       numbers.push(_.random(1, config.numberRange));
-      if (config.mode == ADD){
+      if (mode == ADD){
         numbers.push(_.random(1, config.numberRange));
         result = numbers[0] + numbers[1];
         $scope.operator = "+";

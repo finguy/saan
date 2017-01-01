@@ -1,25 +1,34 @@
 {
   "numberRange": 9,
-  "mode": 2,
   "options": 4,
   "optionsRange": 5,
-  "minLevel": 1,
+  "minLevel": 2,
   "levels": [
     {
       "level": 1,
       "stages": 5,
+      "mode": 1,
       "optionImages": true,
       "numberImages": true
     },
     {
       "level": 2,
       "stages": 5,
+      "mode": 2,
       "optionImages": true,
-      "numberImages": false
+      "numberImages": true
     },
     {
       "level": 3,
       "stages": 5,
+      "mode": 3,
+      "optionImages": true,
+      "numberImages": false
+    },
+    {
+      "level": 4,
+      "stages": 5,
+      "mode": 3,
       "optionImages": false,
       "numberImages": false
     }
@@ -62,7 +71,13 @@
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+    }
   ]
 }
