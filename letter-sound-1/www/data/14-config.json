@@ -2,7 +2,7 @@
   "numberRange": 9,
   "options": 4,
   "optionsRange": 5,
-  "minLevel": 2,
+  "minLevel": 1,
   "levels": [
     {
       "level": 1,
@@ -39,7 +39,8 @@
       "text": "Hi!"
     },
     "tap": {
-      "path": "tap_instruction.mp3"
+      "path": "tap_instruction.mp3",
+      "text": "..."
     }
   },
   "successFeedback": [

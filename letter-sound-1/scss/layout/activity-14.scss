@@ -83,10 +83,6 @@ $blue-14: #00355a;
     justify-content: space-around;
   }
 
-  // .completed {
-  //   border-color: transparent;
-  // }
-
   .number {
     bottom: .4rem;
     color: $blue-14;
@@ -114,8 +110,8 @@ $blue-14: #00355a;
     bottom: 0;
     left: 4rem;
     position: relative;
-    // right: -4rem;
     top: 8rem;
+    width: 30rem;
     z-index: 0;
 
     &::after {

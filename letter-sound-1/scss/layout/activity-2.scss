@@ -90,9 +90,9 @@ $pattern-colors: (color-red, $red),
   }
 
   .character {
+    bottom: 8rem;
     position: absolute;
     right: 0;
-    top: 8rem;
 
     img { height: 30rem; }
   }

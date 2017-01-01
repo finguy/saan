@@ -11,6 +11,7 @@
     $scope.dropzoneModel = [];
     $scope.numbers = [0,0];
     $scope.imgPath = AssetsPath.getImgs($scope.activityId);
+    $scope.enabled = false;
 
     var result;
     var config = '';
@@ -26,13 +27,13 @@
     var tapPlayer;
     var endPlayer;
     var readInstructions;
-    var activityReady = false;
     var mode;
+    var dragChecked = false;
 
     $scope.$on('$ionicView.beforeEnter', function(){
       stageNumber = 1; //TODO: retrieve and load from local storage
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false;
+      readInstructions = true;
       Ctrl14.getConfiguration(level);
     });
 
@@ -61,6 +62,8 @@
         $scope.levelConfig = config.levelConfig;
         Ctrl14.setActivity();
 
+        $scope.enabled = !readInstructions;
+
         if (readInstructions){
           $timeout(function () {
             var introPath = config.instructions.intro.path;
@@ -68,14 +71,15 @@
             instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
               function(){
                 instructionsPlayer.release();
-                activityReady = true;
                 $scope.showText = false;
+                $scope.enabled = true;
                 $scope.$apply();
               },
               function(err){
                 $log.error(err);
                 instructionsPlayer.release();
                 $scope.showText = false;
+                $scope.enabled = true;
                 $scope.$apply();
               }
             );
@@ -86,20 +90,41 @@
             readInstructions = false;
           }, 1000);
         }
-        else {
-          activityReady = true;
-        }
 
-        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
-          function(){}, function(err){ $log.error(err);}
-        );
+        Ctrl14.setTap();
       });
+    };
+
+    Ctrl14.setTap = function() {
+      tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+        function(){
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function(err){
+          $log.error(err);
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        }
+      );
+    };
+
+    $scope.tapInstruction = function() {
+      if ($scope.enabled){
+        $scope.enabled = false;
+        $scope.textSpeech = config.instructions.tap.text;
+        $scope.showText = true;
+        tapPlayer.play();
+      }
     };
 
     $scope.sortableOptions = {
       containment: '.placeholder',
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
+        dragChecked = true;
         return sourceItemHandleScope.modelValue == result;
       }
     };
@@ -108,9 +133,10 @@
       containment: '.activity-' + $scope.activityId + '-content',
       clone: true,
       dragEnd: function(eventObj){
-        if (!$scope.sortableOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
+        if (dragChecked && !$scope.sortableOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
           Ctrl14.failure();
         }
+        dragChecked = false;
       },
       itemMoved: function (eventObj){
         AppSounds.playTap();
@@ -168,6 +194,7 @@
     };
 
     Ctrl14.success = function(){
+      $scope.enabled = false;
 
       var successFeedback = NumberOperations.getSuccessAudio();
 
@@ -175,6 +202,7 @@
         function(){
           successPlayer.release();
           $scope.showText = false;
+          $scope.enabled = true;
           $scope.$apply();
 
           if (stageNumber < config.levelConfig.stages){
@@ -202,7 +230,13 @@
             }
           }
         },
-        function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
+        function(err){
+          $log.error(err);
+          successPlayer.release();
+          $scope.showText = false;
+          $scope.enabled = true;
+          $scope.$apply();
+        }
       );
 
       $scope.textSpeech = successFeedback.text;
@@ -210,25 +244,30 @@
       successPlayer.play();
     };
 
-    $scope.tapInstruction = function() {
-      if (activityReady){
-        tapPlayer.play();
-      }
-    };
+
 
     Ctrl14.failure = function(){
-      if (!checking){
-        var failureFeedback = NumberOperations.getFailureAudio();
+      $scope.enabled = false;
+      var failureFeedback = NumberOperations.getFailureAudio();
 
-        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; checking = false; $scope.$apply();},
-          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
-        );
+      failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function(){
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.enabled = true;
+          $scope.$apply();
+        },
+        function(err){
+          failurePlayer.release();
+          $log.error(err);
+          $scope.showText = false;
+          $scope.enabled = true;
+          $scope.$apply();}
+      );
 
-        $scope.textSpeech = failureFeedback.text;
-        $scope.showText = true;
-        failurePlayer.play();
-      }
+      $scope.textSpeech = failureFeedback.text;
+      $scope.showText = true;
+      failurePlayer.play();
     };
 
     Ctrl14.minReached = function(){
@@ -270,8 +309,6 @@
       $scope.$apply();
       endPlayer.play();
     };
-
-    $scope.enabled = function() { return activityReady;};
 
   }]);
 

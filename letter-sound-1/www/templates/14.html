@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results" is-disabled="dropzoneModel > 0">
+  <div class="results-container" as-sortable="sortableCloneOptions" data-ng-model="results" is-disabled="!enabled">
     <div ng-repeat="number in results" as-sortable-item as-sortable-item-handle
       class="number-container match-card" ng-class="{'closed': !levelConfig.optionImages}">
       <div class="number text-center"> {{number}} </div>
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="character flex" ng-click="playWordAudio()">
+  <div class="character flex" ng-click="tapInstruction()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
     <img src="assets/characters/leuk.png">
   </div>
