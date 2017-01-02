@@ -2,8 +2,9 @@
   'use strict';
 
   angular.module('saan.controllers')
-  .controller('8Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberMatching', 'ActividadesFinalizadasService', 'AssetsPath',
-  function($scope, $log, $state, $timeout, Util, NumberMatching, ActividadesFinalizadasService, AssetsPath) {
+  .controller('8Ctrl',['$scope', '$log', '$state', '$timeout', 'Util', 'NumberMatching',
+  'ActividadesFinalizadasService', 'AssetsPath', 'AppSounds',
+  function($scope, $log, $state, $timeout, Util, NumberMatching, ActividadesFinalizadasService, AssetsPath, AppSounds) {
     $scope.activityId = 8;
     $scope.dropzoneModel = [];
     $scope.showText = false;
@@ -18,19 +19,34 @@
     var instructionsPlayer;
     var failurePlayer;
     var successPlayer;
+    var endPlayer;
+    var tapPlayer;
     var checking = false;
     var dragChecked = false;
     var dragOk = false;
+    var activityReady = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
       readInstructions = false;
-      $scope.dragDisabled = false;
+      $scope.dragDisabled = readInstructions;
       Ctrl8.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, level);
+
+      if (!angular.isUndefined(instructionsPlayer))
+        instructionsPlayer.release();
+
+      if (!angular.isUndefined(successPlayer))
+        successPlayer.release();
+
+      if (!angular.isUndefined(tapPlayer))
+        tapPlayer.release();
+
+      if (!angular.isUndefined(endPlayer))
+        endPlayer.release();
     });
 
     Ctrl8.getConfiguration = function (level){
@@ -46,6 +62,7 @@
               readInstructions = false;
               $scope.showText = false;
               $scope.dragDisabled = false;
+              activityReady = true;
               $scope.$apply();
             },
             function(err){
@@ -54,6 +71,7 @@
               readInstructions = false;
               $scope.showText = false;
               $scope.dragDisabled = false;
+              activityReady = true;
               $scope.$apply();
             }
           );
@@ -62,6 +80,13 @@
           $scope.showText = true;
           instructionsPlayer.play();
         }
+        else {
+          activityReady = true;
+        }
+
+        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+          function(){}, function(err){ $log.error(err);}
+        );
       });
     };
 
@@ -88,6 +113,12 @@
       stageData.tickets = _.range(stageData.numberFrom, stageData.numberTo + 1); //numberTo+1 because range is top exclusive
     };
 
+    $scope.tapInstruction = function() {
+      if (activityReady){
+        tapPlayer.play();
+      }
+    };
+
     $scope.sortableOptions = {
       containment: '.placeholder',
       allowDuplicates: true,
@@ -107,15 +138,17 @@
         dragOk = false;
       },
       dragEnd: function(eventObj) {
-        console.log(eventObj);
         //check that item was correctly moved
-        if (dragChecked && !dragOk){
-          eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
-          eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.item);
-          Ctrl8.failure();
-        }
-        else {
-          Ctrl8.success();
+        if (dragChecked){
+          if (!dragOk){
+            eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
+            eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.item);
+            Ctrl8.failure();
+          }
+          else {
+            AppSounds.playTap();
+            Ctrl8.success();
+          }
         }
       }
     };
@@ -125,7 +158,6 @@
     };
 
     Ctrl8.checkMatch = function(sourceItemHandleScope, destSortableScope){
-      console.log(parseInt(sourceItemHandleScope.modelValue, 10) == parseInt(destSortableScope.element[0].innerText, 10));
       return parseInt(sourceItemHandleScope.modelValue, 10) == parseInt(destSortableScope.element[0].innerText, 10);
     };
 
@@ -140,7 +172,6 @@
         $scope.cards[index].dropzone.push(item);
 
         var successFeedback = NumberMatching.getSuccessAudio();
-        console.log(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path);
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
           function(){
             successPlayer.release();
@@ -151,14 +182,11 @@
               if (level == NumberMatching.getMinLevel() &&
                 !ActividadesFinalizadasService.finalizada($scope.activityId)){
                 // if player reached minimum for setting activity as finished
-                ActividadesFinalizadasService.add($scope.activityId);
-                level++;
-                $state.go('lobby');
+                Ctrl8.minReached();
               }
               else {
                 if (level == NumberMatching.getMaxLevel()){
-                  level = 1;
-                  $state.go('lobby');
+                  Ctrl8.maxReached();
                 }
                 else {
                   $timeout(function(){
@@ -196,6 +224,38 @@
         $scope.showText = true;
         failurePlayer.play();
       }
+    };
+
+    Ctrl8.minReached = function(){
+      // if player reached minimum for setting activity as finished
+      ActividadesFinalizadasService.add($scope.activityId);
+      $scope.finished = true;
+      $scope.$apply();
+      level++;
+
+      endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+        function(){
+          endPlayer.release();
+          $state.go('lobby');
+        }, function(err){ $log.error(err);}
+      );
+
+      $scope.textSpeech = config.ending[0].text;
+      $scope.showText = true;
+      endPlayer.play();
+    };
+
+    Ctrl8.maxReached = function(){
+      level = 1;
+      endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+        function(){ endPlayer.release(); $state.go('lobby'); },
+        function(err){ $log.error(err);}
+      );
+
+      $scope.textSpeech = config.ending[1].text;
+      $scope.showText = true;
+      $scope.$apply();
+      endPlayer.play();
     };
   }]);
 })();

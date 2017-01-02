@@ -8,37 +8,37 @@
 
   .card-container {
     display: flex;
-    justify-content: space-around;
     flex-flow: wrap;
+    justify-content: space-around;
     margin-top: 15rem;
   }
 
   .match-container {
     align-items: center;
     display: flex;
-    justify-content: center;
     height: 15rem;
-    margin-top: auto;
+    justify-content: center;
     margin-bottom: 4em;
+    margin-top: auto;
   }
 
 
   .match-card {
+    align-items: center;
     background: url('../assets/8/invitation.png');
-    background-size: contain;
     background-repeat: no-repeat;
+    background-size: contain;
     border: 0;
     border-radius: 0;
-    height: 16rem;
-    width: 28rem;
-    margin: 0;
-    align-items: center;
     display: flex;
     font-size: 4em;
     font-weight: bold;
+    height: 16rem;
     justify-content: center;
-    padding-right: 1rem;
+    margin: 0;
     padding-bottom: 1rem;
+    padding-right: 1rem;
+    width: 28rem;
   }
 
   number-card {
@@ -58,7 +58,11 @@
   }
 
   .talk-bubble {
-    bottom: 4rem;
-    right: 14rem;
+    align-self: flex-start;
+    bottom: 0;
+    position: relative;
+    right: -4rem;
+    top: 7rem;
+    width: 30rem;
   }
 }
