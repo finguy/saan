@@ -1,35 +1,37 @@
 .number-card {
-  display: flex;
-  flex-direction: column;
-  height: 30rem;
-  justify-content: center;
-  width: 20rem;
+  height: 20rem;
+  width: 60rem;
 
   .number {
-    background-color: #663399;
     font-size: 4em;
-    height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-weight: bold;
+    background: url('../assets/8/table-number.png') center no-repeat;
+    margin-left: auto;
+    margin-right: auto;
+    width: 8rem;
+    height: 11rem;
+    background-size: contain;
+    position: relative;
+    bottom: -3rem;
+    text-align: center;
+    padding-top: 1rem;
   }
 
   .placeholder {
-    border: red dotted;
-    height: 50%;
-
-    .as-sortable-item{
-      background: inherit;
-      border: 0;      
-      margin: 0;
-    }
-
-    .as-sortable-placeholder {
-      visibility: hidden;
-    }
+    height: 20rem;
+    width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: transparent;
+    position: relative;
+    bottom: 20rem;
   }
 
-  .completed{
-    border: 0;
+  .table {
+    background: url('../assets/8/table.png') center no-repeat;
+    background-size: contain;
+    height: 12rem;
+    width: 100%;
   }
+
 }
