@@ -1,15 +1,8 @@
+$orange: #f98f44;
 .activity-5-content {
   background-image: url('../assets/5/fondo.png');
 
-  .letter-container {
-    text-align: center;
-    margin-top: 10rem;
-  }
 
-  .img-letter {
-    height: 12rem;
-    width: 12rem;
-  }
 
   .img-figure {
     max-height: 10rem;
@@ -20,38 +13,54 @@
   }
 
   .box {
-    margin: auto 10rem;
+    margin: auto 5rem;
     text-align: center;
-    width: auto;
+    text-align: center;
+    width: 20rem;
+    height: 25rem;
+    background-color: white;
   }
 
   .floating-objects-container {
-    align-items: flex-end;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 35rem;
+    left: 15rem;
   }
 
   .character{
-    bottom: 0rem;
+    bottom: 5rem;
     position: absolute;
     right: 0;
 
      img {
-      height: 30rem;
+      height: 40rem;
       margin-left: auto;
      }
   }
 
   .talk-bubble {
-    width: 20rem;
+    width: 100%;
     right: 13rem;
-    bottom: 10rem;
+    bottom: 40rem;
 
     &::after {
-      border-color: white transparent transparent white;
-      bottom: initial;
-      right: -2rem;
-      top: 6rem;
+     bottom: initial;
+     right: 1rem;
+     top: 93%;
     }
+  }
+
+  .letter .talk-bubble .talktext p {
+   font-size: 8em;
+   font-weight: bold;
+   font-family: Source Sans Pro;
+   color: $orange;
+   max-height: 10rem;
+   text-transform: uppercase;
+  }
+
+  .letter .talk-bubble::after {
+    right: 2rem;
+    top: 13rem;
   }
 }
