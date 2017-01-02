@@ -2,39 +2,40 @@
   'use strict';
   angular.module('saan.controllers')
 
-  .controller('7Ctrl', ['$scope', '$log', '$state', 'DeckBuilder', 'Util', 'ActividadesFinalizadasService', 'AssetsPath',
-  function($scope, $log, $state, DeckBuilder, Util, ActividadesFinalizadasService, AssetsPath) {
-    $scope.activityId = 7;
+  .controller('7Ctrl', ['$rootScope', '$scope', '$log', '$state', '$timeout', 'DeckBuilder', 'Util',
+  'ActividadesFinalizadasService', 'AssetsPath',
+  function($rootScope, $scope, $log, $state, $timeout, DeckBuilder, Util, ActividadesFinalizadasService, AssetsPath) {
+    $rootScope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
+    $scope.enabled = false;
 
     var Ctrl7 = Ctrl7 || {} ;
     var config = '';
     var level;
     var instructionsPlayer;
     var successPlayer;
-    var failurePlayer;
     var tapPlayer;
     var endPlayer;
     var readInstructions;
+    var activityReady = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false; //TODO set this to true
+      readInstructions = true;
       Ctrl7.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
       Util.saveLevel($scope.activityId, level);
 
+      $rootScope.activityId = '';
+
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(successPlayer))
         successPlayer.release();
-
-      if (!angular.isUndefined(failurePlayer))
-        failurePlayer.release();
 
       if (!angular.isUndefined(tapPlayer))
         tapPlayer.release();
@@ -50,17 +51,36 @@
         $scope.buildDeck();
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            var introPath = config.instructions.intro.path;
             // play instructions of activity
             instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-              function(){ instructionsPlayer.release(); },
-              function(err){ $log.error(err); instructionsPlayer.release(); }
+              function(){
+                instructionsPlayer.release();
+                activityReady = true;
+                $scope.showText = false;
+                $scope.$apply();
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.showText = false;
+                $scope.$apply();
+              }
             );
 
+            $scope.textSpeech = config.instructions.intro.text;
+            $scope.showText = true;
             instructionsPlayer.play();
             readInstructions = false;
           }, 1000);
         }
+        else {
+          activityReady = true;
+        }
+
+        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+          function(){}, function(err){ $log.error(err);}
+        );
       });
     };
 
@@ -96,6 +116,11 @@
       $scope.deck = deck;
     };
 
+    $scope.enabled = function(){
+      // flip is enabled after instructions are read
+      return activityReady;
+    };
+
     $scope.deckCompleted = function(){
       if (level == DeckBuilder.getMinLevel() &&
         !ActividadesFinalizadasService.finalizada($scope.activityId)){
@@ -113,35 +138,51 @@
     };
 
     $scope.tapInstruction = function() {
-      tapPlayer.play();
+      if (activityReady){
+        tapPlayer.play();
+      }
     };
 
     Ctrl7.minReached = function(){
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
-      $scope.$apply();
       level++;
-      //TODO uncomment this after getting media assets
-      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
-      //   function(){
-      //     endPlayer.release();
-      //     $state.go('lobby');
-      //   }, function(err){ $log.error(err);}
-      // );
-      //
-      // endPlayer.play();
+      endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
+        function(){ endPlayer.release(); $scope.showText = false; $state.go('lobby'); },
+        function(err){ $log.error(err); $scope.showText = false; $state.go('lobby'); }
+      );
+
+      $scope.textSpeech = config.ending[0].text;
+      $scope.showText = true;
+      $scope.$apply();
+      endPlayer.play();
     };
 
     Ctrl7.maxReached = function(){
       level = 1;
-      $state.go('lobby'); // TODO remove this line after getting media assets
-      //TODO uncomment this after getting media assets
-      // endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
-      //   function(){ endPlayer.release(); $state.go('lobby'); },
-      //   function(err){ $log.error(err);}
-      // );
-      //
-      // endPlayer.play();
+      endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
+        function(){ endPlayer.release(); $scope.showText = false; $state.go('lobby'); },
+        function(err){ $log.error(err); $scope.showText = false; $state.go('lobby');}
+      );
+
+      $scope.textSpeech = config.ending[1].text;
+      $scope.showText = true;
+      $scope.$apply();
+      endPlayer.play();
+    };
+
+    $scope.feedback = function(success){
+      if (success){
+        var successFeedback = DeckBuilder.getSuccessAudio();
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+          function(){ $scope.showText = false; $scope.$apply(); },
+          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
+        );
+
+        $scope.textSpeech = successFeedback.text;
+        $scope.showText = true;
+        successPlayer.play();
+      }
     };
   }]);
 })();
