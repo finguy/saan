@@ -28,8 +28,8 @@ angular.module('saan.controllers')
 
     RandomWordsNine.words(Ctrl9.level, $scope.playedWords).then(
       function success(data) {
+        Ctrl9.setUpContextVariables(data);
         $timeout(function() {
-         Ctrl9.setUpContextVariables(data);
           if (readInstructions) {
             $scope.speaking = true;
             $scope.showText = true;
@@ -286,12 +286,12 @@ angular.module('saan.controllers')
         //Add elemebt back again   Note:
         eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         $scope.handleProgress(false);
-      } else{
-        console.log("move again");
       }
     },
     itemMoved: function (eventObj) {
-      $scope.handleProgress(true);
+      if ($scope.wordOk){
+        $scope.handleProgress(true);
+      }
     },
     accept: function(sourceItemHandleScope, destSortableScope){
       return false;
