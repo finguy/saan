@@ -34,7 +34,7 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false; //TODO set this to true
+      readInstructions = true; //TODO set this to true
       $scope.coloredThioye = ActividadesFinalizadasService.finalizada(2);
       Ctrl11.getConfiguration(level);
     });
@@ -73,63 +73,67 @@
         $scope.showQuestion = false;
 
         if (readInstructions){
-          readInstructions = false;
-          var intro = config.instructions;
-          //play instructions of activity
-          instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
-            function(){
-              instructionsPlayer.release();
-              $scope.showText = false;
-              $timeout(function(){Ctrl11.setActivity();}, STORY_TIMEOUT);
-            },
-            function(err){
-              $log.error(err);
-              instructionsPlayer.release();
-              $scope.showText = false;
-              $timeout(function(){Ctrl11.setActivity();}, STORY_TIMEOUT);
-            }
-          );
+          $timeout(function() {
+            readInstructions = false;
+            var intro = config.instructions;
+            //play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
+              function(){
+                instructionsPlayer.release();
+                $scope.showText = false;
+                Ctrl11.setActivity();
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.showText = false;
+                Ctrl11.setActivity();
+              }
+            );
 
-          $scope.textSpeech = intro.text;
-          $scope.showText = true;
-          if (!leaving){
-            instructionsPlayer.play();
-          }
+            $scope.textSpeech = intro.text;
+            $scope.showText = true;
+            if (!leaving){
+              instructionsPlayer.play();
+            }
+          }, STORY_TIMEOUT);
         }
         else {
-          $timeout(function(){Ctrl11.setActivity();}, 1500);
+          Ctrl11.setActivity();
         }
       });
     };
 
     Ctrl11.setActivity = function(){
-      $scope.options = [];
-      storyPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.storyPath;
-      $scope.questionText = config.level.questionText;
-      $scope.options = _.shuffle(config.level.options);
-
-      storyPlayer = new Media(storyPath,
-        function(){
-          storyRead = true;
-          $scope.showText = false;
-          $scope.showQuestion = true;
-          storyPlayer.release();
-          $scope.$apply();
-        },
-        function(err){
-          $log.error(err);
-          storyRead = true;
-          $scope.showText = false;
-          storyPlayer.release();
-          $scope.showQuestion = true;
-          $scope.$apply();
-        }
-      );
-
-      $scope.textSpeech = "...";
-      $scope.showText = true;
       if (!leaving){
-        storyPlayer.play();
+        $scope.options = [];
+        storyPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.storyPath;
+        $scope.questionText = config.level.questionText;
+        $scope.options = _.shuffle(config.level.options);
+
+        storyPlayer = new Media(storyPath,
+          function(){
+            storyRead = true;
+            $scope.showText = false;
+            $scope.showQuestion = true;
+            storyPlayer.release();
+            $scope.$apply();
+          },
+          function(err){
+            $log.error(err);
+            storyRead = true;
+            $scope.showText = false;
+            storyPlayer.release();
+            $scope.showQuestion = true;
+            $scope.$apply();
+          }
+        );
+
+        $timeout(function(){
+          $scope.textSpeech = "...";
+          $scope.showText = true;
+          storyPlayer.play();
+        }, STORY_TIMEOUT);
       }
     };
 
@@ -277,7 +281,6 @@
     Ctrl11.maxReached = function(){
       tapEnabled = false;
       level = 1;
-       // TODO remove this line after getting media assets
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){
           endPlayer.release();
