@@ -29,6 +29,7 @@
     var endPlayer;
     var storyPath;
     var tapEnabled = true;
+    var leaving = false;
 
 
     $scope.$on('$ionicView.beforeEnter', function() {
@@ -39,6 +40,7 @@
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
@@ -90,7 +92,9 @@
 
           $scope.textSpeech = intro.text;
           $scope.showText = true;
-          instructionsPlayer.play();
+          if (!leaving){
+            instructionsPlayer.play();
+          }
         }
         else {
           $timeout(function(){Ctrl11.setActivity();}, 1500);
@@ -124,7 +128,9 @@
 
       $scope.textSpeech = "...";
       $scope.showText = true;
-      storyPlayer.play();
+      if (!leaving){
+        storyPlayer.play();
+      }
     };
 
     $scope.readQuestion = function(){
@@ -245,6 +251,7 @@
     };
 
     Ctrl11.minReached = function(){
+      tapEnabled = false;
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
       $scope.$apply();
@@ -268,6 +275,7 @@
     };
 
     Ctrl11.maxReached = function(){
+      tapEnabled = false;
       level = 1;
        // TODO remove this line after getting media assets
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
