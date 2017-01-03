@@ -14,6 +14,7 @@
     $scope.showText = false;
     $scope.finished = false;
     $scope.imagePath = AssetsPath.getImgs($scope.activityId);
+    $scope.enabled = false;
 
     var Ctrl2 = Ctrl2 || {};
     var stageNumber;
@@ -30,6 +31,7 @@
 
     var checking = false;
     var readInstructions;
+    var dragChecked = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       stageNumber = 1; //TODO: retrieve and load from local storage
@@ -48,10 +50,6 @@
       Util.saveLevel($scope.activityId, level);
     });
 
-    $scope.tapInstruction = function() {
-      tapPlayer.play();
-    };
-
     Ctrl2.clearValues = function(){
       stageNumber = 1;
       stageData = {};
@@ -64,15 +62,29 @@
         config = data;
 
         Ctrl2.setActivity();
+
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.intro[$scope.mode - 1].path;
+            var intro = config.instructions.intro[$scope.mode - 1];
             // play instructions of activity
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-              function(){ instructionsPlayer.release(); },
-              function(err){ $log.error(err); instructionsPlayer.release(); }
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
+              function(){
+                instructionsPlayer.release();
+                $scope.enabled = true;
+                $scope.showText = false;
+                $scope.$apply();
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.enabled = true;
+                $scope.showText = false;
+                $scope.$apply();
+              }
             );
 
+            $scope.textSpeech = intro.text;
+            $scope.showText = true;
             instructionsPlayer.play();
             readInstructions = false;
           }, 1000);
@@ -87,6 +99,7 @@
       $scope.patternRight = [];
       $scope.mode = config.level.mode;
       position = 0;
+      $scope.enabled = !readInstructions;
 
       Ctrl2.setSequenceStage();
       if (config.level.mode == MODE_SEQUENCE){
@@ -102,9 +115,33 @@
 
       $scope.patternOptions = config.colors;
 
+      Ctrl2.setTapPlayer();
+
+    };
+
+    Ctrl2.setTapPlayer = function() {
       tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
-        function(){}, function(err){ $log.error(err);}
+        function(){
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function(err){
+          $log.error(err);
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        }
       );
+    };
+
+    $scope.tapInstruction = function() {
+      if ($scope.enabled){
+        $scope.enabled = false;
+        $scope.textSpeech = "...";
+        $scope.showText = true;
+        tapPlayer.play();
+      }
     };
 
     Ctrl2.setSequenceStage = function(){
@@ -141,6 +178,7 @@
     $scope.sortableOptions = {
       allowDuplicates: true,
       accept: function(sourceItemHandleScope, destSortableScope){
+        dragChecked = true;
         return Ctrl2.checkAccept(sourceItemHandleScope.modelValue);
       }
     };
@@ -151,7 +189,7 @@
       clone: true,
       dragEnd: function(eventObj) {
         //check that item was correctly moved
-        if (!Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue)){
+        if (dragChecked && !Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue)){
           Ctrl2.failure();
         }
       },
@@ -174,6 +212,7 @@
 
     Ctrl2.success =  function(){
       if (!checking){
+        $scope.enabled = false;
         var successFeedback = ColorPattern.getSuccessAudio();
 
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
@@ -217,11 +256,25 @@
 
     Ctrl2.failure = function(){
       if (!checking){
+        $scope.enabled = false;
         var failureFeedback = ColorPattern.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; checking = false; $scope.$apply();},
-          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
+          function(){
+            failurePlayer.release();
+            $scope.showText = false;
+            checking = false;
+            $scope.enabled = true;
+            $scope.$apply();
+          },
+          function(err){
+            failurePlayer.release();
+            $log.error(err);
+            $scope.showText = false;
+            checking = false;
+            $scope.enabled = true;
+            $scope.$apply();
+          }
         );
 
         $scope.textSpeech = failureFeedback.text;
@@ -265,9 +318,12 @@
         function(){
           endPlayer.release();
           $state.go('lobby');
-        }, function(err){ $log.error(err);}
+        },
+        function(err){ $log.error(err);}
       );
 
+      $scope.textSpeech = config.ending[0].text;
+      $scope.showText = true;
       endPlayer.play();
     };
 
@@ -278,6 +334,8 @@
         function(err){ $log.error(err);}
       );
 
+      $scope.textSpeech = config.ending[1].text;
+      $scope.showText = true;
       endPlayer.play();
     };
   }]);
