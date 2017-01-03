@@ -1,53 +1,72 @@
 $color : #00bfff;
-.activity12 {
-    .options-container{
-      margin: 6rem 0 0 6rem;
+$blue-11: #0a8bc4;
+
+.activity-12-content {
+  background: url('../assets/12/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+
+  .book {
+    background: url('../assets/12/book.png') center no-repeat;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: auto;
+    min-height: 56.6rem;
+    min-width: 92rem;
+  }
+
+  .question-box {
+    background: url('../assets/12/text-box.png') no-repeat;
+    background-size: cover;
+    color: $blue-11;
+    display: flex;
+    font-size: 2.7em;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6rem;
+    margin-bottom: 1rem;
+    max-width: 65rem;
+    min-height: 32rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .option-container {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    padding: 0 2rem;
+    padding-bottom: 8rem;
+    img {
+     height: 15rem;
     }
+  }
 
-    .options {
-      width: 10rem;
-      height: 10rem;
-      margin: 2rem;
+  .character {
+    bottom: 8rem;
+    position: absolute;
+    right: 0;
+
+    img { height: 30rem; }
+  }
+
+  .talk-bubble {
+    align-self: flex-start;
+    bottom: 2rem;
+    position: relative;
+    right: -4rem;
+    width: 30rem;
+    z-index: 0;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 4rem;
     }
-
-    .options-image-morph {
-      @include image-morph(0.5s);
-    }
-
-    .options-image-morph-click {
-      @include image-morph-rotation-on-click(45deg);
-    }
-
-
-    .text-container {
-      background-color:	$color;
-      border-radius: 5rem;
-      width: 100rem;
-    }
-
-    .text {
-      font-size: 2em;
-      font-weight: bold;
-      font-family: Source Sans Pro;
-      line-height: 4em;
-      word-break: break-all;
-      text-align: justify;
-      width: 80rem;
-    }
-
-    .character{
-      bottom: 8rem;
-      position: absolute;
-      right: 0;
-
-       img {
-        height: 10rem;
-        margin-left: auto;
-       }
-    }
-
-    .talk-bubble {
-      right: 11rem;
-      bottom: 15rem;
-    }
+  }
 }
