@@ -14,7 +14,6 @@
       $scope.showText = false;
       $scope.speaking = false;
       $scope.textSpeech = "";
-
       var successPlayer;
       var failurePlayer;
       var Ctrl10 = Ctrl10 || {};
@@ -35,25 +34,45 @@
       };
 
       Ctrl10.successFeedback = function() {
-        var successFeedback = RandomWordTen.getSuccessAudio();
-        $scope.textSpeech = successFeedback.text;
-        $scope.showText = true;
-        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-          function success() {
-            successPlayer.release();
-            $scope.showText = false;
-            $scope.speaking = false;
-            $scope.$apply();
-          },
-          function error(err) {
-            $log.error(err);
-            successPlayer.release();
-            $scope.showText = false;
-            $scope.checkingWord = false;
-          }
-        );
-        $scope.speaking = true;
-        successPlayer.play();
+       var successFeedback = RandomWordTen.getSuccessAudio();
+       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+         function success() {
+           successPlayer.release();
+           $scope.showText = false;
+           $scope.speaking = false;
+           $scope.$apply();
+         },
+         function error(err) {
+           $log.error(err);
+           successPlayer.release();
+           $scope.showText = false;
+           $scope.checkingWord = false;
+         }
+       );
+
+
+         Ctrl10.rimeWordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "words/" + $scope.rimesDragged[0].word + ".mp3",
+           function success() {
+             Ctrl10.rimeWordPlayer.release();
+             $scope.speaking = false;
+             $scope.textSpeech = successFeedback.text;
+             $scope.showText = true;
+             successPlayer.play();
+             $scope.$apply();
+           },
+           function error(err) {
+             $log.error(err);
+             Ctrl10.rimeWordPlayer.release();
+             Ctrl10.speaking = false;
+           }
+         );
+
+
+          $scope.speaking = true;
+          Ctrl10.wordPlayer.play();
+          $timeout(function () {
+             Ctrl10.rimeWordPlayer.play();
+          },1000);
       };
 
       Ctrl10.errorFeedback = function() {
@@ -143,9 +162,11 @@
 
         Ctrl10.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
           function success() {
-            Ctrl10.instructionsPlayer.release();            
+            Ctrl10.instructionsPlayer.release();
            if (!Ctrl10.beforeLeave) {
-              Ctrl10.wordPlayer.play();
+              $timeout(function() {
+                Ctrl10.wordPlayer.play();
+              },500);
             }
 
             $scope.showText = false;
@@ -193,7 +214,6 @@
         );
        } else {
           endingFeedback = RandomWordTen.getEndingAudio(1);
-
           Ctrl10.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
             function success() {
               Ctrl10.endPlayer.release();
@@ -211,17 +231,17 @@
 
        Ctrl10.wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "words/" + wordJson.audio,
          function success() {
-           Ctrl10.endPlayer.release();
+           Ctrl10.wordPlayer.release();
            $scope.speaking = false;
            $scope.$apply();
          },
-         function error(err) {
+         function error(err) {          
            $log.error(err);
-           Ctrl10.endPlayer.release();
+           Ctrl10.wordPlayer.release();
            Ctrl10.speaking = false;
          }
        );
-      };
+     };
 
       Ctrl10.success = function() {
         Ctrl10.successFeedback();
@@ -250,7 +270,7 @@
             $scope.textSpeech = "Thank you!";
             Ctrl10.endPlayer.play();
           }
-        }, 1500);
+        }, 3000);
       };
 
       Ctrl10.error = function() {
@@ -261,9 +281,9 @@
       };
 
       $scope.handleProgress = function(isWordOk) {
-        AppSounds.playTap();
         $scope.isWordOk = isWordOk;
         if (isWordOk) {
+          AppSounds.playTap();
           Ctrl10.success();
         } else {
           Ctrl10.error();
@@ -332,6 +352,7 @@
         Ctrl10.beforeLeave = true;
         Util.saveLevel($scope.activityId, Ctrl10.level);
         Ctrl10.releasePlayer(Ctrl10.wordPlayer);
+        Ctrl10.releasePlayer(Ctrl10.rimeWordPlayer);
         Ctrl10.releasePlayer(Ctrl10.instructionsPlayer);
         Ctrl10.releasePlayer(Ctrl10.tapInstructionsPlayer);
         Ctrl10.releasePlayer(Ctrl10.endPlayer);

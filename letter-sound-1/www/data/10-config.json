@@ -1,31 +1,31 @@
 {"info":
   [ {
     "word": "frog",
-    "audio": "Frog.mp3",
+    "audio": "frog.mp3",
     "rimes": ["blog","clog","cog"]
     },
     {"word":"mouse" ,
-      "audio":"Mouse.mp3",
+      "audio":"mouse.mp3",
       "rimes": ["spouse","prouse"]
     },
     {"word":"third" ,
-     "audio":"Third.mp3",
-      "rimes":["burd","curd","herd"]
+     "audio": "third.mp3",
+      "rimes":["curd","herd"]
     },
     {"word":"all" ,
-     "audio":"All.mp3",
+     "audio":"all.mp3",
       "rimes": ["doll","call","small"]
     },
     {"word":"bee" ,
-     "audio":"Bee.mp3",
+     "audio":"bee.mp3",
       "rimes": ["glee","see","free"]
     },
     {"word":"giger" ,
-     "audio": "Giger.mp3",
+     "audio": "giger.mp3",
       "rimes": ["eiger"]
     },
     {"word":"chapel",
-     "audio":"Chapel.mp3",
+     "audio":"chapel.mp3",
      "rimes": ["grappel","pineapple"]
 
     }],
