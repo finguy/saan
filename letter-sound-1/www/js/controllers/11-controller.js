@@ -18,7 +18,7 @@
     var config;
     var level;
     var readInstructions;
-    var readStory;
+    var storyRead;
 
     var instructionsPlayer;
     var storyPlayer;
@@ -27,12 +27,13 @@
     var failurePlayer;
     var tapPlayer;
     var endPlayer;
-
     var storyPath;
+    var tapEnabled = true;
+
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = true; //TODO set this to true
+      readInstructions = false; //TODO set this to true
       $scope.coloredThioye = ActividadesFinalizadasService.finalizada(2);
       Ctrl11.getConfiguration(level);
     });
@@ -41,7 +42,7 @@
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(storyPlayer))
         storyPlayer.release();
@@ -66,7 +67,7 @@
     Ctrl11.getConfiguration = function (level){
       Listening.getConfig(level).then(function(data){
         config = data;
-        readStory = false;
+        storyRead = false;
         $scope.showQuestion = false;
 
         if (readInstructions){
@@ -105,7 +106,7 @@
 
       storyPlayer = new Media(storyPath,
         function(){
-          readStory = true;
+          storyRead = true;
           $scope.showText = false;
           $scope.showQuestion = true;
           storyPlayer.release();
@@ -113,7 +114,7 @@
         },
         function(err){
           $log.error(err);
-          readStory = true;
+          storyRead = true;
           $scope.showText = false;
           storyPlayer.release();
           $scope.showQuestion = true;
@@ -127,87 +128,113 @@
     };
 
     $scope.readQuestion = function(){
-      questionPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+config.level.questionPath,
-        function(){
-          questionPlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        },
-        function(err){
-          $log.error(err);
-          questionPlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        }
-      );
-
-      $scope.textSpeech = "...";
-      $scope.showText = true;
-      questionPlayer.play();
-    };
-
-    $scope.checkAnswer = function(value){
-      if (value === config.level.answer){
-        var successFeedback = Listening.getSuccessAudio();
-
-        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      if (tapEnabled){
+        tapEnabled = false;
+        questionPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+config.level.questionPath,
           function(){
-            successPlayer.release();
+            questionPlayer.release();
             $scope.showText = false;
             $scope.$apply();
-
-            if (level == Listening.getMinLevel() &&
-              !ActividadesFinalizadasService.finalizada($scope.activityId)){
-              Ctrl11.minReached();
-            }
-            else {
-              if (level == Listening.getMaxLevel()){
-                Ctrl11.maxReached();
-              }
-              else {
-                level++;
-                Util.saveLevel($scope.activityId, level);
-                Ctrl11.getConfiguration(level);
-              }
-            }
+            tapEnabled = true;
           },
-          function (err){
+          function(err){
             $log.error(err);
-            successPlayer.release();
+            questionPlayer.release();
             $scope.showText = false;
             $scope.$apply();
+            tapEnabled = true;
           }
         );
 
-        $scope.textSpeech = successFeedback.text;
+        $scope.textSpeech = "...";
         $scope.showText = true;
-        successPlayer.play();
+        questionPlayer.play();
       }
-      else {
-        var failureFeedback = Listening.getFailureAudio();
+    };
 
-        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply();},
-          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; $scope.$apply();}
-        );
+    $scope.checkAnswer = function(value){
+      if (tapEnabled){
+        tapEnabled = false;
+        if (value === config.level.answer){
+          var successFeedback = Listening.getSuccessAudio();
 
-        $scope.textSpeech = failureFeedback.text;
-        $scope.showText = true;
-        failurePlayer.play();
+          successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+            function(){
+              tapEnabled = true;
+              successPlayer.release();
+              $scope.showText = false;
+              $scope.$apply();
+
+              if (level == Listening.getMinLevel() &&
+                !ActividadesFinalizadasService.finalizada($scope.activityId)){
+                Ctrl11.minReached();
+              }
+              else {
+                if (level == Listening.getMaxLevel()){
+                  Ctrl11.maxReached();
+                }
+                else {
+                  level++;
+                  Util.saveLevel($scope.activityId, level);
+                  Ctrl11.getConfiguration(level);
+                }
+              }
+            },
+            function (err){
+              $log.error(err);
+              successPlayer.release();
+              $scope.showText = false;
+              tapEnabled = true;
+              $scope.$apply();
+            }
+          );
+
+          $scope.textSpeech = successFeedback.text;
+          $scope.showText = true;
+          successPlayer.play();
+        }
+        else {
+          var failureFeedback = Listening.getFailureAudio();
+
+          failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+            function(){
+              failurePlayer.release();
+              $scope.showText = false;
+              tapEnabled = true;
+              $scope.$apply();
+            },
+            function(err){
+              failurePlayer.release();
+              $log.error(err);
+              $scope.showText = false;
+              tapEnabled = true;
+              $scope.$apply();
+            }
+          );
+
+          $scope.textSpeech = failureFeedback.text;
+          $scope.showText = true;
+          failurePlayer.play();
+        }
       }
     };
 
     $scope.tapInstruction = function() {
-      if (readStory){
+      if (storyRead && tapEnabled){
+        tapEnabled = false;
         storyPlayer = new Media(storyPath,
           function(){
             storyPlayer.release();
             $scope.showText = false;
+            $scope.$apply();
+            tapEnabled = true;
           },
           function(err){
             $log.error(err);
             storyPlayer.release();
             $scope.showText = false;
+            $scope.$apply();
+            tapEnabled = true;
           }
         );
 
