@@ -27,6 +27,8 @@
       var readInstructions;
       var letterPlayers = [];
       var endPlayer;
+      var playingWord = false;
+      var leaving = false;
 
       $scope.$on('$ionicView.beforeEnter', function() {
         stageNumber = 1;
@@ -46,6 +48,7 @@
 
       $scope.$on('$ionicView.beforeLeave', function() {
         Util.saveLevel($scope.activityId, level);
+        leaving = true;
 
         // releasing loose players
         _.each(letterPlayers, function(element){
@@ -81,12 +84,22 @@
       };
 
       $scope.playWordAudio = function() {
-        wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
-          function(){ wordPlayer.release();},
-          function(err){ $log.error(err); wordPlayer.release();}
-        );
+        if (!$scope.readInstructions && !playingWord){
+          wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + stageData.audio,
+            function(){
+              wordPlayer.release();
+              playingWord = false;
+            },
+            function(err){
+              $log.error(err);
+              wordPlayer.release();
+              playingWord = false;
+            }
+          );
 
-        wordPlayer.play();
+          wordPlayer.play();
+          playingWord = true;
+        }
       };
 
       Ctrl1.getConfiguration = function (level){
@@ -112,13 +125,30 @@
               function(){
                 instructionsPlayer.release();
                 $scope.readInstructions = false;
+                $scope.showText = false;
                 $timeout(function(){
-                  $scope.playWordAudio();
-                  $scope.$apply();
+                  if (!leaving){
+                    $scope.playWordAudio();
+                    $scope.$apply();
+                  }
                 }, 500);
               },
-              function(err){ $log.error(err); instructionsPlayer.release(); $scope.readInstructions = false;}
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.readInstructions = false;
+                $scope.showText = false;
+                $timeout(function(){
+                  if (!leaving){
+                    $scope.playWordAudio();
+                    $scope.$apply();
+                  }
+                }, 500);
+              }
             );
+
+            $scope.textSpeech = config.instructions.text;
+            $scope.showText = true;
             instructionsPlayer.play();
 
           }, 1000);
@@ -190,7 +220,6 @@
             }
             else {
               Ctrl1.setActivity();
-              // $scope.$apply();
             }
             $scope.checkingWord = false;
             $scope.$apply();
@@ -237,27 +266,47 @@
       Ctrl1.minReached = function(){
         // if player reached minimum for setting activity as finished
         ActividadesFinalizadasService.add($scope.activityId);
-        $scope.finished = true;
-        $scope.$apply();
         level++;
 
         endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
           function(){
             endPlayer.release();
+            $scope.showText = false;
             $state.go('lobby');
-          }, function(err){ $log.error(err);}
+          },
+          function(err){
+            $log.error(err);
+            endPlayer.release();
+            $scope.showText = false;
+            $state.go('lobby');
+          }
         );
 
+        $scope.textSpeech = config.ending[0].text;
+        $scope.showText = true;
+        $scope.$apply();
         endPlayer.play();
       };
 
       Ctrl1.maxReached = function(){
         level = 1;
         endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
-          function(){ endPlayer.release(); $state.go('lobby'); },
-          function(err){ $log.error(err);}
+          function(){
+            endPlayer.release();
+            $scope.showText = false;
+            $state.go('lobby');
+          },
+          function(err){
+            $log.error(err);
+            endPlayer.release();
+            $scope.showText = false;
+            $state.go('lobby');
+          }
         );
 
+        $scope.textSpeech = config.ending[1].text;
+        $scope.showText = true;
+        $scope.$apply();
         endPlayer.play();
       };
     }]
