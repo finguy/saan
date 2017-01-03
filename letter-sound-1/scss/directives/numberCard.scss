@@ -3,28 +3,36 @@
   width: 60rem;
 
   .number {
+    background: url('../assets/8/table-number.png') center no-repeat;
+    background-size: contain;
+    bottom: -3rem;
     font-size: 4em;
     font-weight: bold;
-    background: url('../assets/8/table-number.png') center no-repeat;
+    height: 11rem;
     margin-left: auto;
     margin-right: auto;
-    width: 8rem;
-    height: 11rem;
-    background-size: contain;
-    position: relative;
-    bottom: -3rem;
-    text-align: center;
     padding-top: 1rem;
+    position: relative;
+    text-align: center;
+    width: 8rem;
+
+    &.checked {
+      background-image: url('../assets/8/check-table.png');
+
+      > * {
+        visibility: hidden;
+      }
+    }
   }
 
   .placeholder {
+    bottom: 20rem;
+    color: transparent;
     height: 20rem;
-    width: 40rem;
     margin-left: auto;
     margin-right: auto;
-    color: transparent;
     position: relative;
-    bottom: 20rem;
+    width: 40rem;
   }
 
   .table {

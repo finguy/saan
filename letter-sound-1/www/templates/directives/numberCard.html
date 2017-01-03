@@ -1,7 +1,9 @@
 <div class="number-card">
-  <div class="number"><span class="value">{{card.value}}</span></div>
+  <div class="number" ng-class="{'checked': card.dropzone.length > 0}">
+    <span class="value">{{card.value}}</span>
+  </div>
   <div class="table" src="assets/8/table.png"></div>
-  <div class="placeholder" as-sortable="sortableOptions" data-ng-model="dropzoneModel" ng-class="{completed: card.dropzone.length > 0}">
+  <div class="placeholder" as-sortable="sortableOptions" data-ng-model="dropzoneModel">
     {{card.value}}
   </div>
 </div>
