@@ -16,7 +16,7 @@
   </div>
 
   <div class="pattern-options">
-    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container">
+    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container" is-disabled="!enabled">
       <div ng-repeat="item in patternOptions" class="text-center">
         <div class="border">
           <div class="pattern-item color-{{item}}" as-sortable-item as-sortable-item-handle></div>
