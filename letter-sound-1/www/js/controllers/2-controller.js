@@ -42,12 +42,21 @@
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
-      tapPlayer.release();
-      instructionsPlayer.release();
-      successPlayer.release();
-      failurePlayer.release();
-      endPlayer.release();
       Util.saveLevel($scope.activityId, level);
+      if (!angular.isUndefined(instructionsPlayer))
+        instructionsPlayer.release();
+
+      if (!angular.isUndefined(successPlayer))
+        successPlayer.release();
+
+      if (!angular.isUndefined(failurePlayer))
+        failurePlayer.release();
+
+      if (!angular.isUndefined(tapPlayer))
+        tapPlayer.release();
+
+      if (!angular.isUndefined(endPlayer))
+        endPlayer.release();
     });
 
     Ctrl2.clearValues = function(){
@@ -192,6 +201,7 @@
         if (dragChecked && !Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue)){
           Ctrl2.failure();
         }
+        dragChecked = false;
       },
       itemMoved: function (eventObj) {
         AppSounds.playTap();
@@ -229,7 +239,7 @@
             }
             else {
               if (level == ColorPattern.getMinLevel() && !$scope.finished){
-                Ctrl2.minReached()();
+                Ctrl2.minReached();
               }
               else {
                 if (level == ColorPattern.getMaxLevel()){
@@ -311,7 +321,6 @@
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
       $scope.finished = true;
-      $scope.$apply();
       level++;
 
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
@@ -319,11 +328,15 @@
           endPlayer.release();
           $state.go('lobby');
         },
-        function(err){ $log.error(err);}
+        function(err){
+          $log.error(err);
+          $state.go('lobby');
+        }
       );
 
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
@@ -331,11 +344,12 @@
       level = 1;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){ endPlayer.release(); $state.go('lobby'); },
-        function(err){ $log.error(err);}
+        function(err){ $log.error(err); $state.go('lobby');}
       );
 
       $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
   }]);
