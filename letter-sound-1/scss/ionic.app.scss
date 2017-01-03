@@ -110,9 +110,12 @@ body {
 }
 
 .hidden {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
+.visible {
+  visibility: visible !important;
+}
 
 .button-back {
   background: no-repeat url('../assets/3/back.png') 0 0;
