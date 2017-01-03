@@ -70,8 +70,14 @@
   ],
   "instructions": {
     "intro": [
-      { "path": "intro_1.mp3" },
-      { "path": "intro_2.mp3" }
+      {
+        "path": "intro_1.mp3",
+        "text": "Hi!"
+       },
+      {
+        "path": "intro_2.mp3",
+        "text": "Hi!"
+       }
     ],
     "tap": { "path": "tap_instruction.mp3" }
   },
@@ -104,7 +110,13 @@
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!" 
+     },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+     }
   ]
 }

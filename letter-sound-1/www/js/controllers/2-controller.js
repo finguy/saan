@@ -201,6 +201,7 @@
         if (dragChecked && !Ctrl2.checkDragEnd(eventObj.source.itemScope.modelValue)){
           Ctrl2.failure();
         }
+        dragChecked = false;
       },
       itemMoved: function (eventObj) {
         AppSounds.playTap();
