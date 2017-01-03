@@ -72,10 +72,11 @@
           $scope.checkingLetter = true;
           selectedLetters[position] = letter;
 
-           if (selectedLetters.length === stageData.text.split("").length) {
-             Ctrl1.checkWord();
-           }
-           $scope.checkingLetter = false;
+          if (_.without(selectedLetters, undefined).length === stageData.text.split("").length) {
+            Ctrl1.checkWord();
+          }
+
+          $scope.checkingLetter = false;
         }
       };
 
@@ -113,6 +114,7 @@
                 $scope.readInstructions = false;
                 $timeout(function(){
                   $scope.playWordAudio();
+                  $scope.$apply();
                 }, 500);
               },
               function(err){ $log.error(err); instructionsPlayer.release(); $scope.readInstructions = false;}
@@ -167,7 +169,6 @@
           function(){
             successPlayer.release();
             $scope.showText = false;
-            $scope.$apply();
 
             if (stageNumber > config.levelData.words.length){ //if level finished
               if (level == WordBuilding.getMinLevel() &&
@@ -189,15 +190,17 @@
             }
             else {
               Ctrl1.setActivity();
-              $scope.$apply();
+              // $scope.$apply();
             }
             $scope.checkingWord = false;
+            $scope.$apply();
           },
           function(err){
             $log.error(err);
             successPlayer.release();
             $scope.showText = false;
             $scope.checkingWord = false;
+            $scope.$apply();
           }
         );
 
