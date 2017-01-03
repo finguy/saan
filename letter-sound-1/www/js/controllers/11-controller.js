@@ -258,7 +258,6 @@
       tapEnabled = false;
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
-      $scope.$apply();
 
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
         function(){
@@ -275,6 +274,7 @@
 
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
@@ -294,6 +294,7 @@
 
       $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
   }]);

@@ -7,7 +7,7 @@
   function ($scope, $log, $state, $timeout, MathOralProblems, AssetsPath,
     ActividadesFinalizadasService, Util) {
 
-    var problem_TIMEOUT = 1000;
+    var PROBLEM_TIMEOUT = 1000;
 
     $scope.activityId = 15;
     $scope.showQuestion = false;
@@ -18,8 +18,7 @@
     var config;
     var level;
     var readInstructions;
-    var readproblem;
-
+    var problemRead;
     var instructionsPlayer;
     var problemPlayer;
     var questionPlayer;
@@ -27,17 +26,19 @@
     var failurePlayer;
     var tapPlayer;
     var endPlayer;
-
     var problemPath;
+    var tapEnabled = true;
+    var leaving = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false; //TODO set this to true
+      readInstructions = true;
       $scope.coloredThioye = ActividadesFinalizadasService.finalizada(2);
       Ctrl15.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
@@ -66,30 +67,34 @@
     Ctrl15.getConfiguration = function (level){
       MathOralProblems.getConfig(level).then(function(data){
         config = data;
-        readproblem = false;
+        problemRead = false;
         $scope.showQuestion = false;
 
         if (readInstructions){
-          readInstructions = false;
-          var intro = config.instructions;
-          //play instructions of activity
-          instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
-            function(){
-              instructionsPlayer.release();
-              $scope.showText = false;
-              $timeout(function(){Ctrl15.setActivity();}, problem_TIMEOUT);
-            },
-            function(err){
-              $log.error(err);
-              instructionsPlayer.release();
-              $scope.showText = false;
-              $timeout(function(){Ctrl15.setActivity();}, problem_TIMEOUT);
-            }
-          );
+          $timeout(function() {
+            readInstructions = false;
+            var intro = config.instructions;
+            //play instructions of activity
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
+              function(){
+                instructionsPlayer.release();
+                $scope.showText = false;
+                $timeout(function(){Ctrl15.setActivity();}, PROBLEM_TIMEOUT);
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                $scope.showText = false;
+                $timeout(function(){Ctrl15.setActivity();}, PROBLEM_TIMEOUT);
+              }
+            );
 
-          $scope.textSpeech = intro.text;
-          $scope.showText = true;
-          instructionsPlayer.play();
+            $scope.textSpeech = intro.text;
+            $scope.showText = true;
+            if (!leaving){
+              instructionsPlayer.play();
+            }
+          }, PROBLEM_TIMEOUT);
         }
         else {
           $timeout(function(){Ctrl15.setActivity();}, 1500);
@@ -98,32 +103,36 @@
     };
 
     Ctrl15.setActivity = function(){
-      $scope.options = [];
-      problemPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.problemPath;
-      $scope.questionText = config.level.questionText;
-      Ctrl15.showOptions();
+      if (!leaving){
+        $scope.options = [];
+        problemPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.problemPath;
+        $scope.questionText = config.level.questionText;
+        Ctrl15.showOptions();
 
-      problemPlayer = new Media(problemPath,
-        function(){
-          readproblem = true;
-          $scope.showText = false;
-          $scope.showQuestion = true;
-          problemPlayer.release();
-          $scope.$apply();
-        },
-        function(err){
-          $log.error(err);
-          readproblem = true;
-          $scope.showText = false;
-          problemPlayer.release();
-          $scope.showQuestion = true;
-          $scope.$apply();
-        }
-      );
+        problemPlayer = new Media(problemPath,
+          function(){
+            problemRead = true;
+            $scope.showText = false;
+            $scope.showQuestion = true;
+            problemPlayer.release();
+            $scope.$apply();
+          },
+          function(err){
+            $log.error(err);
+            problemRead = true;
+            $scope.showText = false;
+            problemPlayer.release();
+            $scope.showQuestion = true;
+            $scope.$apply();
+          }
+        );
 
-      $scope.textSpeech = "...";
-      $scope.showText = true;
-      problemPlayer.play();
+        $timeout(function(){
+          $scope.textSpeech = "...";
+          $scope.showText = true;
+          problemPlayer.play();
+        }, PROBLEM_TIMEOUT);
+      }
     };
 
     Ctrl15.showOptions = function(){
@@ -144,88 +153,112 @@
     };
 
     $scope.readQuestion = function(){
-      questionPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+config.level.questionPath,
-        function(){
-          questionPlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        },
-        function(err){
-          $log.error(err);
-          questionPlayer.release();
-          $scope.showText = false;
-          $scope.$apply();
-        }
-      );
-
-      $scope.textSpeech = "...";
-      $scope.showText = true;
-      questionPlayer.play();
-    };
-
-    $scope.checkAnswer = function(value){
-      if (value === config.level.answer){
-        var successFeedback = MathOralProblems.getSuccessAudio();
-
-        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      if (tapEnabled){
+        tapEnabled = false;
+        questionPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+config.level.questionPath,
           function(){
-            successPlayer.release();
+            questionPlayer.release();
             $scope.showText = false;
+            tapEnabled = true;
             $scope.$apply();
-
-            if (level == MathOralProblems.getMinLevel() &&
-              !ActividadesFinalizadasService.finalizada($scope.activityId)){
-              Ctrl15.minReached();
-            }
-            else {
-              if (level == MathOralProblems.getMaxLevel()){
-                Ctrl15.maxReached();
-              }
-              else {
-                level++;
-                Util.saveLevel($scope.activityId, level);
-                Ctrl15.getConfiguration(level);
-              }
-            }
           },
-          function (err){
+          function(err){
             $log.error(err);
-            successPlayer.release();
+            questionPlayer.release();
             $scope.showText = false;
+            tapEnabled = true;
             $scope.$apply();
           }
         );
 
-        $scope.textSpeech = successFeedback.text;
+        $scope.textSpeech = "...";
         $scope.showText = true;
-        successPlayer.play();
+        questionPlayer.play();
       }
-      else {
-        var failureFeedback = MathOralProblems.getFailureAudio();
+    };
 
-        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply();},
-          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; $scope.$apply();}
-        );
+    $scope.checkAnswer = function(value){
+      if (tapEnabled){
+        tapEnabled = false;
+        if (value === config.level.answer){
+          var successFeedback = MathOralProblems.getSuccessAudio();
 
-        $scope.textSpeech = failureFeedback.text;
-        $scope.showText = true;
-        failurePlayer.play();
+          successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+            function(){
+              tapEnabled = true;
+              successPlayer.release();
+              $scope.showText = false;
+              $scope.$apply();
+
+              if (level == MathOralProblems.getMinLevel() &&
+                !ActividadesFinalizadasService.finalizada($scope.activityId)){
+                Ctrl15.minReached();
+              }
+              else {
+                if (level == MathOralProblems.getMaxLevel()){
+                  Ctrl15.maxReached();
+                }
+                else {
+                  level++;
+                  Util.saveLevel($scope.activityId, level);
+                  Ctrl15.getConfiguration(level);
+                }
+              }
+            },
+            function (err){
+              $log.error(err);
+              successPlayer.release();
+              $scope.showText = false;
+              tapEnabled = true;
+              $scope.$apply();
+            }
+          );
+
+          $scope.textSpeech = successFeedback.text;
+          $scope.showText = true;
+          successPlayer.play();
+        }
+        else {
+          var failureFeedback = MathOralProblems.getFailureAudio();
+
+          failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+            function(){
+              failurePlayer.release();
+              tapEnabled = true;
+              $scope.showText = false;
+              $scope.$apply();
+            },
+            function(err){
+              failurePlayer.release();
+              $log.error(err);
+              $scope.showText = false;
+              tapEnabled = true;
+              $scope.$apply();
+            }
+          );
+
+          $scope.textSpeech = failureFeedback.text;
+          $scope.showText = true;
+          failurePlayer.play();
+        }
       }
     };
 
     $scope.tapInstruction = function() {
-      if (readproblem){
+      if (problemRead && tapEnabled){
+        tapEnabled = false;
         problemPlayer = new Media(problemPath,
           function(){
             problemPlayer.release();
             $scope.showText = false;
+            tapEnabled = true;
             $scope.$apply();
           },
           function(err){
             $log.error(err);
             problemPlayer.release();
             $scope.showText = false;
+            tapEnabled = true;
             $scope.$apply();
           }
         );
@@ -237,9 +270,9 @@
     };
 
     Ctrl15.minReached = function(){
+      tapEnabled = false;
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
-      $scope.$apply();
 
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
         function(){
@@ -256,12 +289,13 @@
 
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
     Ctrl15.maxReached = function(){
+      tapEnabled = false;
       level = 1;
-       // TODO remove this line after getting media assets
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){
           endPlayer.release();
@@ -275,6 +309,7 @@
 
       $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
    }]);
