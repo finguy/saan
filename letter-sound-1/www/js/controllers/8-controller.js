@@ -28,7 +28,7 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false;
+      readInstructions = true;
       $scope.dragDisabled = readInstructions;
       Ctrl8.getConfiguration(level);
     });
