@@ -5,7 +5,7 @@
           ng-attr-name={{$parent.$index}}
           icon="none"
           class="letter-button letter-{{letter}}"
-          on-tap="selectLetter($parent.$index, letter)"
+          ng-click="selectLetter($parent.$index, letter)"
           ng-checked=""
           ng-disabled="readInstructions || checkingWord || checkingLetter">
       </ion-radio>
