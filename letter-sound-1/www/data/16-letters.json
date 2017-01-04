@@ -63,8 +63,8 @@
     ]
   }],
   "instructionsPath": {
-       "intro": {"path": "instructions/intro.mp3", "text":"....."},
-       "tap": {"path": "instructions/tap.mp3", "text":"....."}
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/Tap.mp3", "text":"....."}
       },
 
   "scoreSetUp" : {
