@@ -4,6 +4,8 @@
       <div class="activity-card" ng-repeat="actividad in actividadesDisponibles">
         <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
         <div class="info">{{actividad}}</div>
+        <div class="info" ng-if="completed(actividad)">finalizada min</div>
+        <div class="info" ng-if="maxCompleted(actividad)">finalizada max</div>
       </div ng-repeat-end>
       <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles">
         <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
