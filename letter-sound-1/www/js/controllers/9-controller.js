@@ -312,7 +312,7 @@ angular.module('saan.controllers')
     Ctrl9.showDashboard(true);
   });
   $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel(Ctrl9.activityId, Ctrl9.level);
+    Util.saveLevel($scope.activityId, Ctrl9.level);
     Ctrl9.releasePlayer(Ctrl9.instructionsPlayer);
     Ctrl9.releasePlayer(Ctrl9.instructionsPlayerTap);
     Ctrl9.releasePlayer(Ctrl9.endPlayer);

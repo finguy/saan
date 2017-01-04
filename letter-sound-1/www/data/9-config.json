@@ -3,68 +3,56 @@
     "words": [
     {"word":"ball" ,
       "imgs": ["objects/ball.png"
-                ],
-      "instruction": "Select the image and drag the word"
+                ]
     },
     {"word":"cups" ,
      "imgs": ["objects/cups.png"
-                ],
-      "instruction": "Select the image and drag the word"
+                ]
     },
     {"word":"dishes" ,
       "imgs": ["objects/dishes.png"
-                ],
-      "instruction": "Select the image and drag the word"
+                ]
     },
     {"word":"hats" ,
       "imgs": ["objects/hats.png"
-                ],
-      "instruction": "Select the image and drag the word"
+                ]
     }]},
     { "id": 2,
      "words": [
-     {"word":"ball" ,
-       "imgs": ["objects/ball.png"
-                 ],
-       "instruction": "Select the image and drag the word"
+     {"word":"balloons" ,
+       "imgs": ["objects/balloons.png"
+                 ]
      },
-     {"word":"cups" ,
-      "imgs": ["objects/cups.png"
-                 ],
-       "instruction": "Select the image and drag the word"
+     {"word":"cake" ,
+      "imgs": ["objects/cake.png"
+                 ]
      },
-     {"word":"dishes" ,
-       "imgs": ["objects/dishes.png"
-                 ],
-       "instruction": "Select the image and drag the word"
+     {"word":"chairs" ,
+       "imgs": ["objects/chairs.png"
+                 ]
      },
-     {"word":"hats" ,
-       "imgs": ["objects/hats.png"
-                 ],
-       "instruction": "Select the image and drag the word"
+     {"word":"food" ,
+       "imgs": ["objects/food.png"
+                 ]
      }]
       },
       { "id": 3,
         "words": [
-        {"word":"ball" ,
-          "imgs": ["objects/ball.png"
-                    ],
-          "instruction": "Select the image and drag the word"
+        {"word":"drinks" ,
+          "imgs": ["objects/drinks.png"
+                    ]
         },
-        {"word":"cups" ,
-         "imgs": ["objects/cups.png"
-                    ],
-          "instruction": "Select the image and drag the word"
+        {"word":"food" ,
+         "imgs": ["objects/food.png"
+                    ]
         },
-        {"word":"dishes" ,
-          "imgs": ["objects/dishes.png"
-                    ],
-          "instruction": "Select the image and drag the word"
+        {"word":"balloons" ,
+          "imgs": ["objects/balloons.png"
+                    ]
         },
         {"word":"hats" ,
           "imgs": ["objects/hats.png"
-                    ],
-          "instruction": "Select the image and drag the word"
+                    ]
         }]}
   ],
   "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],
