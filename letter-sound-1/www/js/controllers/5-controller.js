@@ -19,6 +19,7 @@ angular.module('saan.controllers')
     Ctrl5.instructionsPlayer;
     Ctrl5.speaking = false;
 
+    var successPlayer;
     var failurePlayer;
     var endingFeedback;
     Ctrl5.showDashboard = function(readInstructions) {
@@ -37,8 +38,9 @@ angular.module('saan.controllers')
             Ctrl5.instructionsPlayer.play();
             Ctrl5.speaking = true;
           } else {
-           $scope.isSayingLetter = true;
-           $scope.textSpeech = $scope.letter;
+            $scope.isSayingLetter = true;
+            $scope.textSpeech = $scope.letter;
+            $scope.showText = true;
             Ctrl5.letterPlayer.play();
             Ctrl5.speaking = false;
           }
@@ -70,11 +72,12 @@ angular.module('saan.controllers')
         $scope.textSpeech = successFeedback.text;
         $scope.showText = true;
         Ctrl5.speaking = true;
-        var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
           function success() {
             successPlayer.release();
             $scope.showText = false;
             Ctrl5.speaking = false;
+            $scope.$apply();
           },
           function error(err) {
             $log.error(err);
@@ -97,10 +100,10 @@ angular.module('saan.controllers')
         Ctrl5.speaking = true;
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
           function success() {
-            failurePlayer.release();
             $scope.showText = false;
             Ctrl5.speaking = false;
             $scope.$apply();
+            failurePlayer.release();
           },
           function error(err) {
             $log.error(err);
@@ -153,7 +156,6 @@ angular.module('saan.controllers')
       } else {
         endingFeedback = RandomLetter.getEndingAudio(1);
         $scope.textSpeech = endingFeedback.text;
-
         Ctrl5.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
           function success() {
             Ctrl5.endPlayer.release();
@@ -233,7 +235,7 @@ angular.module('saan.controllers')
       Ctrl5.score = Score.update(-Ctrl5.substractScore, Ctrl5.score);
       Util.saveScore($scope.activityId, Ctrl5.score);
       $scope.checkingWord = false;
-      Ctrl5.errorFeedback();
+      $timeout(function() { Ctrl5.errorFeedback(); },1000);
     };
 
     Ctrl5.handleProgress = function(selectedObject) {

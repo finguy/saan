@@ -1,6 +1,6 @@
 $orange: #f98f44;
 .activity-5-content {
-  background-image: url('../assets/5/fondo.png');
+  background-image: url('../assets/5/background.png');
 
 
 
@@ -14,7 +14,6 @@ $orange: #f98f44;
 
   .box {
     margin: auto 5rem;
-    text-align: center;
     text-align: center;
     width: 20rem;
     height: 25rem;
@@ -39,7 +38,7 @@ $orange: #f98f44;
   }
 
   .talk-bubble {
-    width: 100%;
+    width: 30rem;
     right: 13rem;
     bottom: 40rem;
 
@@ -53,7 +52,6 @@ $orange: #f98f44;
   .letter .talk-bubble .talktext p {
    font-size: 8em;
    font-weight: bold;
-   font-family: Source Sans Pro;
    color: $orange;
    max-height: 10rem;
    text-transform: uppercase;
