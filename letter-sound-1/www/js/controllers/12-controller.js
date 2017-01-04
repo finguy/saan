@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-    .controller('12Ctrl', function($scope, $state, $log, $timeout, RandomText,
+    .controller('12Ctrl', function($scope,$sce, $state, $log, $timeout, RandomText,
       Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
       $scope.activityId = 12;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
@@ -109,7 +109,7 @@
         var textJson = data.textJson;
         var position = Util.getRandomNumber(textJson.questions.length);
         $scope.playedTexts.push(textJson.id);
-        $scope.text = textJson.text;
+        $scope.text = $sce.trustAsHtml(textJson.text);
         $scope.question = textJson.questions[position].question;
         $scope.answer = parseInt(textJson.questions[position].answer, 10);
         $scope.options = _.shuffle(textJson.questions[position].options);

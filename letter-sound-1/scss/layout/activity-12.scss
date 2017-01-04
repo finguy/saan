@@ -17,7 +17,7 @@ $blue-11: #0a8bc4;
     min-width: 92rem;
   }
 
-  .question-box {
+  .text-box {
     background: url('../assets/12/text-box.png') no-repeat;
     background-size: cover;
     color: $blue-11;
@@ -29,10 +29,22 @@ $blue-11: #0a8bc4;
     margin-top: 6rem;
     margin-bottom: 1rem;
     max-width: 65rem;
-    min-height: 32rem;
-    padding: 1rem;
-    text-align: center;
+    padding: 3rem;
+    text-align: left;
   }
+  .question-box {
+   background: url('../assets/12/text-box.png') no-repeat;
+   background-size: cover;
+   color: $blue-11;
+   display: flex;
+   font-size: 2.7em;
+   font-weight: bold;
+   padding: 1rem;
+   text-align: center;
+   width: 70rem;
+   margin-bottom: 1rem;
+   margin-left: 10rem;
+   }
 
   .option-container {
     align-items: center;
@@ -43,6 +55,8 @@ $blue-11: #0a8bc4;
     padding-bottom: 8rem;
     img {
      height: 15rem;
+     max-width: 18rem;
+     object-fit: contain;
     }
   }
 
