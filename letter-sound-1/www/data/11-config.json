@@ -1,39 +1,110 @@
 {
-  "minLevel": 1,
+  "minLevel": 2,
   "levels": [
     {
       "level": 1,
-      "instructionsPath": "Duck_Hunt.mp3",
-      "stories": [
+      "questionText": "What was the most important thing Mbott lost?",
+      "options": [
         {
-          "text": "I have five apples on a basket but then I put three more apples in. How many apples do I have in the basket in total?",
-          "options": [
-            {
-              "id": 1,
-              "imagePath": "img/10-assets/objects/apple.png"
-            },
-            {
-              "id": 2,
-              "imagePath": "img/10-assets/objects/ball1.png"
-            },
-            {
-              "id": 3,
-              "imagePath": "img/10-assets/objects/ball2.png"
-            },
-            {
-              "id": 4,
-              "imagePath": "img/10-assets/objects/bird1.png"
-            }
-          ],
-          "answer": 1,
-          "textSoundPath": "Galaga_Theme.mp3",
-          "questionSoundPath": "Contra_Intro.mp3"
+          "id": 1,
+          "path": "stories/1/sticker_bed.png"
+        },
+        {
+          "id": 2,
+          "path": "stories/1/sticker_clock.png"
+        },
+        {
+          "id": 3,
+          "path": "stories/1/sticker_pot.png"
+        },
+        {
+          "id": 4,
+          "path": "stories/1/sticker_radio.png"
         }
-      ]
+      ],
+      "answer": 1,
+      "storyPath": "stories/1/story_1.mp3",
+      "questionPath": "stories/1/question_1.mp3"
+    },
+    {
+      "level": 2,
+      "questionText": "Which of the following colors is not among my favorites?",
+      "options": [
+        {
+          "id": 1,
+          "path": "stories/2/sticker_green.png"
+        },
+        {
+          "id": 2,
+          "path": "stories/2/sticker_purple.png"
+        },
+        {
+          "id": 3,
+          "path": "stories/2/sticker_red.png"
+        },
+        {
+          "id": 4,
+          "path": "stories/2/sticker_yellow.png"
+        }
+      ],
+      "answer": 4,
+      "storyPath": "stories/2/story_2.mp3",
+      "questionPath": "stories/2/question_2.mp3"
+    },
+    {
+      "level": 3,
+      "questionText": "What was Golo trying to get from the cauldron but got puppies instead?",
+      "options": [
+        {
+          "id": 1,
+          "path": "stories/3/sticker_corn.png"
+        },
+        {
+          "id": 2,
+          "path": "stories/3/sticker_fish.png"
+        },
+        {
+          "id": 3,
+          "path": "stories/3/sticker_hot_dog.png"
+        },
+        {
+          "id": 4,
+          "path": "stories/3/sticker_tomatoe.png"
+        }
+      ],
+      "answer": 3,
+      "storyPath": "stories/3/story_3.mp3",
+      "questionPath": "stories/3/question_3.mp3"
+    },
+    {
+      "level": 4,
+      "questionText": "What instrument Tarabu learned to play with the humans?",
+      "options": [
+        {
+          "id": 1,
+          "path": "stories/4/sticker_bed.png"
+        },
+        {
+          "id": 2,
+          "path": "stories/4/sticker_clock.png"
+        },
+        {
+          "id": 3,
+          "path": "stories/4/sticker_pot.png"
+        },
+        {
+          "id": 4,
+          "path": "stories/4/sticker_radio.png"
+        }
+      ],
+      "answer": 1,
+      "storyPath": "stories/4/story_4.mp3",
+      "questionPath": "stories/4/question_4.mp3"
     }
   ],
   "instructions": {
-    "path": "intro.mp3"
+    "path": "intro.mp3",
+    "text": "Hi!"
   },
   "successFeedback": [
     {
@@ -46,21 +117,29 @@
     },
     {
       "path": "well_done.mp3",
-      "text": "Well done!!"
+      "text": "Well done!"
     }
   ],
   "failureFeedback": [
     {
       "path": "almost.mp3",
-      "text": "Almost! Try listening the word again"
+      "text": "Almost! Try listening to the story again!"
     },
     {
-      "path": "not_what.mp3",
-      "text": "That's not what we're looking for now"
+      "path": "not_correct.mp3",
+      "text": "I am not sure that's the correct answer"
+    },
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Outstanding!"},
+    {
+      "path": "end_2.mp3",
+      "text": "I am impressed!"}
   ]
 }

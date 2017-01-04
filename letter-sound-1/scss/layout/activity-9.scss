@@ -1,18 +1,29 @@
+$black: #000000;
 .activity9 {
-  background: url('../assets/9/background-wood.jpg') no-repeat fixed;
+  background: url('../assets/9/background.png') no-repeat fixed;
   background-size: cover;
 
   .letter {
-    height: 6rem;
-    width: 6rem;
+      background-image: url('../assets/9/party-sheet.png');
+      background-repeat:no-repeat;
+      background-position: center;
+      background-color:transparent;
+      border: 0;
+      min-height: 15rem;
+      width: 31rem;
+      display: flex;
+      flex-direction: initial;
+      padding-left: 10rem;
+      padding-top: 5rem;
+      font-size: 4em;
+      color: $black;
+      font-weight: bold;
+
   }
 
   .icon-word.dropzone {
-    background-image: url('../assets/9/cuadro.png');
-    border: 0;
-    border-radius: 0;
-    height: 17rem;
-    width: 17rem;
+    margin: 3rem;
+    height: 15rem;
   }
 
   .selected {
@@ -36,7 +47,8 @@
   .word-icons {
     display: flex;
     justify-content: center;
-    margin-bottom: 15rem;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
     padding: 1.5rem;
   }
 
@@ -47,6 +59,7 @@
 
   .list-letters {
     width: auto;
+    height: 25rem;
   }
 
   .as-sortable-item {
@@ -63,18 +76,26 @@
   }
 
   .character{
-    bottom: 8rem;
+    bottom: 0;
     position: absolute;
     right: 0;
 
      img {
-      height: 10rem;
+      height: 30rem;
       margin-left: auto;
      }
   }
 
   .talk-bubble {
-    right: 8rem;
-    bottom: 8rem;
+    align-self: flex-start;
+    bottom: 7rem;
+    right: 15rem;
+    z-index: 0;
+    width: 30rem;
+    &::after {
+      border-color: white transparent transparent white;
+      right: -1.38rem;
+      top: 5rem;
+    }
   }
 }

@@ -39,14 +39,14 @@ angular.module('saan.controllers')
 
     RandomLetterThree.letter(Ctrl3.level, Ctrl3.playedLetters).then(
       function success(data) {
-
-
         Ctrl3.setUpContextVariables(data);
         var readWordTimeout = 1000;
         var instructionsTimeout = 0;
         $timeout(function loadUI() {
           if (readInstructions) {
             Ctrl3.speaking = true;
+            $scope.textSpeech = "Hi!";
+            $scope.showText = true;
             Ctrl3.instructionsPlayer.play();
             readInstructions = false;
             instructionsTimeout = 21000;
@@ -61,7 +61,7 @@ angular.module('saan.controllers')
       function error(error) {
         $log.error(error);
       }
-    );   
+    );
   };
 
   $scope.readTapInstruction = function() {
@@ -119,6 +119,7 @@ angular.module('saan.controllers')
       Ctrl3.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
         function success() {
           Ctrl3.instructionsPlayer.release();
+          $scope.showText = false;
           $timeout(function() {
            Ctrl3.instructionsPlayer2.play();
           },500);
@@ -250,6 +251,8 @@ angular.module('saan.controllers')
        Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
        if (Ctrl3.finished) {
          ActividadesFinalizadasService.add($scope.activityId);
+         $scope.textSpeech = "Thank you!";
+         $scope.showText = true;
          Ctrl3.endPlayer.play();
        } else {
          Ctrl3.showDashboard(false);
@@ -258,6 +261,8 @@ angular.module('saan.controllers')
        Ctrl3.showDashboard(false);
      } else {
        Ctrl3.level = Ctrl3.initialLevel;
+       $scope.textSpeech = "Thank you!";
+       $scope.showText = true;
        Ctrl3.endPlayer.play();
      }
     }, 2000);

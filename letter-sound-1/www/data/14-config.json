@@ -1,31 +1,47 @@
 {
   "numberRange": 9,
-  "mode": 2,
   "options": 4,
-  "optionsRange": 5,  
-  "minLevel": 2,
+  "optionsRange": 5,
+  "minLevel": 1,
   "levels": [
     {
       "level": 1,
       "stages": 5,
+      "mode": 1,
       "optionImages": true,
       "numberImages": true
     },
     {
       "level": 2,
       "stages": 5,
+      "mode": 2,
       "optionImages": true,
-      "numberImages": false
+      "numberImages": true
     },
     {
       "level": 3,
       "stages": 5,
+      "mode": 3,
+      "optionImages": true,
+      "numberImages": false
+    },
+    {
+      "level": 4,
+      "stages": 5,
+      "mode": 3,
       "optionImages": false,
       "numberImages": false
     }
   ],
   "instructions": {
-    "path": "intro.mp3"
+    "intro": {
+      "path": "intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..."
+    }
   },
   "successFeedback": [
     {
@@ -44,15 +60,25 @@
   "failureFeedback": [
     {
       "path": "almost.mp3",
-      "text": "Almost! Try listening the word again"
+      "text": "Almost! Check the numbers and try again!"
     },
     {
-      "path": "not_what.mp3",
-      "text": "That's not what we're looking for now"
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    },
+    {
+      "path": "not_correct.mp3",
+      "text": "I'm not sure this is the correct number"
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+    }
   ]
 }

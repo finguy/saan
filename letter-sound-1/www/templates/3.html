@@ -1,11 +1,9 @@
 <ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity{{activityId}}-content">
-  <activity-status></activity-status>
   <div class="content">
-    <img ng-src="img/ic_record_voice_over.png" class="material-icons btn-play-word" ng-click="speak(instructions)" />
     <div class="row" id="activity">
       <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name,img.src)">
-        <div class="activity-{{activityId}}-box-shadow">
-          <div class="letter"> {{img.name}} </div>
+        <div class="letter">
+          {{img.name}}
         </div>
       </div>
     </div>

@@ -31,6 +31,14 @@ angular.module('saan.controllers')
     console.log("lobby check");
   };
 
+  $scope.completed = function(id) {
+    return ActividadesFinalizadasService.finalizada(parseInt(id,10));
+  };
+
+  $scope.maxCompleted = function(id) {
+    return ActividadesFinalizadasService.maxFinalizada(parseInt(id,10));
+  };
+
   $scope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
     if(toState.name === 'lobby'){
       chequearActividadesDisponibles();
