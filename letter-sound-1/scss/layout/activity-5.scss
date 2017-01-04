@@ -1,8 +1,10 @@
 $orange: #f98f44;
+$skyblue: #01b1ec;
+$oliveGreen: #3e4830;
+$englichGreen: #00873a;
+$white: #ffffff;
 .activity-5-content {
   background-image: url('../assets/5/background.png');
-
-
 
   .img-figure {
     max-height: 10rem;
@@ -12,18 +14,47 @@ $orange: #f98f44;
     display: block;
   }
 
-  .box {
-    margin: auto 5rem;
-    text-align: center;
-    width: 20rem;
-    height: 25rem;
-    background-color: white;
+  .box_wrapper {
+   background-color: $white;
+   height: 25rem;
+   width: 20rem;
+   margin: 2rem;
+
+   .box {
+      margin-top: 1rem;
+      margin-left: 2.5rem;
+      text-align: center;
+      width: 15rem;
+      height: 20rem;
+      padding-top: 5rem;
+    }
   }
+
+  .box_wrapper:nth-child(1){
+   .box {
+     background-color: $skyblue;
+   }
+  }
+
+  .box_wrapper:nth-child(2){
+   .box {
+       background-color: $englichGreen;
+      }
+  }
+
+  .box_wrapper:nth-child(3){
+   .box {
+     background-color: $oliveGreen;
+    }
+  }
+
+
+
 
   .floating-objects-container {
     position: absolute;
-    top: 35rem;
-    left: 15rem;
+    top: 33rem;
+    left: 25rem;
   }
 
   .character{

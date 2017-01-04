@@ -1,10 +1,10 @@
 <ion-view class="activity-{{activityId}}-content content-margin">
 
   <div class="row floating-objects-container">
-    <div ng-repeat="img in imgs" ng-click="selectLetter(img.name, img.src)">
+    <div ng-repeat="img in imgs" ng-click="selectLetter(img.name, img.src)" class="box_wrapper">
       <div class="box">
         <img ng-src="{{assetsPath}}{{img.src}}" class="img-figure" />
-      </div>
+      </div>     
     </div>
   </div>
   <div class="character" ng-click="readTapInstruction()">

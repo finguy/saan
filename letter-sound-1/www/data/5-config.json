@@ -1,110 +1,88 @@
 {"letters":
-  [{"letter":"a" ,
-    "letterSrc": "alphabet-buttons/a.png",
+  [{"letter":"m" ,
+    "letterSrc": "alphabet-buttons/m.png",
     "imgs":[
-      {"src": ["animals/wale.png",
-                "animals/snake.png"
+      {"src": ["animals/monkey.png"
               ],
-       "name" : "A"
+       "name" : "M"
      },
      {"src": [
-              "animals/tiger.png"
-     ],
-      "name" : "e"
-    },
-    {"src": ["animals/octopus.png",
-              "animals/frog.png",
-              "animals/dog.png",
               "animals/lion.png"
+     ],
+      "name" : "l"
+    },
+    {"src": [
+            "animals/parrot.png"
             ],
-     "name" : "o"
-   }
+     "name" : "P"
+     }
       ]
     },
-    {"letter":"e" ,
-      "letterSrc": "alphabet-buttons/e.png",
+    {"letter":"p" ,
+      "letterSrc": "alphabet-buttons/panter.png",
       "imgs":[
         {"src": [
-                  "animals/frog.png",
-                  "animals/dog.png",
-                  "animals/lion.png"
+                  "animals/frog.png"
                 ],
-         "name" : "o"
+         "name" : "f"
        },
       {"src": [
-              "animals/sheep.png"
+              "animals/parrot.png"
               ],
-       "name" : "E"
+       "name" : "P"
      },
-      {"src": ["animals/octopus.png",
-                "animals/duck.png"
-              ],
-       "name" : "u"
-     }
-        ]
-    },
-    {"letter":"i" ,
-      "letterSrc": "alphabet-buttons/i.png",
-      "imgs":[
-       {"src": [ "animals/horse.png",
-                 "animals/frog.png",
-                 "animals/dog.png"
-                 ],
-        "name" : "o"
-      },
-      {"src": ["animals/octopus.png",
-                "animals/turtle.png",
-                "animals/duck.png"],
-       "name" : "u"
-     },
-     {"src": ["animals/aligator.png",
-              "animals/fish.png",
-              "animals/bird.png",
-              "animals/pig.png"],
-      "name" : "I"
+     {"src": ["animals/monkey.png"],
+      "name" : "m"
     }
         ]
     },
-    {"letter":"o" ,
-      "letterSrc": "alphabet-buttons/o.png",
+    {"letter":"f" ,
+      "letterSrc": "alphabet-buttons/frog.png",
       "imgs":[
-       {"src": [ "animals/wale.png",
-                 "animals/snake.png"
+       {"src": [ "animals/panter.png"
+                 ],
+        "name" : "p"
+      },
+      {"src": ["animals/monkey.png"],
+       "name" : "mo"
+     },
+     {"src": ["animals/frog.png"],
+      "name" : "f"
+    }
+        ]
+    },
+    {"letter":"l" ,
+      "letterSrc": "alphabet-buttons/lion.png",
+      "imgs":[
+       {"src": [ "animals/lion.png"
                 ],
-        "name" : "a"
+        "name" : "l"
       },
       {"src": [
-              "animals/sheep.png"
+              "animals/panter.png"
             ],
-       "name" : "e"
+       "name" : "p"
      },
-     {"src": ["animals/octopus.png",
-               "animals/frog.png",
-               "animals/horse.png",
-               "animals/dog.png"
+     {"src": ["animals/rabbit.png"
              ],
-      "name" : "o"
+      "name" : "r"
     }
         ]
     },
-  {"letter":"u" ,
-    "letterSrc": "alphabet-buttons/u.png",
+  {"letter":"r" ,
+    "letterSrc": "alphabet-buttons/r.png",
     "imgs":[
-            {"src": [  "animals/octopus.png",
-                        "animals/duck.png"
+            {"src": [  "animals/rabbit.png"
                     ],
-             "name" : "u"
+             "name" : "r"
            },
            {"src": [
-                   "animals/sheep.png"
+                   "animals/frog.png"
                   ],
-            "name" : "e"
+            "name" : "f"
           },
-          {"src": ["animals/aligator.png",
-                   "animals/fish.png",
-                   "animals/bird.png",
-                   "animals/pig.png"],
-           "name" : "I"
+          {"src": ["animals/panter.png"],
+           "name" : "p"
          }
       ]
     }
@@ -115,8 +93,6 @@
        "action": {"path": "letters/", "text":""}
 
       },
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
   "scoreSetUp" : {
     "add": 1,
     "substract": 1

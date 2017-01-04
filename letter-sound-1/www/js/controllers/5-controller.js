@@ -194,6 +194,7 @@ angular.module('saan.controllers')
         function success() {
           Ctrl5.letterPlayer.release();
           Ctrl5.speaking = false;
+          $scope.showText = false;
           $scope.isSayingLetter = false;
         },
         function error(err) {
@@ -235,7 +236,10 @@ angular.module('saan.controllers')
       Ctrl5.score = Score.update(-Ctrl5.substractScore, Ctrl5.score);
       Util.saveScore($scope.activityId, Ctrl5.score);
       $scope.checkingWord = false;
-      $timeout(function() { Ctrl5.errorFeedback(); },1000);
+      //$scope.showText = false;
+      $timeout(function() {
+       Ctrl5.errorFeedback();
+      },1000);
     };
 
     Ctrl5.handleProgress = function(selectedObject) {
@@ -275,6 +279,7 @@ angular.module('saan.controllers')
       if (!Ctrl5.speaking) {
         $scope.isSayingLetter = true;
         $scope.textSpeech = $scope.letter;
+        $scope.showText = true;
         Ctrl5.speaking = true;
         Ctrl5.letterPlayer.play();
       }
