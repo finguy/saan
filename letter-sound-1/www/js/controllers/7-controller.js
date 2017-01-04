@@ -49,6 +49,8 @@
         config = data;
         $scope.size = config.level.numberOfCards;
         $scope.buildDeck();
+
+        activityReady = !readInstructions;
         if (readInstructions){
           $timeout(function () {
             var introPath = config.instructions.intro.path;
@@ -74,14 +76,26 @@
             readInstructions = false;
           }, 1000);
         }
-        else {
-          activityReady = true;
-        }
 
-        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
-          function(){}, function(err){ $log.error(err);}
-        );
+        Ctrl7.setTapPlayer();
+
       });
+    };
+
+    Ctrl7.setTapPlayer = function(){
+      tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+        function(){
+          activityReady = true;
+          $scope.showText = false;
+          $scope.$apply();
+        },
+        function(err){
+          $log.error(err);
+          activityReady = true;
+          $scope.showText = false;
+          $scope.$apply();
+        }
+      );
     };
 
     $scope.buildDeck = function(){
@@ -139,17 +153,29 @@
 
     $scope.tapInstruction = function() {
       if (activityReady){
+        activityReady = false;
+        $scope.textSpeech = config.instructions.tap.text;
+        $scope.showText = true;
         tapPlayer.play();
       }
     };
 
     Ctrl7.minReached = function(){
+      activityReady = false;
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
       level++;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
-        function(){ endPlayer.release(); $scope.showText = false; $state.go('lobby'); },
-        function(err){ $log.error(err); $scope.showText = false; $state.go('lobby'); }
+        function(){
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');
+        },
+        function(err){
+          $log.error(err);
+          $scope.showText = false;
+          $state.go('lobby');
+        }
       );
 
       $scope.textSpeech = config.ending[0].text;
@@ -160,9 +186,19 @@
 
     Ctrl7.maxReached = function(){
       level = 1;
+      activityReady = false;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
-        function(){ endPlayer.release(); $scope.showText = false; $state.go('lobby'); },
-        function(err){ $log.error(err); $scope.showText = false; $state.go('lobby');}
+        function(){
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');
+        },
+        function(err){
+          $log.error(err);
+          endPlayer.release();
+          $scope.showText = false;
+          $state.go('lobby');
+        }
       );
 
       $scope.textSpeech = config.ending[1].text;
@@ -173,10 +209,22 @@
 
     $scope.feedback = function(success){
       if (success){
+        activityReady = false;
         var successFeedback = DeckBuilder.getSuccessAudio();
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-          function(){ $scope.showText = false; $scope.$apply(); },
-          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply();}
+          function(){
+            activityReady = true;
+            successPlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+          },
+          function(err){
+            $log.error(err);
+            successPlayer.release();
+            activityReady = true;
+            $scope.showText = false;
+            $scope.$apply();
+          }
         );
 
         $scope.textSpeech = successFeedback.text;
