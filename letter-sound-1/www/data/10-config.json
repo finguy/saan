@@ -1,44 +1,44 @@
 {"info":
   [ {
-    "word": "frog",
-    "audio": "frog.mp3",
-    "rimes": ["blog","clog","cog"]
+    "word": "Frog",
+    "audio": "Frog.mp3",
+    "rimes": ["Blog","Clog","Cog"]
     },
-    {"word":"mouse" ,
-      "audio":"mouse.mp3",
-      "rimes": ["spouse","prouse"]
+    {"word":"Mouse" ,
+      "audio":"Mouse.mp3",
+      "rimes": ["Spouse","Prouse"]
     },
-    {"word":"third" ,
-     "audio": "third.mp3",
-      "rimes":["curd","herd"]
+    {"word":"Third" ,
+     "audio": "Third.mp3",
+      "rimes":["Curd","Herd"]
     },
-    {"word":"all" ,
-     "audio":"all.mp3",
-      "rimes": ["doll","call","small"]
+    {"word":"All" ,
+     "audio":"All.mp3",
+      "rimes": ["Doll","Call","Small"]
     },
-    {"word":"bee" ,
-     "audio":"bee.mp3",
-      "rimes": ["glee","see","free"]
+    {"word":"Bee" ,
+     "audio":"Bee.mp3",
+      "rimes": ["Glee","See","Free"]
     },
-    {"word":"giger" ,
-     "audio": "giger.mp3",
-      "rimes": ["eiger"]
+    {"word":"Giger" ,
+     "audio": "Giger.mp3",
+      "rimes": ["Eiger"]
     },
-    {"word":"chapel",
-     "audio":"chapel.mp3",
-     "rimes": ["grappel","pineapple"]
+    {"word":"Chapel",
+     "audio":"Chapel.mp3",
+     "rimes": ["Grappel","Pineapple"]
 
     }],
-  "allWords": ["frog","blog","clog","cog","mouse","spouse","prouse","third","burd","curd","herd","chapel","grappel","pineapple","giger","eiger","bee","glee","see","free","all","doll","call","small"],
+  "allWords": ["Frog","Blog","Clog","Cog","Mouse","Spouse","Prouse","Third","Burd","Curd","Herd","Chapel","Grappel","Pineapple","Giger","Eiger","Bee","Glee","See","Free","All","Doll","Call","Small"],
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
-       "tap": {"path": "instructions/Tap.mp3", "text":"....."}
+       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
+       "tap": {"path": "instructions/Tap.mp3", "text":"..."}
   },
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 2,
+  "finalizationLevel": 3,
   "successFeedback": [
     {
       "path": "Amazing.mp3",
@@ -56,11 +56,11 @@
   "endFeedback": [
     {
      "path": "End1.mp3",
-     "text": "......"
+     "text": "Thank you!"
     },
     {
       "path": "End2.mp3",
-      "text": "......"
+      "text": "Thank you!"
     }
 
   ],
