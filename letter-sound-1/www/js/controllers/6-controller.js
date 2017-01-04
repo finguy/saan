@@ -6,6 +6,7 @@ angular.module('saan.controllers')
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
+  $scope.shuffleLetters = [];
   $scope.letters2 = [];
   $scope.dropzone = [];
   $scope.hasDraggedLetter = [];
@@ -82,7 +83,7 @@ angular.module('saan.controllers')
            Ctrl6.instructionsPlayer.play();
           } else {
            $scope.speaking = true;
-           Ctrl6.instructionsTapPlayer.play();
+           Ctrl6.phonemaPlayer.play();
           }
         }, 1000);
       },
@@ -114,17 +115,21 @@ angular.module('saan.controllers')
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.finalizationLevel = data.finalizationLevel;
     $scope.word = wordJson.word;
+    $scope.wordImg = AssetsPath.getImgs($scope.activityId) + Util.getRandomElemFromArray(wordJson.imgs);
+    $scope.showImage = false;
     Ctrl6.initialLevel = 0;
     $scope.letters = [];
-    var letters = wordJson.word.split("");
+    //$scope.shuffleLetters = [];
+    var letters = wordJson.word.split("");   
     for (var i in letters) {
      if (letters[i]) {
       $scope.letters.push({"index": i, "letter": letters[i]});
      }
     }
-
+    //$scope.shuffleLetters = _.shuffle($scope.letters);
+    //console.log($scope.shuffleLetters)
     $scope.letters2 = [];
-    $scope.currentPhonema = Util.getRandomElemFromArray($scope.letters);
+    $scope.currentPhonema = $scope.letters[0];
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
     $scope.hasDraggedLetter = [];
@@ -132,15 +137,15 @@ angular.module('saan.controllers')
     for (var i = 0; i < $scope.letters.length; i++) {
      var letter = $scope.letters[i];
      $scope.hasDraggedLetter[letter + "_" + i] = false;
-
-
     }
 
     Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl6.instructionsPlayer.release();
         if (!Ctrl6.beforeLeave) {
+         $timeout(function() {
           Ctrl6.phonemaPlayer.play();
+         },1000);
         }
         $scope.showText = false;
         $scope.speaking = false;
@@ -149,24 +154,6 @@ angular.module('saan.controllers')
       function error(err) {
         $log.error(err);
         Ctrl6.instructionsPlayer.release();
-        $scope.showText = false;
-        $scope.speaking = false;
-      }
-    );
-
-    Ctrl6.instructionsTapPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
-      function success() {
-        Ctrl6.instructionsTapPlayer.release();
-        $scope.showText = false;
-        $scope.speaking = false;
-        if (!Ctrl6.beforeLeave) {
-          Ctrl6.phonemaPlayer.play();
-        }
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl6.instructionsTapPlayer.release();
         $scope.showText = false;
         $scope.speaking = false;
       }
@@ -264,6 +251,7 @@ angular.module('saan.controllers')
          Ctrl6.score = Score.update($scope.addScore, $scope.activityId, Ctrl6.finished);
        }
        if (LAST_CHECK) {
+         $scope.showImage = true;
          Ctrl6.successFeedback();
          $timeout(function() {
            if (!Ctrl6.finished) {
@@ -327,7 +315,7 @@ angular.module('saan.controllers')
 
   $scope.readTapInstruction = function() {
    if (!$scope.speaking){
-     Ctrl6.instructionsTapPlayer.play();
+     Ctrl6.phonemaPlayer.play();
      $scope.speaking = true;
    }
   };
@@ -381,7 +369,6 @@ angular.module('saan.controllers')
     Ctrl6.beforeLeave = true;
     Util.saveLevel($scope.activityId, Ctrl6.level);
     Ctrl6.releasePlayer(Ctrl6.instructionsPlayer);
-    Ctrl6.releasePlayer(Ctrl6.instructionsTapPlayer);
     Ctrl6.releasePlayer(Ctrl6.phonemaPlayer);
     Ctrl6.releasePlayer(Ctrl6.endPlayer);
     Ctrl6.releasePlayer(successPlayer);

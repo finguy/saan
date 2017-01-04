@@ -1,52 +1,32 @@
 {"words":
-  [{"word":"dog" ,
-    "instruction":"Drag the letter you hear to the magic box",
+  [{"word":"banana" ,
     "imgs":[
-                "objects/dog1.png",
-                "objects/dog2.png",
-                "objects/dog3.png"
+                "objects/banana.png"
       ]
     },
-    {"word":"house" ,
-      "instruction": "Drag the letter you hear to the magic box",
+    {"word":"bean" ,
       "imgs":[
-                 "objects/house1.png",
-                  "objects/house2.png",
-                  "objects/house3.png",
-                  "objects/house4.png"
+                 "objects/bean.png"
         ]
     },
-    {"word":"bird" ,
-      "instruction": "Drag the letter you hear to the magic box",
+    {"word":"corn" ,
       "imgs":[
-                 "objects/bird1.png",
-                  "objects/bird2.png"
+                 "objects/corn.png"
         ]
     },
-    {"word":"ball" ,
-      "instruction": "Drag the letter you hear to the magic box",
+    {"word":"egg" ,
       "imgs":[
-                 "objects/ball1.png",
-                  "objects/ball2.png"
+                 "objects/egg.png"
         ]
     },
-    {"word":"tree" ,
-      "instruction": "Drag the letter you hear to the magic box",
+    {"word":"fish" ,
       "imgs":[
-                 "objects/tree1.png"
+                 "objects/fish.png"
         ]
     },
-    {"word":"tiger" ,
-      "instruction":"Drag the letter you hear to the magic box",
+    {"word":"tomato" ,
       "imgs":[
-                 "objects/tiger1.png",
-                  "objects/tiger2.png"
-        ]
-    },
-    {"word":"apple" ,
-      "instruction":"Drag the letter you hear to the magic box",
-      "imgs":[
-                 "objects/apple.png"
+                 "objects/tomatoes.png"
         ]
     }
   ],

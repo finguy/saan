@@ -10,7 +10,7 @@
   .activity-6-letterContainer{
     display: inline-flex;
     position: absolute;
-    bottom:0;
+    bottom:10rem;
     left: 30%;
     padding: 1rem;
   }
@@ -23,12 +23,21 @@
     background: transparent;
     border: 0;
   }
+ .lettersDragged {
+  position:absolute;
+  top: 25rem;
+  left: 45rem;
+  width: 30rem;
+  display: flex;
+  justify-content: center;
+  margin:auto;
+ }
  .dragged-letter {
-  height: 10rem;
-  width: 10rem;
+  height: 6rem;
+  width: 6rem;
   background: transparent;
   border: 0;
-  margin-top: 10rem;
+
  }
   .icon-phonema {
     padding: 5rem;
@@ -37,7 +46,6 @@
   .dropzone {
     background: url('../assets/6/magic-pot.png') no-repeat center / contain;
     min-height: 50rem;
-    background-size: 50rem;
     border:0;
 
     .as-sortable-placeholder {
@@ -76,7 +84,7 @@
   }
 
   .talk-bubble {
-    right: 14rem;
+    right: 16rem;
     bottom: 12rem;
     width: 100%;
 
