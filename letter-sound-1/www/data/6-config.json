@@ -1,83 +1,77 @@
-{"words":
-  [{"word":"banana" ,
-    "imgs":[
-                "objects/banana.png"
-      ]
-    },
-    {"word":"beans" ,
-      "imgs":[
-                 "objects/beans.png"
-        ]
-    },
-    {"word":"corn" ,
-      "imgs":[
-                 "objects/corn.png"
-        ]
-    },
-    {"word":"egg" ,
-      "imgs":[
-                 "objects/egg.png"
-        ]
-    },
-    {"word":"fish" ,
-      "imgs":[
-                 "objects/fish.png"
-        ]
-    },
-    {"word":"tomato" ,
-      "imgs":[
-                 "objects/tomato.png"
-        ]
-    }
-  ],
+{
+  "words": [{
+    "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+    "imgs": [
+      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+    ]
+  }, {
+   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+   "imgs": [
+     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+   ]
+  }, {
+   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+   "imgs": [
+     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+   ]
+  }, {
+   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+   "imgs": [
+     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+   ]
+  }, {
+   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+   "imgs": [
+     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+   ]
+  }, {
+   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+   "imgs": [
+     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+   ]
+  }],
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"..."},
-       "tap": {"path": "instructions/tapInstructions.mp3", "text":"..."}
-      },
-  "successMessages": ["Well done!", "Awesome!","Great!","Amazing!"],
-  "errorMessages": ["Try again!"],
-  "scoreSetUp" : {
+    "intro": {
+      "path": "instructions/Intro.mp3",
+      "text": "..."
+    },
+    "tap": {
+      "path": "instructions/tapInstructions.mp3",
+      "text": "..."
+    }
+  },
+  "scoreSetUp": {
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel" : 3,
-  "successFeedback": [
-    {
-      "path": "Amazing.mp3",
-      "text": "Amazing!"
-    },
-    {
-      "path": "Great.mp3",
-      "text": "Great!"
-    },
-    {
-      "path": "Well_Done.mp3",
-      "text": "Well done!"
-    }
-  ],
-  "endingFeedback": [
-    {
-     "path": "End1.mp3",
-     "text": "Thank you!"
-    },
-    {
+  "finalizationLevel": 3,
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  }, {
+    "path": "Great.mp3",
+    "text": "Great!"
+  }, {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
+  "endingFeedback": [{
+      "path": "End1.mp3",
+      "text": "Thank you!"
+    }, {
       "path": "End2.mp3",
       "text": "Thank you!"
     }
 
   ],
-  "failureFeedback": [
-    {
-      "path": "Almost.mp3",
-      "text": "Almost! Try listening to the letter again"
-    },
-    {
-      "path": "Not_Correct_Letter.mp3",
-      "text": "I am not sure this is the correct letter"
-    },
-    {
-      "path": "Try_Again.mp3",
-      "text": "Try again!"
-    }
-  ]
+  "failureFeedback": [{
+    "path": "Almost.mp3",
+    "text": "Almost! Try listening to the letter again"
+  }, {
+    "path": "Not_Correct_Letter.mp3",
+    "text": "I am not sure this is the correct letter"
+  }, {
+    "path": "Try_Again.mp3",
+    "text": "Try again!"
+  }]
 }

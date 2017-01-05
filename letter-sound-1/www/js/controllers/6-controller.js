@@ -20,7 +20,7 @@ angular.module('saan.controllers')
   var Ctrl6 = Ctrl6 || {};
   var dragChecked = false;
   Ctrl6.instructionsPlayer;
-
+  Ctrl6.playedWords = {};
   Ctrl6.successFeedback = function() {
    if (!$scope.speaking) {
      successFeedback = RandomWordSix.getSuccessAudio();
@@ -73,7 +73,7 @@ angular.module('saan.controllers')
     Ctrl6.setUpScore();
     Ctrl6.setUpStatus();
 
-    RandomWordSix.word(Ctrl6.level).then(
+    RandomWordSix.word(Ctrl6.level, Ctrl6.playedWords).then(
       function success(data) {
         Ctrl6.setUpContextVariables(data);
         $timeout(function() {
@@ -112,20 +112,20 @@ angular.module('saan.controllers')
   }
 
   Ctrl6.setUpContextVariables = function(data) {
-    var wordJson = data.word;
-
+    var word = data.word;
+    var img  = data.img;
     $scope.addScore = data.scoreSetUp.add;
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.finalizationLevel = data.finalizationLevel;
-    $scope.word = wordJson.word;
-    $scope.wordImg = AssetsPath.getImgs($scope.activityId) + Util.getRandomElemFromArray(wordJson.imgs);
+    $scope.word = word;
+    $scope.wordImg = AssetsPath.getImgs($scope.activityId) + img;
     $scope.showImage = false;
     Ctrl6.initialLevel = 0;
     $scope.letters = [];
     $scope.letterSounds = [];
+    Ctrl6.playedWords[$scope.word] = true;
 
-    //$scope.shuffleLetters = [];
-    var letters = wordJson.word.split("");
+    var letters = word.split("");
     for (var i in letters) {
      if (letters[i]) {
       $scope.letters.push({"index": i, "letter": letters[i]});
@@ -135,9 +135,6 @@ angular.module('saan.controllers')
 
 
     $scope.letters = _.shuffle($scope.letters);
-
-    // $scope.shuffleLetters = _.shuffle($scope.letters);
-    //console.log($scope.shuffleLetters)
     $scope.letters2 = [];
     $scope.currentPhonema = $scope.letterSounds[0];
     $scope.letterSounds.shift();
@@ -149,8 +146,6 @@ angular.module('saan.controllers')
      var letter = $scope.letters[i];
      $scope.hasDraggedLetter[letter + "_" + i] = false;
     }
-
-    // $scope.letters= angular.copy(_.shuffle($scope.letters));
 
     Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
@@ -275,7 +270,7 @@ angular.module('saan.controllers')
               $scope.showText = true;
                Ctrl6.endPlayer.play();
              }
-           } else if ( Ctrl6.level  < $scope.totalLevels ) {
+           } else if ( (Ctrl6.level + 1)  < $scope.totalLevels ) {
              Ctrl6.levelUp();
              Ctrl6.showDashboard(false);
            } else {
@@ -369,7 +364,7 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   $scope.$on('$ionicView.beforeEnter', function() {
-    Ctrl6.showDashboard(false);
+    Ctrl6.showDashboard(true);
     Ctrl6.beforeLeave = false;
   });
 
