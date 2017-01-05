@@ -38,7 +38,7 @@
           "name" : 2
          }
           ]
-      },     
+      },
       {"number":4,
         "imgs":[
           {"src": [],
@@ -117,24 +117,14 @@
           "name" : 2
          }
           ]
-      },
-      {"number":10,
-        "imgs":[
-          {"src": [],
-           "name" : 10
-         },
-          {"src": [],
-           "name" : 3
-         },
-         {"src": [],
-          "name" : 2
-         }
-          ]
       }
   ],
-  "assets": [ "assorted-objects/banana.png",
-            "assorted-objects/bean.png",
-            "assorted-objects/tomato.png"
+  "assets": [ "assorted-objects/bananas.png",
+              "assorted-objects/beans.png",
+              "assorted-objects/tomatoes.png",
+              "assorted-objects/corn.png",
+              "assorted-objects/eggs.png",
+              "assorted-objects/fish.png"
 
         ],
   "instructionsPath": {

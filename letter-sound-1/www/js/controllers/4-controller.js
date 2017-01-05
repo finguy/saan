@@ -83,16 +83,14 @@ angular.module('saan.controllers')
       if (numberJson.imgs[i]) {
         var img = {};
         img.name = numberJson.imgs[i].name;
-        img.src = [];
         //Select an unused asset
         var index = Util.getRandomNumber(length);
         while (used[index] || !Ctrl4.assets[index]) {
           index = Util.getRandomNumber(length);
         }
         used[index] = true;
-        for (var j = 0; j < img.name; j++) {
-          img.src.push(Ctrl4.assets[index]);
-        }
+        var path = Ctrl4.assets[index].split("/");
+        img.src = path[0] +"/" + img.name + "-" + path[1];        
         $scope.imgs.push(img);
       }
     }
