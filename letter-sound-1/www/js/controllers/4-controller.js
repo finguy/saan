@@ -90,7 +90,7 @@ angular.module('saan.controllers')
         }
         used[index] = true;
         var path = Ctrl4.assets[index].split("/");
-        img.src = path[0] +"/" + img.name + "-" + path[1];        
+        img.src = path[0] +"/" + img.name + "-" + path[1];
         $scope.imgs.push(img);
       }
     }
@@ -285,7 +285,7 @@ angular.module('saan.controllers')
   $scope.sortableSourceOptions = {
     containment: '.activity4-content',
     containerPositioning: 'relative',
-    clone: true,
+    clone: false,
     dragEnd: function(eventObj) {
       if ($scope.draggedOk){
         Ctrl4.handleProgress(true);
