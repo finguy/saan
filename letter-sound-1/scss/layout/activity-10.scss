@@ -1,11 +1,14 @@
  $darkBlue: #1e1e4c;
+
 .activity10 {
+
   background: url('../assets/10/background.png');
   background-size: cover;
 
   .dashboard {
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
 
   .word {
@@ -18,46 +21,49 @@
   }
 
   .wordToPlay {
-       background-image: url('../assets/10/sheet-second-word.png');
-       background-repeat: no-repeat;
-       background-position: center;
-       background-color:transparent;
-       border: 0;
-       min-height: 15rem;
-       width: 20rem;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       font-size: 4em;
-       color: $darkBlue;
-       font-weight: bold;
+    background-image: url('../assets/10/sheet-second-word.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:transparent;
+    border: 0;
+    min-height: 15rem;
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    color: $darkBlue;
+    font-weight: bold;
    }
 
   .wordToRime {
-   background-image: url('../assets/10/sheet-first-word.png');
-   background-position: center;
-   background-color:transparent;
-   background-repeat: no-repeat;
-   border: 0;
-   min-height: 15rem;
-   width: 20rem;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: 4em;
-   color: $darkBlue;
-   font-weight: bold;
+    background-image: url('../assets/10/sheet-first-word.png');
+    background-position: center;
+    background-color:transparent;
+    background-repeat: no-repeat;
+    border: 0;
+    min-height: 15rem;
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    color: $darkBlue;
+    font-weight: bold;
   }
+
   .data-container {
-    margin: 0;
-    padding: 10rem;
-    width: 40rem;
-    height: 30rem;
-    position:absolute;
-    left: 50rem;
-    top: 1rem;
-    display:flex;
+    align-self: center;
+    display: flex;
     flex-direction: column;
+    height: 30rem;
+    margin: 10rem 0 0;
+    width: 40rem;
+
+    div {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .list-letters {
@@ -72,16 +78,16 @@
   }
 
   .as-sortable-placeholder {
-    opacity: 0;
+    display: none !important;
   }
 
   .list-words {
+    align-items: center;
     display: flex;
+    flex-grow: 1;
     flex-wrap: wrap;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 10%;
+    margin-bottom: 12rem;
   }
 
   .as-sortable-dragging {

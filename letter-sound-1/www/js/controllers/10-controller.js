@@ -18,6 +18,7 @@
       $scope.endText = "";
       var successPlayer;
       var failurePlayer;
+      var dragChecked = false;
       var Ctrl10 = Ctrl10 || {};
       Ctrl10.instructionsPlayer;
 
@@ -335,9 +336,10 @@
         containerPositioning: 'relative',
         clone: false,
         dragEnd: function(eventObj) {
-          if (!$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
+          if (dragChecked && !$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
             $scope.handleProgress(false);
           }
+          dragChecked = false;
         },
         itemMoved: function (eventObj) {
           $scope.handleProgress(true);
@@ -350,6 +352,7 @@
       //Drop
       $scope.sortableTargetOptions = {
         accept: function(sourceItemHandleScope, destSortableScope){
+          dragChecked = true;
           var ER = new RegExp(sourceItemHandleScope.modelValue.word,"i");
           return ER.test($scope.rimesStr);
         },
