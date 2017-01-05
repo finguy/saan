@@ -1,0 +1,137 @@
+{"letters":
+  [{"letter":"m" ,
+    "letterSrc": "alphabet-buttons/m.png",
+    "imgs":[
+      {"src": ["animals/monkey.png"
+              ],
+       "name" : "M"
+     },
+     {"src": [
+              "animals/lion.png"
+     ],
+      "name" : "l"
+    },
+    {"src": [
+            "animals/parrot.png"
+            ],
+     "name" : "P"
+     }
+      ]
+    },
+    {"letter":"p" ,
+      "letterSrc": "alphabet-buttons/panter.png",
+      "imgs":[
+        {"src": [
+                  "animals/frog.png"
+                ],
+         "name" : "f"
+       },
+      {"src": [
+              "animals/parrot.png"
+              ],
+       "name" : "P"
+     },
+     {"src": ["animals/monkey.png"],
+      "name" : "m"
+    }
+        ]
+    },
+    {"letter":"f" ,
+      "letterSrc": "alphabet-buttons/frog.png",
+      "imgs":[
+       {"src": [ "animals/panter.png"
+                 ],
+        "name" : "p"
+      },
+      {"src": ["animals/monkey.png"],
+       "name" : "mo"
+     },
+     {"src": ["animals/frog.png"],
+      "name" : "f"
+    }
+        ]
+    },
+    {"letter":"l" ,
+      "letterSrc": "alphabet-buttons/lion.png",
+      "imgs":[
+       {"src": [ "animals/lion.png"
+                ],
+        "name" : "l"
+      },
+      {"src": [
+              "animals/panter.png"
+            ],
+       "name" : "p"
+     },
+     {"src": ["animals/rabbit.png"
+             ],
+      "name" : "r"
+    }
+        ]
+    },
+  {"letter":"r" ,
+    "letterSrc": "alphabet-buttons/r.png",
+    "imgs":[
+            {"src": [  "animals/rabbit.png"
+                    ],
+             "name" : "r"
+           },
+           {"src": [
+                   "animals/frog.png"
+                  ],
+            "name" : "f"
+          },
+          {"src": ["animals/panter.png"],
+           "name" : "p"
+         }
+      ]
+    }
+    ],
+
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "action": {"path": "letters/", "text":""}
+
+      },
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "finalizationLevel": 3,
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  },
+  {
+    "path": "Great.mp3",
+    "text": "Great!"
+  },
+  {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
+  "failureFeedback": [
+    {
+      "path": "NotComing.mp3",
+      "text": "Hmm I think this guest told me he cannot come to the party."
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again!"
+    },
+    {
+     "path":"Almost.mp3",
+     "text": "Almost! Try listening to the letter again"
+    }
+  ],
+  "endFeedback": [
+    {
+      "path": "Fin1.mp3",
+      "text": ""
+    },
+    {
+      "path": "Fin2.mp3",
+      "text": ""
+    }
+  ]
+}

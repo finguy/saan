@@ -7,22 +7,16 @@ angular.module('saan.services')
       return $http.get(src).then(
         function success(response) {
           data = response.data;
-          var lettersNotPlayed = [];
-          if (playedLetters.length === 0 ){
-            lettersNotPlayed = data.letters;
+          var json = data.letters;
+          var index;
+          if (level <= json.length) {
+            index = level - 1;
           } else {
-            for (var i in data.letters) { //FIXME: try to use underscore
-              if (data.letters[i]) {
-                var ER = new RegExp(data.letters[i].letter, "i");
-                if (!ER.test(playedLetters.toString())) {
-                  lettersNotPlayed.push(data.letters[i]);
-                }
-              }
-            }
+            index = 0; //Start all over
           }
-          var position = Util.getRandomNumber(lettersNotPlayed .length);
+
           return {
-            letter: lettersNotPlayed[position],
+            letter: json[index],
             instructions : data.instructions,
             instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
@@ -57,10 +51,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/5-letters.json';
+            src = 'data/5-config.json';
             break;
           default:
-            src = 'data/5-letters.json';
+            src = 'data/5-config.json';
         }
         return src;
       },

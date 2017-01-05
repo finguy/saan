@@ -1,15 +1,10 @@
+$orange: #f98f44;
+$skyblue: #01b1ec;
+$oliveGreen: #3e4830;
+$englichGreen: #00873a;
+$white: #ffffff;
 .activity-5-content {
   background-image: url('../assets/5/background.png');
-
-  .letter-container {
-    text-align: center;
-    margin-top: 10rem;
-  }
-
-  .img-letter {
-    height: 12rem;
-    width: 12rem;
-  }
 
   .img-figure {
     max-height: 10rem;
@@ -19,20 +14,51 @@
     display: block;
   }
 
-  .box {
-    margin: auto 10rem;
-    text-align: center;
-    width: auto;
+  .box_wrapper {
+   background-color: $white;
+   height: 25rem;
+   width: 20rem;
+   margin: 2rem;
+
+   .box {
+      margin-top: 1rem;
+      margin-left: 2.5rem;
+      text-align: center;
+      width: 15rem;
+      height: 20rem;
+      padding-top: 5rem;
+    }
   }
 
+  .box_wrapper:nth-child(1){
+   .box {
+     background-color: $skyblue;
+   }
+  }
+
+  .box_wrapper:nth-child(2){
+   .box {
+       background-color: $englichGreen;
+      }
+  }
+
+  .box_wrapper:nth-child(3){
+   .box {
+     background-color: $oliveGreen;
+    }
+  }
+
+
+
+
   .floating-objects-container {
-    align-items: flex-end;
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 33rem;
+    left: 25rem;
   }
 
   .character{
-    bottom: 8rem;
+    bottom: 5rem;
     position: absolute;
     right: 0;
 
@@ -43,7 +69,27 @@
   }
 
   .talk-bubble {
-    right: 22rem;
-    bottom: 15rem;
+    width: 30rem;
+    right: 13rem;
+    bottom: 40rem;
+
+    &::after {
+     bottom: initial;
+     right: 1rem;
+     top: 93%;
+    }
+  }
+
+  .letter .talk-bubble .talktext p {
+   font-size: 8em;
+   font-weight: bold;
+   color: $orange;
+   max-height: 10rem;
+   text-transform: uppercase;
+  }
+
+  .letter .talk-bubble::after {
+    right: 2rem;
+    top: 13rem;
   }
 }
