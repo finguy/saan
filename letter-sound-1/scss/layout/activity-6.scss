@@ -1,5 +1,8 @@
-.activity6 {
-  background-image: url('../assets/6/background.png');
+.activity-6 {
+  background: url('../assets/6/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
 
   .images-list {
     float: left;
@@ -7,16 +10,41 @@
     width: 50rem;
   }
 
-  .activity-6-letterContainer{
-    @include image-container-1(2rem, #5E2B26, #e7ddc4);
-    display: inline-flex;
+  .ingredient-image {
+    height: 12rem;
+    width: 12rem;
+    margin-top: 6rem;
+    align-self: center;
+    object-fit: contain;
+  }
+
+  .letterContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
     margin-bottom: 10rem;
-    padding: 1rem;
   }
 
   .letters-list.as-sortable-item{
     height: 10rem;
     width: 10rem;
+    float: left;
+    bottom: 0;
+    background: transparent;
+    border: 0;
+  }
+
+  .lettersDragged {
+    display: flex;
+    width: 50rem;
+    align-self: center;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+ .dragged-letter {
+    height: 6rem;
+    width: 6rem;
     background: transparent;
     border: 0;
   }
@@ -26,28 +54,21 @@
   }
 
   .dropzone {
-    background: url('../assets/6/objects/treasure-chest-stars.png') no-repeat center / contain;
-    height: 30rem;
-    border:0;
+    background: url('../assets/6/magic-pot.png') no-repeat center / contain;
+    min-height: 50rem;
+    border: 0;
+    margin-bottom: 12rem;
+    display: flex;
+    flex-direction: column;
 
     .as-sortable-placeholder {
-      visibility: hidden;
+      display: none !important;
     }
   }
 
-  .activity-6-dragged-phonemas {
-      background-image: url('../assets/6/ice-cube.png');
-      background-repeat: no-repeat;
-      min-height: 19rem;
-      margin: .5rem;
-      border: 0;
-      border-radius: 0;
-      width: 20rem;
-  }
 
   .dragged-phonemas {
     height: 8rem;
-    -webkit-transform: rotate(3deg);
     transform: rotate(3deg);
     margin-left: 3rem;
     margin-top: 5rem;
@@ -55,25 +76,26 @@
     display: block;
   }
 
-  .as-sortable-dragging{
-    background: 0;
-    border: 0;
-    margin: 0;
+  .as-sortable-placeholder {
+    display: none !important;
   }
 
   .character{
-    bottom: 20rem;
+    bottom: 24rem;
     position: absolute;
     right: 0;
-
-     img {
-      height: 10rem;
-      margin-left: auto;
-     }
   }
 
   .talk-bubble {
-    right: 6rem;
-    bottom: 6rem;
+    right: 16rem;
+    bottom: 12rem;
+    width: 100%;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 6rem;
+    }
   }
 }

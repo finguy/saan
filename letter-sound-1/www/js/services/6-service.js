@@ -6,26 +6,38 @@ angular.module('saan.services')
       var src = LevelsSix.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
+
           data = response.data;
-          var wordsNotPlayed = [];
-          if (playedWords.length === 0 ){
-            wordsNotPlayed = data.words;
+          var json = data.words;
+          var index;
+          if (level <= json.length && level > 1) {
+            index = level - 1;
           } else {
-            var playedWordsStr = playedWords.toString();
-            for (var i in data.words) { //FIXME: try to use underscore
-              if (data.words[i]) {
-                var ER = new RegExp(data.words[i].word, "i");
-                if (!ER.test(playedWordsStr)) {
-                  wordsNotPlayed.push(data.words[i]);
-                }
-              }
-            }
+            index = 0; //Start all over
           }
-          var index = Util.getRandomNumber(wordsNotPlayed.length);
+
+          //Pick word from level that hasn't been played in current session
+          var key = 0;
+          var iterWord = json[index].word[key];
+          var imgWord = json[index].imgs[key];
+
+          if ( _.size(playedWords) > 0 ) {
+            while (key < json[index].word.length && playedWords[iterWord]) {
+                key++;
+                iterWord = json[index].word[key];
+                imgWord = json[index].imgs[key];
+            }
+          } else {
+           key = Util.getRandomNumber(json[index].word.length);
+           iterWord = json[index].word[key];
+           imgWord = json[index].imgs[key];
+          }
+          
           return {
-            word : wordsNotPlayed[index],
+            word : iterWord,
+            img: imgWord,
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,
@@ -46,6 +58,9 @@ angular.module('saan.services')
     getFailureAudio: function() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
+    },
+    getEndingAudio: function(index) {
+      return data.endingFeedback[index];
     }
   };
 })
@@ -55,10 +70,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/6-words.json';
+            src = 'data/6-config.json';
             break;
           default:
-            src = 'data/6-words.json';
+            src = 'data/6-config.json';
         }
         return src;
       },

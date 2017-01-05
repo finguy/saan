@@ -1,65 +1,72 @@
 angular.module('saan.controllers')
 
-.controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix, TTSService,
+.controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.activityId = 6; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.word = ""; // Letter to play in level
   $scope.letters = [];
+  $scope.shuffleLetters = [];
   $scope.letters2 = [];
-  $scope.lettersDragged = [];
-  $scope.imgSrc = "";
-  $scope.playedWords = []; // Collects words the user played
-  $scope.level = null; // Indicates activity level
-  $scope.activityProgress = 0;
-  $scope.letterInstruction = "";
-  $scope.score = 0;
   $scope.dropzone = [];
   $scope.hasDraggedLetter = [];
   $scope.phonemas = [];
-  $scope.imgBox = "objects/treasure-chest-stars.png";
+  $scope.imgBox = "magic-pot.png";
   $scope.showText = false;
   $scope.textSpeech = "";
-  $scope.speak = TTSService.speak;
-
+  $scope.introMessage = "";
+  $scope.endMessage = "";
+  var successFeedback;
+  var failureFeedback;
   var Ctrl6 = Ctrl6 || {};
+  var dragChecked = false;
   Ctrl6.instructionsPlayer;
-
+  Ctrl6.playedWords = {};
   Ctrl6.successFeedback = function() {
-    var successFeedback = RandomWordSix.getSuccessAudio();
-    $scope.textSpeech = successFeedback.text;
-    $scope.showText = true;
-    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-      function success() {
-        successPlayer.release();
-        $scope.showText = false;
-      },
-      function error(err) {
-        $log.error(err);
-        successPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
-      }
-    );
-    successPlayer.play();
+   if (!$scope.speaking) {
+     successFeedback = RandomWordSix.getSuccessAudio();
+     $scope.textSpeech = successFeedback.text;
+     $scope.showText = true;
+     var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+       function success() {
+         successPlayer.release();
+         $scope.showText = false;
+         $scope.speaking = false;
+       },
+       function error(err) {
+         $log.error(err);
+         successPlayer.release();
+         $scope.showText = false;
+         $scope.checkingWord = false;
+         $scope.speaking = false;
+       }
+     );
+     $scope.speaking = true;
+     successPlayer.play();
+    }
   };
 
   Ctrl6.errorFeedback = function() {
-    var failureFeedback = RandomWordSix.getFailureAudio();
+   if (!$scope.speaking) {
+    failureFeedback = RandomWordSix.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
     var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
         failurePlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
         $scope.$apply();
       },
       function error(err) {
         $log.error(err);
         failurePlayer.release();
         $scope.showText = false;
+        $scope.speaking = false;
       });
+    $scope.speaking = true;
     failurePlayer.play();
+   }
   };
 
   Ctrl6.showDashboard = function(readInstructions) {
@@ -67,19 +74,22 @@ angular.module('saan.controllers')
     Ctrl6.setUpScore();
     Ctrl6.setUpStatus();
 
-    RandomWordSix.word($scope.level, $scope.playedWords).then(
+    RandomWordSix.word(Ctrl6.level, Ctrl6.playedWords).then(
       function success(data) {
         Ctrl6.setUpContextVariables(data);
-        var readWordTimeout = (readInstructions) ? 4000 : 1000;
         $timeout(function() {
-          if (readInstructions) {
-            Ctrl6.instructionsPlayer.play();
+          if (!Ctrl6.beforeLeave){
+            if (readInstructions) {
+             $scope.textSpeech = $scope.introMessage;
+             $scope.showText = true;
+             $scope.speaking = true;
+             Ctrl6.instructionsPlayer.play();
+            } else {
+             $scope.speaking = true;
+             Ctrl6.phonemaPlayer.play();
+            }
           }
-
-          $timeout(function() {
-            $scope.speak($scope.currentPhonema);
-          }, readWordTimeout);
-        }, readWordTimeout);
+        }, 1000);
       },
       function error(error) {
         $log.error(error);
@@ -88,126 +98,197 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.setUpLevel = function() {
-    if (!$scope.level) {
-      $scope.level = Util.getLevel($scope.activityId);
+    if (!Ctrl6.level) {
+      Ctrl6.level = Util.getLevel($scope.activityId);
     }
   };
 
   Ctrl6.setUpScore = function() {
-    $scope.score = Util.getScore($scope.activityId);
+    Ctrl6.score = Util.getScore($scope.activityId);
 
   };
 
   Ctrl6.setUpStatus = function() {
-    $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
+    Ctrl6.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
   }
 
   Ctrl6.setUpContextVariables = function(data) {
-    var wordJson = data.word;
+    var word = data.word;
+    var img  = data.img;
     $scope.addScore = data.scoreSetUp.add;
     $scope.substractScore = data.scoreSetUp.substract;
     $scope.finalizationLevel = data.finalizationLevel;
-    $scope.word = wordJson.word;
-    $scope.playedWords.push(wordJson.word);
-    Ctrl6.initialLevel = 1;
-    var aux_letters = wordJson.word.split("");
-    for (var j in aux_letters) {
-      if (aux_letters[j]) {
-        var letter = aux_letters[j];
-        $scope.letters.push({
-          "letter": letter,
-          "index": j
-        });
-        $scope.hasDraggedLetter[letter + "_" + j] = false;
-      }
+    $scope.word = word;
+    $scope.wordImg = AssetsPath.getImgs($scope.activityId) + img;
+    $scope.showImage = false;
+    Ctrl6.initialLevel = 0;
+    $scope.letters = [];
+    $scope.letterSounds = [];
+    Ctrl6.playedWords[$scope.word] = true;
+
+    var letters = word.split("");
+    for (var i in letters) {
+     if (letters[i]) {
+      $scope.letters.push({"index": i, "letter": letters[i]});
+      $scope.letterSounds.push({"index": i, "letter": letters[i]});
+     }
     }
+
 
     $scope.letters = _.shuffle($scope.letters);
-    $scope.lettersDragged = wordJson.word.split("");
-    var letterJSON = Util.getRandomElemFromArray($scope.letters);
-    $scope.currentPhonema = letterJSON.letter;
-    $scope.imgSrc = Util.getRandomElemFromArray(wordJson.imgs);
-    $scope.wordInstruction = wordJson.instruction;
+    $scope.letters2 = [];
+    $scope.currentPhonema = $scope.letterSounds[0];
+    $scope.letterSounds.shift();
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
-    if ($scope.finished) {
-      $scope.activityProgress = 100;
-    } else {
-      $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
+    $scope.hasDraggedLetter = [];
+
+    for (var i = 0; i < $scope.letters.length; i++) {
+     var letter = $scope.letters[i];
+     $scope.hasDraggedLetter[letter + "_" + i] = false;
     }
-
-
-    Ctrl6.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    $scope.introMessage = data.instructionsPath.intro.text;
+    Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl6.instructionsPlayer.release();
-        $scope.playWordAudio();
+        if (!Ctrl6.beforeLeave) {
+         $timeout(function() {
+          Ctrl6.phonemaPlayer.play();
+         },1000);
+        }
+        $scope.showText = false;
+        $scope.speaking = false;
+        $scope.$apply();
       },
       function error(err) {
         $log.error(err);
         Ctrl6.instructionsPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
       }
     );
+
+    Ctrl6.phonemaPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "letters/" + $scope.currentPhonema.letter.toUpperCase() + ".mp3",
+      function success() {
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      }
+    );
+
+    if (!Ctrl6.finished) {
+    var endingFeedback = RandomWordSix.getEndingAudio(0);
+    $scope.endMessage = endingFeedback.text;
+    Ctrl6.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path ,
+      function success() {
+        Ctrl6.endPlayer.release();
+        $scope.speaking = false;
+        $state.go('lobby');
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.endPlayer.release();
+        $scope.speaking = false;
+      }
+    );
+   } else {
+      endingFeedback = RandomWordSix.getEndingAudio(1);
+      $scope.endMessage = endingFeedback.text;
+      Ctrl6.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          Ctrl6.endPlayer.release();
+          $scope.speaking = false;
+          $state.go('lobby');
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl6.endPlayer.release();
+          $scope.speaking = false;
+        }
+      );
+    }
   };
 
   $scope.checkPhonema = function(selectedObject) {
-    var ER = new RegExp($scope.currentPhonema, "i");
-    var name = selectedObject.toLowerCase();
+    var ER = new RegExp($scope.currentPhonema.letter, "i");
+    var name = selectedObject.letter.toLowerCase();
     return ER.test(name);
   };
 
   $scope.getNewPhonema = function() {
-    $scope.phonemas.push($scope.currentPhonema);
-    var selected = true;
-    while (selected && $scope.phonemas.length < $scope.letters.length) {
-      var letterJSON = Util.getRandomElemFromArray($scope.letters);
-      $scope.currentPhonema = letterJSON.letter;
-      selected = $scope.hasDraggedLetter[letterJSON.letter + "_" + letterJSON.index];
-    }
+    $scope.currentPhonema = $scope.letterSounds[0];
+    $scope.letterSounds.shift();
+    Ctrl6.phonemaPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "letters/" + $scope.currentPhonema.letter.toUpperCase() + ".mp3",
+      function success() {
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl6.phonemaPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+      }
+    );
+    Ctrl6.phonemaPlayer.play();
   };
 
 
   Ctrl6.success = function() {
-    var LAST_CHECK = $scope.phonemas.length === $scope.letters.length;
-    Ctrl6.successFeedback();
-    if (!$scope.finished) {
-      $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-    }
-    if (LAST_CHECK) {
-      $scope.speak($scope.word);
-      $timeout(function() {
-        Ctrl6.levelUp();
-        if (!$scope.finished) {
-          $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-          $scope.finished = $scope.level >= $scope.finalizationLevel;
-          if ($scope.finished) {
-            ActividadesFinalizadasService.add($scope.activityId);
-            $state.go('lobby');
-          } else if ($scope.level <= $scope.totalLevels) {
-            Ctrl6.showDashboard(false);
-          } else {
-            $state.go('lobby');
-          }
-        } else if ($scope.level <= $scope.totalLevels) {
-          Ctrl6.showDashboard(false);
-        } else {
-          $scope.level = Ctrl6.initialLevel;
-          $state.go('lobby');
-        }
-      }, 1000);
-    } else {
-      $scope.speak($scope.currentPhonema);
-    }
+    var LAST_CHECK = $scope.letters2.length === $scope.letters.length;
+      if (!Ctrl6.finished) {
+         Ctrl6.score = Score.update($scope.addScore, $scope.activityId, Ctrl6.finished);
+       }
+       if (LAST_CHECK) {
+         $scope.showImage = true;
+         Ctrl6.successFeedback();
+         $timeout(function() {
+           if (!Ctrl6.finished) {
+             Ctrl6.levelUp();
+             Ctrl6.score = Score.update($scope.addScore, $scope.activityId, Ctrl6.finished);
+             Ctrl6.finished = Ctrl6.level >= $scope.finalizationLevel;
+             if (Ctrl6.finished) {
+               ActividadesFinalizadasService.add($scope.activityId);
+               $scope.textSpeech = $scope.endMessage;
+               $scope.showText = true;
+               Ctrl6.endPlayer.play();
+             } else if (Ctrl6.level < $scope.totalLevels) {
+               Ctrl6.showDashboard(false);
+             } else {
+              $scope.textSpeech = $scope.endMessage;
+              $scope.showText = true;
+               Ctrl6.endPlayer.play();
+             }
+           } else if ( (Ctrl6.level + 1)  < $scope.totalLevels ) {
+             Ctrl6.levelUp();
+             Ctrl6.showDashboard(false);
+           } else {
+             Ctrl6.level = Ctrl6.initialLevel;
+             $scope.textSpeech = $scope.endMessage;
+             $scope.showText = true;
+             Ctrl6.endPlayer.play();
+           }
+         }, 2000);
+       }
   };
 
   Ctrl6.error = function() {
-    if (!$scope.finished) {
-      $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
-      Util.saveScore($scope.activityId, $scope.score);
+    if (!Ctrl6.finished) {
+      Ctrl6.score = Score.update(-$scope.substractScore, $scope.activityId, Ctrl6.finished);
+      Util.saveScore($scope.activityId, Ctrl6.score);
     }
-    $scope.speak(name);
     $timeout(function() {
       Ctrl6.errorFeedback();
-    }, 000);
+    }, 1000);
   };
 
   $scope.handleProgress = function(isPhonemaOk, name) {
@@ -219,31 +300,79 @@ angular.module('saan.controllers')
   };
 
   Ctrl6.levelUp = function() {
-    $scope.level++;
+    Ctrl6.level++;
     $scope.letters = [];
     $scope.selectedLetters = [];
   };
 
   Ctrl6.levelDown = function() {
-    $scope.level = (level > 1) ? (level - 1) : 1;
+    Ctrl6.level = (level > 1) ? (level - 1) : 1;
     $scope.letters = [];
     $scope.selectedLetters = [];
   };
 
-  Ctrl6.showPage = function() {
-    $scope.isActivity = true;
-    $scope.instructions = $scope.letterInstruction;
-    $timeout(function() {
-      $scope.speak($scope.instructions);
-    }, 1000);
-  }
+  $scope.readTapInstruction = function() {
+   if (!$scope.speaking){
+     Ctrl6.phonemaPlayer.play();
+     $scope.speaking = true;
+   }
+  };
+
+  $scope.sortableTargetOptions = {
+    containment: '.activity-6',
+    accept: function(sourceItemHandleScope, destSortableScope){
+      dragChecked = true;
+      var value = sourceItemHandleScope.modelValue;
+      console.log(value);
+      $scope.isPhonemaOk = $scope.checkPhonema(value);
+      return $scope.isPhonemaOk;
+    }
+  };
+
+  $scope.sortableSourceOptions = {
+    containment: '.activity-6',
+    containerPositioning: 'relative',
+    clone: true,
+    allowDuplicates: true,
+    dragEnd: function(eventObj) {
+      if (dragChecked && !$scope.isPhonemaOk){
+        $scope.handleProgress(false);
+      }
+      dragChecked = false;
+    },
+    itemMoved: function (eventObj) {
+     console.log('itemMoved');
+      var item = eventObj.source.itemScope.modelValue;
+      $scope.hasDraggedLetter[item.letter + "_" + item.index] = true;
+      if ($scope.letters2.length != $scope.letters.length) {
+        $scope.getNewPhonema();
+      }
+      $scope.handleProgress(true,item.letter);
+    }
+  };
+  $scope.isDragged = function(letter , index) {
+    return $scope.hasDraggedLetter[letter +"_" + index] === true;
+  };
+
+  Ctrl6.releasePlayer = function (player) {
+    if (player) {
+      player.release();
+    }
+  };
 
   //*************** ACTIONS **************************/
   $scope.$on('$ionicView.beforeEnter', function() {
     Ctrl6.showDashboard(true);
+    Ctrl6.beforeLeave = false;
   });
 
   $scope.$on('$ionicView.beforeLeave', function() {
-    Util.saveLevel($scope.activityId, $scope.level);
+    Ctrl6.beforeLeave = true;
+    Util.saveLevel($scope.activityId, Ctrl6.level);
+    Ctrl6.releasePlayer(Ctrl6.instructionsPlayer);
+    Ctrl6.releasePlayer(Ctrl6.phonemaPlayer);
+    Ctrl6.releasePlayer(Ctrl6.endPlayer);
+    Ctrl6.releasePlayer(successPlayer);
+    Ctrl6.releasePlayer(failurePlayer);
   });
 });
