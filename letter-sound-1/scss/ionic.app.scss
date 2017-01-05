@@ -31,6 +31,7 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 @import 'layout/activity-10';
 @import 'layout/activity-5';
 @import 'layout/activity-6';
+@import 'layout/activity-7';
 @import 'layout/activity-9';
 @import 'directives/progressBar';
 @import 'directives/flipableCard';
@@ -109,9 +110,12 @@ body {
 }
 
 .hidden {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
+.visible {
+  visibility: visible !important;
+}
 
 .button-back {
   background: no-repeat url('../assets/3/back.png') 0 0;

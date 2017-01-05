@@ -1,73 +1,99 @@
 (function() {
   'use strict';
   angular.module('saan.controllers')
-    .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen, TTSService,
-      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
+    .controller('10Ctrl', function($scope, $log, $state, $timeout, RandomWordTen,
+      Util, Animations, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
       $scope.activityId = 10;
       $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
-      $scope.word = [];
-      $scope.wordStr = "";
+      $scope.word = "";
       $scope.rimes = [];
-      $scope.selectedRimeLetters = [];
       $scope.words = [];
-      $scope.img = "";
       $scope.playedWords = [];
-      $scope.level = null;
-      $scope.totalLevels = 1;
-      $scope.activityProgress = 0;
-      $scope.score = 0;
-      $scope.draggedWord = false;
-      $scope.imgsDragged = [];
+      $scope.rimesDragged = [];
       $scope.isWordOk = false;
       $scope.showText = false;
+      $scope.speaking = false;
       $scope.textSpeech = "";
-      $scope.speak = TTSService.speak;
-
+      $scope.introText = "";
+      $scope.endText = "";
+      var successPlayer;
+      var failurePlayer;
+      var dragChecked = false;
       var Ctrl10 = Ctrl10 || {};
       Ctrl10.instructionsPlayer;
 
       Ctrl10.setUpLevel = function() {
-        if (!$scope.level) {
-          $scope.level = Util.getLevel($scope.activityId);
-        }
-      };
-
-      Ctrl10.setUpScore = function() {
-        $scope.score = Util.getScore($scope.activityId);
-
+       if (!Ctrl10.level) {
+           Ctrl10.level = Util.getLevel($scope.activityId);
+       }
       };
 
       Ctrl10.setUpStatus = function() {
-        $scope.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
+        Ctrl10.finished = ActividadesFinalizadasService.finalizada($scope.activityId);
+      };
+
+      Ctrl10.setUpScore = function() {
+        Ctrl10.score = Util.getScore($scope.activityId);
       };
 
       Ctrl10.successFeedback = function() {
-        var successFeedback = RandomWordTen.getSuccessAudio();
-        $scope.textSpeech = successFeedback.text;
-        $scope.showText = true;
-        var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-          function success() {
-            successPlayer.release();
-            $scope.showText = false;
-          },
-          function error(err) {
-            $log.error(err);
-            successPlayer.release();
-            $scope.showText = false;
-            $scope.checkingWord = false;
-          }
-        );
-        successPlayer.play();
+       //Success player
+       if (successPlayer) {
+        successPlayer.release();
+       }
+       var successFeedback = RandomWordTen.getSuccessAudio();
+       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+         function success() {
+           successPlayer.release();
+           $scope.showText = false;
+           $scope.speaking = false;
+           $scope.$apply();
+         },
+         function error(err) {
+           $log.error(err);
+           successPlayer.release();
+           $scope.showText = false;
+           $scope.checkingWord = false;
+         }
+       );
+
+         //Rime player
+         if (Ctrl10.rimeWordPlayer) {
+          Ctrl10.rimeWordPlayer.release();
+         }
+         Ctrl10.rimeWordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "words/" + $scope.rimesDragged[0].word + ".mp3",
+           function success() {
+             Ctrl10.rimeWordPlayer.release();
+             $scope.speaking = false;
+             $scope.textSpeech = successFeedback.text;
+             $scope.showText = true;
+             successPlayer.play();
+             $scope.$apply();
+           },
+           function error(err) {
+             $log.error(err);
+             Ctrl10.rimeWordPlayer.release();
+             Ctrl10.speaking = false;
+           }
+         );
+
+
+          $scope.speaking = true;
+          Ctrl10.wordPlayer.play();
+          $timeout(function () {
+             Ctrl10.rimeWordPlayer.play();
+          },1000);
       };
 
       Ctrl10.errorFeedback = function() {
         var failureFeedback = RandomWordTen.getFailureAudio();
         $scope.textSpeech = failureFeedback.text;
         $scope.showText = true;
-        var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
           function success() {
             failurePlayer.release();
             $scope.showText = false;
+            $scope.speaking = false;
             $scope.$apply();
           },
           function error(err) {
@@ -75,26 +101,31 @@
             failurePlayer.release();
             $scope.showText = false;
           });
+        $scope.speaking = true;
         failurePlayer.play();
       };
 
-      Ctrl10.showDashboard = function(readInstructions) {
-        Ctrl10.setUpLevel();
-        Ctrl10.setUpScore();
-        Ctrl10.setUpStatus();
+      Ctrl10.setUpStatus();
+      Ctrl10.setUpLevel();
+      Ctrl10.setUpScore();
 
-        RandomWordTen.word($scope.level, $scope.playedWords).then(
+      Ctrl10.showDashboard = function(readInstructions) {
+
+        RandomWordTen.word(Ctrl10.level, $scope.playedWords).then(
           function success(data) {
             Ctrl10.setUpContextVariables(data);
             var readWordTimeout = (readInstructions) ? 2000 : 1000;
             $timeout(function() {
-              if (readInstructions) {
-                Ctrl10.instructionsPlayer.play();
-                $timeout(function() {
-                  $scope.speak($scope.wordStr);
-                }, 3000);
-              } else {
-                $scope.speak($scope.wordStr);
+              if (!Ctrl10.beforeLeave){
+                if (readInstructions) {
+                  $scope.speaking = true;
+                  $scope.showText = true;
+                  $scope.textSpeech = $scope.introText;
+                  Ctrl10.instructionsPlayer.play();
+                } else {
+                  $scope.speaking = true;
+                  Ctrl10.wordPlayer.play();
+                }
               }
             }, readWordTimeout);
 
@@ -107,21 +138,19 @@
       Ctrl10.setUpContextVariables = function(data) {
         var wordJson = data.wordJson;
         $scope.playedWords.push(wordJson.word);
-        $scope.wordStr = wordJson.word;
-        $scope.word = wordJson.word.split("");
+        $scope.rimesDragged = [];
+        $scope.word = wordJson.word;
+        $scope.wordAudio = wordJson.audio;
         $scope.rimesStr = wordJson.rimes.join(",");
         var index = Util.getRandomNumber(wordJson.rimes.length);
-        var rime = wordJson.rimes[index];
-        $scope.selectedRimeLetters = rime.split("");
+        $scope.selectedRime = wordJson.rimes[index];
         $scope.isWordOk = false;
         var wordsToPlay = [];
-
         for (var j in data.allWords) {
           if (data.allWords[j]) {
             var ER = new RegExp(data.allWords[j], "i");
-            if (!ER.test($scope.rimesStr)) {
+            if (!ER.test($scope.rimesStr) && data.allWords[j] !== $scope.word) {
               wordsToPlay.push({
-                "letters": data.allWords[j].split(""),
                 "word": data.allWords[j]
               });
             }
@@ -130,66 +159,154 @@
 
         wordsToPlay.length = 3;
         wordsToPlay.push({
-          "word": rime,
-          "letters": rime.split("")
+          "word": $scope.selectedRime
         });
         $scope.words = _.shuffle(wordsToPlay);
 
         $scope.instructions = data.instructions;
         $scope.successMessages = data.successMessages;
         $scope.errorMessages = data.errorMessages;
-        var imageIndex = Util.getRandomNumber(wordJson.imgs.length);
-        $scope.img = wordJson.imgs[imageIndex];
         $scope.addScore = data.scoreSetUp.add;
         $scope.substractScore = data.scoreSetUp.substract;
-        $scope.totalLevels = data.totalLevels;
+        Ctrl10.totalLevels = data.totalLevels;
         $scope.checkingNumber = false;
         Ctrl10.finalizationLevel = data.finalizationLevel;
         Ctrl10.initialLevel = 1;
-        if ($scope.finished) {
-          $scope.activityProgress = 100;
-        } else {
-          $scope.activityProgress = 100 * ($scope.level - 1) / $scope.totalLevels;
+        $scope.introText = data.instructionsPath.intro.text;
+
+        //Initial instructions player
+        if (!Ctrl10.instructionsPlayer) {
+          Ctrl10.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
+            function success() {
+              Ctrl10.instructionsPlayer.release();
+             if (!Ctrl10.beforeLeave) {
+                $timeout(function() {
+                  Ctrl10.wordPlayer.play();
+                },500);
+              }
+
+              $scope.showText = false;
+              $scope.speaking = false;
+              $scope.$apply();
+            },
+            function error(err) {
+              $log.error(err);
+              Ctrl10.instructionsPlayer.release();
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
+          );
         }
 
-        Ctrl10.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+        //Tap player
+        if (!Ctrl10.tapInstructionsPlayer) {
+          Ctrl10.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
+            function success() {
+              Ctrl10.tapInstructionsPlayer.release();
+              $scope.showText = false;
+              $scope.speaking = false;
+              $scope.$apply();
+            },
+            function error(err) {
+              $log.error(err);
+              Ctrl10.tapInstructionsPlayer.release();
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
+          );
+        }
+
+        //End player
+        if (!Ctrl10.finished) {
+         if (Ctrl10.endPlayer) {
+          Ctrl10.endPlayer.release();
+         }
+        var endingFeedback = RandomWordTen.getEndingAudio(0);
+        $scope.endText = endingFeedback.text;
+        Ctrl10.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path ,
           function success() {
-            Ctrl10.instructionsPlayer.release();
+            Ctrl10.endPlayer.release();
+            $scope.speaking = false;
+            $scope.$apply();
+            $state.go('lobby');
           },
           function error(err) {
             $log.error(err);
-            Ctrl10.instructionsPlayer.release();
+            Ctrl10.endPlayer.release();
+            Ctrl10.speaking = false;
           }
         );
-      };
+       } else {
+          endingFeedback = RandomWordTen.getEndingAudio(1);
+          $scope.endText = endingFeedback.text;
+          if (Ctrl10.endPlayer) {
+           Ctrl10.endPlayer.release();
+          }
+          Ctrl10.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+            function success() {
+              Ctrl10.endPlayer.release();
+              $scope.speaking = false;
+              $scope.$apply();
+              $state.go('lobby');
+            },
+            function error(err) {
+              $log.error(err);
+              Ctrl10.endPlayer.release();
+              Ctrl10.speaking = false;
+            }
+          );
+       }
+
+       //Word player
+       if (Ctrl10.wordPlayer) {
+        Ctrl10.wordPlayer.release();
+       }
+       Ctrl10.wordPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "words/" + $scope.wordAudio,
+         function success() {
+           //Ctrl10.wordPlayer.release();
+           $scope.speaking = false;
+           $scope.$apply();
+         },
+         function error(err) {
+           $log.error(err);
+          // Ctrl10.wordPlayer.release();
+           Ctrl10.speaking = false;
+         }
+       );
+     };
 
       Ctrl10.success = function() {
-        $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
         Ctrl10.successFeedback();
         $timeout(function() {
-          $scope.draggedWord = false;
-          Ctrl10.levelUp();
-          if (!$scope.finished) {
-            $scope.score = Score.update($scope.addScore, $scope.activityId, $scope.finished);
-            $scope.finished = $scope.level >= Ctrl10.finalizationLevel;
-            if ($scope.finished) {
+          if (!Ctrl10.finished) {
+            Ctrl10.levelUp();
+            Ctrl10.finished = Ctrl10.level > Ctrl10.finalizationLevel;
+            Ctrl10.score = Score.update($scope.addScore, $scope.activityId, Ctrl10.finished);
+            if (Ctrl10.finished) {
               ActividadesFinalizadasService.add($scope.activityId);
-              $state.go('lobby');
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.endText;
+              Ctrl10.endPlayer.play();
             } else {
-              Ctrl10.showDashboard(true);
+              Ctrl10.showDashboard(false);
             }
-          } else if ($scope.level <= $scope.totalLevels) {
-            Ctrl10.showDashboard(true);
+          } else if (Ctrl10.level < (Ctrl10.totalLevels -1 )) {
+            Ctrl10.levelUp();
+            Ctrl10.showDashboard(false);
           } else {
-            $scope.level = Ctrl10.initialLevel;
-            $state.go('lobby');
+            Ctrl10.level = Ctrl10.initialLevel;
+            $scope.speaking = true;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            Ctrl10.endPlayer.play();
           }
-        }, 1000);
+        }, 4000);
       };
 
       Ctrl10.error = function() {
-        if (!$scope.finished) {
-          $scope.score = Score.update(-$scope.substractScore, $scope.activityId, $scope.finished);
+        if (!Ctrl10.finished) {
+          Ctrl10.finished = Score.update(-$scope.substractScore, $scope.activityId, Ctrl10.finished);
         }
         Ctrl10.errorFeedback();
       };
@@ -197,6 +314,7 @@
       $scope.handleProgress = function(isWordOk) {
         $scope.isWordOk = isWordOk;
         if (isWordOk) {
+          AppSounds.playTap();
           Ctrl10.success();
         } else {
           Ctrl10.error();
@@ -204,11 +322,62 @@
       };
 
       Ctrl10.levelUp = function() {
-        $scope.level++;
+        Ctrl10.level = (Ctrl10.level + 1 ) % Ctrl10.totalLevels;
+        if (Ctrl10.level === 0) {
+          Ctrl10.level = 1;
+        }
       };
 
       Ctrl10.levelDown = function() {
-        $scope.level = (level > 1) ? (level - 1) : 1;
+        Ctrl10.level = (Ctrl10.level > 1) ? (level - 1) : 0;
+      };
+
+      //Drag
+      $scope.sortableSourceOptions = {
+        containment: '.activity10',
+        containerPositioning: 'relative',
+        clone: false,
+        dragEnd: function(eventObj) {
+          if (dragChecked && !$scope.sortableTargetOptions.accept(eventObj.source.itemScope, eventObj.dest.sortableScope)){
+            $scope.handleProgress(false);
+          }
+          dragChecked = false;
+        },
+        itemMoved: function (eventObj) {
+          $scope.handleProgress(true);
+        },
+        accept: function(sourceItemHandleScope, destSortableScope){
+          return false;
+        }
+      };
+
+      //Drop
+      $scope.sortableTargetOptions = {
+        accept: function(sourceItemHandleScope, destSortableScope){
+          dragChecked = true;
+          var ER = new RegExp(sourceItemHandleScope.modelValue.word,"i");
+          return ER.test($scope.rimesStr);
+        },
+      };
+
+      $scope.tapInstructions = function() {
+       if (!$scope.speaking) {
+        $scope.speaking = true;
+        Ctrl10.tapInstructionsPlayer.play();
+       }
+      };
+
+      $scope.readWord = function() {
+       if (!$scope.speaking) {
+         $scope.speaking = true;
+         Ctrl10.wordPlayer.play();
+       }
+      }
+
+      Ctrl10.releasePlayer = function (player) {
+        if (player) {
+          player.release();
+        }
       };
 
       //*************** ACTIONS **************************/
@@ -216,7 +385,15 @@
         Ctrl10.showDashboard(true);
       });
       $scope.$on('$ionicView.beforeLeave', function() {
-        Util.saveLevel($scope.activityId, $scope.level);
+        Ctrl10.beforeLeave = true;
+        Util.saveLevel($scope.activityId, Ctrl10.level);
+        Ctrl10.releasePlayer(Ctrl10.wordPlayer);
+        Ctrl10.releasePlayer(Ctrl10.rimeWordPlayer);
+        Ctrl10.releasePlayer(Ctrl10.instructionsPlayer);
+        Ctrl10.releasePlayer(Ctrl10.tapInstructionsPlayer);
+        Ctrl10.releasePlayer(Ctrl10.endPlayer);
+        Ctrl10.releasePlayer(successPlayer);
+        Ctrl10.releasePlayer(failurePlayer);
       });
     });
 })();

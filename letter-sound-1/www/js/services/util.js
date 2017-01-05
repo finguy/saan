@@ -51,7 +51,7 @@ angular.module('saan.services')
     },
     saveLevel: function(idActivity, level) {
       var key = "Activity"+idActivity+"-level";
-        if (typeof(Storage) !== "undefined" && idActivity && level) {
+        if (typeof(Storage) !== "undefined" && typeof(idActivity) !== "undefined" && typeof(level) !== "undefined") {            
             return localStorage.setItem(key, level);
         }
         return null;

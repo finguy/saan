@@ -1,22 +1,27 @@
-<ion-view view-title="{{activityId}}" class="flex-column items-center content-margin activity-{{activityId}}-content">
+<ion-view view-title="{{activityId}}" class="flex items-center activity-{{activityId}}-content">
   <div class="flex justify items-center grow-1">
-    <div class="number-container">
-      <div class="number horizontal-center" ng-if="step >= 1"> {{number}} </div>
-      <div class="text animate-if" ng-if="step >= 2"> {{numberToWords(number)}} </div>
-    </div>
 
-    <div class="item-dropzone animate-if" data-ng-model="dropzone" as-sortable="sortableOptions" ng-if="step >= 3">
-      <div ng-repeat="item in dropzone track by $index" class="flex pattern-item color color-red item"></div>
-      <number-group class="horizontal-center vertical-center width-100" target=number list="dropzone"
-        item-class="flex pattern-item color color-red item"></number-group>
-    </div>
-
-    <div class="item-container animate-if" ng-if="step>=3">
-      <div as-sortable="sortableCloneOptions" data-ng-model="items" is-disabled="dragDisabled">
-        <div ng-repeat="item in items" as-sortable-item as-sortable-item-handle class="flex pattern-item color-red"></div>
+    <div class="item-container">
+      <div as-sortable="sortableCloneOptions" data-ng-model="items" is-disabled="!enabled">
+        <img ng-repeat="item in items track by $index" ng-src="{{imgPath}}cookie.png"
+        class="sortable-cookie" as-sortable-item as-sortable-item-handle>
       </div>
     </div>
+
+    <div class="cub">
+      <talk-bubble ng-show="showNumber" text="number" text2="numberToWords(number)" ng-click="tapNumber()"
+        class="text-center" ng-class="{'btn-position':!autoCheck}"></talk-bubble>
+      <div class="item-dropzone" data-ng-model="dropzone" as-sortable="sortableOptions">
+        <img ng-repeat="item in dropzone track by $index" ng-src="{{imgPath}}cookie.png"
+        class="sortable-cookie" as-sortable-item as-sortable-item-handle>
+      </div>
+    </div>
+
+    <button ng-show="!autoCheck" class="button check-button" ng-click="checkValue()"></button>
   </div>
 
-  <button ng-if="showButton" class="check-button" ng-click="checkValue()">coso coso coso</button>
+  <div class="character flex" ng-click="tapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img src="assets/characters/gaynde.png">
+  </div>
 </ion-view>

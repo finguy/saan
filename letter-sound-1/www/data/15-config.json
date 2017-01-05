@@ -1,49 +1,85 @@
 {
-  "minLevel": 1,
+  "minLevel": 2,
+  "options": 4,
   "levels": [
     {
       "level": 1,
-      "instructionsPath": "Duck_Hunt.mp3",
-      "instructionsText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-      "options": 4,
-      "problems": [
-        {
-          "type": "changeResult",
-          "text": "I have five apples on a basket but then I put three more apples in. How many apples do I have in the basket in total?",
-          "answer": 8,
-          "soundPath": "Galaga_Theme.mp3"
-        },
-        {
-          "type": "combineResult",
-          "text": "Golo baked two chocolate cookies and eight vanilla cookies. How many cookies Golo baked?",
-          "answer": 10,
-          "soundPath": "Contra_Intro.mp3"
-        },
-        {
-          "type": "compareChange",
-          "text": "On the party, there are four guests on Leuk's table and seven guests on M'bott table. How many guests must join Leuk's table so that it has the same amount of guests as M'bott table?",
-          "answer": 3,
-          "soundPath": "Galaga_Theme.mp3"
-        },
-        {
-          "type": "changeStart",
-          "text": "Thioye has just painted two of his feathers red. Now he has eight red feathers. How many red feathers had Thioye at the beginning?",
-          "answer": 6,
-          "soundPath": "Contra_Intro.mp3"
-        },
-        {
-          "type": "sharing",
-          "text": "The turtles share ten cookies equally between themselves. How many cookies does each turtle get?",
-          "answer": 5,
-          "soundPath": "Galaga_Theme.mp3"
-        },
-        {
-          "type": "multiplicative",
-          "text": "There are five tables on the party. There are two seats on each table. How many seats are on the party altogether?",
-          "answer": 10,
-          "soundPath": "Contra_Intro.mp3"
-        }
-      ]
+      "questionText": "How many apples does Tarabu has in the basket in total?",
+      "problemPath": "problems/1/problem_1.mp3",
+      "questionPath": "problems/1/question_1.mp3",
+      "answer": 8
+    },
+    {
+      "level": 2,
+      "questionText": "How many cookies Golo baked?",
+      "problemPath": "problems/2/problem_2.mp3",
+      "questionPath": "problems/2/question_2.mp3",
+      "answer": 10
+    },
+    {
+      "level": 3,
+      "type": "compareChange",
+      "questionText": "How many guests must join Leuk's table so that it has the same amount of guests as M'bott table?",
+      "problemPath": "problems/3/problem_3.mp3",
+      "questionPath": "problems/3/question_3.mp3",
+      "answer": 3
+    },
+    {
+      "level": 4,
+      "type": "changeStart",
+      "questionText": "How many red feathers I had at the beginning?",
+      "problemPath": "problems/4/problem_4.mp3",
+      "questionPath": "problems/4/question_4.mp3",
+      "answer": 6
+    },
+    {
+      "level": 5,
+      "questionText": "How many cookies does each cub get?",
+      "problemPath": "problems/5/problem_5.mp3",
+      "questionPath": "problems/5/question_5.mp3",
+      "answer": 5
+    }
+  ],
+  "instructions": {
+    "path": "intro.mp3",
+    "text": "Hi!"
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Try listening to the problem again!"
+    },
+    {
+      "path": "not_correct.mp3",
+      "text": "I am not sure that's the correct answer"
+    },
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Incredible!"
     }
   ]
 }

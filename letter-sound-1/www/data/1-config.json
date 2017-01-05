@@ -81,7 +81,8 @@
     }
   ],
   "instructions": {
-    "path": "intro.mp3"
+    "path": "intro.mp3",
+    "text": "Hi!"
   },
   "successFeedback": [
     {
@@ -108,7 +109,13 @@
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3" ,
+      "text": "Thank you!"
+    }
   ]
 }

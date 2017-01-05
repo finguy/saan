@@ -30,6 +30,7 @@ angular.module('saan.services', [])
   .factory('ActividadesFinalizadasService', ['$window', function($window) {
 
     var FINISHED_ACTIVITIES = "finishedActivities";
+    var FINISHED_ACTIVITIES_MAX = "finishedActivitiesMax";
 
     var marcarComoFinalizada = function(activityId) {
         var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
@@ -42,12 +43,23 @@ angular.module('saan.services', [])
       actividadFinalizada = function(activityId){
         var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
         return _.indexOf(finishedActivities, activityId) != -1;
+      },
+      actividadFinalizadaMax = function(activityId){
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES_MAX)) || [];
+        return _.indexOf(finishedActivities, activityId) != -1;
+      },
+      marcarFinalizadaMax = function(activityId) {
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES_MAX)) || [];
+        finishedActivities.push(activityId);
+        $window.localStorage.setItem(FINISHED_ACTIVITIES_MAX, JSON.stringify(finishedActivities));
       };
 
     return {
       add: marcarComoFinalizada,
       get: getActividadesFinalizadas,
-      finalizada: actividadFinalizada
+      finalizada: actividadFinalizada,
+      maxFinalizada: actividadFinalizadaMax,
+      addMax: marcarFinalizadaMax
     };
   }])
   .factory('TTSService', ['$q', function($q) {

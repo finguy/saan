@@ -9,13 +9,15 @@
         deck: '=',
         map: '=',
         deckCompleted: '&',
-        size: '='
+        size: '=',
+        feedback: '&',
+        enabled: '&'
       },
       controller: ['$scope', '$timeout', function deckController($scope, $timeout){
         var CARD_BACK = 0;
         var CARD_FRONT = 1;
         var CARD_MATCHED = 2;
-        var CARD_CHECK_DELAY = 1000;
+        var CARD_CHECK_DELAY = 1500;
 
         var flipEnabled = true;
         var matchedCards = 0;
@@ -26,7 +28,7 @@
         };
 
         this.flipCard = function(row, col){
-          if (flipEnabled){
+          if (flipEnabled && $scope.enabled()){
             if (selectedCards.length == 2){
               unflipCard();
             }
@@ -47,17 +49,18 @@
 
         var matchCard = function(row, col){
           flipEnabled = false;
+          $scope.feedback({success: true});
           $timeout(function(){
-              for (var i=0; i<selectedCards.length; i++){
-                $scope.map[selectedCards[i].row][selectedCards[i].col] = CARD_MATCHED;
-              }
-              selectedCards = [];
-              matchedCards = matchedCards + 2;
-              if (matchedCards == $scope.size){
-                matchedCards = 0;
-                $scope.deckCompleted();
-              }
-              flipEnabled = true;
+            for (var i=0; i<selectedCards.length; i++){
+              $scope.map[selectedCards[i].row][selectedCards[i].col] = CARD_MATCHED;
+            }
+            selectedCards = [];
+            matchedCards = matchedCards + 2;
+            if (matchedCards == $scope.size){
+              matchedCards = 0;
+              $scope.deckCompleted();
+            }
+            flipEnabled = true;
           }, CARD_CHECK_DELAY);
         };
 

@@ -1,57 +1,81 @@
+$blue-14: #00355a;
+
 .activity-14-content {
   align-items: center;
+  background: url('../assets/14/background.png') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  font-size: 5em;
-  height: 100%;
+  font-weight: bold;
+  justify-content: space-around;
+
+  %box-tag {
+    height: 26.5rem;
+    width: 20rem;
+  }
 
   .operation-container {
     align-items: center;
     display: flex;
-    margin-top: 10rem;
-    padding-bottom: 20rem;
-    width: auto;
   }
 
   .number-container {
-    height: 21rem;
-    width: 20rem;
+    @extend %box-tag;
+    background: url('../assets/14/box-number.png');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+
+    &.closed {
+      background: url('../assets/14/box-number-closed.png');
+      background-repeat: no-repeat;
+    }
   }
 
-  .symbol-margin {
-    margin-left: 3rem;
-    margin-right: 3rem;
+  .symbol {
+    background: white;
+    font-size: 8rem;
+    height: 8rem;
+    line-height: 1;
+    margin: 5rem 3rem 0;
+    text-align: center;
+    width: 8rem;
   }
 
   .dropzone {
-    border: .2rem dashed grey;
-    border-radius: 0;
-    height: 21rem;
-    padding: 0;
-    width: 20rem;
+    @extend %box-tag;
+    position: absolute;
+    right: 20rem;
 
     .as-sortable-placeholder {
       visibility: hidden;
     }
   }
 
+  .placeholder {
+    border: .5rem white dashed;
+    height: 20.2rem;
+    margin-top: 6.3rem;
+    width: 20rem;
+  }
+
   .results-container {
     align-items: center;
     display: flex;
-    justify-content: space-around;
-    width: 100%;
+    justify-content: center;
+
+    .number-container {
+      margin: 0 1rem;
+    }
   }
 
-  .as-sortable-item{
-    &.match-card {
-      background-color: #e4de90;
-      border-color: transparent;
-      border-radius: 0;
-    }
+  .as-sortable-item {
+    border: 0;
+    border-radius: 0;
 
-    &.number-container {
-      border: 0;
-      color: initial;
+    &.match-card {
+      background-color: transparent;
+      border-color: transparent;
     }
   }
 
@@ -60,24 +84,50 @@
     justify-content: space-around;
   }
 
-  .completed {
-    border-color: transparent;
-  }
-
   .number {
-    background-color: #e4de90;
+    bottom: .4rem;
+    color: $blue-14;
+    font-size: 5em;
+    padding-left: .5rem;
+    position: relative;
   }
 
   .number-image {
     align-items: center;
-    background-color: cornflowerblue;
+    background-color: transparent;
     display: flex;
+    flex-grow: 1;
     flex-wrap: wrap;
     height: 15rem;
     justify-content: center;
+  }
 
-    img {
-      width: 4rem;
+  .as-sortable-dragging {
+    width: auto !important;
+  }
+
+  .talk-bubble {
+    align-self: flex-start;
+    bottom: 0;
+    left: 4rem;
+    position: relative;
+    top: 8rem;
+    width: 30rem;
+    z-index: 0;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 4rem;
     }
+  }
+
+  .character {
+    bottom: 0;
+    position: absolute;
+    right: 2rem;
+
+    img { height: 32rem; }
   }
 }

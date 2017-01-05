@@ -2,33 +2,24 @@ angular.module('saan.services')
 .factory('RandomWordTen', function($http, LevelsTen, Util) {
   var data;
   return {
-    word: function(level, playedWords) {
+    word: function(level) {
       var src = LevelsTen.getSrcData(level);
       return $http.get(src).then(
         function success(response) {
           data = response.data;
           var json = data.info;
-          var wordsNotPlayed = [];
-          if (playedWords.length === 0 ){
-            wordsNotPlayed = json;
+          var index;
+          if (level <= json.length) {
+            index = level - 1;
           } else {
-            var playedWordsStr = playedWords.toString();
-            for (var i in json) { //FIXME: try to use underscore
-              if (json[i].word) {
-                var ER = new RegExp(json[i].word, "i");
-                if (!ER.test(playedWordsStr) && json[i].word) {
-                  wordsNotPlayed.push(json[i]);
-                }
-              }
-            }
+            index = 0; //Start all over
           }
 
-          var index = Util.getRandomNumber(wordsNotPlayed.length);
 
           return {
-            wordJson: wordsNotPlayed[index],
+            wordJson: json[index],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp: data.scoreSetUp,
@@ -50,6 +41,9 @@ angular.module('saan.services')
     getFailureAudio: function() {
       var index = _.random(0, data.failureFeedback.length - 1);
       return data.failureFeedback[index];
+    },
+    getEndingAudio: function(index) {
+      return data.endFeedback[index];
     }
   };
 })
@@ -59,10 +53,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/10-words.json';
+            src = 'data/10-config.json';
             break;
           default:
-            src = 'data/10-words.json';
+            src = 'data/10-config.json';
         }
         return src;
       },

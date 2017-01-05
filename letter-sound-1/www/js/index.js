@@ -17,7 +17,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		app.readConfig();
+		// app.readConfig();
 
 		/*var success = function(message) {
 			alert(message);

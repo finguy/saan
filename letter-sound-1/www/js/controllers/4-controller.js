@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber, TTSService,
+.controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber,
   Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
 
   $scope.activityId = 4;
@@ -11,8 +11,11 @@ angular.module('saan.controllers')
   $scope.numberDragged = [];
   $scope.showText = false;
   $scope.textSpeech = "";
-  $scope.speak = TTSService.speak;
+  $scope.speaking = false;
 
+  var successPlayer;
+  var endingPlayer;
+  var failurePlayer;
   var Ctrl4 = Ctrl4 || {};
   Ctrl4.playedNumbers = [];
   Ctrl4.level = null;
@@ -27,18 +30,17 @@ angular.module('saan.controllers')
     RandomNumber.number(Ctrl4.level, Ctrl4.playedNumbers).then(
       function success(data) {
         Ctrl4.setUpContextVariables(data);
-        var readWordTimeout = (readInstructions) ? 2000 : 1000;
+        var readWordTimeout =  1000;
         //wait for UI to load
         $timeout(function() {
-          $scope.showText = false;
+
           if (readInstructions) {
+            $scope.showText = true;
+            $scope.textSpeech = 'Hi!';
+            $scope.speaking = true;
             Ctrl4.instructionsPlayer.play();
-            readInstructions = false;
-            $timeout(function() {
-              $scope.speak($scope.number);
-            }, 8000);
           } else {
-            $scope.speak($scope.number);
+            $scope.showText = false;
           }
         }, readWordTimeout);
 
@@ -95,80 +97,149 @@ angular.module('saan.controllers')
       }
     }
 
-    if (Ctrl4.finished) {
-      $scope.activityProgress = 100;
-    } else {
-      $scope.activityProgress = 100 * (Ctrl4.level - 1) / Ctrl4.totalLevels;
-    }
-
-    Ctrl4.instructionsPlayer = new Media(AssetsPath.getGeneralAudio() + data.instructionsPath,
+    Ctrl4.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl4.instructionsPlayer.release();
-        $scope.playWordAudio();
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl4.instructionsPlayer.release();
-      }
-    );
-  };
-
-  Ctrl4.successFeedback = function() {
-    var successFeedback = RandomNumber.getSuccessAudio();
-    $scope.textSpeech = successFeedback.text;
-    $scope.showText = true;
-    var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-      function success() {
-        successPlayer.release();
         $scope.showText = false;
-      },
-      function error(err) {
-        $log.error(err);
-        successPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
-      }
-    );
-    successPlayer.play();
-  };
-
-  Ctrl4.errorFeedback = function() {
-    var failureFeedback = RandomNumber.getFailureAudio();
-    $scope.textSpeech = failureFeedback.text;
-    $scope.showText = true;
-    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-      function success() {
-        failurePlayer.release();
-        $scope.showText = false;
+        $scope.speaking = false;
         $scope.$apply();
       },
       function error(err) {
         $log.error(err);
-        failurePlayer.release();
+        Ctrl4.instructionsPlayer.release();
+      }
+    );
+
+    Ctrl4.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
+      function success() {
+        Ctrl4.tapInstructionsPlayer.release();
         $scope.showText = false;
-      });
-    failurePlayer.play();
+        $scope.speaking = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        Ctrl4.tapInstructionsPlayer.release();
+        $scope.showText = false;
+        $scope.speaking = false;
+        $scope.$apply();
+      }
+    );
+
+    if (!Ctrl4.finished) {
+      endingFeedback = RandomNumber.getEndingAudio(0);
+      Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          Ctrl4.endPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+          $state.go('lobby');
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl4.endPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        }
+      );
+    } else {
+      endingFeedback = RandomNumber.getEndingAudio(1);
+      Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          Ctrl4.endPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+          $state.go('lobby');
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl4.endPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        }
+      );
+    }
+  };
+
+  Ctrl4.successFeedback = function() {
+   if (!$scope.speaking) {
+      var successFeedback = RandomNumber.getSuccessAudio();
+      $scope.textSpeech = successFeedback.text;
+      $scope.showText = true;
+      successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        function success() {
+          successPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          successPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.checkingWord = false;
+          $scope.$apply();
+        }
+      );
+      $scope.speaking = true;
+      successPlayer.play();
+   }
+  };
+
+  Ctrl4.errorFeedback = function() {
+    if (!$scope.speaking) {
+      var failureFeedback = RandomNumber.getFailureAudio();
+      $scope.textSpeech = failureFeedback.text;
+      $scope.showText = true;
+      failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+        function success() {
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          failurePlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        });
+      $scope.speaking = true;
+      failurePlayer.play();
+    }
   };
 
   Ctrl4.success = function() {
     Ctrl4.playedNumbers.push($scope.number);
     Ctrl4.successFeedback();
-    Ctrl4.levelUp();
-    if (!Ctrl4.finished) {
-      Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
-      Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
-      if (Ctrl4.finished) {
-        ActividadesFinalizadasService.add($scope.activityId);
-        $state.go('lobby');
-      } else {
-        Ctrl4.showDashboard(false);
-      }
-    } else if (Ctrl4.level <= Ctrl4.totalLevels) {
-      Ctrl4.showDashboard(false);
-    } else {
-      Ctrl4.level = Ctrl4.initialLevel;
-      $state.go('lobby');
-    }
+    $timeout(function() {
+     Ctrl4.levelUp();
+     if (!Ctrl4.finished) {
+       Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
+       Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
+       if (Ctrl4.finished) {
+         ActividadesFinalizadasService.add($scope.activityId);
+         $scope.showText = true;
+         $scope.textSpeech = 'Thank you!';
+         Ctrl4.endPlayer.play();
+       } else {
+         Ctrl4.showDashboard(false);
+       }
+     } else if (Ctrl4.level <= Ctrl4.totalLevels) {
+       Ctrl4.showDashboard(false);
+     } else {
+       Ctrl4.level = Ctrl4.initialLevel;
+       $scope.showText = true;
+       $scope.textSpeech = 'Thank you!';
+       Ctrl4.endPlayer.play();
+     }
+    },2000);
   };
 
   Ctrl4.error = function() {
@@ -200,6 +271,19 @@ angular.module('saan.controllers')
     Ctrl4.imgs = [];
   };
 
+  Ctrl4.releasePlayer = function(player) {
+    if (player) {
+      player.release();
+    }
+  };
+
+  $scope.playInstructions = function() {
+   if (!$scope.speaking) {
+     $scope.speaking = true;
+     Ctrl4.tapInstructionsPlayer.play();
+   }
+  }
+
   $scope.sortableSourceOptions = {
     containment: '.activity4-content',
     containerPositioning: 'relative',
@@ -227,7 +311,14 @@ angular.module('saan.controllers')
   $scope.$on('$ionicView.beforeEnter', function() {
     Ctrl4.showDashboard(true);
   });
+
   $scope.$on('$ionicView.beforeLeave', function() {
     Util.saveLevel($scope.activityId, Ctrl4.level);
+    Ctrl4.releasePlayer(Ctrl4.instructionsPlayer);
+    Ctrl4.releasePlayer(Ctrl4.tapInstructionsPlayer);
+    Ctrl4.releasePlayer(Ctrl4.endPlayer);
+    Ctrl4.releasePlayer(successPlayer);
+    Ctrl4.releasePlayer(failurePlayer);
   });
+
 });
