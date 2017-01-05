@@ -18,9 +18,11 @@
       "questions": [
         {"question": "Which of these ingredients Golo needed?",
           "options": [
-              {"id":1, "img": "assorted-objects/tomatoes.png"},
-              {"id":2, "img": "assorted-objects/beans.png"},
-              {"id":3, "img": "assorted-objects/eggs.png"}
+              {"id":1, "img": "assorted-objects/tomato-sticker.png"},
+              {"id":2, "img": "assorted-objects/banana-sticker.png"},
+              {"id":3, "img": "assorted-objects/corn-sticker.png"},
+              {"id":4, "img": "assorted-objects/cookie-sticker.png"}
+
             ],
             "answer":1
         }
@@ -31,9 +33,10 @@
       "questions": [
         {"question": "What food do the cubs want to eat today?",
           "options": [
-              {"id":1, "img": "assorted-objects/beans.png"},
-              {"id":2, "img": "assorted-objects/bananas.png"},
-              {"id":3, "img": "assorted-objects/eggs.png"}
+              {"id":1, "img": "assorted-objects/apple-sticker.png"},
+              {"id":2, "img": "assorted-objects/banana-sticker.png"},
+              {"id":3, "img": "assorted-objects/cookie-sticker.png"},
+              {"id":4, "img": "assorted-objects/hot-dog-sticker.png"}
             ],
             "answer":2
         }
@@ -46,7 +49,8 @@
           "options": [
               {"id":1, "img": "assorted-objects/tarabu-sticker.png"},
               {"id":2, "img": "assorted-objects/thioye-sticker.png"},
-              {"id":3, "img": "assorted-objects/turtle-sticker.png"}
+              {"id":3, "img": "assorted-objects/turtle-sticker.png"},
+              {"id":3, "img": "assorted-objects/leuk-sticker.png"}
             ],
             "answer":3
         }
