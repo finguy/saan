@@ -33,7 +33,7 @@
   "instructionsPath": {
     "intro": {
       "path": "instructions/Intro.mp3",
-      "text": "..."
+      "text": "Hi!"
     },
     "tap": {
       "path": "instructions/tapInstructions.mp3",
