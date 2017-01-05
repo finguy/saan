@@ -1,3 +1,5 @@
+$lobby-blue: #043556;
+
 .lobby {
   background: url('../assets/lobby/lobby-background.png') no-repeat center center fixed;
   background-size: cover;
@@ -23,6 +25,7 @@
   }
 
   .info {
+    color: $lobby-blue;
     font-size: 4em;
     font-weight: bold;
     height: 5rem;
@@ -47,6 +50,14 @@
     padding-top: 2rem;
     position: relative;
     width: 29.2rem;
+
+    &.locked {
+      filter: grayscale(.8);
+    }
+  }
+
+  .locked .footer .stars {
+    margin-left: auto;
   }
 
   .button {
