@@ -7,26 +7,18 @@ angular.module('saan.services')
       return $http.get(src).then(
         function success(response) {
           data = response.data;
-          var numbersNotPlayed = [];
-          console.log(data);
-          if (playedNumbers.length === 0 ){
-            numbersNotPlayed = data.numbers;
+          var json = data.numbers;
+          var index;
+          if (level <= json.length) {
+            index = level - 1;
           } else {
-            for (var i in data.numbers) { //FIXME: try to use underscore
-              if (data.numbers[i]) {
-                  var index = _.indexOf(playedNumbers,data.numbers[i].number);
-                if (index === -1) {
-                  numbersNotPlayed.push(data.numbers[i]);
-                }
-              }
-            }
+            index = 0; //Start all over
           }
 
-          var position = Util.getRandomNumber(numbersNotPlayed.length);
           return {
-            number : numbersNotPlayed[position],
+            number : json[index],
             instructions : data.instructions,
-            instructionsPath: data.instructionsPath,  
+            instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
             successMessages: data.successMessages,
             scoreSetUp : data.scoreSetUp,
@@ -40,6 +32,10 @@ angular.module('saan.services')
           console.log("error");
         }
       );
+    },
+    getEndingAudio: function(index) {
+      return data.endingFeedback[index];
+
     },
     getSuccessAudio: function() {
       var index = _.random(0, data.successFeedback.length - 1);
@@ -57,10 +53,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/4-numbers.json';
+            src = 'data/4-config.json';
             break;
           default:
-            src = 'data/4-numbers.json';
+            src = 'data/4-config.json';
         }
         return src;
       },

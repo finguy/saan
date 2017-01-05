@@ -82,22 +82,22 @@
       "options": [
         {
           "id": 1,
-          "path": "stories/4/sticker_bed.png"
+          "path": "stories/4/sticker_drum.png"
         },
         {
           "id": 2,
-          "path": "stories/4/sticker_clock.png"
+          "path": "stories/4/sticker_flute.png"
         },
         {
           "id": 3,
-          "path": "stories/4/sticker_pot.png"
+          "path": "stories/4/sticker_guitar.png"
         },
         {
           "id": 4,
-          "path": "stories/4/sticker_radio.png"
+          "path": "stories/4/sticker_maracas.png"
         }
       ],
-      "answer": 1,
+      "answer": 3,
       "storyPath": "stories/4/story_4.mp3",
       "questionPath": "stories/4/question_4.mp3"
     }

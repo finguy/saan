@@ -156,13 +156,21 @@
       mode = (config.levelConfig.mode == MIXED) ? _.random(ADD, SUBTRACT) : config.levelConfig.mode;
 
       // select the two numbers to add/subtract
-      numbers.push(_.random(1, config.numberRange));
       if (mode == ADD){
-        numbers.push(_.random(1, config.numberRange));
+        if (config.levelConfig.optionImages || config.levelConfig.numberImages){
+          numbers.push(_.random(1, config.numberRange - 1));
+          numbers.push(_.random(1, config.numberRange - numbers[0]));
+        }
+        else {
+          numbers.push(_.random(1, config.numberRange));
+          numbers.push(_.random(1, config.numberRange));
+        }
+
         result = numbers[0] + numbers[1];
         $scope.operator = "+";
       }
       else{
+        numbers.push(_.random(1, config.numberRange));
         numbers.push(_.random(1, numbers[0]));
         result = numbers[0] - numbers[1];
         $scope.operator = "-";

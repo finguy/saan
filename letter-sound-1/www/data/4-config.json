@@ -1,0 +1,179 @@
+{"numbers":
+  [{"number":1,
+    "imgs":[
+      { "src": [],
+       "name" : 1
+      },
+      {"src": [],
+        "name" : 2
+      },
+      {"src": [],
+       "name" : 3
+     }
+      ]
+    },
+    {"number":2 ,
+      "imgs":[
+        {"src": [],
+         "name" : 2
+       },
+        {"src": [],
+         "name" : 1
+       },
+
+      {"src": [],
+       "name" : 3
+     }
+        ]
+      },
+      {"number":3,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":4,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 4
+         }
+          ]
+      },
+      {"number":5,
+        "imgs":[
+          {"src": [],
+           "name" : 5
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":6,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 6
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+
+      {"number":7,
+        "imgs":[
+          {"src": [],
+           "name" : 7
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      },
+      {"number":8,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 3
+         },
+         {"src": [],
+          "name" : 8
+         }
+          ]
+      },
+      {"number":9,
+        "imgs":[
+          {"src": [],
+           "name" : 1
+         },
+          {"src": [],
+           "name" : 9
+         },
+         {"src": [],
+          "name" : 2
+         }
+          ]
+      }
+  ],
+  "assets": [ "assorted-objects/bananas.png",
+              "assorted-objects/beans.png",
+              "assorted-objects/tomatoes.png",
+              "assorted-objects/corn.png",
+              "assorted-objects/eggs.png",
+              "assorted-objects/fish.png"
+
+        ],
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
+       "tap": {"path": "instructions/Instructions.mp3", "text":"....."}
+  },
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  },
+  "finalizationLevel" : 3,
+  "successFeedback": [
+    {
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "endingFeedback": [
+    {
+     "path": "End1.mp3",
+     "text": "......"
+    },
+    {
+      "path": "End2.mp3",
+      "text": "......"
+    }
+
+  ],
+  "failureFeedback": [
+    {
+      "path": "Almost.mp3",
+      "text": "Almost! Carefully count the ingredients on the other boxes and try again"
+    },
+    {
+      "path": "Not_Correct.mp3",
+      "text": "I'm not sure this is the correct box"
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again!"
+    }
+  ]
+}
