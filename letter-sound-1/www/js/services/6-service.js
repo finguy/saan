@@ -32,14 +32,7 @@ angular.module('saan.services')
            iterWord = json[index].word[key];
            imgWord = json[index].imgs[key];
           }
-
-          console.log("playedWords:");
-          console.log(playedWords);
-          console.log("playedWords.length:");
-          console.log(_.size(playedWords));
-          console.log("nextWord:");
-          console.log(iterWord);
-          console.log(playedWords[iterWord]);
+          
           return {
             word : iterWord,
             img: imgWord,
