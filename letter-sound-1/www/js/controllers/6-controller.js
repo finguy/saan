@@ -326,7 +326,7 @@ angular.module('saan.controllers')
   };
 
   $scope.sortableTargetOptions = {
-    containment: '.activity6',
+    containment: '.activity-6',
     accept: function(sourceItemHandleScope, destSortableScope){
       dragChecked = true;
       var value = sourceItemHandleScope.modelValue;
@@ -337,9 +337,9 @@ angular.module('saan.controllers')
   };
 
   $scope.sortableSourceOptions = {
-    containment: '.activity6',
+    containment: '.activity-6',
     containerPositioning: 'relative',
-    clone:true,
+    clone: true,
     allowDuplicates: true,
     dragEnd: function(eventObj) {
       if (dragChecked && !$scope.isPhonemaOk){

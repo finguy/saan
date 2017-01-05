@@ -1,5 +1,8 @@
-.activity6 {
-  background-image: url('../assets/6/background.png');
+.activity-6 {
+  background: url('../assets/6/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
 
   .images-list {
     float: left;
@@ -7,12 +10,19 @@
     width: 50rem;
   }
 
-  .activity-6-letterContainer{
-    display: inline-flex;
-    position: absolute;
-    bottom:10rem;
-    left: 30%;
-    padding: 1rem;
+  .ingredient-image {
+    height: 12rem;
+    width: 12rem;
+    margin-top: 6rem;
+    align-self: center;
+    object-fit: contain;
+  }
+
+  .letterContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: 10rem;
   }
 
   .letters-list.as-sortable-item{
@@ -23,22 +33,22 @@
     background: transparent;
     border: 0;
   }
- .lettersDragged {
-  position:absolute;
-  top: 25rem;
-  left: 45rem;
-  width: 30rem;
-  display: flex;
-  justify-content: center;
-  margin:auto;
- }
- .dragged-letter {
-  height: 6rem;
-  width: 6rem;
-  background: transparent;
-  border: 0;
 
- }
+  .lettersDragged {
+    display: flex;
+    width: 50rem;
+    align-self: center;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+ .dragged-letter {
+    height: 6rem;
+    width: 6rem;
+    background: transparent;
+    border: 0;
+  }
+
   .icon-phonema {
     padding: 5rem;
   }
@@ -46,7 +56,10 @@
   .dropzone {
     background: url('../assets/6/magic-pot.png') no-repeat center / contain;
     min-height: 50rem;
-    border:0;
+    border: 0;
+    margin-bottom: 12rem;
+    display: flex;
+    flex-direction: column;
 
     .as-sortable-placeholder {
       display: none !important;
@@ -56,31 +69,21 @@
 
   .dragged-phonemas {
     height: 8rem;
-    -webkit-transform: rotate(3deg);
     transform: rotate(3deg);
     margin-left: 3rem;
     margin-top: 5rem;
     margin-right: auto;
     display: block;
   }
+
   .as-sortable-placeholder {
-   display: none !important;
-  }
-  .as-sortable-dragging{
-    background: 0;
-    border: 0;
-    margin: 0;
+    display: none !important;
   }
 
   .character{
-    bottom: 0rem;
+    bottom: 24rem;
     position: absolute;
     right: 0;
-
-     img {
-      height: 40rem;
-      margin-left: auto;
-     }
   }
 
   .talk-bubble {

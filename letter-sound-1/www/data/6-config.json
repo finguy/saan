@@ -4,9 +4,9 @@
                 "objects/banana.png"
       ]
     },
-    {"word":"bean" ,
+    {"word":"beans" ,
       "imgs":[
-                 "objects/bean.png"
+                 "objects/beans.png"
         ]
     },
     {"word":"corn" ,
@@ -26,7 +26,7 @@
     },
     {"word":"tomato" ,
       "imgs":[
-                 "objects/tomatoes.png"
+                 "objects/tomato.png"
         ]
     }
   ],
