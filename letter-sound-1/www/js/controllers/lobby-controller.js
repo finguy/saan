@@ -27,7 +27,7 @@ angular.module('saan.controllers')
     });
 
     $scope.actividadesNoDisponibles = actividadesNoDisponibles;
-    $scope.actividadesDisponibles = _.sortBy(actividadesDisponibles, "order");
+    $scope.actividadesDisponibles = actividadesDisponibles;
     console.log("lobby check");
   };
 

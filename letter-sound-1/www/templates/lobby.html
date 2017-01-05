@@ -1,17 +1,32 @@
 <ion-view view-title="Lobby" class="lobby">
   <ion-scroll zooming="true" direction="x" class="lobby-scroll">
     <div class="activities-container">
-      <div class="activity-card" ng-repeat="actividad in actividadesDisponibles">
-        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
-        <div class="info">{{actividad}}</div>
-        <div class="info" ng-if="completed(actividad)">finalizada min</div>
-        <div class="info" ng-if="maxCompleted(actividad)">finalizada max</div>
+      <div class="activity-card" ng-repeat="actividad in actividadesDisponibles track by $index"
+        ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}"
+        ui-sref="activity({activityId:actividad})">
+        <div class="footer">
+          <div class="info">{{$index + 1}}</div>
+          <div class="stars">
+            <img src="assets/lobby/grey-star.png" ng-if="!completed(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="completed(actividad)">
+            <img src="assets/lobby/grey-star.png" ng-if="!maxCompleted(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="maxCompleted(actividad)">
+          </div>
+        </div>
       </div ng-repeat-end>
-      <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles">
-        <img class="lobby-item" ui-sref="activity({activityId:actividad})" ng-src="assets/{{actividad}}/cover.png">
+      <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles"
+        ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}">
+        <div class="footer">
+          <div class="stars">
+            <img src="assets/lobby/grey-star.png" ng-if="!completed(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="completed(actividad)">
+            <img src="assets/lobby/grey-star.png" ng-if="!maxCompleted(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="maxCompleted(actividad)">
+          </div>
+        </div>
       </div ng-repeat-end>
     </div>
   </ion-scroll>
-  <button class="button forward" ng-click="scrollForward()"> > </button>
-  <button class="button backward" ng-click="scrollBackward()"> < </button>
+  <button class="button forward" ng-click="scrollForward()"></button>
+  <button class="button backward" ng-click="scrollBackward()"></button>
 </ion-view>
