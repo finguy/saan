@@ -121,7 +121,8 @@
   ],
   "assets": [ "assorted-objects/bananas.png",
               "assorted-objects/beans.png",
-              "assorted-objects/tomatoes.png",              
+              "assorted-objects/tomatoes.png",
+              "assorted-objects/corn.png",
               "assorted-objects/eggs.png",
               "assorted-objects/fish.png"
 
