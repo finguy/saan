@@ -118,12 +118,12 @@ body {
 }
 
 .button-back {
-  background: no-repeat url('../assets/3/back.png') 0 0;
+  background: url('../assets/lobby/left-arrow.png') no-repeat;
   border: 0;
-  height: 5rem;
+  height: 9.8rem;
   left: .5rem;
   position: absolute;
   top: .5rem;
-  width: 5rem;
+  width: 9.8rem;
   z-index: 99999;
  }
