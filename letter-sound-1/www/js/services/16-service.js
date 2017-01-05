@@ -7,7 +7,7 @@ angular.module('saan.services')
         return $http.get(src).then(
           function success(response) {
 
-            data = response.data;
+            data = response.readings;
             var json = data.info;
             var index;
             if (level <= json.length) {
