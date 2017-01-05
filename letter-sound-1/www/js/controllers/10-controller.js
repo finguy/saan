@@ -116,14 +116,16 @@
             Ctrl10.setUpContextVariables(data);
             var readWordTimeout = (readInstructions) ? 2000 : 1000;
             $timeout(function() {
-              if (readInstructions) {
-                $scope.speaking = true;
-                $scope.showText = true;
-                $scope.textSpeech = $scope.introText;
-                Ctrl10.instructionsPlayer.play();
-              } else {
-                $scope.speaking = true;
-                Ctrl10.wordPlayer.play();
+              if (!Ctrl10.beforeLeave){
+                if (readInstructions) {
+                  $scope.speaking = true;
+                  $scope.showText = true;
+                  $scope.textSpeech = $scope.introText;
+                  Ctrl10.instructionsPlayer.play();
+                } else {
+                  $scope.speaking = true;
+                  Ctrl10.wordPlayer.play();
+                }
               }
             }, readWordTimeout);
 
