@@ -1,4 +1,18 @@
-<ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">
-  <activity-status></activity-status>
-  <object-dashboard-ten></object-dashboard-ten>
+<ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}}">
+ <div class="dashboard">
+   <div class="data-container" as-sortable="sortableTargetOptions" data-ng-model="rimesDragged" ng-click="readWord()">
+     <div class="wordToRime"> {{word}}</div>
+     <div class="wordToPlay" ng-repeat="rime in rimesDragged"> {{rime.word}}</div>
+   </div>
+
+   <div data-ng-model="words" class="list-words text-center" as-sortable="sortableSourceOptions" is-disabled="speaking">
+     <div ng-repeat="data in words" class="list-letters" as-sortable-item as-sortable-item-handle>
+         <div class="wordToPlay"> {{data.word}}</div>
+     </div>
+   </div>
+   <div class="character" ng-click="tapInstructions()">
+     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+     <img ng-src="assets/characters/tarabu.png">
+   </div>
+ </div>
 </ion-view>

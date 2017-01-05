@@ -1,4 +1,9 @@
+$lobby-blue: #043556;
+
 .lobby {
+  background: url('../assets/lobby/lobby-background.png') no-repeat center center fixed;
+  background-size: cover;
+  line-height: initial;
 
   .lobby-scroll {
     height: 100%;
@@ -8,49 +13,67 @@
     }
   }
 
+  .footer {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    height: 7.6rem;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    position: absolute;
+    width: 100%;
+  }
+
+  .info {
+    color: $lobby-blue;
+    font-size: 4em;
+    font-weight: bold;
+    height: 5rem;
+  }
+
+  .stars img {
+    margin-left: 1.5rem;
+  }
+
   .activities-container {
     align-items: center;
     display: inline-flex;
     height: 100%;
     padding-left: 20%;
-
-    .info {
-      font-size: 3em;
-      height: 5rem;
-      margin-top: auto;
-      text-align: center;
-    }
   }
 
   .activity-card {
-    background-color: rgba(205, 220, 57, 0.4);
     display: flex;
     flex-direction: column;
-    height: 40rem;
+    height: 37.8rem;
     margin-right: 10rem;
     padding-top: 2rem;
-    width: 40rem;
+    position: relative;
+    width: 29.2rem;
 
-    img {
-      height: 30rem;
-      object-fit: contain;
-    }
-
-    &.locked img {
-      filter: contrast(0) brightness(45%);
+    &.locked {
+      filter: grayscale(.8);
     }
   }
 
+  .locked .footer .stars {
+    margin-left: auto;
+  }
+
   .button {
+    height: 9.8rem;
     position: absolute;
-    top: 50%;
+    top: calc(50% - 4.9rem);
+    width: 9.8rem;
 
     &.forward {
+      background: url('../assets/lobby/right-arrow.png') no-repeat;
       margin-right: 2rem;
       right: 0;
     }
 
     &.backward {
+      background: url('../assets/lobby/left-arrow.png') no-repeat;
       left: 0;
       margin-left: 2rem;
     }

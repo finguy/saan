@@ -10,7 +10,7 @@
     $scope.dropzone = [];
     $scope.items = ['dummy'];
     $scope.step = 1;
-    $scope.dragDisabled = false;
+    $scope.enabled = false;
     $scope.showNumber = false;
     $scope.imgPath = AssetsPath.getImgs($scope.activityId);
 
@@ -67,11 +67,7 @@
         mode = $scope.autoCheck ? 0 : 1;
 
         $scope.number = config.level.numberFrom;
-        $scope.dragDisabled = readInstructions;
-
-        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap[mode].path,
-          function(){}, function(err){ $log.error(err);}
-        );
+        $scope.enabled = !readInstructions;
 
         if (readInstructions){
           $timeout(function () {
@@ -82,7 +78,7 @@
                 instructionsPlayer.release();
                 if (!leaving){
                   $scope.showText = false;
-                  $scope.dragDisabled = false;
+                  $scope.enabled = true;
                   $scope.showNumber = true;
                   $scope.tapNumber();
                   $scope.$apply();
@@ -92,29 +88,33 @@
                 $log.error(err);
                 instructionsPlayer.release();
                 $scope.showText = false;
-                $scope.dragDisabled = false;
+                $scope.enabled = true;
                 $scope.showNumber = true;
                 $scope.$apply();
               }
             );
 
-            $scope.textSpeech = intro.text;
-            $scope.showText = true;
-            instructionsPlayer.play();
-            readInstructions = false;
+            if (!leaving){
+              $scope.textSpeech = intro.text;
+              $scope.showText = true;
+              instructionsPlayer.play();
+              readInstructions = false;
+            }
           }, 1000);
         }
         else {
           $scope.showNumber = true;
           $scope.tapNumber();
         }
+
+        Ctrl13.setTapPlayer();
       });
     };
 
     Ctrl13.startStage = function(){
       $scope.dropzone = [];
       itemCount = 0;
-      $scope.dragDisabled = false;
+      $scope.enabled = true;
     };
 
     $scope.numberToWords = function(number){
@@ -143,40 +143,48 @@
     };
 
     $scope.checkValue = function(){
-      var feedback;
-      var feedbackPath;
+        if ($scope.enabled){
+        var feedback;
+        var feedbackPath;
+        $scope.enabled = false;
 
-      if ($scope.number == itemCount){
-        $scope.dragDisabled = true;
-        feedback = LearningNumber.getSuccessAudio();
-        feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
-      }
-      else if (!$scope.autoCheck){
-        feedback = LearningNumber.getFailureAudio();
-        feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
-      }
+        if ($scope.number == itemCount){
+          feedback = LearningNumber.getSuccessAudio();
+          feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
+        }
+        else if (!$scope.autoCheck){
+          feedback = LearningNumber.getFailureAudio();
+          feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
+        }
 
-      if (feedbackPath){
-        feedbackPath = feedbackPath + feedback.path;
+        if (feedbackPath){
+          feedbackPath = feedbackPath + feedback.path;
 
-        feedbackPlayer = new Media(feedbackPath,
-          function(){
-            feedbackPlayer.release();
-            $scope.showText = false;
-            $scope.$apply();
-            if ($scope.number == itemCount){
-              Ctrl13.success();
-            }
-          },
-          function(err){
-            $log.error(err);
-            feedbackPlayer.release();
-            $scope.showText = false;
-          });
+          feedbackPlayer = new Media(feedbackPath,
+            function(){
+              feedbackPlayer.release();
+              $scope.showText = false;
+              $scope.$apply();
+              if ($scope.number == itemCount){
+                Ctrl13.success();
+              }
+              else{
+                $scope.enabled = true;
+                $scope.$apply();
+              }
+            },
+            function(err){
+              $log.error(err);
+              feedbackPlayer.release();
+              $scope.showText = false;
+              $scope.enabled = true;
+              $scope.$apply();
+            });
 
-        $scope.textSpeech = feedback.text;
-        $scope.showText = true;
-        feedbackPlayer.play();
+          $scope.textSpeech = feedback.text;
+          $scope.showText = true;
+          feedbackPlayer.play();
+        }
       }
     };
 
@@ -191,6 +199,7 @@
       else {
         if (level == LearningNumber.getMinLevel() &&
           !ActividadesFinalizadasService.finalizada($scope.activityId)){
+            level++;
           // if player reached minimum for setting activity as finished
           $timeout(function(){ Ctrl13.minReached();}, 1000);
         }
@@ -199,24 +208,58 @@
             $timeout(function(){ Ctrl13.maxReached();}, 1000);
           }
           else {
-            Util.saveLevel($scope.activityId, ++level);
-            $timeout(function(){$scope.dragDisabled = false; Ctrl13.getConfiguration(level);}, 1000);
+            level++;
+            Util.saveLevel($scope.activityId, level);
+            $timeout(function(){
+              $scope.enabled = true;
+              Ctrl13.getConfiguration(level);
+            }, 1000);
           }
         }
       }
     };
 
+    Ctrl13.setTapPlayer = function() {
+      tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap[mode].path,
+        function(){
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        }, function(err){
+          $log.error(err);
+          $scope.enabled = true;
+          $scope.showText = false;
+          $scope.$apply();
+        }
+      );
+    };
+
     $scope.tapInstruction = function() {
-      if (!$scope.dragDisabled)
+      if ($scope.enabled){
+        $scope.enabled = false;
+        $scope.textSpeech = config.instructions.tap[mode].text;
+        $scope.showText = true;
         tapPlayer.play();
+      }
     };
 
     $scope.tapNumber = function(){
-      numberPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+"numbers/"+config.instructions.numbers[$scope.number-1],
-        function() { numberPlayer.release(); },
-        function(err){ numberPlayer.release(); });
+      if ($scope.enabled){
+        $scope.enabled = false;
+        numberPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId)+"numbers/"+config.instructions.numbers[$scope.number-1],
+          function() {
+            numberPlayer.release();
+            $scope.enabled = true;
+            $scope.$apply();
+          },
+          function(err){
+            numberPlayer.release();
+            $scope.enabled = true;
+            $scope.$apply();
+          });
 
-      numberPlayer.play();
+        numberPlayer.play();
+      }
     };
 
     Ctrl13.minReached = function(){
@@ -228,11 +271,13 @@
           endPlayer.release();
           $scope.showText = false;
           $state.go('lobby');
-        }, function(err){
+        },
+        function(err){
           $log.error(err);
           endPlayer.release();
           $scope.showText = false;
-          $state.go('lobby');}
+          $state.go('lobby');
+        }
       );
 
       $scope.textSpeech = config.ending[0].text;

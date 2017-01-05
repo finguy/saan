@@ -1,5 +1,15 @@
-<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content content-margin">
-  <div class="match-container">
-    <div ng-repeat="item in options" class="match-card" ng-click="checkAnswer({{item}})">{{item}}</div>
+<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content">
+
+  <div class="book">
+    <div class="question-box" ng-class="{'visible': showQuestion}" ng-click="readQuestion()">{{questionText}}</div>
+    <div class="option-container" ng-class="{'visible': showQuestion}">
+      <span ng-repeat="item in options" class="number-option" ng-click="checkAnswer({{item}})">{{item}}</span>
+    </div>
+  </div>
+
+  <div class="character flex" ng-click="tapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img ng-if="!coloredThioye" src="assets/characters/thioye.png">
+    <img ng-if="coloredThioye" src="assets/characters/thioye-color.png">
   </div>
 </ion-view>

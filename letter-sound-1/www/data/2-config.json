@@ -7,21 +7,21 @@
       "mode": 1,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 4
+      "stages": 2
     },
     {
       "number": 2,
       "mode": 1,
       "numberOfColors": 3,
       "patternLength": 6,
-      "stages": 4
+      "stages": 2
     },
     {
       "number": 3,
       "mode": 2,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 4
+      "stages": 2
     },
     {
       "number": 4,
@@ -33,8 +33,14 @@
   ],
   "instructions": {
     "intro": [
-      { "path": "intro_1.mp3" },
-      { "path": "intro_2.mp3" }
+      {
+        "path": "intro_1.mp3",
+        "text": "Hi!"
+       },
+      {
+        "path": "intro_2.mp3",
+        "text": "Hi!"
+       }
     ],
     "tap": { "path": "tap_instruction.mp3" }
   },
@@ -67,7 +73,13 @@
     }
   ],
   "endingAudio" : [
-    { "path": "end_1.mp3" },
-    { "path": "end_2.mp3" }
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+     },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+     }
   ]
 }

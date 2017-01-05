@@ -1,0 +1,104 @@
+{"info":
+  [ { "id": 1,
+    "words": [
+    {"word":"ball" ,
+      "imgs": ["objects/ball.png"
+                ]
+    },
+    {"word":"cups" ,
+     "imgs": ["objects/cups.png"
+                ]
+    },
+    {"word":"dishes" ,
+      "imgs": ["objects/dishes.png"
+                ]
+    },
+    {"word":"hats" ,
+      "imgs": ["objects/hats.png"
+                ]
+    }]},
+    { "id": 2,
+     "words": [
+     {"word":"balloons" ,
+       "imgs": ["objects/balloons.png"
+                 ]
+     },
+     {"word":"cake" ,
+      "imgs": ["objects/cake.png"
+                 ]
+     },
+     {"word":"chairs" ,
+       "imgs": ["objects/chairs.png"
+                 ]
+     },
+     {"word":"food" ,
+       "imgs": ["objects/food.png"
+                 ]
+     }]
+      },
+      { "id": 3,
+        "words": [
+        {"word":"drinks" ,
+          "imgs": ["objects/drinks.png"
+                    ]
+        },
+        {"word":"food" ,
+         "imgs": ["objects/food.png"
+                    ]
+        },
+        {"word":"balloons" ,
+          "imgs": ["objects/balloons.png"
+                    ]
+        },
+        {"word":"hats" ,
+          "imgs": ["objects/hats.png"
+                    ]
+        }]}
+  ],
+  "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "limit":4,
+  "finalizationLevel": 2,
+  "successFeedback": [
+    {
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "endFeedback": [
+    {
+     "path": "End1.mp3",
+     "text": "Thank you!"
+    },
+    {
+      "path": "End2.mp3",
+      "text": "Thank you!"
+    }
+
+  ],
+  "failureFeedback": [
+    {
+      "path": "Almost.mp3",
+      "text": "Almost! Take your time to read the words and try again"
+    },
+    {
+      "path": "Not_Correct.mp3",
+      "text": "Well, I am not sure that's a correct match"
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again"
+    }
+  ]
+}

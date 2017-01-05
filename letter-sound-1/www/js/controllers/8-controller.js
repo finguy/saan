@@ -28,7 +28,7 @@
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
-      readInstructions = false;
+      readInstructions = true;
       $scope.dragDisabled = readInstructions;
       Ctrl8.getConfiguration(level);
     });
@@ -55,30 +55,32 @@
         Ctrl8.setStage();
         Ctrl8.setActivity();
         if (readInstructions){
-          // play instructions of activity
-          instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.intro.path,
-            function(){
-              instructionsPlayer.release();
-              readInstructions = false;
-              $scope.showText = false;
-              $scope.dragDisabled = false;
-              activityReady = true;
-              $scope.$apply();
-            },
-            function(err){
-              $log.error(err);
-              instructionsPlayer.release();
-              readInstructions = false;
-              $scope.showText = false;
-              $scope.dragDisabled = false;
-              activityReady = true;
-              $scope.$apply();
-            }
-          );
 
-          $scope.textSpeech = config.instructions.intro.text;
-          $scope.showText = true;
-          instructionsPlayer.play();
+          $timeout(function(){
+            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.intro.path,
+              function(){
+                instructionsPlayer.release();
+                readInstructions = false;
+                $scope.showText = false;
+                $scope.dragDisabled = false;
+                activityReady = true;
+                $scope.$apply();
+              },
+              function(err){
+                $log.error(err);
+                instructionsPlayer.release();
+                readInstructions = false;
+                $scope.showText = false;
+                $scope.dragDisabled = false;
+                activityReady = true;
+                $scope.$apply();
+              }
+            );
+
+            $scope.textSpeech = config.instructions.intro.text;
+            $scope.showText = true;
+            instructionsPlayer.play();
+          },1000);          
         }
         else {
           activityReady = true;

@@ -1,11 +1,26 @@
 <ion-view view-title="Dashboard (level: {{level}})" class="activity{{activityId}} content-margin">
-  <activity-status></activity-status>
-  <div class="text-center">
-    <img ng-src="{{assetsPath}}radio.png" class="instructions" ng-click="speak(instructions)">
-  </div>
-  <object-dashboard-nine class="horizontal-center"></object-dashboard-nine>
-  <div class="character" ng-click="playWordAudio()">
+ <div class="dashboard">
+   <div class="word-icons">
+     <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index" >
+       <div class="col list-letters" as-sortable="targetOptions" data-ng-model="item.dropzone">
+         <img class="dropzone icon-word" ng-src="{{assetsPath}}{{item.image}}" ng-show="item.dropzone.length == 1"
+         ng-click="selectItem(item.image)" ng-class="{'selected': item.image == selectedItem}"
+         ng-repeat="dummy in items" as-sortable-item/>
+       </div>
+     </div>
+   </div>
+
+   <div class="list-words" as-sortable="sourceOptions" data-ng-model="words" is-disabled="speaking">
+     <div class="words" ng-repeat="data in words">
+       <div class="list-letters" as-sortable-item as-sortable-item-handle>
+         <div class="letter">{{data.word}} </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+  <div class="character" ng-click="readInstructions()">
     <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
-    <img ng-src="assets/characters/mbott.png">
+    <img ng-src="assets/characters/gaynde.png" ng-click="readInstructions()">
   </div>
 </ion-view>

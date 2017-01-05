@@ -7,24 +7,24 @@
       "options": [
         {
           "id": 1,
-          "path": "stories/1/sticker-bed.png"
+          "path": "stories/1/sticker_bed.png"
         },
         {
           "id": 2,
-          "path": "stories/1/sticker-clock.png"
+          "path": "stories/1/sticker_clock.png"
         },
         {
           "id": 3,
-          "path": "stories/1/sticker-pot.png"
+          "path": "stories/1/sticker_pot.png"
         },
         {
           "id": 4,
-          "path": "stories/1/sticker-radio.png"
+          "path": "stories/1/sticker_radio.png"
         }
       ],
       "answer": 1,
-      "storyPath": "stories/1/story1.mp3",
-      "questionPath": "stories/1/question1.mp3"
+      "storyPath": "stories/1/story_1.mp3",
+      "questionPath": "stories/1/question_1.mp3"
     },
     {
       "level": 2,
@@ -32,24 +32,24 @@
       "options": [
         {
           "id": 1,
-          "path": "stories/2/sticker-bed.png"
+          "path": "stories/2/sticker_green.png"
         },
         {
           "id": 2,
-          "path": "stories/2/sticker-clock.png"
+          "path": "stories/2/sticker_purple.png"
         },
         {
           "id": 3,
-          "path": "stories/2/sticker-pot.png"
+          "path": "stories/2/sticker_red.png"
         },
         {
           "id": 4,
-          "path": "stories/2/sticker-radio.png"
+          "path": "stories/2/sticker_yellow.png"
         }
       ],
-      "answer": 1,
-      "storyPath": "stories/2/story2.mp3",
-      "questionPath": "stories/2/question2.mp3"
+      "answer": 4,
+      "storyPath": "stories/2/story_2.mp3",
+      "questionPath": "stories/2/question_2.mp3"
     },
     {
       "level": 3,
@@ -57,24 +57,24 @@
       "options": [
         {
           "id": 1,
-          "path": "stories/3/sticker-bed.png"
+          "path": "stories/3/sticker_corn.png"
         },
         {
           "id": 2,
-          "path": "stories/3/sticker-clock.png"
+          "path": "stories/3/sticker_fish.png"
         },
         {
           "id": 3,
-          "path": "stories/3/sticker-pot.png"
+          "path": "stories/3/sticker_hot_dog.png"
         },
         {
           "id": 4,
-          "path": "stories/3/sticker-radio.png"
+          "path": "stories/3/sticker_tomatoe.png"
         }
       ],
-      "answer": 1,
-      "storyPath": "stories/3/story3.mp3",
-      "questionPath": "stories/3/question3.mp3"
+      "answer": 3,
+      "storyPath": "stories/3/story_3.mp3",
+      "questionPath": "stories/3/question_3.mp3"
     },
     {
       "level": 4,
@@ -82,24 +82,24 @@
       "options": [
         {
           "id": 1,
-          "path": "stories/4/sticker-bed.png"
+          "path": "stories/4/sticker_drum.png"
         },
         {
           "id": 2,
-          "path": "stories/4/sticker-clock.png"
+          "path": "stories/4/sticker_flute.png"
         },
         {
           "id": 3,
-          "path": "stories/4/sticker-pot.png"
+          "path": "stories/4/sticker_guitar.png"
         },
         {
           "id": 4,
-          "path": "stories/4/sticker-radio.png"
+          "path": "stories/4/sticker_maracas.png"
         }
       ],
-      "answer": 1,
-      "storyPath": "stories/4/story4.mp3",
-      "questionPath": "stories/4/question4.mp3"
+      "answer": 3,
+      "storyPath": "stories/4/story_4.mp3",
+      "questionPath": "stories/4/question_4.mp3"
     }
   ],
   "instructions": {

@@ -36,10 +36,9 @@ angular.module('saan.controllers')
   });
 
   Ctrl16.showDashboard = function(readInstructions) {
-
+    Ctrl16.setUpStatus();
     Ctrl16.setUpLevel();
     Ctrl16.setUpScore();
-    Ctrl16.setUpStatus();
 
     RandomWordsSixteen.letters(Ctrl16.level).then(
       function success(data) {

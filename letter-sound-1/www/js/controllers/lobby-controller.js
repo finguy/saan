@@ -27,8 +27,16 @@ angular.module('saan.controllers')
     });
 
     $scope.actividadesNoDisponibles = actividadesNoDisponibles;
-    $scope.actividadesDisponibles = _.sortBy(actividadesDisponibles, "order");
+    $scope.actividadesDisponibles = actividadesDisponibles;
     console.log("lobby check");
+  };
+
+  $scope.completed = function(id) {
+    return ActividadesFinalizadasService.finalizada(parseInt(id,10));
+  };
+
+  $scope.maxCompleted = function(id) {
+    return ActividadesFinalizadasService.maxFinalizada(parseInt(id,10));
   };
 
   $scope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){

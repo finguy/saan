@@ -2,7 +2,7 @@
   <div class="flex justify items-center grow-1">
 
     <div class="item-container">
-      <div as-sortable="sortableCloneOptions" data-ng-model="items" is-disabled="dragDisabled">
+      <div as-sortable="sortableCloneOptions" data-ng-model="items" is-disabled="!enabled">
         <img ng-repeat="item in items track by $index" ng-src="{{imgPath}}cookie.png"
         class="sortable-cookie" as-sortable-item as-sortable-item-handle>
       </div>
