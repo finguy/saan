@@ -18,6 +18,7 @@ angular.module('saan.controllers')
   var successFeedback;
   var failureFeedback;
   var Ctrl6 = Ctrl6 || {};
+  var dragChecked = false;
   Ctrl6.instructionsPlayer;
 
   Ctrl6.successFeedback = function() {
@@ -76,14 +77,16 @@ angular.module('saan.controllers')
       function success(data) {
         Ctrl6.setUpContextVariables(data);
         $timeout(function() {
-          if (readInstructions) {
-           $scope.textSpeech = "Hi!";
-           $scope.showText = true;
-           $scope.speaking = true;
-           Ctrl6.instructionsPlayer.play();
-          } else {
-           $scope.speaking = true;
-           Ctrl6.phonemaPlayer.play();
+          if (!Ctrl6.beforeLeave){
+            if (readInstructions) {
+             $scope.textSpeech = "Hi!";
+             $scope.showText = true;
+             $scope.speaking = true;
+             Ctrl6.instructionsPlayer.play();
+            } else {
+             $scope.speaking = true;
+             Ctrl6.phonemaPlayer.play();
+            }
           }
         }, 1000);
       },
@@ -119,17 +122,25 @@ angular.module('saan.controllers')
     $scope.showImage = false;
     Ctrl6.initialLevel = 0;
     $scope.letters = [];
+    $scope.letterSounds = [];
+
     //$scope.shuffleLetters = [];
-    var letters = wordJson.word.split("");   
+    var letters = wordJson.word.split("");
     for (var i in letters) {
      if (letters[i]) {
       $scope.letters.push({"index": i, "letter": letters[i]});
+      $scope.letterSounds.push({"index": i, "letter": letters[i]});
      }
     }
-    //$scope.shuffleLetters = _.shuffle($scope.letters);
+
+
+    $scope.letters = _.shuffle($scope.letters);
+
+    // $scope.shuffleLetters = _.shuffle($scope.letters);
     //console.log($scope.shuffleLetters)
     $scope.letters2 = [];
-    $scope.currentPhonema = $scope.letters[0];
+    $scope.currentPhonema = $scope.letterSounds[0];
+    $scope.letterSounds.shift();
     $scope.totalLevels = data.totalLevels;
     $scope.phonemas = [];
     $scope.hasDraggedLetter = [];
@@ -138,6 +149,8 @@ angular.module('saan.controllers')
      var letter = $scope.letters[i];
      $scope.hasDraggedLetter[letter + "_" + i] = false;
     }
+
+    // $scope.letters= angular.copy(_.shuffle($scope.letters));
 
     Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
@@ -216,16 +229,8 @@ angular.module('saan.controllers')
   };
 
   $scope.getNewPhonema = function() {
-    $scope.phonemas.push($scope.currentPhonema);
-    var selected = true;
-    var totalLetters = $scope.letters.length;
-    var i  = 0;
-
-    while (selected && i < totalLetters) {
-      $scope.currentPhonema = $scope.letters[i];
-      selected = $scope.hasDraggedLetter[$scope.currentPhonema.letter + "_" + $scope.currentPhonema.index];
-      i++;
-    }
+    $scope.currentPhonema = $scope.letterSounds[0];
+    $scope.letterSounds.shift();
     Ctrl6.phonemaPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + "letters/" + $scope.currentPhonema.letter.toUpperCase() + ".mp3",
       function success() {
         Ctrl6.phonemaPlayer.release();
@@ -323,6 +328,7 @@ angular.module('saan.controllers')
   $scope.sortableTargetOptions = {
     containment: '.activity6',
     accept: function(sourceItemHandleScope, destSortableScope){
+      dragChecked = true;
       var value = sourceItemHandleScope.modelValue;
       console.log(value);
       $scope.isPhonemaOk = $scope.checkPhonema(value);
@@ -336,9 +342,10 @@ angular.module('saan.controllers')
     clone:true,
     allowDuplicates: true,
     dragEnd: function(eventObj) {
-      if (!$scope.isPhonemaOk){
-         $scope.handleProgress(false);
+      if (dragChecked && !$scope.isPhonemaOk){
+        $scope.handleProgress(false);
       }
+      dragChecked = false;
     },
     itemMoved: function (eventObj) {
      console.log('itemMoved');
@@ -362,7 +369,8 @@ angular.module('saan.controllers')
 
   //*************** ACTIONS **************************/
   $scope.$on('$ionicView.beforeEnter', function() {
-    Ctrl6.showDashboard(true);
+    Ctrl6.showDashboard(false);
+    Ctrl6.beforeLeave = false;
   });
 
   $scope.$on('$ionicView.beforeLeave', function() {
