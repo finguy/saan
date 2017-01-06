@@ -34,8 +34,10 @@ angular.module('saan.services', [])
 
     var marcarComoFinalizada = function(activityId) {
         var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
-        finishedActivities.push(activityId);
-        $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+        if (_.indexOf(finishedActivities, activityId) == -1){
+          finishedActivities.push(activityId);
+          $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+        }
       },
       getActividadesFinalizadas = function() {
         return JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
@@ -50,8 +52,10 @@ angular.module('saan.services', [])
       },
       marcarFinalizadaMax = function(activityId) {
         var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES_MAX)) || [];
-        finishedActivities.push(activityId);
-        $window.localStorage.setItem(FINISHED_ACTIVITIES_MAX, JSON.stringify(finishedActivities));
+        if (_.indexOf(finishedActivities, activityId) == -1){
+          finishedActivities.push(activityId);
+          $window.localStorage.setItem(FINISHED_ACTIVITIES_MAX, JSON.stringify(finishedActivities));
+        }
       };
 
     return {
