@@ -55,7 +55,8 @@
                     ]
         }]}
   ],
-  "instructionsPath": ["instructions/Intro.mp3", "instructions/Instructions.mp3"],
+  "instructionsPath": [ {"path": "instructions/Intro.mp3", "text":"Hi!"},
+   { "path": "instructions/Instructions.mp3", "text":"..."}],
   "scoreSetUp" : {
     "add": 1,
     "substract": 1
