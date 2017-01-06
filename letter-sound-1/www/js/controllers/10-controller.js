@@ -15,6 +15,7 @@
       $scope.speaking = false;
       $scope.textSpeech = "";
       $scope.introText = "";
+      $scope.helpText = "";
       $scope.endText = "";
       var successPlayer;
       var failurePlayer;
@@ -200,6 +201,7 @@
 
         //Tap player
         if (!Ctrl10.tapInstructionsPlayer) {
+          $scope.helpText = data.instructionsPath.tap.text;
           Ctrl10.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
             function success() {
               Ctrl10.tapInstructionsPlayer.release();
@@ -363,13 +365,15 @@
       $scope.tapInstructions = function() {
        if (!$scope.speaking) {
         $scope.speaking = true;
+        $scope.showText = true;
+        $scope.textSpeech = $scope.helpText;
         Ctrl10.tapInstructionsPlayer.play();
        }
       };
 
       $scope.readWord = function() {
        if (!$scope.speaking) {
-         $scope.speaking = true;
+         $scope.speaking = true;             
          Ctrl10.wordPlayer.play();
        }
       }

@@ -14,7 +14,9 @@ angular.module('saan.controllers')
   $scope.showText = false;
   $scope.textSpeech = "";
   $scope.speaking = false;
-
+  $scope.introText = "";
+  $scope.helpText = "";
+  $scope.endText = "";
   var failurePlayer;
   var successPlayer;
   var Ctrl9 = Ctrl9 || {};
@@ -33,10 +35,11 @@ angular.module('saan.controllers')
           if (readInstructions) {
             $scope.speaking = true;
             $scope.showText = true;
-            $scope.textSpeech = "Hi!";
+            $scope.textSpeech = $scope.introText;
             Ctrl9.instructionsPlayer.play();
           } else {
            $scope.speaking = false;
+           $scope.showText = false;
           }
         }, 1000);
       },
@@ -67,10 +70,7 @@ angular.module('saan.controllers')
       $scope.showText = true;
       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
         function success() {
-          successPlayer.release();
-          $scope.showText = false;
-          $scope.speaking = false;
-          $scope.$apply();
+          successPlayer.release();          
         },
         function error(err) {
           $log.error(err);
@@ -89,6 +89,8 @@ angular.module('saan.controllers')
   $scope.readInstructions = function() {
    if (!$scope.speaking) {
      $scope.speaking = true;
+     $scope.showText = true;
+     $scope.textSpeech = $scope.helpText;
      Ctrl9.instructionsPlayerTap.play();
    }
   };
@@ -146,6 +148,7 @@ angular.module('saan.controllers')
 
     if (!Ctrl9.finished) {
       endingFeedback = RandomWordsNine.getEndingAudio(0);
+      $scope.endText = endingFeedback.text;
       Ctrl9.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl9.endPlayer.release();
@@ -161,6 +164,7 @@ angular.module('saan.controllers')
     } else {
 
       endingFeedback = RandomWordsNine.getEndingAudio(1);
+      $scope.endText = endingFeedback.text;
       Ctrl9.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl9.endPlayer.release();
@@ -174,8 +178,8 @@ angular.module('saan.controllers')
         }
       );
     }
-
-    Ctrl9.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath[0],
+    $scope.introText = data.instructionsPath[0].text;
+    Ctrl9.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath[0].path,
       function success() {
         Ctrl9.instructionsPlayer.release();
         $scope.showText = false;
@@ -189,8 +193,8 @@ angular.module('saan.controllers')
         $scope.$apply();
       }
     );
-
-    Ctrl9.instructionsPlayerTap = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath[1],
+    $scope.helpText = data.instructionsPath[1].text;
+    Ctrl9.instructionsPlayerTap = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath[1].path,
       function success() {
         Ctrl9.instructionsPlayerTap.release();
         $scope.showText = false;
@@ -220,14 +224,14 @@ angular.module('saan.controllers')
         if (Ctrl9.finished) {
           ActividadesFinalizadasService.add($scope.activityId);
           $scope.showText = true;
-          $scope.textSpeech = "Thank you!";
+          $scope.textSpeech = $scope.endText;
           Ctrl9.endPlayer.play();
         } else if (Ctrl9.level <= Ctrl9.totalLevels) {
           Ctrl9.showDashboard(false);
         } else {
           Ctrl9.level = Ctrl9.initialLevel;
           $scope.showText = true;
-          $scope.textSpeech = "Thank you!";
+          $scope.textSpeech = $scope.endText;
           Ctrl9.endPlayer.play();
         }
       } else {
@@ -236,7 +240,7 @@ angular.module('saan.controllers')
         } else {
           Ctrl9.level = Ctrl9.initialLevel;
           $scope.showText = true;
-          $scope.textSpeech = "Thank you!";
+          $scope.textSpeech = $scope.endText;
           Ctrl9.endPlayer.play();
         }
       }

@@ -155,9 +155,9 @@
   "srcAlphabetLetters": "letters-blue/letters-blue-",
   "instructions": "Hi! Let's learn letters. Touch the boxes!",
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
-       "action": [{"path": "instructions/tap_letter.mp3", "text":""},
-                  {"path": "letters/", "text":""}
+       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
+       "action": [{"path": "instructions/tap_letter.mp3", "text":"..."},
+                  {"path": "letters/", "text":"..."}
                  ]
       },
   "scoreSetUp" : {
@@ -196,11 +196,11 @@
   "endFeedback": [
     {
       "path": "End1.mp3",
-      "text": ""
+      "text": "Thank you!"
     },
     {
       "path": "End2.mp3",
-      "text": ""
+      "text": "Thank you!"
     }
   ]
 }

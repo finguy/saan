@@ -8,6 +8,9 @@
       $scope.img = "";
       $scope.playedTexts = [];
       $scope.text = "";
+      $scope.introText = "";
+      $scope.helpText = "";
+      $scope.endText = "";
       $scope.showReading = false;
       $scope.showQuestion = false;
       $scope.showOptions = false;
@@ -43,8 +46,8 @@
           successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
             function success() {
               successPlayer.release();
-              $scope.showText = false;
-              $scope.speaking = false;
+             // $scope.showText = false;
+             // $scope.speaking = false;
             },
             function error(err) {
               $log.error(err);
@@ -92,9 +95,12 @@
             $timeout(function() {
               if (readInstructions) {
                 $scope.showText = true;
-                $scope.textSpeech = "Hi!";
+                $scope.textSpeech = $scope.introText;
                 $scope.speaking = true;
                 Ctrl12.instructionsPlayer.play();
+              } else {
+                $scope.showText = false;
+                $scope.speaking = false;
               }
             }, 1000);
 
@@ -122,6 +128,7 @@
         Ctrl12.initialLevel = 1;
         $scope.checkingAnswer = false;
 
+        $scope.helpText = data.instructionsPath.tap.text;
         Ctrl12.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
           function success() {
             Ctrl12.tapInstructionsPlayer.release();
@@ -137,6 +144,7 @@
           }
         );
 
+        $scope.introText = data.instructionsPath.intro.text;
         Ctrl12.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
           function success() {
             Ctrl12.instructionsPlayer.release();
@@ -152,12 +160,13 @@
 
         if (!Ctrl12.finished) {
         var endingFeedback = RandomText.getEndingAudio(0);
+        $scope.endText = endingFeedback.text;
         Ctrl12.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path ,
           function success() {
             Ctrl12.endPlayer.release();
-            $scope.showText = false;
-            $scope.speaking = false;
-            $scope.$apply();
+            //$scope.showText = false;
+            //$scope.speaking = false;
+            //$scope.$apply();
             $state.go('lobby');
           },
           function error(err) {
@@ -168,6 +177,7 @@
         );
        } else {
           endingFeedback = RandomText.getEndingAudio(1);
+          $scope.endText = endingFeedback.text;
           Ctrl12.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
             function success() {
               Ctrl12.endPlayer.release();
@@ -197,7 +207,7 @@
               ActividadesFinalizadasService.add($scope.activityId);
               $scope.speaking = true;
               $scope.showText = true;
-              $scope.textSpeech = "Thank you!";
+              $scope.textSpeech = $scope.endText;
               Ctrl12.endPlayer.play();
             } else {
               Ctrl12.showDashboard(false);
@@ -208,7 +218,7 @@
             Ctrl12.level = Ctrl12.initialLevel;
             $scope.speaking = true;
             $scope.showText = true;
-            $scope.textSpeech = "Thank you!";
+            $scope.textSpeech = $scope.endText;
             Ctrl12.endPlayer.play();
           }
         }, 1500);
@@ -259,6 +269,8 @@
       $scope.tapInstruction = function() {
        if (!$scope.speaking){
          $scope.speaking = true;
+         $scope.textSpeech = $scope.helpText;
+         $scope.showText = true;
          Ctrl12.tapInstructionsPlayer.play();
        }
       }

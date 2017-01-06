@@ -89,8 +89,8 @@
     ],
 
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
-       "action": {"path": "letters/", "text":""}
+       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
+       "action": {"path": "letters/", "text":"..."}
 
       },
   "scoreSetUp" : {
@@ -126,12 +126,12 @@
   ],
   "endFeedback": [
     {
-      "path": "Fin1.mp3",
-      "text": ""
+      "path": "End1.mp3",
+      "text": "Thank you!"
     },
     {
-      "path": "Fin2.mp3",
-      "text": ""
+      "path": "End2.mp3",
+      "text": "Thank you!"
     }
   ]
 }
