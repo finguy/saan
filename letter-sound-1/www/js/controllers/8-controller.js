@@ -8,7 +8,7 @@
     $scope.activityId = 8;
     $scope.dropzoneModel = [];
     $scope.showText = false;
-    $scope.dragDisabled = true;
+    $scope.enabled = true;
 
     var config;
     var Ctrl8 = Ctrl8 || {};
@@ -24,16 +24,16 @@
     var checking = false;
     var dragChecked = false;
     var dragOk = false;
-    var activityReady = false;
+    var leaving = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
       readInstructions = true;
-      $scope.dragDisabled = readInstructions;
       Ctrl8.getConfiguration(level);
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
@@ -54,42 +54,63 @@
         config = data;
         Ctrl8.setStage();
         Ctrl8.setActivity();
+
         if (readInstructions){
-
           $timeout(function(){
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.intro.path,
-              function(){
-                instructionsPlayer.release();
-                readInstructions = false;
-                $scope.showText = false;
-                $scope.dragDisabled = false;
-                activityReady = true;
-                $scope.$apply();
-              },
-              function(err){
-                $log.error(err);
-                instructionsPlayer.release();
-                readInstructions = false;
-                $scope.showText = false;
-                $scope.dragDisabled = false;
-                activityReady = true;
-                $scope.$apply();
-              }
-            );
+            if (!leaving){
+              instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.intro.path,
+                function(){
+                  instructionsPlayer.release();
+                  readInstructions = false;
+                  $scope.showText = false;
+                  $scope.enabled = true;
+                  $scope.$apply();
+                },
+                function(err){
+                  $log.error(err);
+                  instructionsPlayer.release();
+                  readInstructions = false;
+                  $scope.showText = false;
+                  $scope.enabled = true;
+                  $scope.$apply();
+                }
+              );
 
-            $scope.textSpeech = config.instructions.intro.text;
-            $scope.showText = true;
-            instructionsPlayer.play();
-          },1000);          
-        }
-        else {
-          activityReady = true;
+              $scope.textSpeech = config.instructions.intro.text;
+              $scope.showText = true;
+              instructionsPlayer.play();
+            }
+          },1000);
         }
 
-        tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
-          function(){}, function(err){ $log.error(err);}
-        );
+        Ctrl8.setTapPlayer();
+        $scope.enabled = !readInstructions;
       });
+    };
+
+    Ctrl8.setTapPlayer = function() {
+      tapPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + config.instructions.tap.path,
+        function(){
+          $scope.showText = false;
+          $scope.enabled = true;
+          $scope.$apply();
+        },
+        function(err){
+          $log.error(err);
+          $scope.showText = false;
+          $scope.enabled = true;
+          $scope.$apply();
+        }
+      );
+    };
+
+    $scope.tapInstruction = function() {
+      if ($scope.enabled){
+        $scope.enabled = false;
+        $scope.textSpeech = config.instructions.tap.text;
+        $scope.showText = true;
+        tapPlayer.play();
+      }
     };
 
     Ctrl8.clearValues = function(){
@@ -113,12 +134,6 @@
     Ctrl8.setStage = function(){
       stageData = config.level;
       stageData.tickets = _.range(stageData.numberFrom, stageData.numberTo + 1); //numberTo+1 because range is top exclusive
-    };
-
-    $scope.tapInstruction = function() {
-      if (activityReady){
-        tapPlayer.play();
-      }
     };
 
     $scope.sortableOptions = {
@@ -200,15 +215,22 @@
             }
             else {
               $scope.matches.push(stageData.tickets.pop());
+              $scope.enabled = true;
               $scope.$apply();
             }
             checking = false;
           },
-          function(err){ $log.error(err); successPlayer.release(); $scope.showText = false; $scope.$apply(); }
+          function(err){
+            $log.error(err);
+            successPlayer.release();
+            $scope.showText = false;
+            $scope.enabled = true;
+            $scope.$apply(); }
         );
 
         $scope.textSpeech = successFeedback.text;
         $scope.showText = true;
+        $scope.enabled = false;
         successPlayer.play();
       }
     };
@@ -218,10 +240,23 @@
         var failureFeedback = NumberMatching.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.$apply(); checking = false;},
-          function(err){ failurePlayer.release(); $log.error(err); $scope.showText = false; checking = false; $scope.$apply();}
+          function(){
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.enabled = true;
+            $scope.$apply();
+            checking = false;
+          },
+          function(err){
+            failurePlayer.release();
+            $log.error(err);
+            $scope.showText = false;
+            $scope.enabled = true;
+            checking = false;
+            $scope.$apply();}
         );
 
+        $scope.enabled = false;
         $scope.textSpeech = failureFeedback.text;
         $scope.showText = true;
         failurePlayer.play();
@@ -232,7 +267,6 @@
       // if player reached minimum for setting activity as finished
       ActividadesFinalizadasService.add($scope.activityId);
       $scope.finished = true;
-      $scope.$apply();
       level++;
 
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[0].path,
@@ -244,11 +278,13 @@
 
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
+      $scope.$apply();
       endPlayer.play();
     };
 
     Ctrl8.maxReached = function(){
       level = 1;
+      ActividadesFinalizadasService.addMax($scope.activityId);
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){ endPlayer.release(); $state.go('lobby'); },
         function(err){ $log.error(err);}
