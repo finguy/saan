@@ -373,7 +373,7 @@
 
       $scope.readWord = function() {
        if (!$scope.speaking) {
-         $scope.speaking = true;                  
+         $scope.speaking = true;             
          Ctrl10.wordPlayer.play();
        }
       }
