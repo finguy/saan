@@ -6,6 +6,7 @@
   'ActividadesFinalizadasService', 'AssetsPath',
   function($rootScope, $scope, $log, $state, $timeout, DeckBuilder, Util, ActividadesFinalizadasService, AssetsPath) {
     $rootScope.activityId = 7;
+    $scope.activityId = 7;
     $scope.deck = [];
     $scope.map = [];
     $scope.enabled = false;
@@ -19,6 +20,7 @@
     var endPlayer;
     var readInstructions;
     var activityReady = false;
+    var leaving = false;
 
     $scope.$on('$ionicView.beforeEnter', function() {
       level = Util.getLevel($scope.activityId) || 1;
@@ -27,6 +29,7 @@
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
       Util.saveLevel($scope.activityId, level);
 
       $rootScope.activityId = '';
@@ -53,27 +56,29 @@
         activityReady = !readInstructions;
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.intro.path;
-            // play instructions of activity
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-              function(){
-                instructionsPlayer.release();
-                activityReady = true;
-                $scope.showText = false;
-                $scope.$apply();
-              },
-              function(err){
-                $log.error(err);
-                instructionsPlayer.release();
-                $scope.showText = false;
-                $scope.$apply();
-              }
-            );
+            if (!leaving){
+              var introPath = config.instructions.intro.path;
+              // play instructions of activity
+              instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+                function(){
+                  instructionsPlayer.release();
+                  activityReady = true;
+                  $scope.showText = false;
+                  $scope.$apply();
+                },
+                function(err){
+                  $log.error(err);
+                  instructionsPlayer.release();
+                  $scope.showText = false;
+                  $scope.$apply();
+                }
+              );
 
-            $scope.textSpeech = config.instructions.intro.text;
-            $scope.showText = true;
-            instructionsPlayer.play();
-            readInstructions = false;
+              $scope.textSpeech = config.instructions.intro.text;
+              $scope.showText = true;
+              instructionsPlayer.play();
+              readInstructions = false;
+            }
           }, 1000);
         }
 
@@ -185,6 +190,7 @@
     };
 
     Ctrl7.maxReached = function(){
+      ActividadesFinalizadasService.addMax($scope.activityId);
       level = 1;
       activityReady = false;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
