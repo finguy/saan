@@ -12,7 +12,9 @@ angular.module('saan.controllers')
   $scope.showText = false;
   $scope.textSpeech = "";
   $scope.speaking = false;
-
+  $scope.introText = "";
+  $scope.helpText = "";
+  $scope.endText = "";
   var successPlayer;
   var endingPlayer;
   var failurePlayer;
@@ -36,11 +38,12 @@ angular.module('saan.controllers')
 
           if (readInstructions) {
             $scope.showText = true;
-            $scope.textSpeech = 'Hi!';
+            $scope.textSpeech = $scope.introText;
             $scope.speaking = true;
             Ctrl4.instructionsPlayer.play();
           } else {
             $scope.showText = false;
+            $scope.speaking = false;
           }
         }, readWordTimeout);
 
@@ -94,7 +97,7 @@ angular.module('saan.controllers')
         $scope.imgs.push(img);
       }
     }
-
+    $scope.introText = data.instructionsPath.intro.text;
     Ctrl4.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl4.instructionsPlayer.release();
@@ -108,6 +111,7 @@ angular.module('saan.controllers')
       }
     );
 
+    $scope.helpText = data.instructionsPath.tap.text;
     Ctrl4.tapInstructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.tap.path,
       function success() {
         Ctrl4.tapInstructionsPlayer.release();
@@ -126,12 +130,13 @@ angular.module('saan.controllers')
 
     if (!Ctrl4.finished) {
       endingFeedback = RandomNumber.getEndingAudio(0);
+      $scope.endText = endingFeedback.text;
       Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl4.endPlayer.release();
-          $scope.showText = false;
-          $scope.speaking = false;
-          $scope.$apply();
+          //$scope.showText = false;
+          //$scope.speaking = false;
+          //$scope.$apply();
           $state.go('lobby');
         },
         function error(err) {
@@ -144,12 +149,13 @@ angular.module('saan.controllers')
       );
     } else {
       endingFeedback = RandomNumber.getEndingAudio(1);
+      $scope.endText = endingFeedback.text;
       Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl4.endPlayer.release();
-          $scope.showText = false;
-          $scope.speaking = false;
-          $scope.$apply();
+          //$scope.showText = false;
+         // $scope.speaking = false;
+         // $scope.$apply();
           $state.go('lobby');
         },
         function error(err) {
@@ -171,15 +177,10 @@ angular.module('saan.controllers')
       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
         function success() {
           successPlayer.release();
-          $scope.showText = false;
-          $scope.speaking = false;
-          $scope.$apply();
         },
         function error(err) {
           $log.error(err);
-          successPlayer.release();
-          $scope.showText = false;
-          $scope.speaking = false;
+          successPlayer.release();         
           $scope.checkingWord = false;
           $scope.$apply();
         }
@@ -224,7 +225,8 @@ angular.module('saan.controllers')
        if (Ctrl4.finished) {
          ActividadesFinalizadasService.add($scope.activityId);
          $scope.showText = true;
-         $scope.textSpeech = 'Thank you!';
+         $scope.textSpeech = $scope.endText;
+         $scope.speaking = true;
          Ctrl4.endPlayer.play();
        } else {
          Ctrl4.showDashboard(false);
@@ -234,7 +236,8 @@ angular.module('saan.controllers')
      } else {
        Ctrl4.level = Ctrl4.initialLevel;
        $scope.showText = true;
-       $scope.textSpeech = 'Thank you!';
+       $scope.textSpeech = $scope.endText;
+       $scope.speaking = true;
        Ctrl4.endPlayer.play();
      }
     },2000);
@@ -278,6 +281,8 @@ angular.module('saan.controllers')
   $scope.playInstructions = function() {
    if (!$scope.speaking) {
      $scope.speaking = true;
+     $scope.textSpeech = $scope.helpText;
+     $scope.showText = true;
      Ctrl4.tapInstructionsPlayer.play();
    }
   }
