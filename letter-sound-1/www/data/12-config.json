@@ -65,8 +65,8 @@
   },
   "finalizationLevel": 3,
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"....."},
-       "tap": {"path": "instructions/Tap.mp3", "text":"....."}
+       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
+       "tap": {"path": "instructions/Tap.mp3", "text":"..."}
       },
   "successFeedback": [
     {
@@ -85,11 +85,11 @@
   "endFeedback": [
     {
      "path": "End1.mp3",
-     "text": "......"
+     "text": "Thank you!"
     },
     {
       "path": "End2.mp3",
-      "text": "......"
+      "text": "Great!"
     }
 
   ],
