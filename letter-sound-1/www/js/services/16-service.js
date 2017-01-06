@@ -5,7 +5,7 @@ angular.module('saan.services')
       letters: function(level) {
         var src = LevelsSixteen.getSrcData(level);
         return $http.get(src).then(
-          function success(response) {            
+          function success(response) {
             data = response.data;
             var json = data.info;
             var index;
@@ -31,8 +31,7 @@ angular.module('saan.services')
           }
         );
       },
-      getEndingAudio: function(level, totalLevels) {
-        var index = (level < totalLevels) ? 0 : 1; // Si se llego al final reproduce el segundo
+      getEndingAudio: function(index) {        
         return data.endingFeedback[index];
       },
       getSuccessAudio: function() {
@@ -51,10 +50,10 @@ angular.module('saan.services')
         var src = '';
         switch (level) {
           case "1":
-            src = 'data/16-letters.json';
+            src = 'data/16-config.json';
             break;
           default:
-            src = 'data/16-letters.json';
+            src = 'data/16-config.json';
         }
         return src;
       },
