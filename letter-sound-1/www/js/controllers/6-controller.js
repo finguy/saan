@@ -15,6 +15,7 @@ angular.module('saan.controllers')
   $scope.showText = false;
   $scope.textSpeech = "";
   $scope.introMessage = "";
+  $scope.tapMessage = "";
   $scope.endMessage = "";
   var successFeedback;
   var failureFeedback;
@@ -30,8 +31,8 @@ angular.module('saan.controllers')
      var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
        function success() {
          successPlayer.release();
-         $scope.showText = false;
-         $scope.speaking = false;
+        // $scope.showText = false;
+        // $scope.speaking = false;
        },
        function error(err) {
          $log.error(err);
@@ -86,6 +87,8 @@ angular.module('saan.controllers')
              Ctrl6.instructionsPlayer.play();
             } else {
              $scope.speaking = true;
+             $scope.textSpeech = $scope.tapMessage;
+             $scope.showText = true;
              Ctrl6.phonemaPlayer.play();
             }
           }
@@ -148,6 +151,7 @@ angular.module('saan.controllers')
      $scope.hasDraggedLetter[letter + "_" + i] = false;
     }
     $scope.introMessage = data.instructionsPath.intro.text;
+    $scope.tapMessage = data.instructionsPath.tap.text;
     Ctrl6.instructionsPlayer = new Media(AssetsPath.getActivityAudio($scope.activityId) + data.instructionsPath.intro.path,
       function success() {
         Ctrl6.instructionsPlayer.release();
@@ -239,6 +243,8 @@ angular.module('saan.controllers')
         $scope.speaking = false;
       }
     );
+    $scope.textSpeech = $scope.tapMessage;
+    $scope.showText = true;
     Ctrl6.phonemaPlayer.play();
   };
 
@@ -260,13 +266,15 @@ angular.module('saan.controllers')
                ActividadesFinalizadasService.add($scope.activityId);
                $scope.textSpeech = $scope.endMessage;
                $scope.showText = true;
+               $scope.speaking = true;
                Ctrl6.endPlayer.play();
              } else if (Ctrl6.level < $scope.totalLevels) {
                Ctrl6.showDashboard(false);
              } else {
               $scope.textSpeech = $scope.endMessage;
               $scope.showText = true;
-               Ctrl6.endPlayer.play();
+              $scope.speaking = true;
+              Ctrl6.endPlayer.play();
              }
            } else if ( (Ctrl6.level + 1)  < $scope.totalLevels ) {
              Ctrl6.levelUp();
@@ -275,6 +283,7 @@ angular.module('saan.controllers')
              Ctrl6.level = Ctrl6.initialLevel;
              $scope.textSpeech = $scope.endMessage;
              $scope.showText = true;
+             $scope.speaking = true;
              Ctrl6.endPlayer.play();
            }
          }, 2000);
@@ -313,6 +322,8 @@ angular.module('saan.controllers')
 
   $scope.readTapInstruction = function() {
    if (!$scope.speaking){
+     $scope.textSpeech = $scope.tapMessage;
+     $scope.showText = true;
      Ctrl6.phonemaPlayer.play();
      $scope.speaking = true;
    }
