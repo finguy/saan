@@ -14,15 +14,11 @@
           </div>
         </div>
       </div ng-repeat-end>
-      <div class="activity-card locked" ng-repeat="actividad in actividadesNoDisponibles"
-        ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}">
-        <div class="footer">
-          <div class="stars">
-            <img src="assets/lobby/grey-star.png" ng-if="!completed(actividad)">
-            <img src="assets/lobby/yellow-star.png" ng-if="completed(actividad)">
-            <img src="assets/lobby/grey-star.png" ng-if="!maxCompleted(actividad)">
-            <img src="assets/lobby/yellow-star.png" ng-if="maxCompleted(actividad)">
-          </div>
+      <div class="locked-container" ng-repeat="actividad in actividadesNoDisponibles">
+        <div class="overlay">
+          <img src="assets/lobby/lock.png">
+        </div>
+        <div class="activity-card locked" ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}">
         </div>
       </div ng-repeat-end>
     </div>
