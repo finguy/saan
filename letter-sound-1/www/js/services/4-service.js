@@ -7,16 +7,45 @@ angular.module('saan.services')
       return $http.get(src).then(
         function success(response) {
           data = response.data;
-          var json = data.numbers;
-          var index;
-          if (level <= json.length) {
-            index = level - 1;
-          } else {
-            index = 0; //Start all over
-          }
+           //Build levels, one level per number
+           var totalNumbers = [];
+           var levels = []
+           var i = 0;
+           for (var elem in data.numbers) {
+            if (data.numbers[elem]) {
+              levels[i] = [];
+              for (var k = 0; k < 9; k++) {
+                 levels[i].push(data.numbers[k]);
+              }
+              totalNumbers.push(data.numbers[i].number);
+              i++;
+            }
 
+           }
+
+           var index;
+           if (level <= levels.length && level > 0) {
+             index = level - 1;
+           } else {
+             index = 0; //Start all over
+           }
+
+           //Pick word from level that hasn't been played in current session, starting in level position as it is one level per number
+           if ( _.size(playedNumbers) > 0 && _.size(playedNumbers) < levels.length) {
+             var numbersToPlay = _.difference(totalNumbers,playedNumbers);
+             var number = Util.getRandomElemFromArray(numbersToPlay);
+             for (var iter = 0; iter < levels[index].length; iter++) {
+                    iterNumber = levels[index][iter];
+                    if (iterNumber.number === number)  {
+                     break;
+                    }
+             }
+           } else {
+            var key = Util.getRandomNumber(levels[index].length);
+            iterNumber = levels[index][key];
+           }
           return {
-            number : json[index],
+            number : iterNumber,
             instructions : data.instructions,
             instructionsPath: data.instructionsPath,
             errorMessages : data.errorMessages,
