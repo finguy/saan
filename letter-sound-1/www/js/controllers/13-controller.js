@@ -46,7 +46,7 @@
       if (!angular.isUndefined(instructionsPlayer))
         instructionsPlayer.release();
 
-      if (!angular.isUndefined(successPlayer))
+      if (!angular.isUndefined(feedbackPlayer))
         feedbackPlayer.release();
 
       if (!angular.isUndefined(tapPlayer))
@@ -143,48 +143,48 @@
     };
 
     $scope.checkValue = function(){
-        if ($scope.enabled){
-        var feedback;
-        var feedbackPath;
-        $scope.enabled = false;
+      var feedback;
+      var feedbackPath;
 
-        if ($scope.number == itemCount){
-          feedback = LearningNumber.getSuccessAudio();
-          feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
-        }
-        else if (!$scope.autoCheck){
-          feedback = LearningNumber.getFailureAudio();
-          feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
-        }
 
-        if (feedbackPath){
-          feedbackPath = feedbackPath + feedback.path;
+      if ($scope.number == itemCount){
+        feedback = LearningNumber.getSuccessAudio();
+        feedbackPath = AssetsPath.getSuccessAudio($scope.activityId);
+      }
+      else if (!$scope.autoCheck){
+        feedback = LearningNumber.getFailureAudio();
+        feedbackPath = AssetsPath.getFailureAudio($scope.activityId);
+      }
 
-          feedbackPlayer = new Media(feedbackPath,
-            function(){
-              feedbackPlayer.release();
-              $scope.showText = false;
-              $scope.$apply();
-              if ($scope.number == itemCount){
-                Ctrl13.success();
-              }
-              else{
-                $scope.enabled = true;
-                $scope.$apply();
-              }
-            },
-            function(err){
-              $log.error(err);
-              feedbackPlayer.release();
-              $scope.showText = false;
+      if (feedbackPath){
+        feedbackPath = feedbackPath + feedback.path;
+
+        feedbackPlayer = new Media(feedbackPath,
+          function(){
+            feedbackPlayer.release();
+            $scope.showText = false;
+            $scope.$apply();
+            if ($scope.number == itemCount){
+              Ctrl13.success();
+            }
+            else{
               $scope.enabled = true;
               $scope.$apply();
-            });
+            }
+          },
+          function(err){
+            $log.error(err);
+            feedbackPlayer.release();
+            $scope.showText = false;
+            $scope.enabled = true;
+            $scope.$apply();
+          });
 
-          $scope.textSpeech = feedback.text;
-          $scope.showText = true;
-          feedbackPlayer.play();
-        }
+        $scope.enabled = false;
+        $scope.textSpeech = feedback.text;
+        $scope.showText = true;
+        feedbackPlayer.play();
+
       }
     };
 
@@ -288,6 +288,7 @@
 
     Ctrl13.maxReached = function(){
       level = 1;
+      ActividadesFinalizadasService.addMax($scope.activityId);
       var maxAudio = AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path;
       endPlayer = new Media(maxAudio,
         function(){

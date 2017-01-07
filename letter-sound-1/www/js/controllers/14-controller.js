@@ -66,28 +66,30 @@
 
         if (readInstructions){
           $timeout(function () {
-            var introPath = config.instructions.intro.path;
-            // play instructions of activity
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
-              function(){
-                instructionsPlayer.release();
-                $scope.showText = false;
-                $scope.enabled = true;
-                $scope.$apply();
-              },
-              function(err){
-                $log.error(err);
-                instructionsPlayer.release();
-                $scope.showText = false;
-                $scope.enabled = true;
-                $scope.$apply();
-              }
-            );
+            if (!leaving){
+              var introPath = config.instructions.intro.path;
+              // play instructions of activity
+              instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + introPath,
+                function(){
+                  instructionsPlayer.release();
+                  $scope.showText = false;
+                  $scope.enabled = true;
+                  $scope.$apply();
+                },
+                function(err){
+                  $log.error(err);
+                  instructionsPlayer.release();
+                  $scope.showText = false;
+                  $scope.enabled = true;
+                  $scope.$apply();
+                }
+              );
 
-            $scope.textSpeech = config.instructions.intro.text;
-            $scope.showText = true;
-            instructionsPlayer.play();
-            readInstructions = false;
+              $scope.textSpeech = config.instructions.intro.text;
+              $scope.showText = true;
+              instructionsPlayer.play();
+              readInstructions = false;
+            }
           }, 1000);
         }
 
@@ -140,6 +142,7 @@
       },
       itemMoved: function (eventObj){
         AppSounds.playTap();
+        $scope.enabled = false;
         $timeout(function(){
           $scope.$apply(function(){
             Ctrl14.success();
@@ -202,20 +205,18 @@
     };
 
     Ctrl14.success = function(){
-      $scope.enabled = false;
-
       var successFeedback = NumberOperations.getSuccessAudio();
 
       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
         function(){
           successPlayer.release();
           $scope.showText = false;
-          $scope.enabled = true;
           $scope.$apply();
 
           if (stageNumber < config.levelConfig.stages){
             stageNumber++;
             Ctrl14.setActivity();
+            $scope.enabled = true;
             $scope.$apply();
           }
           else{
@@ -295,6 +296,7 @@
         }
       );
 
+      $scope.enabled = false;
       $scope.textSpeech = config.ending[0].text;
       $scope.showText = true;
       $scope.$apply();
@@ -303,6 +305,7 @@
 
     Ctrl14.maxReached = function(){
       level = 1;
+      ActividadesFinalizadasService.addMax($scope.activityId);
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){
           endPlayer.release();
@@ -312,6 +315,7 @@
         function(err){ $log.error(err); $scope.showText = false; $state.go('lobby'); }
       );
 
+      $scope.enabled = false;
       $scope.textSpeech = config.ending[1].text;
       $scope.showText = true;
       $scope.$apply();

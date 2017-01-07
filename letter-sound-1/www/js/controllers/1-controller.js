@@ -89,14 +89,20 @@
             function(){
               wordPlayer.release();
               playingWord = false;
+              $scope.showText = false;
+              $scope.$apply();
             },
             function(err){
               $log.error(err);
               wordPlayer.release();
               playingWord = false;
+              $scope.showText = false;
+              $scope.$apply();
             }
           );
 
+          $scope.textSpeech = "...";
+          $scope.showText = true;
           wordPlayer.play();
           playingWord = true;
         }
@@ -289,6 +295,7 @@
       };
 
       Ctrl1.maxReached = function(){
+        ActividadesFinalizadasService.addMax($scope.activityId);
         level = 1;
         endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
           function(){

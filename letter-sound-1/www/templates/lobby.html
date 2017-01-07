@@ -1,5 +1,5 @@
 <ion-view view-title="Lobby" class="lobby">
-  <ion-scroll zooming="true" direction="x" class="lobby-scroll">
+  <ion-scroll zooming="false" direction="x" overflow-scroll="false" class="lobby-scroll">
     <div class="activities-container">
       <div class="activity-card" ng-repeat="actividad in actividadesDisponibles track by $index"
         ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}"

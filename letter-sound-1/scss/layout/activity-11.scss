@@ -17,8 +17,8 @@ $blue-11: #0a8bc4;
   }
 
   .question-box {
-    background: url('../assets/11/box-question.png') no-repeat;
-    background-size: cover;
+    background-color: white;
+    box-shadow: .6rem .6rem .5rem .6rem #afafaf;
     color: $blue-11;
     display: flex;
     font-size: 3em;
@@ -41,6 +41,12 @@ $blue-11: #0a8bc4;
     padding: 0 2rem;
     padding-bottom: 8rem;
     visibility: hidden;
+
+    img {
+      height: 18rem;
+      object-fit: contain;
+      width: 18rem;
+    }
   }
 
   .character {

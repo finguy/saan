@@ -17,8 +17,8 @@ $blue-15: #0a8bc4;
   }
 
   .question-box {
-    background: url('../assets/15/box-question.png') no-repeat;
-    background-size: cover;
+    background-color: white;
+    box-shadow: .6rem .6rem .5rem .6rem #afafaf;
     color: $blue-15;
     display: flex;
     font-size: 3em;

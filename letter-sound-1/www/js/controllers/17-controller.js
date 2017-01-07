@@ -136,7 +136,7 @@
     $scope.tapInstruction = function() {
       if ($scope.enabled){
         $scope.enabled = false;
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.instructions.tap.text;
         $scope.showText = true;
         tapPlayer.play();
       }
@@ -324,6 +324,7 @@
 
     Ctrl17.maxReached = function(){
       level = 1;
+      ActividadesFinalizadasService.addMax($scope.activityId);
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){
           endPlayer.release();

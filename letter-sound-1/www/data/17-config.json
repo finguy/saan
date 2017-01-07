@@ -79,7 +79,10 @@
         "text": "Hi!"
        }
     ],
-    "tap": { "path": "tap_instruction.mp3" }
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..."
+    }
   },
   "successFeedback": [
     {
@@ -112,7 +115,7 @@
   "endingAudio" : [
     {
       "path": "end_1.mp3",
-      "text": "Thank you!" 
+      "text": "Thank you!"
      },
     {
       "path": "end_2.mp3",

@@ -24,7 +24,8 @@
       ],
       "answer": 1,
       "storyPath": "stories/1/story_1.mp3",
-      "questionPath": "stories/1/question_1.mp3"
+      "questionPath": "stories/1/question_1.mp3",
+      "readingText": "..."
     },
     {
       "level": 2,
@@ -49,7 +50,8 @@
       ],
       "answer": 4,
       "storyPath": "stories/2/story_2.mp3",
-      "questionPath": "stories/2/question_2.mp3"
+      "questionPath": "stories/2/question_2.mp3",
+      "readingText": "..."
     },
     {
       "level": 3,
@@ -74,7 +76,8 @@
       ],
       "answer": 3,
       "storyPath": "stories/3/story_3.mp3",
-      "questionPath": "stories/3/question_3.mp3"
+      "questionPath": "stories/3/question_3.mp3",
+      "readingText": "..."
     },
     {
       "level": 4,
@@ -99,7 +102,8 @@
       ],
       "answer": 3,
       "storyPath": "stories/4/story_4.mp3",
-      "questionPath": "stories/4/question_4.mp3"
+      "questionPath": "stories/4/question_4.mp3",
+      "readingText": "..."
     }
   ],
   "instructions": {
