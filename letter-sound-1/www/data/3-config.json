@@ -25,58 +25,58 @@
     "lettersToPlay": ["a", "f", "h"]
   }, {
     "letter": "i",
-    "lettersToPlay": ["i", "e", "I"]
+    "lettersToPlay": ["i", "z", "x"]
   }, {
     "letter": "j",
-    "lettersToPlay": ["u", "e", "J"]
+    "lettersToPlay": ["u", "k", "J"]
   }, {
     "letter": "k",
-    "lettersToPlay": ["K", "e", "I"]
+    "lettersToPlay": ["K", "v", "I"]
   }, {
     "letter": "l",
-    "lettersToPlay": ["u", "e", "L"]
+    "lettersToPlay": ["u", "m", "L"]
   }, {
     "letter": "m",
-    "lettersToPlay": ["M", "e", "L"]
+    "lettersToPlay": ["M", "s", "L"]
   }, {
     "letter": "n",
     "lettersToPlay": ["u", "n", "L"]
   }, {
     "letter": "o",
-    "lettersToPlay": ["u", "e", "o"]
+    "lettersToPlay": ["u", "P", "o"]
   }, {
     "letter": "p",
-    "lettersToPlay": ["p", "e", "L"]
+    "lettersToPlay": ["p", "T", "L"]
   }, {
     "letter": "q",
     "lettersToPlay": ["u", "q", "L"]
   }, {
     "letter": "r",
-    "lettersToPlay": ["R", "e", "L"]
+    "lettersToPlay": ["R", "b", "L"]
   }, {
     "letter": "s",
-    "lettersToPlay": ["u", "S", "L"]
+    "lettersToPlay": ["u", "S", "Q"]
   }, {
     "letter": "t",
-    "lettersToPlay": ["u", "e", "t"]
+    "lettersToPlay": ["u", "g", "t"]
   }, {
     "letter": "u",
-    "lettersToPlay": ["u", "e", "L"]
+    "lettersToPlay": ["u", "J", "L"]
   }, {
     "letter": "v",
-    "lettersToPlay": ["U", "v", "L"]
+    "lettersToPlay": ["U", "v", "X"]
   }, {
     "letter": "w",
-    "lettersToPlay": ["U", "e", "W"]
-  }, {
-    "letter": "y",
-    "lettersToPlay": ["y", "e", "L"]
+    "lettersToPlay": ["U", "h", "W"]
   }, {
     "letter": "x",
-    "lettersToPlay": ["U", "x", "L"]
+    "lettersToPlay": ["U", "x", "B"]
+  }, {
+    "letter": "y",
+    "lettersToPlay": ["y", "A", "L"]
   }, {
     "letter": "z",
-    "lettersToPlay": ["u", "e", "Z"]
+    "lettersToPlay": ["u", "M", "Z"]
   }],
   "instructionsPath": {
     "intro": {
@@ -95,7 +95,7 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 5,
+  "finalizationLevel": 13,
   "successFeedback": [{
     "path": "Amazing.mp3",
     "text": "Amazing!"

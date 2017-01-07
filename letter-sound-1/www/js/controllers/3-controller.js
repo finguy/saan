@@ -24,7 +24,7 @@ angular.module('saan.controllers')
   Ctrl3.successMessages = [];
   Ctrl3.errorMessages = [];
   Ctrl3.dashboard = []; // Dashboard letters
-  Ctrl3.playedLetters = {}; // Collects words the user played
+  Ctrl3.playedLetters = []; // Collects words the user played
   Ctrl3.level = null; // Indicates activity level
   Ctrl3.score = 0;
   Ctrl3.status = false;
@@ -221,7 +221,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl3.success = function() {
-    Ctrl3.playedLetters[Ctrl3.letter.toLowerCase()] = true;
+    Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     Ctrl3.successFeedback();
     $timeout(function () {
      Ctrl3.levelUp();

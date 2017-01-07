@@ -9,10 +9,15 @@ angular.module('saan.services')
         return $http.get(src).then(
           function success(response) {
             data = response.data;
-            //One level per letter
+            //Build levels, one level per letter
             var levels = []
+            var totalLetters = [];
             for (var i = 0;  i < 26; i++) {
-              levels[i] = data.info;
+              levels[i] = [];
+              for (var k = 0; k < 26; k++) {
+                 levels[i].push(data.info[k]);
+              }
+              totalLetters.push(data.info[i].letter.toLowerCase());
             }
 
             var index;
@@ -22,19 +27,21 @@ angular.module('saan.services')
               index = 0; //Start all over
             }
 
-            //Pick word from level that hasn't been played in current session
-            var key = 0;
-            var iterLetter = levels[index][key];
-
-            if ( _.size(playedLetters) > 0 ) {
-              while (key < levels[index].length && playedLetters[iterLetter]) {
-                  key++;
-                  iterLetter = levels[index][key];
+            //Pick word from level that hasn't been played in current session, starting in level position as it is one level per number
+            if ( _.size(playedLetters) > 0 && _.size(playedLetters) < levels.length) {
+              var lettersToPlay = _.difference(totalLetters,playedLetters);
+              var letter = Util.getRandomElemFromArray(lettersToPlay);
+              for (var iter = 0; iter < levels[index].length; iter++) {
+                     iterLetter = levels[index][iter];
+                     if (iterLetter.letter.toLowerCase() === letter.toLowerCase())  {
+                      break;
+                     }
               }
             } else {
-             key = Util.getRandomNumber(levels[index].length);
+             var key = Util.getRandomNumber(levels[index].length);
              iterLetter = levels[index][key];
             }
+
             return {
               letter: iterLetter,
               instructionsPath: data.instructionsPath,
