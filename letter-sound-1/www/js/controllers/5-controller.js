@@ -76,7 +76,7 @@ angular.module('saan.controllers')
         Ctrl5.speaking = true;
         successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
           function success() {
-            successPlayer.release();           
+            successPlayer.release();
           },
           function error(err) {
             $log.error(err);
@@ -236,13 +236,11 @@ angular.module('saan.controllers')
       },1500);
     };
 
-    Ctrl5.error = function() {
+    Ctrl5.error = function() {      
+      $scope.checkingWord = false;
+      Ctrl5.errorFeedback();
       Ctrl5.score = Score.update(-Ctrl5.substractScore, Ctrl5.score);
       Util.saveScore($scope.activityId, Ctrl5.score);
-      $scope.checkingWord = false;
-      $timeout(function() {
-       Ctrl5.errorFeedback();
-      },1000);
     };
 
     Ctrl5.handleProgress = function(selectedObject) {

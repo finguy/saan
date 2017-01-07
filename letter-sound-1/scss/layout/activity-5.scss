@@ -6,55 +6,23 @@ $white: #ffffff;
 .activity-5-content {
   background-image: url('../assets/5/background.png');
 
-  .img-figure {
-    max-height: 10rem;
-  }
-
   .img-ground {
     display: block;
   }
 
   .box_wrapper {
-   background-color: $white;
    height: 25rem;
    width: 20rem;
    margin: 2rem;
-
-   .box {
-      margin-top: 1rem;
-      margin-left: 2.5rem;
-      text-align: center;
-      width: 15rem;
-      height: 20rem;
-      padding-top: 5rem;
-    }
   }
-
-  .box_wrapper:nth-child(1){
-   .box {
-     background-color: $skyblue;
-   }
-  }
-
-  .box_wrapper:nth-child(2){
-   .box {
-       background-color: $englichGreen;
-      }
-  }
-
-  .box_wrapper:nth-child(3){
-   .box {
-     background-color: $oliveGreen;
-    }
-  }
-
-
-
 
   .floating-objects-container {
     position: absolute;
     top: 33rem;
     left: 25rem;
+    img {
+      margin-right: 10rem;
+     }
   }
 
   .character{
@@ -63,7 +31,7 @@ $white: #ffffff;
     right: 0;
 
      img {
-      height: 40rem;
+      height: 30rem;
       margin-left: auto;
      }
   }
@@ -71,12 +39,13 @@ $white: #ffffff;
   .talk-bubble {
     width: 30rem;
     right: 13rem;
-    bottom: 40rem;
+    bottom: 4rem;
 
     &::after {
      bottom: initial;
-     right: 1rem;
-     top: 93%;
+     border-color: #fff transparent transparent #fff;
+     right: -1rem;
+     top: 1rem;
     }
   }
 
@@ -89,7 +58,8 @@ $white: #ffffff;
   }
 
   .letter .talk-bubble::after {
-    right: 2rem;
-    top: 13rem;
+   border-color: #fff transparent transparent #fff;
+   right: -1rem;
+   top: 1rem;
   }
 }
