@@ -42,7 +42,10 @@
         "text": "Hi!"
        }
     ],
-    "tap": { "path": "tap_instruction.mp3" }
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..."
+    }
   },
   "successFeedback": [
     {

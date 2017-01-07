@@ -136,7 +136,7 @@
     $scope.tapInstruction = function() {
       if ($scope.enabled){
         $scope.enabled = false;
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.instructions.tap.text;
         $scope.showText = true;
         tapPlayer.play();
       }

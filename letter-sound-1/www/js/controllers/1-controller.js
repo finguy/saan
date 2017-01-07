@@ -89,14 +89,20 @@
             function(){
               wordPlayer.release();
               playingWord = false;
+              $scope.showText = false;
+              $scope.$apply();
             },
             function(err){
               $log.error(err);
               wordPlayer.release();
               playingWord = false;
+              $scope.showText = false;
+              $scope.$apply();
             }
           );
 
+          $scope.textSpeech = "...";
+          $scope.showText = true;
           wordPlayer.play();
           playingWord = true;
         }
