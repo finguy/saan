@@ -42,7 +42,7 @@
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))
-          instructionsPlayer.release();
+        instructionsPlayer.release();
 
       if (!angular.isUndefined(problemPlayer))
         problemPlayer.release();
@@ -103,36 +103,40 @@
     };
 
     Ctrl15.setActivity = function(){
-      if (!leaving){
-        $scope.options = [];
-        problemPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.problemPath;
-        $scope.questionText = config.level.questionText;
-        Ctrl15.showOptions();
+      $scope.options = [];
+      problemPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.problemPath;
+      $scope.questionText = config.level.questionText;
+      Ctrl15.showOptions();
 
-        problemPlayer = new Media(problemPath,
-          function(){
+      problemPlayer = new Media(problemPath,
+        function(){
+          if (!leaving){
             problemRead = true;
             $scope.showText = false;
             $scope.showQuestion = true;
             problemPlayer.release();
             $scope.$apply();
-          },
-          function(err){
-            $log.error(err);
+          }
+        },
+        function(err){
+          $log.error(err);
+          if (!leaving){
             problemRead = true;
             $scope.showText = false;
             problemPlayer.release();
             $scope.showQuestion = true;
             $scope.$apply();
           }
-        );
+        }
+      );
 
-        $timeout(function(){
-          $scope.textSpeech = "...";
+      $timeout(function(){
+        if (!leaving){
+          $scope.textSpeech = config.level.readingText;
           $scope.showText = true;
           problemPlayer.play();
-        }, PROBLEM_TIMEOUT);
-      }
+        }
+      }, PROBLEM_TIMEOUT);
     };
 
     Ctrl15.showOptions = function(){
@@ -171,7 +175,7 @@
           }
         );
 
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.level.readingText;
         $scope.showText = true;
         questionPlayer.play();
       }
@@ -263,7 +267,7 @@
           }
         );
 
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.level.readingText;
         $scope.showText = true;
         problemPlayer.play();
       }
@@ -294,6 +298,7 @@
     };
 
     Ctrl15.maxReached = function(){
+      ActividadesFinalizadasService.addMax($scope.activityId);
       tapEnabled = false;
       level = 1;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,

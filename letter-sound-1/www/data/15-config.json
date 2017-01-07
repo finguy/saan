@@ -7,6 +7,7 @@
       "questionText": "How many apples does Tarabu has in the basket in total?",
       "problemPath": "problems/1/problem_1.mp3",
       "questionPath": "problems/1/question_1.mp3",
+      "readingText": "...",
       "answer": 8
     },
     {
@@ -14,6 +15,7 @@
       "questionText": "How many cookies Golo baked?",
       "problemPath": "problems/2/problem_2.mp3",
       "questionPath": "problems/2/question_2.mp3",
+      "readingText": "...",
       "answer": 10
     },
     {
@@ -22,6 +24,7 @@
       "questionText": "How many guests must join Leuk's table so that it has the same amount of guests as M'bott table?",
       "problemPath": "problems/3/problem_3.mp3",
       "questionPath": "problems/3/question_3.mp3",
+      "readingText": "...",
       "answer": 3
     },
     {
@@ -30,6 +33,7 @@
       "questionText": "How many red feathers I had at the beginning?",
       "problemPath": "problems/4/problem_4.mp3",
       "questionPath": "problems/4/question_4.mp3",
+      "readingText": "...",
       "answer": 6
     },
     {
@@ -37,6 +41,7 @@
       "questionText": "How many cookies does each cub get?",
       "problemPath": "problems/5/problem_5.mp3",
       "questionPath": "problems/5/question_5.mp3",
+      "readingText": "...",
       "answer": 5
     }
   ],
