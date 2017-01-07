@@ -324,6 +324,7 @@
 
     Ctrl17.maxReached = function(){
       level = 1;
+      ActividadesFinalizadasService.addMax($scope.activityId);
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){
           endPlayer.release();

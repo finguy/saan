@@ -341,6 +341,7 @@
     };
 
     Ctrl2.maxReached = function(){
+      ActividadesFinalizadasService.addMax($scope.activityId);
       level = 1;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
         function(){ endPlayer.release(); $state.go('lobby'); },
