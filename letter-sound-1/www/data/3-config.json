@@ -1,206 +1,126 @@
-{"letters":
-  [{"letter":"a" ,
-    "upperCaseImg": "letters-blue/letters-blue-a-uppercase.png",
-    "lowerCaseImg": "letters-blue/letters-blue-a-lowercase.png",
-    "instruction":"Can you tap a?",
-    "imgs":[
-      {"src": ["animals/wale.png",
-                "animals/aligator.png",
-                "animals/cat.png",
-                "animals/bat.png",
-                "animals/cammel.png",
-                "animals/bear.png",
-                "animals/elephant.png",
-                "animals/snake.png"
-              ],
-       "name" : "A"
-     },
-     {"src": ["animals/horse.png",
-              "animals/tiger.png",
-              "animals/monkey.png",
-              "animals/sheep.png"
-     ],
-      "name" : "e"
-    },
-    {"src": ["animals/octopus.png",
-              "animals/frog.png",
-              "animals/dog.png",
-              "animals/lion.png"
-            ],
-     "name" : "o"
-   }
-      ]
-    },
-    {"letter":"e" ,
-      "upperCaseImg": "letters-blue/letters-blue-e-uppercase.png",
-      "lowerCaseImg": "letters-blue/letters-blue-e-lowercase.png",
-      "instruction":"Can you tap e?",
-      "imgs":[
-        {"src": ["animals/wale.png",
-                "animals/horse.png",
-                "animals/tiger.png",
-                "animals/cammel.png",
-                "animals/bear.png",
-                "animals/elephant.png",
-                "animals/monkey.png",
-                "animals/snake.png",
-                "animals/sheep.png"
-                ],
-         "name" : "E"
-       },
-       {"src": ["animals/aligator.png",
-                "animals/fish.png",
-                "animals/lion.png",
-                "animals/bird.png",
-                "animals/pig.png"
-                ],
-        "name" : "i"
-      },
-      {"src": ["animals/octopus.png",
-                "animals/turtle.png",
-                "animals/duck.png"
-              ],
-       "name" : "u"
-     }
-        ]
-    },
-    {"letter":"i" ,
-      "upperCaseImg": "letters-blue/letters-blue-i-uppercase.png",
-      "lowerCaseImg": "letters-blue/letters-blue-i-lowercase.png",
-      "instruction":"Can you tap i?",
-      "imgs":[
-        {"src": ["animals/aligator.png",
-                 "animals/fish.png",
-                 "animals/bird.png",
-                 "animals/pig.png"],
-         "name" : "I"
-       },
-       {"src": ["animals/horse.png",
-                 "animals/frog.png",
-                 "animals/dog.png"
-                 ],
-        "name" : "o"
-      },
-      {"src": ["animals/octopus.png",
-                "animals/turtle.png",
-                "animals/duck.png"],
-       "name" : "u"
-     }
-        ]
-    },
-    {"letter":"o" ,
-      "upperCaseImg": "letters-blue/letters-blue-o-uppercase.png",
-      "lowerCaseImg": "letters-blue/letters-blue-o-lowercase.png",
-      "instruction":"Can you tap o?",
-      "imgs":[
-        {"src": ["animals/octopus.png",
-                  "animals/frog.png",
-                  "animals/horse.png",
-                  "animals/dog.png"
-                ],
-         "name" : "o"
-       },
-       {"src": [ "animals/wale.png",
-               "animals/cammel.png",
-               "animals/bear.png",
-               "animals/elephant.png",
-               "animals/snake.png"
-                ],
-        "name" : "a"
-      },
-      {"src": [ "animals/tiger.png",
-              "animals/cammel.png",
-              "animals/bear.png",
-              "animals/elephant.png",
-              "animals/snake.png",
-              "animals/sheep.png"
-            ],
-       "name" : "e"
-     }
-        ]
-    },
-  {"letter":"u" ,
-    "upperCaseImg": "letters-blue/letters-blue-u-uppercase.png",
-    "lowerCaseImg": "letters-blue/letters-blue-u-lowercase.png",
-    "instruction":"Can you tap u?",
-    "imgs":[
-            {"src": [  "animals/octopus.png",
-                        "animals/turtle.png",
-                        "animals/duck.png"
-                    ],
-             "name" : "u"
-           },
-           {"src": ["animals/wale.png",
-                   "animals/horse.png",
-                   "animals/cammel.png",
-                   "animals/bear.png",
-                   "animals/elephant.png",
-                   "animals/monkey.png",
-                   "animals/snake.png",
-                   "animals/sheep.png"
-                  ],
-            "name" : "e"
-          },
-          {"src": ["animals/aligator.png",
-                   "animals/fish.png",
-                   "animals/bird.png",
-                   "animals/pig.png"],
-           "name" : "I"
-         }
-      ]
-    }
-    ],
-  "nextLetterImgSrc":"back.png",
-  "previousLetterImgSrc":"forward.png",
-  "srcAlphabetLetters": "letters-blue/letters-blue-",
-  "instructions": "Hi! Let's learn letters. Touch the boxes!",
+{
+  "info": [{
+    "letter": "a",
+    "lettersToPlay": ["A", "e", "o"]
+  }, {
+    "letter": "b",
+    "lettersToPlay": ["B", "i", "u"]
+  }, {
+    "letter": "c",
+    "lettersToPlay": ["I", "c", "u"]
+  }, {
+    "letter": "d",
+    "lettersToPlay": ["C", "a", "d"]
+  }, {
+    "letter": "E",
+    "lettersToPlay": ["u", "E", "I"]
+  }, {
+    "letter": "f",
+    "lettersToPlay": ["f", "t", "o"]
+  }, {
+    "letter": "g",
+    "lettersToPlay": ["n", "g", "r"]
+  }, {
+    "letter": "h",
+    "lettersToPlay": ["a", "f", "h"]
+  }, {
+    "letter": "i",
+    "lettersToPlay": ["i", "e", "I"]
+  }, {
+    "letter": "j",
+    "lettersToPlay": ["u", "e", "J"]
+  }, {
+    "letter": "k",
+    "lettersToPlay": ["K", "e", "I"]
+  }, {
+    "letter": "l",
+    "lettersToPlay": ["u", "e", "L"]
+  }, {
+    "letter": "m",
+    "lettersToPlay": ["M", "e", "L"]
+  }, {
+    "letter": "n",
+    "lettersToPlay": ["u", "n", "L"]
+  }, {
+    "letter": "o",
+    "lettersToPlay": ["u", "e", "o"]
+  }, {
+    "letter": "p",
+    "lettersToPlay": ["p", "e", "L"]
+  }, {
+    "letter": "q",
+    "lettersToPlay": ["u", "q", "L"]
+  }, {
+    "letter": "r",
+    "lettersToPlay": ["R", "e", "L"]
+  }, {
+    "letter": "s",
+    "lettersToPlay": ["u", "S", "L"]
+  }, {
+    "letter": "t",
+    "lettersToPlay": ["u", "e", "t"]
+  }, {
+    "letter": "u",
+    "lettersToPlay": ["u", "e", "L"]
+  }, {
+    "letter": "v",
+    "lettersToPlay": ["U", "v", "L"]
+  }, {
+    "letter": "w",
+    "lettersToPlay": ["U", "e", "W"]
+  }, {
+    "letter": "y",
+    "lettersToPlay": ["y", "e", "L"]
+  }, {
+    "letter": "x",
+    "lettersToPlay": ["U", "x", "L"]
+  }, {
+    "letter": "z",
+    "lettersToPlay": ["u", "e", "Z"]
+  }],
   "instructionsPath": {
-       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
-       "action": [{"path": "instructions/tap_letter.mp3", "text":"..."},
-                  {"path": "letters/", "text":"..."}
-                 ]
-      },
-  "scoreSetUp" : {
+    "intro": {
+      "path": "instructions/Intro.mp3",
+      "text": "Hi!"
+    },
+    "action": [{
+      "path": "instructions/tap_letter.mp3",
+      "text": "..."
+    }, {
+      "path": "letters/",
+      "text": "..."
+    }]
+  },
+  "scoreSetUp": {
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 3,
-  "successFeedback": [
-    {
-      "path": "Amazing.mp3",
-      "text": "Amazing!"
-    },
-    {
-      "path": "Great.mp3",
-      "text": "Great!"
-    },
-    {
-      "path": "Well_Done.mp3",
-      "text": "Well done!"
-    }
-  ],
-  "failureFeedback": [
-    {
-      "path": "Try_Again.mp3",
-      "text": "Try again!"
-    },
-    {
-      "path": "Not_Sure.mp3",
-      "text": "I'm not sure that's the correct letter"
-    },
-    {
-     "path":"Almost.mp3",
-     "text": "Almost! Try listening to the letter again"
-    }
-  ],
-  "endFeedback": [
-    {
-      "path": "End1.mp3",
-      "text": "Thank you!"
-    },
-    {
-      "path": "End2.mp3",
-      "text": "Thank you!"
-    }
-  ]
+  "finalizationLevel": 5,
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  }, {
+    "path": "Great.mp3",
+    "text": "Great!"
+  }, {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
+  "failureFeedback": [{
+    "path": "Try_Again.mp3",
+    "text": "Try again!"
+  }, {
+    "path": "Not_Sure.mp3",
+    "text": "I'm not sure that's the correct letter"
+  }, {
+    "path": "Almost.mp3",
+    "text": "Almost! Try listening to the letter again"
+  }],
+  "endFeedback": [{
+    "path": "End1.mp3",
+    "text": "Thank you!"
+  }, {
+    "path": "End2.mp3",
+    "text": "Thank you!"
+  }]
 }

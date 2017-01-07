@@ -9,33 +9,38 @@ angular.module('saan.services')
         return $http.get(src).then(
           function success(response) {
             data = response.data;
-            var lettersNotPlayed = [];
-            if (playedLetters.length === 0) {
-              lettersNotPlayed = data.letters;
-            } else {
-              for (var i in data.letters) { //FIXME: try to use underscore
-                if (data.letters[i]) {
-                  var ER = new RegExp(data.letters[i].letter, "i");
-                  if (!ER.test(playedLetters.toString())) {
-                    lettersNotPlayed.push(data.letters[i]);
-                  }
-                }
-              }
+            //One level per letter
+            var levels = []
+            for (var i = 0;  i < 26; i++) {
+              levels[i] = data.info;
             }
 
-            var position = Util.getRandomNumber(lettersNotPlayed.length);
+            var index;
+            if (level <= levels.length && level > 0) {
+              index = level - 1;
+            } else {
+              index = 0; //Start all over
+            }
+
+            //Pick word from level that hasn't been played in current session
+            var key = 0;
+            var iterLetter = levels[index][key];
+
+            if ( _.size(playedLetters) > 0 ) {
+              while (key < levels[index].length && playedLetters[iterLetter]) {
+                  key++;
+                  iterLetter = levels[index][key];
+              }
+            } else {
+             key = Util.getRandomNumber(levels[index].length);
+             iterLetter = levels[index][key];
+            }
             return {
-              letter: lettersNotPlayed[position],
-              instructions: data.instructions,
+              letter: iterLetter,
               instructionsPath: data.instructionsPath,
-              errorMessages: data.errorMessages,
-              successMessages: data.successMessages,
               scoreSetUp: data.scoreSetUp,
-              nextLetterImgSrc: data.nextLetterImgSrc,
-              previousLetterImgSrc: data.previousLetterImgSrc,
-              srcAlphabetLetters: data.srcAlphabetLetters,
               finalizationLevel: data.finalizationLevel,
-              totalLevels: data.letters.length
+              totalLevels: data.info.length
             };
           },
           function error() {
