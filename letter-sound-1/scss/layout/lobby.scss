@@ -43,21 +43,45 @@ $lobby-blue: #043556;
   }
 
   .activity-card {
+    border-radius: 2rem;
     display: flex;
     flex-direction: column;
     height: 37.8rem;
     margin-right: 10rem;
-    padding-top: 2rem;
     position: relative;
     width: 29.2rem;
 
     &.locked {
       filter: grayscale(.8);
+      margin-right: 0;
     }
   }
 
   .locked .footer .stars {
     margin-left: auto;
+  }
+
+  .locked-container {
+    margin-right: 10rem;
+    position: relative;
+
+    img {
+      margin: auto;
+      position: relative;      
+      z-index: 1;
+    }
+  }
+
+  .overlay {
+    background-color: rgba(13, 45, 66, .5);
+    border-radius: 2rem;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
   }
 
   .button {
