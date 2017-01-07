@@ -10,8 +10,8 @@ angular.module('saan.services')
           data = response.data;
           var json = data.words;
           var index;
-          if (level <= json.length && level > 1) {
-            index = level - 1;
+          if (level <= json.length && level > 0) {
+            index = level -1;
           } else {
             index = 0; //Start all over
           }
@@ -32,7 +32,7 @@ angular.module('saan.services')
            iterWord = json[index].word[key];
            imgWord = json[index].imgs[key];
           }
-          
+
           return {
             word : iterWord,
             img: imgWord,

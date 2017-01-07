@@ -261,7 +261,7 @@ angular.module('saan.controllers')
            if (!Ctrl6.finished) {
              Ctrl6.levelUp();
              Ctrl6.score = Score.update($scope.addScore, $scope.activityId, Ctrl6.finished);
-             Ctrl6.finished = Ctrl6.level >= $scope.finalizationLevel;
+             Ctrl6.finished = Ctrl6.level > $scope.finalizationLevel;
              if (Ctrl6.finished) {
                ActividadesFinalizadasService.add($scope.activityId);
                $scope.textSpeech = $scope.endMessage;
