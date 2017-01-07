@@ -74,26 +74,26 @@
 
         if (readInstructions){
           $timeout(function() {
-            readInstructions = false;
-            var intro = config.instructions;
-            //play instructions of activity
-            instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
-              function(){
-                instructionsPlayer.release();
-                $scope.showText = false;
-                Ctrl11.setActivity();
-              },
-              function(err){
-                $log.error(err);
-                instructionsPlayer.release();
-                $scope.showText = false;
-                Ctrl11.setActivity();
-              }
-            );
-
-            $scope.textSpeech = intro.text;
-            $scope.showText = true;
             if (!leaving){
+              readInstructions = false;
+              var intro = config.instructions;
+              //play instructions of activity
+              instructionsPlayer = new Media(AssetsPath.getInstructionsAudio($scope.activityId) + intro.path,
+                function(){
+                  instructionsPlayer.release();
+                  $scope.showText = false;
+                  Ctrl11.setActivity();
+                },
+                function(err){
+                  $log.error(err);
+                  instructionsPlayer.release();
+                  $scope.showText = false;
+                  Ctrl11.setActivity();
+                }
+              );
+
+              $scope.textSpeech = intro.text;
+              $scope.showText = true;
               instructionsPlayer.play();
             }
           }, STORY_TIMEOUT);
@@ -105,7 +105,7 @@
     };
 
     Ctrl11.setActivity = function(){
-      if (!leaving){
+
         $scope.options = [];
         storyPath = AssetsPath.getActivityAudio($scope.activityId) + config.level.storyPath;
         $scope.questionText = config.level.questionText;
@@ -113,28 +113,33 @@
 
         storyPlayer = new Media(storyPath,
           function(){
-            storyRead = true;
-            $scope.showText = false;
-            $scope.showQuestion = true;
-            storyPlayer.release();
-            $scope.$apply();
+            if (!leaving){
+              storyRead = true;
+              $scope.showText = false;
+              $scope.showQuestion = true;
+              storyPlayer.release();
+              $scope.$apply();
+            }
           },
           function(err){
-            $log.error(err);
-            storyRead = true;
-            $scope.showText = false;
-            storyPlayer.release();
-            $scope.showQuestion = true;
-            $scope.$apply();
+            if (!leaving){
+              $log.error(err);
+              storyRead = true;
+              $scope.showText = false;
+              storyPlayer.release();
+              $scope.showQuestion = true;
+              $scope.$apply();
+            }
           }
         );
 
         $timeout(function(){
-          $scope.textSpeech = "...";
-          $scope.showText = true;
-          storyPlayer.play();
+          if (!leaving){
+            $scope.textSpeech = config.level.readingText;
+            $scope.showText = true;
+            storyPlayer.play();
+          }
         }, STORY_TIMEOUT);
-      }
     };
 
     $scope.readQuestion = function(){
@@ -156,7 +161,7 @@
           }
         );
 
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.level.readingText;
         $scope.showText = true;
         questionPlayer.play();
       }
@@ -248,7 +253,7 @@
           }
         );
 
-        $scope.textSpeech = "...";
+        $scope.textSpeech = config.level.readingText;
         $scope.showText = true;
         storyPlayer.play();
       }
@@ -279,6 +284,7 @@
     };
 
     Ctrl11.maxReached = function(){
+      ActividadesFinalizadasService.addMax($scope.activityId);
       tapEnabled = false;
       level = 1;
       endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + config.ending[1].path,
