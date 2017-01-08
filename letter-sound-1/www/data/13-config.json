@@ -1,0 +1,74 @@
+{
+  "minLevel": 1,
+  "levels": [
+    {
+      "level": 1,
+      "numberFrom": 1,
+      "numberTo": 5,
+      "autoCheck": true
+    },
+    {
+      "level": 2,
+      "numberFrom": 6,
+      "numberTo": 10,
+      "autoCheck": false
+    }
+  ],
+  "instructions": {
+    "intro": [
+      {
+        "path": "intro_1.mp3",
+        "text": "Hi!"
+      },
+      {
+        "path": "intro_2.mp3",
+        "text": "Hi!"
+       }
+    ],
+    "tap": [
+      {
+        "path": "tap_instruction_1.mp3",
+        "text": "..."
+       },
+      {
+        "path": "tap_instruction_2.mp3",
+        "text": "..."
+       }
+    ],
+    "numbers": ["1.mp3","2.mp3","3.mp3","4.mp3","5.mp3","6.mp3","7.mp3","8.mp3","9.mp3","10.mp3"]
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Count the food and try again!"
+    },
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "cards": 4,
+  "options": 1,
+  "minLevel": 1,
+  "levels": [
+    {
+      "number": 1,
+      "numberFrom": 1,
+      "numberTo": 2
+    },
+    {
+      "number": 2,
+      "numberFrom": 3,
+      "numberTo": 6
+    },
+    {
+      "number": 2,
+      "numberFrom": 7,
+      "numberTo": 10
+    }
+  ],
+  "instructions": {
+    "intro": {
+      "path": "intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..." 
+    }
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    },
+    {
+      "path": "not_correct.mp3",
+      "text": "I'm not sure this is the correct table"
+    },
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Check the numbers and try again!"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+     },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+     }
+  ]
+}

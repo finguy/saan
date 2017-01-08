@@ -1,0 +1,121 @@
+{
+  "minLevel": "2",
+  "levels": [
+    {
+      "level": 1,
+      "options": 4,
+      "words": [
+        {
+          "text": "Pot",
+          "audio": "items/pot.mp3",
+          "img": "pot.png"
+        },
+        {
+          "text": "Bed",
+          "audio": "items/bed.mp3",
+          "img": "bed.png"
+        },
+        {
+          "text": "Soap",
+          "audio": "items/soap.mp3",
+          "img": "soap.png"
+        },
+        {
+          "text": "Key",
+          "audio": "items/key.mp3",
+          "img": "key.png"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "options": 4,
+      "words": [
+        {
+          "text": "Food",
+          "audio": "items/food.mp3",
+          "img": "food.png"
+        },
+        {
+          "text": "Radio",
+          "audio": "items/radio.mp3",
+          "img": "radio.png"
+        },
+        {
+          "text": "Pillow",
+          "audio": "items/pillow.mp3",
+          "img": "pillow.png"
+        },
+        {
+          "text": "Clock",
+          "audio": "items/clock.mp3",
+          "img": "clock.png"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "options": 4,
+      "words": [
+        {
+          "text": "Flowers",
+          "audio": "items/flowers.mp3",
+          "img": "flowers.png"
+        },
+        {
+          "text": "Dishes",
+          "audio": "items/dishes.mp3",
+          "img": "dishes.png"
+        },
+        {
+          "text": "Table",
+          "audio": "items/table.mp3",
+          "img": "table.png"
+        },
+        {
+          "text": "Photos",
+          "audio": "items/photos.mp3",
+          "img": "photos.png"
+        }
+      ]
+    }
+  ],
+  "instructions": {
+    "path": "intro.mp3",
+    "text": "Hi!"
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Try listening the word again"
+    },
+    {
+      "path": "not_what.mp3",
+      "text": "That's not what we're looking for now"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3" ,
+      "text": "Thank you!"
+    }
+  ]
+}

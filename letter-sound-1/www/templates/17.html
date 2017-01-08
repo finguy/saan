@@ -1,0 +1,37 @@
+<ion-view view-title="{{activityId}}" class="height-100 activity-{{activityId}}-content content-margin">
+  <div class="pattern-container">
+    <img src="{{imagePath}}rope.png" class="rope">
+    <div class="pattern-item item-number"
+      ng-repeat="item in patternLeft track by $index">
+      <span class="number-text">{{item}}</span>
+    </div>
+
+    <div class="dropzone pattern-item text-center"
+      as-sortable="sortableOptions"
+      data-ng-model="patternLeft"
+      ng-hide="hideDropzone">
+      <img src="{{imagePath}}hook.png" class="hook">
+      <div ng-repeat="item in dropzone" as-sortable-item></div>
+    </div>
+
+    <div class="flex pattern-item item-number"
+      ng-repeat="item in patternRight track by $index">
+      <span class="number-text">{{item}}</span>
+    </div>
+  </div>
+
+  <div class="pattern-options">
+    <div as-sortable="sortableCloneOptions" data-ng-model="patternOptions" class="options-container" is-disabled="!enabled">
+      <div ng-repeat="item in patternOptions">
+        <div class="pattern-item item-number number-option"
+          as-sortable-item as-sortable-item-handle>
+          <span class="number-text">{{item}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="character flex" ng-click="tapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img src="assets/characters/thioye-color.png">
+  </div>
+</ion-view>

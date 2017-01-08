@@ -1,0 +1,90 @@
+{
+  "minLevel": 2,
+  "options": 4,
+  "levels": [
+    {
+      "level": 1,
+      "questionText": "How many apples does Tarabu has in the basket in total?",
+      "problemPath": "problems/1/problem_1.mp3",
+      "questionPath": "problems/1/question_1.mp3",
+      "readingText": "...",
+      "answer": 8
+    },
+    {
+      "level": 2,
+      "questionText": "How many cookies Golo baked?",
+      "problemPath": "problems/2/problem_2.mp3",
+      "questionPath": "problems/2/question_2.mp3",
+      "readingText": "...",
+      "answer": 10
+    },
+    {
+      "level": 3,
+      "type": "compareChange",
+      "questionText": "How many guests must join Leuk's table so that it has the same amount of guests as M'bott table?",
+      "problemPath": "problems/3/problem_3.mp3",
+      "questionPath": "problems/3/question_3.mp3",
+      "readingText": "...",
+      "answer": 3
+    },
+    {
+      "level": 4,
+      "type": "changeStart",
+      "questionText": "How many red feathers I had at the beginning?",
+      "problemPath": "problems/4/problem_4.mp3",
+      "questionPath": "problems/4/question_4.mp3",
+      "readingText": "...",
+      "answer": 6
+    },
+    {
+      "level": 5,
+      "questionText": "How many cookies does each cub get?",
+      "problemPath": "problems/5/problem_5.mp3",
+      "questionPath": "problems/5/question_5.mp3",
+      "readingText": "...",
+      "answer": 5
+    }
+  ],
+  "instructions": {
+    "path": "intro.mp3",
+    "text": "Hi!"
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Try listening to the problem again!"
+    },
+    {
+      "path": "not_correct.mp3",
+      "text": "I am not sure that's the correct answer"
+    },
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Incredible!"
+    }
+  ]
+}

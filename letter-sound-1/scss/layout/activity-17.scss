@@ -1,0 +1,130 @@
+.activity-17-content {
+  background: url('../assets/17/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .character {
+    bottom: 8rem;
+    position: absolute;
+    right: 0;
+
+    img { height: 30rem; }
+
+    .talk-bubble {
+      align-self: flex-start;
+      bottom: 2rem;
+      position: relative;
+      right: -4rem;
+      width: 30rem;
+      z-index: 0;
+
+      &::after {
+        border-color: white transparent transparent white;
+        bottom: initial;
+        right: -2rem;
+        top: 4rem;
+      }
+    }
+  }
+
+  .number-text {
+    font-size: 2em;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .pattern-item {
+    height: 8rem;
+    margin: auto .5rem;
+    width: 8rem;
+
+    &.item-number {
+      border: 0;
+      border-radius: 50%;
+      margin: auto 1rem 1rem;
+    }
+  }
+
+  .dropzone {
+    border: .2rem dashed grey;
+    border-radius: 50%;
+    color: grey;
+    margin: 3.6rem 1rem 1rem;
+
+    .hook {
+      bottom: 4rem;
+      position: relative;
+    }
+
+    .as-sortable-placeholder {
+      visibility: hidden;
+    }
+  }
+
+  .pattern-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 5%;
+
+    .rope {
+      height: 2rem;
+      position: absolute;
+      width: 100%;
+    }
+
+    .item-number {
+      background: url('../assets/17/number-container.png') center center no-repeat;
+      height: 12rem;
+      width: 9rem;
+      z-index: 1;
+    }
+
+    .number-text {
+      top: 1.2rem;
+    }
+
+  }
+
+  .pattern-options {
+    padding-bottom: 1rem;
+
+    .item-number {
+      background: url('../assets/17/numbers-to-choose.png') center center no-repeat;
+      height: 12rem;
+      width: 9rem;
+    }
+
+    .number-text {
+      bottom: .2rem;
+    }
+  }
+
+  .item-number {
+    align-items: center;
+    display: flex;
+    font-size: 2em;
+    justify-content: center;
+  }
+
+  .as-sortable-item.item-number {
+    display: flex;
+  }
+
+  .as-sortable-placeholder {
+    background-color: transparent;
+    border-color: transparent;
+    margin: auto 1rem 1rem;
+  }
+
+  .as-sortable-dragging {
+    width: auto !important;
+  }
+
+  .options-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}

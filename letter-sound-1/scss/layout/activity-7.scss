@@ -1,0 +1,28 @@
+.activity-7-content {
+  background: url('../assets/7/background.png') no-repeat center center fixed;
+  background-size: cover;
+
+  .character {
+    bottom: 0;
+    position: absolute;
+    right: -.5rem;
+
+    img { height: 30rem; }
+  }
+
+  .talk-bubble {
+    align-self: flex-start;
+    bottom: 2rem;
+    position: relative;
+    right: -4rem;
+    width: 30rem;
+    z-index: 0;
+
+    &::after {
+      border-color: white transparent transparent white;
+      bottom: initial;
+      right: -2rem;
+      top: 4rem;
+    }
+  }
+}

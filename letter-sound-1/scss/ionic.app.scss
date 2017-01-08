@@ -20,14 +20,110 @@ $ionicons-font-path: '../lib/ionic/fonts' !default;
 
 // Include all of Ionic
 @import 'www/lib/ionic/scss/ionic';
+
+@import 'util/util';
+@import 'directives/talk-bubble';
+@import 'font-faces/fonts';
 @import 'layout/activity-1';
-@import 'directives/letterDashboard';
+@import 'layout/activity-2';
+@import 'layout/activity-3';
+@import 'layout/activity-4';
+@import 'layout/activity-10';
+@import 'layout/activity-5';
+@import 'layout/activity-6';
+@import 'layout/activity-7';
+@import 'layout/activity-9';
+@import 'directives/progressBar';
+@import 'directives/flipableCard';
+@import 'directives/numberCard';
+@import 'directives/numberGroup';
+@import 'layout/memory';
+@import 'layout/activity-8';
+@import 'layout/activity-11';
+@import 'layout/activity-12';
+@import 'layout/activity-13';
+@import 'layout/activity-14';
+@import 'layout/activity-15';
+@import 'layout/activity-16';
+@import 'layout/activity-17';
+@import 'layout/lobby';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: Source Sans Pro;
+  font-size: 1rem;
+  line-height: initial;
+}
+
+.content-margin {
+  padding-top: 4.4rem;
+}
 
 .text-center {
   text-align: center;
 }
 
-.align-center {
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+.justify {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.horizontal-center {
   margin-left: auto;
   margin-right: auto;
 }
+
+.height-100 {
+  height: 100%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.vertical-center {
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.button-back {
+  background: url('../assets/lobby/left-arrow.png') no-repeat;
+  border: 0;
+  height: 9.8rem;
+  left: .5rem;
+  position: absolute;
+  top: .5rem;
+  width: 9.8rem;
+  z-index: 99999;
+ }

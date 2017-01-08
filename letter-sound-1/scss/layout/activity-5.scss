@@ -1,0 +1,68 @@
+$orange: #f98f44;
+$skyblue: #01b1ec;
+$oliveGreen: #3e4830;
+$englichGreen: #00873a;
+$white: #ffffff;
+.activity-5-content {
+  background-image: url('../assets/5/background.png');
+
+  .img-ground {
+    display: block;
+  }
+
+  .box_wrapper {
+   height: 25rem;
+   width: 20rem;
+   margin: 2rem;
+  }
+
+  .floating-objects-container {
+    position: absolute;
+    top: 31rem;
+    justify-content: center;
+
+    img {
+      height: 25rem;
+      margin: 0 5rem;
+      object-fit: contain;
+      width: 25rem;
+     }
+  }
+
+  .character{
+    bottom: 1rem;
+    position: absolute;
+    right: 0;
+
+     img {
+      height: 30rem;
+      margin-left: auto;
+     }
+  }
+
+  .talk-bubble {
+    width: 30rem;
+    right: 15rem;
+    bottom: initial;
+    top: 3rem;
+
+    &::after {
+     border-color: #fff transparent transparent #fff;
+     right: -1rem;
+     top: 1rem;
+    }
+  }
+
+  .letter .talk-bubble .talktext p {
+   font-size: 8em;
+   font-weight: bold;
+   color: $orange;
+   text-transform: uppercase;
+  }
+
+  .letter .talk-bubble::after {
+   border-color: #fff transparent transparent #fff;
+   right: -1rem;
+   top: 1rem;
+  }
+}

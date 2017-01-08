@@ -30,20 +30,40 @@ angular.module('saan.services', [])
   .factory('ActividadesFinalizadasService', ['$window', function($window) {
 
     var FINISHED_ACTIVITIES = "finishedActivities";
+    var FINISHED_ACTIVITIES_MAX = "finishedActivitiesMax";
 
     var marcarComoFinalizada = function(activityId) {
         var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
-        finishedActivities.push(activityId);
-        $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+        if (_.indexOf(finishedActivities, activityId) == -1){
+          finishedActivities.push(activityId);
+          $window.localStorage.setItem(FINISHED_ACTIVITIES, JSON.stringify(finishedActivities));
+        }
       },
       getActividadesFinalizadas = function() {
         return JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+      },
+      actividadFinalizada = function(activityId){
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES)) || [];
+        return _.indexOf(finishedActivities, activityId) != -1;
+      },
+      actividadFinalizadaMax = function(activityId){
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES_MAX)) || [];
+        return _.indexOf(finishedActivities, activityId) != -1;
+      },
+      marcarFinalizadaMax = function(activityId) {
+        var finishedActivities = JSON.parse($window.localStorage.getItem(FINISHED_ACTIVITIES_MAX)) || [];
+        if (_.indexOf(finishedActivities, activityId) == -1){
+          finishedActivities.push(activityId);
+          $window.localStorage.setItem(FINISHED_ACTIVITIES_MAX, JSON.stringify(finishedActivities));
+        }
       };
-
 
     return {
       add: marcarComoFinalizada,
-      get: getActividadesFinalizadas
+      get: getActividadesFinalizadas,
+      finalizada: actividadFinalizada,
+      maxFinalizada: actividadFinalizadaMax,
+      addMax: marcarFinalizadaMax
     };
   }])
   .factory('TTSService', ['$q', function($q) {

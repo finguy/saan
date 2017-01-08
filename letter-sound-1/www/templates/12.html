@@ -1,0 +1,17 @@
+<ion-view view-title="{{activityId}}" class="activity-{{activityId}}-content">
+
+  <div class="book">
+    <div class="text-box" data-ng-bind-html="text"></div>
+    <div class="question-box">
+     {{question}}
+    </div>
+    <div class="option-container">
+      <img class="options" id="{{opt.id}}" ng-repeat="opt in options" ng-src="{{assetsPath}}{{opt.img}}" ng-click="selectAnswer(opt.id)">
+    </div>
+  </div>
+
+  <div class="character flex" ng-click="tapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img src="assets/characters/turtle.png">
+  </div>
+</ion-view>

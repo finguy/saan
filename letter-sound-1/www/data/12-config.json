@@ -1,0 +1,110 @@
+{ "readings" : [
+    { "id" : 1,
+       "text": "M'bott is a frog that really likes photography. He is always looking for new opportunities to take photos.<br/><br/> While he was at the party, he kept taking photos of all guests, including Leuk the rabbit, Gaynde the lion and Golo the baboon.<br/><br/>The only guest he could not photograph was himself!",
+      "questions": [
+        {"question": "Who is the only guest that M'bott could not photograph?",
+          "options": [
+              {"id":1, "img": "assorted-objects/leuk-sticker.png"},
+              {"id":2, "img": "assorted-objects/lion-sticker.png"},
+              {"id":3, "img": "assorted-objects/golo-sticker.png"},
+              {"id":4, "img": "assorted-objects/mbott-sticker.png"}
+            ],
+            "answer":4
+        }
+      ]
+    },
+    { "id" : 2,
+       "text": "Golo the baboon had the special task of preparing all the food needed for the party.<br/><br/> It was a lot of food to cook, so he asked Thioye the parrot for some help. <br/><br/>Golo needed some ingredients but he was in a hurry, so he asked Thioye to get some bananas, peas, and tomatoes from the local market",
+      "questions": [
+        {"question": "Which of these ingredients Golo needed?",
+          "options": [
+              {"id":1, "img": "assorted-objects/banana-sticker.png"},
+              {"id":2, "img": "assorted-objects/apple-sticker.png"},
+              {"id":3, "img": "assorted-objects/corn-sticker.png"},
+              {"id":4, "img": "assorted-objects/cookie-sticker.png"}
+
+            ],
+            "answer":1
+        }
+      ]
+    },
+    { "id" : 3,
+       "text": "Everytime Gaynde the lion has to feed his cubs he always has the same problem. <br/><br/>They are a lot of cubs and they always change their minds about what food they like. <br/><br/>Yesterday they wanted apples but today they want bananas!",
+      "questions": [
+        {"question": "What food do the cubs want to eat today?",
+          "options": [
+              {"id":1, "img": "assorted-objects/apple-sticker.png"},
+              {"id":2, "img": "assorted-objects/banana-sticker.png"},
+              {"id":3, "img": "assorted-objects/cookie-sticker.png"},
+              {"id":4, "img": "assorted-objects/hot-dog-sticker.png"}
+            ],
+            "answer":2
+        }
+      ]
+    },
+    { "id" : 4,
+       "text": "Tarabu the panther has a band with some of her friends. She and Thioye the parrot are the singers, Gaynde the lion plays the drums and Golo the baboon plays the guitar.<br/><br/>Fudu the turtle used to play the bass guitar, but when he lost his glasses he could not keep playing and had to leave the band.",
+      "questions": [
+        {"question": "Who had to leave the band?",
+          "options": [
+              {"id":1, "img": "assorted-objects/tarabu-sticker.png"},
+              {"id":2, "img": "assorted-objects/thioye-sticker.png"},
+              {"id":3, "img": "assorted-objects/turtle-sticker.png"},
+              {"id":3, "img": "assorted-objects/leuk-sticker.png"}
+            ],
+            "answer":3
+        }
+      ]
+    }
+
+
+  ],
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "finalizationLevel": 3,
+  "instructionsPath": {
+       "intro": {"path": "instructions/Intro.mp3", "text":"Hi!"},
+       "tap": {"path": "instructions/Tap.mp3", "text":"..."}
+      },
+  "successFeedback": [
+    {
+      "path": "Amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "Great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "Well_Done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "endFeedback": [
+    {
+     "path": "End1.mp3",
+     "text": "Thank you!"
+    },
+    {
+      "path": "End2.mp3",
+      "text": "Great!"
+    }
+
+  ],
+  "failureFeedback": [
+    {
+      "path": "Almost.mp3",
+      "text": "Almost! Try reading the text again"
+    },
+    {
+      "path": "Not_Correct.mp3",
+      "text": "Hmmm, I am not sure that's the correct answer"
+    },
+    {
+      "path": "Try_Again.mp3",
+      "text": "Try again"
+    }
+  ]
+}

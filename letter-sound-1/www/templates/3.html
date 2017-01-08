@@ -1,0 +1,15 @@
+<ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity{{activityId}}-content">
+  <div class="content">
+    <div class="row" id="activity">
+      <div class="col" ng-repeat="letter in letters" ng-click="selectLetter(letter)">
+        <div class="letter">
+          {{letter}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="character" ng-click="readTapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech"></talk-bubble>
+    <img ng-src="assets/characters/turtle.png">
+  </div>
+</ion-view>

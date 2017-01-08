@@ -1,7 +1,82 @@
-.material-icons.btn-play-word {
-  font-size: 8em;
-}
+.activity-1-content {
+  $alphabet: a b c d e f g h i j k l m n o p q r s t u v w x y z;
+  background: url('../assets/1/background.png') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
 
-.dashboard-container {
-  width: 80%;
+  @each $letter in $alphabet {
+    .letter-#{$letter} {
+      &.item-radio {
+        background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+
+        input:checked + .radio-content .item-content {
+          background: url('../assets/alphabet-buttons/#{$letter}.png') no-repeat center / contain;
+          filter: brightness(70%);
+          visibility: visible;
+        }
+      }
+    }
+  }
+
+  .radio-content .item-content {
+    height: 9rem;
+    width: 9rem;
+  }
+
+  .letter-button {
+    border: 0;
+    display: block;
+    height: 9rem;
+    margin: auto auto 2.5rem;
+    width: 9rem;
+
+    .radio-content {
+      visibility: collapse;
+    }
+  }
+
+  .dashboard-container {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+  }
+
+  .footer {
+    display: flex;
+    margin-top: auto;
+  }
+
+  .item-collection {
+    align-self: flex-end;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-around;
+    padding-bottom: 1rem;
+
+    img {
+      height: 12rem;
+    }
+
+    .shadow {
+      filter: contrast(0) brightness(45%);
+    }
+
+    .completed {
+      filter: contrast(100%) brightness(100%);
+    }
+  }
+
+  .character img {
+    height: 20rem;
+    margin-left: auto;
+  }
+
+  .talk-bubble {
+    bottom: 15rem;
+    right: 22rem;
+    width: 30rem;
+  }
+
 }

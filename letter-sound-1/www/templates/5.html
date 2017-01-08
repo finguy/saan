@@ -1,0 +1,11 @@
+<ion-view class="activity-{{activityId}}-content">
+
+  <div class="row floating-objects-container">
+     <img ng-src="{{assetsPath}}{{img.src}}" class="img-figure" ng-repeat="img in imgs" ng-click="selectLetter(img.name, img.src)"  />
+  </div>
+  <div class="character" ng-click="readTapInstruction()">
+    <talk-bubble ng-show="showText" text="textSpeech" ng-class="{'letter': isSayingLetter}">
+    </talk-bubble>
+    <img ng-src="assets/characters/turtle.png">
+  </div>
+</ion-view>

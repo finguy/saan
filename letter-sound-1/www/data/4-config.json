@@ -1,0 +1,85 @@
+{
+  "numbers": [{
+      "number": 1,
+      "numbersToPlay": [1, 2, 3]
+    }, {
+      "number": 2,
+      "numbersToPlay": [2, 1, 3]
+    }, {
+      "number": 3,
+      "numbersToPlay": [1, 3, 5]
+    }, {
+      "number": 4,
+      "numbersToPlay": [1, 4, 3]
+    }, {
+      "number": 5,
+      "numbersToPlay": [4, 2, 5]
+    }, {
+      "number": 6,
+      "numbersToPlay": [6, 9, 3]
+    },
+    {
+      "number": 7,
+      "numbersToPlay": [7, 2, 8]
+    }, {
+      "number": 8,
+      "numbersToPlay": [8, 2, 1]
+    }, {
+      "number": 9,
+      "numbersToPlay": [1, 9, 3]
+    }
+  ],
+  "assets": ["assorted-objects/bananas.png",
+    "assorted-objects/beans.png",
+    "assorted-objects/tomatoes.png",
+    "assorted-objects/corn.png",
+    "assorted-objects/eggs.png",
+    "assorted-objects/fish.png"
+
+  ],
+  "instructionsPath": {
+    "intro": {
+      "path": "instructions/Intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": {
+      "path": "instructions/Instructions.mp3",
+      "text": "..."
+    }
+  },
+  "scoreSetUp": {
+    "add": 1,
+    "substract": 1,
+    "minScore": 10
+  },
+  "finalizationLevel": 7,
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  }, {
+    "path": "Great.mp3",
+    "text": "Great!"
+  }, {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
+  "endingFeedback": [{
+      "path": "End1.mp3",
+      "text": "Thank you!"
+    }, {
+      "path": "End2.mp3",
+      "text": "Thank you!"
+    }
+
+  ],
+  "failureFeedback": [{
+    "path": "Almost.mp3",
+    "text": "Almost! Carefully count the ingredients on the other boxes and try again"
+  }, {
+    "path": "Not_Correct.mp3",
+    "text": "I'm not sure this is the correct box"
+  }, {
+    "path": "Try_Again.mp3",
+    "text": "Try again!"
+  }]
+}

@@ -1,0 +1,86 @@
+$black: #000;
+.activity9 {
+  background: url("../assets/9/background.png") no-repeat fixed;
+  background-size: cover;
+  .letter {
+    border: 0;
+    font-size: 4em;
+    color: $black;
+    font-weight: bold;
+    position: relative;
+    top: 40%;
+    text-align: center;
+  }
+  .icon-word.dropzone {
+    margin: 3rem;
+    height: 15rem;
+  }
+  .selected {
+    background: #09c;
+  }
+  .selected.dropzone {
+    border-radius: 1rem;
+  }
+  .list-words {
+    display: flex;
+    justify-content: center;
+  }
+  .words {
+    display: flex;
+    padding: 1em;
+  }
+  .word-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+  }
+  .instructions {
+    height: 10rem;
+    width: 10rem;
+  }
+  .list-letters {
+    width: 31rem;
+    height: 25rem;
+    background-image: url("../assets/9/party-sheet.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+  }
+  .list-icons {
+    width: 31rem;
+    height: 25rem;
+  }
+  .as-sortable-item {
+    background-color: inherit;
+    border: inherit;
+  }
+  .as-sortable-placeholder {
+    display: none !important;
+  }
+  .as-sortable-dragging {
+    width: auto !important;
+  }
+  .character {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    img {
+      height: 30rem;
+      margin-left: auto;
+    }
+  }
+  .talk-bubble {
+    align-self: flex-start;
+    bottom: 7rem;
+    right: 15rem;
+    z-index: 0;
+    width: 30rem;
+    &::after {
+      border-color: white transparent transparent white;
+      right: -1.38rem;
+      top: 5rem;
+    }
+  }
+}

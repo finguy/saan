@@ -1,9 +1,28 @@
-<ion-view view-title="Lobby">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="actividad in actividadesDisponibles" href="#/activity/{{actividad}}">
-        {{actividad}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-view view-title="Lobby" class="lobby">
+  <ion-scroll zooming="false" direction="x" overflow-scroll="false" scrollbar-x="false" class="lobby-scroll">
+    <div class="activities-container">
+      <div class="activity-card" ng-repeat="actividad in actividadesDisponibles track by $index"
+        ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}"
+        ui-sref="activity({activityId:actividad})">
+        <div class="footer">
+          <div class="info">{{$index + 1}}</div>
+          <div class="stars">
+            <img src="assets/lobby/grey-star.png" ng-if="!completed(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="completed(actividad)">
+            <img src="assets/lobby/grey-star.png" ng-if="!maxCompleted(actividad)">
+            <img src="assets/lobby/yellow-star.png" ng-if="maxCompleted(actividad)">
+          </div>
+        </div>
+      </div ng-repeat-end>
+      <div class="locked-container" ng-repeat="actividad in actividadesNoDisponibles">
+        <div class="overlay">
+          <img src="assets/lobby/lock.png">
+        </div>
+        <div class="activity-card locked" ng-style="{'background-image': 'url(assets/{{actividad}}/cover.png)'}">
+        </div>
+      </div ng-repeat-end>
+    </div>
+  </ion-scroll>
+  <button class="button forward" ng-click="scrollForward()"></button>
+  <button class="button backward" ng-click="scrollBackward()"></button>
 </ion-view>

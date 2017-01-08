@@ -1,0 +1,88 @@
+{
+  "colors": ["blue", "green", "purple", "red", "yellow"],
+  "minLevel": 3,
+  "levels": [
+    {
+      "number": 1,
+      "mode": 1,
+      "numberOfColors": 2,
+      "patternLength": 6,
+      "stages": 2
+    },
+    {
+      "number": 2,
+      "mode": 1,
+      "numberOfColors": 3,
+      "patternLength": 6,
+      "stages": 2
+    },
+    {
+      "number": 3,
+      "mode": 2,
+      "numberOfColors": 2,
+      "patternLength": 6,
+      "stages": 2
+    },
+    {
+      "number": 4,
+      "mode": 2,
+      "numberOfColors": 3,
+      "patternLength": 6,
+      "stages": 4
+    }
+  ],
+  "instructions": {
+    "intro": [
+      {
+        "path": "intro_1.mp3",
+        "text": "Hi!"
+       },
+      {
+        "path": "intro_2.mp3",
+        "text": "Hi!"
+       }
+    ],
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..."
+    }
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "try_again.mp3",
+      "text": "Try again!"
+    },
+    {
+      "path": "not_the_color.mp3",
+      "text": "That's a nice color but not the one we have to use right now"
+    },
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Check the colored feathers and try again!"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+     },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+     }
+  ]
+}

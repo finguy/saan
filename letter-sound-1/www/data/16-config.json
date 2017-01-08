@@ -1,0 +1,110 @@
+{"info":
+  [{"id":1,
+    "letters": [
+      { "name":"b",
+        "letterImg": "Letters/b.png",
+        "assets": [ "items/bed.png"
+                ]
+      },
+      { "name":"c",
+        "letterImg": "Letters/c.png",
+        "assets": [
+                    "items/clock.png"]
+      },
+      { "name":"r",
+        "letterImg":"Letters/r.png",
+        "assets":[ "items/radio.png" ]
+      }
+    ]
+  },
+  {"id":2,
+    "letters": [
+      { "name":"d",
+        "letterImg": "Letters/d.png",
+        "assets": [  "items/dishes.png"
+                ]
+      },
+      { "name":"p",
+        "letterImg": "Letters/p.png",
+        "assets": [
+                   "items/pillow.png",
+                   "items/pot.png",
+                   "items/photos.png"
+
+                  ]
+      },
+      { "name":"k",
+        "letterImg":"Letters/k.png",
+        "assets":["items/key.png"
+                 ]
+      }
+    ]
+  },
+  {"id":3,
+    "letters": [
+      { "name":"f",
+        "letterImg": "Letters/f.png",
+        "assets": [  "items/flowers.png",
+                    "items/food.png"
+                  ]
+      },
+      { "name":"s",
+        "letterImg":"Letters/s.png",
+        "assets":[
+                 "items/soap.png"
+                 ]
+      },
+      {  "name":"t",
+         "letterImg":"Letters/t.png",
+         "assets":[
+                "items/table.png"
+                ]
+      }
+    ]
+  }],
+  "instructionsPath": {
+       "intro": {"path": "instructions/intro.mp3", "text":"Hi!"},
+       "tap": {"path": "instructions/tap.mp3", "text":"..."}
+      },
+
+  "scoreSetUp" : {
+    "add": 1,
+    "substract": 1
+  },
+  "finalizationLevel": 3,
+  "successFeedback": [
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!"
+    }
+  ],
+  "endingFeedback": [
+    {
+     "path": "end1.mp3",
+     "text": "Thank you!"
+    },
+    {
+      "path": "end2.mp3",
+      "text": "Thank you!"
+    }
+
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Take a close look at the labels"
+    },
+    {
+      "path": "notSure.mp3",
+      "text": "I am not sure that object belongs there"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "minLevel": 6,
+  "levels": [
+    {
+      "level": 1,
+      "numberOfCards": 2,
+      "numberFrom": 1,
+      "numberTo": 1
+    },
+    {
+      "level": 2,
+      "numberOfCards": 2,
+      "numberFrom": 2,
+      "numberTo": 2
+    },
+    {
+      "level": 3,
+      "numberOfCards": 4,
+      "numberFrom": 1,
+      "numberTo": 2
+    },
+    {
+      "level": 4,
+      "numberOfCards": 4,
+      "numberFrom": 3,
+      "numberTo": 4
+    },
+    {
+      "level": 5,
+      "numberOfCards": 4,
+      "numberFrom": 1,
+      "numberTo": 9
+    },
+    {
+      "level": 6,
+      "numberOfCards": 16,
+      "numberFrom": 1,
+      "numberTo": 9
+    },
+    {
+      "level": 7,
+      "numberOfCards": 16,
+      "numberFrom": 1,
+      "numberTo": 9
+    },
+    {
+      "level": 8,
+      "numberOfCards": 16,
+      "numberFrom": 1,
+      "numberTo": 9
+    }
+  ],
+  "instructions": {
+    "intro": {
+      "path": "intro.mp3",
+      "text": "Hi!"
+    },
+    "tap": {
+      "path": "tap_instruction.mp3",
+      "text": "..."
+    }
+  },
+  "successFeedback": [
+    {
+      "path": "great.mp3",
+      "text": "Great!"
+    },
+    {
+      "path": "amazing.mp3",
+      "text": "Amazing!"
+    },
+    {
+      "path": "well_done.mp3",
+      "text": "Well done!!"
+    }
+  ],
+  "failureFeedback": [
+    {
+      "path": "almost.mp3",
+      "text": "Almost! Try listening the word again"
+    },
+    {
+      "path": "not_what.mp3",
+      "text": "That's not what we're looking for now"
+    }
+  ],
+  "endingAudio" : [
+    {
+      "path": "end_1.mp3",
+      "text": "Thank you!"
+    },
+    {
+      "path": "end_2.mp3",
+      "text": "Thank you!"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "info": [{
+    "letter": "a",
+    "lettersToPlay": ["A", "e", "o"]
+  }, {
+    "letter": "b",
+    "lettersToPlay": ["B", "i", "u"]
+  }, {
+    "letter": "c",
+    "lettersToPlay": ["I", "c", "u"]
+  }, {
+    "letter": "d",
+    "lettersToPlay": ["C", "a", "d"]
+  }, {
+    "letter": "E",
+    "lettersToPlay": ["u", "E", "I"]
+  }, {
+    "letter": "f",
+    "lettersToPlay": ["f", "t", "o"]
+  }, {
+    "letter": "g",
+    "lettersToPlay": ["n", "g", "r"]
+  }, {
+    "letter": "h",
+    "lettersToPlay": ["a", "f", "h"]
+  }, {
+    "letter": "i",
+    "lettersToPlay": ["i", "z", "x"]
+  }, {
+    "letter": "j",
+    "lettersToPlay": ["u", "k", "J"]
+  }, {
+    "letter": "k",
+    "lettersToPlay": ["K", "v", "I"]
+  }, {
+    "letter": "l",
+    "lettersToPlay": ["u", "m", "L"]
+  }, {
+    "letter": "m",
+    "lettersToPlay": ["M", "s", "L"]
+  }, {
+    "letter": "n",
+    "lettersToPlay": ["u", "n", "L"]
+  }, {
+    "letter": "o",
+    "lettersToPlay": ["u", "P", "o"]
+  }, {
+    "letter": "p",
+    "lettersToPlay": ["p", "T", "L"]
+  }, {
+    "letter": "q",
+    "lettersToPlay": ["u", "q", "L"]
+  }, {
+    "letter": "r",
+    "lettersToPlay": ["R", "b", "L"]
+  }, {
+    "letter": "s",
+    "lettersToPlay": ["u", "S", "Q"]
+  }, {
+    "letter": "t",
+    "lettersToPlay": ["u", "g", "t"]
+  }, {
+    "letter": "u",
+    "lettersToPlay": ["u", "J", "L"]
+  }, {
+    "letter": "v",
+    "lettersToPlay": ["U", "v", "X"]
+  }, {
+    "letter": "w",
+    "lettersToPlay": ["U", "h", "W"]
+  }, {
+    "letter": "x",
+    "lettersToPlay": ["U", "x", "B"]
+  }, {
+    "letter": "y",
+    "lettersToPlay": ["y", "A", "L"]
+  }, {
+    "letter": "z",
+    "lettersToPlay": ["u", "M", "Z"]
+  }],
+  "instructionsPath": {
+    "intro": {
+      "path": "instructions/Intro.mp3",
+      "text": "Hi!"
+    },
+    "action": [{
+      "path": "instructions/tap_letter.mp3",
+      "text": "..."
+    }, {
+      "path": "letters/",
+      "text": "..."
+    }]
+  },
+  "scoreSetUp": {
+    "add": 1,
+    "substract": 1
+  },
+  "finalizationLevel": 13,
+  "successFeedback": [{
+    "path": "Amazing.mp3",
+    "text": "Amazing!"
+  }, {
+    "path": "Great.mp3",
+    "text": "Great!"
+  }, {
+    "path": "Well_Done.mp3",
+    "text": "Well done!"
+  }],
+  "failureFeedback": [{
+    "path": "Try_Again.mp3",
+    "text": "Try again!"
+  }, {
+    "path": "Not_Sure.mp3",
+    "text": "I'm not sure that's the correct letter"
+  }, {
+    "path": "Almost.mp3",
+    "text": "Almost! Try listening to the letter again"
+  }],
+  "endFeedback": [{
+    "path": "End1.mp3",
+    "text": "Thank you!"
+  }, {
+    "path": "End2.mp3",
+    "text": "Thank you!"
+  }]
+}

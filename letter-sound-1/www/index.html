@@ -1,32 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet"> -->
-
-     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above -->
-    <link href="css/ionic.app.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/ionic.app.min.css">
+    <link href="lib/ng-sortable/dist/ng-sortable.style.min.css" rel="stylesheet" type="text/css">
+    <link href="lib/ng-sortable/dist/ng-sortable.css" rel="stylesheet" type="text/css">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
+
     <script src="lib/underscore/underscore-min.js"></script>
     <script src="lib/angular-underscore-module/angular-underscore-module.js"></script>
-
-
+    <script type="text/javascript" src="lib/ng-sortable/dist/ng-sortable.min.js"></script>
     <!-- your app's js -->
-  	<script src="js/services.js"></script>
-    <script src="js/services/1-service.js"></script>
-    <script src="js/services/util.js"></script>
   	<script src="js/app.js"></script>
-  	<script src="js/controllers.js"></script>
-  	<script src="js/controllers/lobby-controller.js"></script>
+
+    <!-- inject:js -->
+    <script src="js/angular-underscore.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/services.js"></script>
     <script src="js/controllers/1-controller.js"></script>
+    <script src="js/controllers/10-controller.js"></script>
+    <script src="js/controllers/11-controller.js"></script>
+    <script src="js/controllers/12-controller.js"></script>
+    <script src="js/controllers/13-controller.js"></script>
+    <script src="js/controllers/14-controller.js"></script>
+    <script src="js/controllers/15-controller.js"></script>
+    <script src="js/controllers/16-controller.js"></script>
+    <script src="js/controllers/17-controller.js"></script>
+    <script src="js/controllers/2-controller.js"></script>
+    <script src="js/controllers/3-controller.js"></script>
+    <script src="js/controllers/4-controller.js"></script>
+    <script src="js/controllers/5-controller.js"></script>
+    <script src="js/controllers/6-controller.js"></script>
+    <script src="js/controllers/7-controller.js"></script>
+    <script src="js/controllers/8-controller.js"></script>
+    <script src="js/controllers/9-controller.js"></script>
+    <script src="js/controllers/lobby-controller.js"></script>
     <script src="js/directives/directives.js"></script>
-
-
+    <script src="js/directives/flipableCard.js"></script>
+    <script src="js/directives/memoryDeck.js"></script>
+    <script src="js/directives/numberCard.js"></script>
+    <script src="js/directives/numberGroup.js"></script>
+    <script src="js/directives/talkBubble.js"></script>
+    <script src="js/services/1-service.js"></script>
+    <script src="js/services/10-service.js"></script>
+    <script src="js/services/11-service.js"></script>
+    <script src="js/services/12-service.js"></script>
+    <script src="js/services/13-service.js"></script>
+    <script src="js/services/14-service.js"></script>
+    <script src="js/services/15-service.js"></script>
+    <script src="js/services/16-service.js"></script>
+    <script src="js/services/17-service.js"></script>
+    <script src="js/services/2-service.js"></script>
+    <script src="js/services/3-service.js"></script>
+    <script src="js/services/4-service.js"></script>
+    <script src="js/services/5-service.js"></script>
+    <script src="js/services/6-service.js"></script>
+    <script src="js/services/7-service.js"></script>
+    <script src="js/services/8-service.js"></script>
+    <script src="js/services/9-service.js"></script>
+    <script src="js/services/animations.js"></script>
+    <script src="js/services/appSounds.js"></script>
+    <script src="js/services/assetsPath.js"></script>
+    <script src="js/services/score.js"></script>
+    <script src="js/services/util.js"></script>
+    <!-- endinject -->
 
   </head>
   <body ng-app="saan">
@@ -34,13 +77,11 @@
   <!--
       The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-stable">
+    <!-- <ion-nav-bar class="bar-stable">
       <ion-nav-back-button>
       </ion-nav-back-button>
-    </ion-nav-bar>
-
-	<a href="/activity/1">1</a>
-
+    </ion-nav-bar> -->
+    <back-button></back-button>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
       Templates are in the /templates folder (but you could also

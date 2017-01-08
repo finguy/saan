@@ -1,0 +1,79 @@
+.activity-16-content {
+  background: url("../assets/16/background-organization.png") no-repeat center center fixed;
+  padding-top: 0;
+  .letterNameBox {
+    width: 15rem;
+    margin-left: 22rem;
+  }
+  .letterAsset {
+    height: 12rem;
+    margin-left: 3rem;
+    float: left;
+  }
+  .dropzone {
+    min-height: 12rem;
+    max-height: 12rem;
+    width: 60rem;
+  }
+  .dropzoneContainer {
+    background-image: url("../assets/16/library.png");
+    background-repeat: no-repeat;
+    margin-left: 32rem;
+    width: 60rem;
+    .as-sortable-item {
+      display: inline;
+      margin-top: 0;
+      margin-left: 23%;
+      width: 5%;
+    }
+    &:nth-child(1) {
+      background-image: url("../assets/16/firstShelf.png");
+      background-repeat: no-repeat;
+      min-height: 24rem;
+      .as-sortable-item {
+        margin-top: 4.4%;
+        display: inline;
+        margin-left: 23%;
+        width: 5%;
+      }
+      .letterNameBox {
+        margin-top: 4.4rem;
+      }
+    }
+  }
+  .listAssets {
+    display: flex;
+    justify-content: center;
+  }
+  .word-icons {
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .as-sortable-item {
+    background-color: inherit;
+    border: inherit;
+    border-radius: 0;
+  }
+  .as-sortable-placeholder {
+    display: none !important;
+  }
+  .as-sortable-dragging {
+    width: auto;
+    margin: 0 !important;
+  }
+  .character {
+    bottom: 20rem;
+    position: absolute;
+    right: 0;
+    img {
+      height: 20rem;
+      margin-left: auto;
+    }
+  }
+  .talk-bubble {
+    right: 22rem;
+    bottom: 15rem;
+    width: 30rem;
+    line-height: 3em;
+  }
+}
