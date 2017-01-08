@@ -1,9 +1,9 @@
 <ion-view view-title="Dashboard (level: {{level}} score: {{score}})" class="activity{{activityId}}-content">
   <div class="content">
     <div class="row" id="activity">
-      <div class="col" ng-repeat="img in imgs" ng-click="selectLetter(img.name,img.src)">
+      <div class="col" ng-repeat="letter in letters" ng-click="selectLetter(letter)">
         <div class="letter">
-          {{img.name}}
+          {{letter}}
         </div>
       </div>
     </div>

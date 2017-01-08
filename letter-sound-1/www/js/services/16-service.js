@@ -31,7 +31,7 @@ angular.module('saan.services')
           }
         );
       },
-      getEndingAudio: function(index) {        
+      getEndingAudio: function(index) {
         return data.endingFeedback[index];
       },
       getSuccessAudio: function() {

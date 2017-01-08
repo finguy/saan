@@ -1,34 +1,34 @@
 {
   "words": [{
-    "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
+    "word": ["banana", "beans", "corn", "egg"],
     "imgs": [
-      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
+      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png"
     ]
   }, {
-   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
-   "imgs": [
-     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
-   ]
+    "word": ["banana", "beans", "corn", "egg"],
+    "imgs": [
+      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png"
+    ]
   }, {
-   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
-   "imgs": [
-     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
-   ]
+    "word": ["banana", "beans", "corn", "egg"],
+    "imgs": [
+      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png"
+    ]
   }, {
-   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
-   "imgs": [
-     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
-   ]
+    "word": ["banana", "beans", "corn", "egg"],
+    "imgs": [
+      "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png"
+    ]
   }, {
-   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
-   "imgs": [
-     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
-   ]
+    "word": ["fish", "tomato"],
+    "imgs": [
+      "objects/fish.png", "objects/tomato.png"
+    ]
   }, {
-   "word": ["banana", "beans", "corn", "egg", "fish", "tomato"],
-   "imgs": [
-     "objects/banana.png", "objects/beans.png", "objects/corn.png", "objects/egg.png", "objects/fish.png", "objects/tomato.png"
-   ]
+    "word": ["fish", "tomato"],
+    "imgs": [
+      "objects/fish.png", "objects/tomato.png"
+    ]
   }],
   "instructionsPath": {
     "intro": {

@@ -2,7 +2,7 @@
  <div class="dashboard">
    <div class="word-icons">
      <div id="{{assetsPath}}{{imgSrc}}" ng-repeat="item in imgs track by $index" >
-       <div class="col list-letters" as-sortable="targetOptions" data-ng-model="item.dropzone">
+       <div class="col list-icons" as-sortable="targetOptions" data-ng-model="item.dropzone">
          <img class="dropzone icon-word" ng-src="{{assetsPath}}{{item.image}}" ng-show="item.dropzone.length == 1"
          ng-click="selectItem(item.image)" ng-class="{'selected': item.image == selectedItem}"
          ng-repeat="dummy in items" as-sortable-item/>

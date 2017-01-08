@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber,
-  Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
+  Util, Animations, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
 
   $scope.activityId = 4;
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
@@ -32,18 +32,19 @@ angular.module('saan.controllers')
     RandomNumber.number(Ctrl4.level, Ctrl4.playedNumbers).then(
       function success(data) {
         Ctrl4.setUpContextVariables(data);
-        var readWordTimeout =  1000;
+        var readWordTimeout = 1000;
         //wait for UI to load
         $timeout(function() {
-
-          if (readInstructions) {
-            $scope.showText = true;
-            $scope.textSpeech = $scope.introText;
-            $scope.speaking = true;
-            Ctrl4.instructionsPlayer.play();
-          } else {
-            $scope.showText = false;
-            $scope.speaking = false;
+          if (!Ctrl4.beforeLeave) {
+            if (readInstructions) {
+              $scope.showText = true;
+              $scope.textSpeech = $scope.introText;
+              $scope.speaking = true;
+              Ctrl4.instructionsPlayer.play();
+            } else {
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
           }
         }, readWordTimeout);
 
@@ -82,10 +83,10 @@ angular.module('saan.controllers')
 
     var length = Ctrl4.assets.length;
     var used = [];
-    for (var i in numberJson.imgs) {
-      if (numberJson.imgs[i]) {
+    for (var i in numberJson.numbersToPlay) {
+      if (numberJson.numbersToPlay[i]) {
         var img = {};
-        img.name = numberJson.imgs[i].name;
+        img.name = numberJson.numbersToPlay[i];
         //Select an unused asset
         var index = Util.getRandomNumber(length);
         while (used[index] || !Ctrl4.assets[index]) {
@@ -93,7 +94,7 @@ angular.module('saan.controllers')
         }
         used[index] = true;
         var path = Ctrl4.assets[index].split("/");
-        img.src = path[0] +"/" + img.name + "-" + path[1];
+        img.src = path[0] + "/" + img.name + "-" + path[1];
         $scope.imgs.push(img);
       }
     }
@@ -134,9 +135,6 @@ angular.module('saan.controllers')
       Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl4.endPlayer.release();
-          //$scope.showText = false;
-          //$scope.speaking = false;
-          //$scope.$apply();
           $state.go('lobby');
         },
         function error(err) {
@@ -153,9 +151,6 @@ angular.module('saan.controllers')
       Ctrl4.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
         function success() {
           Ctrl4.endPlayer.release();
-          //$scope.showText = false;
-         // $scope.speaking = false;
-         // $scope.$apply();
           $state.go('lobby');
         },
         function error(err) {
@@ -170,7 +165,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl4.successFeedback = function() {
-   if (!$scope.speaking) {
+    if (!$scope.speaking) {
       var successFeedback = RandomNumber.getSuccessAudio();
       $scope.textSpeech = successFeedback.text;
       $scope.showText = true;
@@ -180,14 +175,14 @@ angular.module('saan.controllers')
         },
         function error(err) {
           $log.error(err);
-          successPlayer.release();         
+          successPlayer.release();
           $scope.checkingWord = false;
           $scope.$apply();
         }
       );
       $scope.speaking = true;
       successPlayer.play();
-   }
+    }
   };
 
   Ctrl4.errorFeedback = function() {
@@ -218,29 +213,32 @@ angular.module('saan.controllers')
     Ctrl4.playedNumbers.push($scope.number);
     Ctrl4.successFeedback();
     $timeout(function() {
-     Ctrl4.levelUp();
-     if (!Ctrl4.finished) {
-       Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
-       Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
-       if (Ctrl4.finished) {
-         ActividadesFinalizadasService.add($scope.activityId);
-         $scope.showText = true;
-         $scope.textSpeech = $scope.endText;
-         $scope.speaking = true;
-         Ctrl4.endPlayer.play();
-       } else {
-         Ctrl4.showDashboard(false);
-       }
-     } else if (Ctrl4.level <= Ctrl4.totalLevels) {
-       Ctrl4.showDashboard(false);
-     } else {
-       Ctrl4.level = Ctrl4.initialLevel;
-       $scope.showText = true;
-       $scope.textSpeech = $scope.endText;
-       $scope.speaking = true;
-       Ctrl4.endPlayer.play();
-     }
-    },2000);
+      Ctrl4.levelUp();
+      console.log("level:");
+      console.log(Ctrl4.level);
+      if (!Ctrl4.finished) {
+        Ctrl4.score = Score.update(Ctrl4.addScore, $scope.activityId, Ctrl4.finished);
+        Ctrl4.finished = Ctrl4.level >= Ctrl4.finalizationLevel;
+        if (Ctrl4.finished) {
+          ActividadesFinalizadasService.add($scope.activityId);
+          $scope.showText = true;
+          $scope.textSpeech = $scope.endText;
+          $scope.speaking = true;
+          Ctrl4.endPlayer.play();
+        } else {
+          Ctrl4.showDashboard(false);
+        }
+      } else if (Ctrl4.level <= Ctrl4.totalLevels) {
+        Ctrl4.showDashboard(false);
+      } else {
+        ActividadesFinalizadasService.addMax($scope.activityId);
+        Ctrl4.level = Ctrl4.initialLevel;
+        $scope.showText = true;
+        $scope.textSpeech = $scope.endText;
+        $scope.speaking = true;
+        Ctrl4.endPlayer.play();
+      }
+    }, 2000);
   };
 
   Ctrl4.error = function() {
@@ -261,14 +259,12 @@ angular.module('saan.controllers')
   Ctrl4.levelUp = function() {
     Ctrl4.level++;
     Ctrl4.numbers = [];
-    Ctrl4.playedNumbers = [];
     Ctrl4.imgs = [];
   };
 
   Ctrl4.levelDown = function() {
     Ctrl4.level = (level > 1) ? (level - 1) : 1;
     Ctrl4.numbers = [];
-    Ctrl4.playedNumbers = [];
     Ctrl4.imgs = [];
   };
 
@@ -279,12 +275,14 @@ angular.module('saan.controllers')
   };
 
   $scope.playInstructions = function() {
-   if (!$scope.speaking) {
-     $scope.speaking = true;
-     $scope.textSpeech = $scope.helpText;
-     $scope.showText = true;
-     Ctrl4.tapInstructionsPlayer.play();
-   }
+    if (!$scope.speaking) {
+      $scope.speaking = true;
+      $scope.textSpeech = $scope.helpText;
+      $scope.showText = true;
+      if (!Ctrl4.beforeLeave) {
+        Ctrl4.tapInstructionsPlayer.play();
+      }
+    }
   }
 
   $scope.sortableSourceOptions = {
@@ -292,16 +290,20 @@ angular.module('saan.controllers')
     containerPositioning: 'relative',
     clone: true,
     dragEnd: function(eventObj) {
-      if ($scope.draggedOk){
-        Ctrl4.handleProgress(true);
-      } else {
-        Ctrl4.handleProgress(false);
+      var validDrag = typeof $scope.draggedOk !== 'undefined';
+      var progressOk = $scope.draggedOk;
+      $scope.draggedOk = undefined;
+      if (validDrag) {
+        if (progressOk) {
+          AppSounds.playTap();
+        }
+        Ctrl4.handleProgress(progressOk);
       }
     },
   };
 
   $scope.sortableTargetOptions = {
-   clone: false,
+    clone: false,
     accept: function(sourceItemHandleScope, destSortableScope) {
       $scope.draggedOk = destSortableScope.modelValue == $scope.number;
       return $scope.draggedOk;
@@ -316,6 +318,7 @@ angular.module('saan.controllers')
   });
 
   $scope.$on('$ionicView.beforeLeave', function() {
+    Ctrl4.beforeLeave = true;
     Util.saveLevel($scope.activityId, Ctrl4.level);
     Ctrl4.releasePlayer(Ctrl4.instructionsPlayer);
     Ctrl4.releasePlayer(Ctrl4.tapInstructionsPlayer);

@@ -63,7 +63,7 @@
     ]
   }],
   "instructionsPath": {
-       "intro": {"path": "instructions/intro.mp3", "text":"..."},
+       "intro": {"path": "instructions/intro.mp3", "text":"Hi!"},
        "tap": {"path": "instructions/tap.mp3", "text":"..."}
       },
 
@@ -71,7 +71,7 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 2,
+  "finalizationLevel": 3,
   "successFeedback": [
     {
       "path": "amazing.mp3",
@@ -93,7 +93,7 @@
     },
     {
       "path": "end2.mp3",
-      "text": "..."
+      "text": "Thank you!"
     }
 
   ],

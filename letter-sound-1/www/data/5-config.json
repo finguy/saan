@@ -113,7 +113,7 @@
   "failureFeedback": [
     {
       "path": "NotComing.mp3",
-      "text": "Hmm I think this guest told me he cannot come to the party."
+      "text": "Hmm I think this guest told me he cannot come to the party"
     },
     {
       "path": "Try_Again.mp3",

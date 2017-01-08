@@ -28,8 +28,10 @@ angular.module('saan.controllers')
   Ctrl16.letterOk = false;
   Ctrl16.instructionsPlayer;
   $scope.speaking = false;
+  Ctrl16.letterOk = undefined;
 
   $scope.$on('$ionicView.beforeLeave', function() {
+    Ctrl16.beforeLeave = true;
     Util.saveLevel($scope.activityId, Ctrl16.level);
     Ctrl16.releasePlayer(Ctrl16.instructionsPlayer);
     Ctrl16.releasePlayer(Ctrl16.tapInstructionsPlayer);
@@ -38,7 +40,7 @@ angular.module('saan.controllers')
     Ctrl16.releasePlayer(failurePlayer);
   });
 
-  Ctrl16.releasePlayer = function (player) {
+  Ctrl16.releasePlayer = function(player) {
     if (player) {
       player.release();
     }
@@ -55,16 +57,18 @@ angular.module('saan.controllers')
 
         //wait for UI to load
         var readWordTimeout = 1000;
-        $timeout(function() {
-          if (readInstructions) {
-            $scope.showText = true;
-            $scope.speaking = true;
-            Ctrl16.instructionsPlayer.play();
-          } else {
-            $scope.showText = false;
-            $scope.speaking = false;
-          }
-        }, readWordTimeout);
+        if (!Ctrl16.beforeLeave) {
+          $timeout(function() {
+            if (readInstructions) {
+              $scope.showText = true;
+              $scope.speaking = true;
+              Ctrl16.instructionsPlayer.play();
+            } else {
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
+          }, readWordTimeout);
+        }
       },
       function error(error) {
         $log.error(error);
@@ -88,28 +92,30 @@ angular.module('saan.controllers')
 
   Ctrl16.successFeedback = function() {
     if (!$scope.speaking) {
-    var successFeedback = RandomWordsSixteen.getSuccessAudio();
-    $scope.textSpeech = successFeedback.text;
-    $scope.showText = true;
-    successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-      function success() {
-        successPlayer.release();
-        $scope.showText = false;
-        $scope.speaking = false;
-        $scope.$apply();
-      },
-      function error(err) {
-        $log.error(err);
-        successPlayer.release();
-        $scope.showText = false;
-        $scope.checkingWord = false;
-        $scope.speaking = false;
+      var successFeedback = RandomWordsSixteen.getSuccessAudio();
+      $scope.textSpeech = successFeedback.text;
+      $scope.showText = true;
+      successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+        function success() {
+          successPlayer.release();
+          $scope.showText = false;
+          $scope.speaking = false;
+          $scope.$apply();
+        },
+        function error(err) {
+          $log.error(err);
+          successPlayer.release();
+          $scope.showText = false;
+          $scope.checkingWord = false;
+          $scope.speaking = false;
+        }
+      );
+      if (!Ctrl16.beforeLeave) {
+        $scope.speaking = true;
+        successPlayer.play();
       }
-    );
-    $scope.speaking = true;
-    successPlayer.play();
 
-   }
+    }
   };
 
   Ctrl16.endingFeedbackSetUp = function() {
@@ -133,7 +139,7 @@ angular.module('saan.controllers')
           $scope.speaking = false;
         }
       );
-     }
+    }
   };
 
   Ctrl16.errorFeedback = function() {
@@ -154,9 +160,11 @@ angular.module('saan.controllers')
           $scope.showText = false;
           $scope.speaking = false;
         });
-      $scope.speaking = true;
-      failurePlayer.play();
-     }
+      if (!Ctrl16.beforeLeave) {
+        $scope.speaking = true;
+        failurePlayer.play();
+      }
+    }
   };
 
   Ctrl16.setUpContextVariables = function(data, readInstructions) {
@@ -235,7 +243,6 @@ angular.module('saan.controllers')
 
 
   Ctrl16.handleSuccess = function() {
-    AppSounds.playTap();
     var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
     if (LAST_CHECK) {
       Ctrl16.levelUp(); //Advance level
@@ -244,10 +251,14 @@ angular.module('saan.controllers')
         Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
         if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
           ActividadesFinalizadasService.add($scope.activityId);
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $timeout(function() {
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.endText;
+              endingPlayer.play();
+            }, 1000);
+          }
         } else if (Ctrl16.level <= Ctrl16.totalLevels) {
           Ctrl16.successFeedback();
           $timeout(function() {
@@ -255,10 +266,14 @@ angular.module('saan.controllers')
           }, 1000);
         } else {
           Ctrl16.level = Ctrl16.initialLevel;
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $timeout(function() {
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.endText;
+              endingPlayer.play();
+            }, 1000);
+          }
         }
       } else {
         if (Ctrl16.level <= Ctrl16.totalLevels) {
@@ -267,11 +282,14 @@ angular.module('saan.controllers')
             Ctrl16.showDashboard(false);
           }, 1000);
         } else {
+          ActividadesFinalizadasService.addMax($scope.activityId);
           Ctrl16.level = Ctrl16.initialLevel;
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $scope.speaking = true;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            endingPlayer.play();
+          }
         }
       }
     }
@@ -310,22 +328,20 @@ angular.module('saan.controllers')
     containment: '.activity-16-content',
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
-      if (!Ctrl16.letterOk) {
+      var validDrag = typeof Ctrl16.letterOk !== 'undefined';
+      var progressOk = Ctrl16.letterOk;
+      Ctrl16.letterOk = undefined;
+      if (validDrag && !progressOk) {
         $log.error("wrong!!");
         //Remove element from where it was added
         eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
         //Add elemebt back again   Note:
-        eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
+        eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         Ctrl16.handleProgress(false);
-      } else {
-        $log.error("move again");
-      }
-    },
-    itemMoved: function(eventObj) {
-      if (Ctrl16.letterOk) {
+      } else if (validDrag) {
+        AppSounds.playTap();
         Ctrl16.handleProgress(true);
       }
-
     },
     accept: function(sourceItemHandleScope, destSortableScope) {
       return false;
@@ -342,12 +358,12 @@ angular.module('saan.controllers')
   };
 
   $scope.tapInstructions = function() {
-   if (!$scope.speaking) {
-     $scope.showText = true;
-     $scope.speaking = true;
-     $scope.textSpeech = $scope.helpText;
-     Ctrl16.tapInstructionsPlayer.play();
-   }
+    if (!$scope.speaking) {
+      $scope.showText = true;
+      $scope.speaking = true;
+      $scope.textSpeech = $scope.helpText;
+      Ctrl16.tapInstructionsPlayer.play();
+    }
   };
 
   $scope.$on('$ionicView.beforeEnter', function() {
