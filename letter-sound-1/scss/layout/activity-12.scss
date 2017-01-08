@@ -17,8 +17,6 @@ $blue-question: #0a8bc4;
   }
 
   .text-box {
-    background: url('../assets/12/text-box.png') no-repeat;
-    background-size: cover;
     color: $blue-text;
     font-size: 2.5em;
     font-weight: bold;
@@ -30,9 +28,7 @@ $blue-question: #0a8bc4;
     box-shadow: .6rem .6rem .5rem .6rem #afafaf;
   }
 
-  .question-box {
-    background: url('../assets/12/text-box.png') no-repeat;
-    background-size: cover;
+  .question-box {    
     color: $blue-question;
     font-size: 2.5em;
     font-weight: bold;

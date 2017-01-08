@@ -28,6 +28,7 @@ angular.module('saan.controllers')
   Ctrl16.letterOk = false;
   Ctrl16.instructionsPlayer;
   $scope.speaking = false;
+  Ctrl16.letterOk =  undefined;
 
   $scope.$on('$ionicView.beforeLeave', function() {
     Ctrl16.beforeLeave = true;
@@ -251,10 +252,12 @@ angular.module('saan.controllers')
         if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
           ActividadesFinalizadasService.add($scope.activityId);
           if (!Ctrl16.beforeLeave) {
-            $scope.speaking = true;
-            $scope.showText = true;
-            $scope.textSpeech = $scope.endText;
-            endingPlayer.play();
+           $timeout(function() {
+             $scope.speaking = true;
+             $scope.showText = true;
+             $scope.textSpeech = $scope.endText;
+             endingPlayer.play();
+            }, 1000);
           }
         } else if (Ctrl16.level <= Ctrl16.totalLevels) {
           Ctrl16.successFeedback();
@@ -264,10 +267,12 @@ angular.module('saan.controllers')
         } else {
           Ctrl16.level = Ctrl16.initialLevel;
           if (!Ctrl16.beforeLeave) {
-            $scope.speaking = true;
-            $scope.showText = true;
-            $scope.textSpeech = $scope.endText;
-            endingPlayer.play();
+           $timeout(function() {
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.endText;
+              endingPlayer.play();
+            }, 1000);
           }
         }
       } else {

@@ -80,15 +80,14 @@ $blue: #0460ab;
   }
 
   .talk-bubble {
+    width: 30rem;
     right: 15rem;
     bottom: 6rem;
-    width: 30rem;
-
+    min-height: 15rem;
     &::after {
-      border-color: white transparent transparent white;
-      bottom: initial;
-      right: -2rem;
-      top: 6rem;
+     border-color: #fff transparent transparent #fff;
+     right: -1rem;
+     bottom: 2rem;
     }
   }
 }
