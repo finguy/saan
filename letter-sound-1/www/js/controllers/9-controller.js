@@ -296,12 +296,7 @@ angular.module('saan.controllers')
       } else if (validDrag) {
        $scope.handleProgress(true);
       }
-    }/*,
-    itemMoved: function (eventObj) {
-      if ($scope.wordOk){
-        $scope.handleProgress(true);
-      }
-    }*/,
+    },
     accept: function(sourceItemHandleScope, destSortableScope){
       return false;
     }

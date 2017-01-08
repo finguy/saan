@@ -310,22 +310,19 @@ angular.module('saan.controllers')
     containment: '.activity-16-content',
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
-      if (!Ctrl16.letterOk) {
+     var validDrag =  typeof Ctrl16.letterOk !== 'undefined' ;
+     var progressOk = Ctrl16.letterOk;
+     Ctrl16.letterOk =  undefined;
+      if (validDrag && !progressOk){
         $log.error("wrong!!");
         //Remove element from where it was added
         eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
         //Add elemebt back again   Note:
         eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         Ctrl16.handleProgress(false);
-      } else {
-        $log.error("move again");
-      }
-    },
-    itemMoved: function(eventObj) {
-      if (Ctrl16.letterOk) {
+      } else if (validDrag) {
         Ctrl16.handleProgress(true);
       }
-
     },
     accept: function(sourceItemHandleScope, destSortableScope) {
       return false;
