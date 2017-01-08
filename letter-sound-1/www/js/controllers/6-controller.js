@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix,
-  Util, Score, ActividadesFinalizadasService, AssetsPath, AppSounds {
+  Util, Score, ActividadesFinalizadasService, AssetsPath, AppSounds) {
   $scope.activityId = 6; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.word = ""; // Letter to play in level
@@ -21,6 +21,8 @@ angular.module('saan.controllers')
   var failureFeedback;
   var Ctrl6 = Ctrl6 || {};
   var dragChecked = false;
+  var successPlayer ;
+  var failurePlayer;
   Ctrl6.instructionsPlayer;
   Ctrl6.playedWords = {};
   Ctrl6.successFeedback = function() {
@@ -28,7 +30,7 @@ angular.module('saan.controllers')
      successFeedback = RandomWordSix.getSuccessAudio();
      $scope.textSpeech = successFeedback.text;
      $scope.showText = true;
-     var successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+     successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
        function success() {
          successPlayer.release();
         // $scope.showText = false;
@@ -52,7 +54,7 @@ angular.module('saan.controllers')
     failureFeedback = RandomWordSix.getFailureAudio();
     $scope.textSpeech = failureFeedback.text;
     $scope.showText = true;
-    var failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+    failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
       function success() {
         failurePlayer.release();
         $scope.showText = false;

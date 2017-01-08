@@ -30,6 +30,7 @@ angular.module('saan.controllers')
   $scope.speaking = false;
 
   $scope.$on('$ionicView.beforeLeave', function() {
+    Ctrl16.beforeLeave = true;
     Util.saveLevel($scope.activityId, Ctrl16.level);
     Ctrl16.releasePlayer(Ctrl16.instructionsPlayer);
     Ctrl16.releasePlayer(Ctrl16.tapInstructionsPlayer);
@@ -55,16 +56,18 @@ angular.module('saan.controllers')
 
         //wait for UI to load
         var readWordTimeout = 1000;
-        $timeout(function() {
-          if (readInstructions) {
-            $scope.showText = true;
-            $scope.speaking = true;
-            Ctrl16.instructionsPlayer.play();
-          } else {
-            $scope.showText = false;
-            $scope.speaking = false;
-          }
-        }, readWordTimeout);
+        if (!Ctrl16.beforeLeave) {
+          $timeout(function() {
+            if (readInstructions) {
+              $scope.showText = true;
+              $scope.speaking = true;
+              Ctrl16.instructionsPlayer.play();
+            } else {
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
+          }, readWordTimeout);
+        }
       },
       function error(error) {
         $log.error(error);
@@ -106,8 +109,10 @@ angular.module('saan.controllers')
         $scope.speaking = false;
       }
     );
-    $scope.speaking = true;
-    successPlayer.play();
+    if (!Ctrl16.beforeLeave) {
+      $scope.speaking = true;
+      successPlayer.play();
+    }
 
    }
   };
@@ -154,8 +159,10 @@ angular.module('saan.controllers')
           $scope.showText = false;
           $scope.speaking = false;
         });
-      $scope.speaking = true;
-      failurePlayer.play();
+      if (!Ctrl16.beforeLeave) {
+        $scope.speaking = true;
+        failurePlayer.play();
+      }
      }
   };
 
@@ -243,10 +250,12 @@ angular.module('saan.controllers')
         Ctrl16.finished = Ctrl16.level >= Ctrl16.finalizationLevel;
         if (Ctrl16.finished) { // Puede haber alcanzado el puntaje para que marque como finalizada.
           ActividadesFinalizadasService.add($scope.activityId);
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $scope.speaking = true;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            endingPlayer.play();
+          }
         } else if (Ctrl16.level <= Ctrl16.totalLevels) {
           Ctrl16.successFeedback();
           $timeout(function() {
@@ -254,10 +263,12 @@ angular.module('saan.controllers')
           }, 1000);
         } else {
           Ctrl16.level = Ctrl16.initialLevel;
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $scope.speaking = true;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            endingPlayer.play();
+          }
         }
       } else {
         if (Ctrl16.level <= Ctrl16.totalLevels) {
@@ -268,10 +279,12 @@ angular.module('saan.controllers')
         } else {
           ActividadesFinalizadasService.addMax($scope.activityId);
           Ctrl16.level = Ctrl16.initialLevel;
-          $scope.speaking = true;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          endingPlayer.play();
+          if (!Ctrl16.beforeLeave) {
+            $scope.speaking = true;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            endingPlayer.play();
+          }
         }
       }
     }

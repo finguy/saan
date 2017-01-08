@@ -69,7 +69,10 @@
              //$scope.speaking = false;
              $scope.textSpeech = successFeedback.text;
              $scope.showText = true;
-             successPlayer.play();
+             if (!Ctrl10.beforeLeave) {
+               successPlayer.play();
+             }
+
              $scope.$apply();
            },
            function error(err) {
@@ -84,7 +87,9 @@
           Ctrl10.wordPlayer.play();
           $timeout(function () {
              $scope.speaking = true;
-             Ctrl10.rimeWordPlayer.play();
+             if (!Ctrl10.beforeLeave) {
+               Ctrl10.rimeWordPlayer.play();
+             }
           },1000);
       };
 
@@ -104,8 +109,10 @@
             failurePlayer.release();
             $scope.showText = false;
           });
-        $scope.speaking = true;
-        failurePlayer.play();
+        if (!Ctrl10.beforeLeave) {
+          $scope.speaking = true;
+          failurePlayer.play();
+        }
       };
 
       Ctrl10.setUpStatus();
