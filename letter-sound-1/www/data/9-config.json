@@ -12,10 +12,6 @@
     {"word":"dishes" ,
       "imgs": ["objects/dishes.png"
                 ]
-    },
-    {"word":"hats" ,
-      "imgs": ["objects/hats.png"
-                ]
     }]},
     { "id": 2,
      "words": [
@@ -23,16 +19,12 @@
        "imgs": ["objects/balloons.png"
                  ]
      },
-     {"word":"cake" ,
-      "imgs": ["objects/cake.png"
+     {"word":"hats" ,
+      "imgs": ["objects/hats.png"
                  ]
      },
      {"word":"chairs" ,
        "imgs": ["objects/chairs.png"
-                 ]
-     },
-     {"word":"food" ,
-       "imgs": ["objects/food.png"
                  ]
      }]
       },
@@ -46,12 +38,8 @@
          "imgs": ["objects/food.png"
                     ]
         },
-        {"word":"balloons" ,
-          "imgs": ["objects/balloons.png"
-                    ]
-        },
-        {"word":"hats" ,
-          "imgs": ["objects/hats.png"
+        {"word":"cake" ,
+          "imgs": ["objects/cake.png"
                     ]
         }]}
   ],

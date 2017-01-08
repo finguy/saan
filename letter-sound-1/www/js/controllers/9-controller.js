@@ -70,7 +70,7 @@ angular.module('saan.controllers')
       $scope.showText = true;
       successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
         function success() {
-          successPlayer.release();          
+          successPlayer.release();
         },
         function error(err) {
           $log.error(err);
@@ -220,7 +220,7 @@ angular.module('saan.controllers')
       Ctrl9.levelUp();
       if (!Ctrl9.finished) {
         $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
-        Ctrl9.finished = Ctrl9.level >= Ctrl9.finalizationLevel;
+        Ctrl9.finished = Ctrl9.level >= (Ctrl9.finalizationLevel + 1 );
         if (Ctrl9.finished) {
           ActividadesFinalizadasService.add($scope.activityId);
           $scope.showText = true;
@@ -283,20 +283,25 @@ angular.module('saan.controllers')
     containment: '.activity9',
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
-      if (!$scope.wordOk){
+     var validDrag =  typeof $scope.wordOk !== 'undefined' ;
+     var progressOk = $scope.wordOk;
+     $scope.wordOk =  undefined;
+      if (validDrag && !progressOk){
         console.log("wrong!!");
         //Remove element from where it was added
         eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
         //Add elemebt back again   Note:
         eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         $scope.handleProgress(false);
+      } else if (validDrag) {
+       $scope.handleProgress(true);
       }
-    },
+    }/*,
     itemMoved: function (eventObj) {
       if ($scope.wordOk){
         $scope.handleProgress(true);
       }
-    },
+    }*/,
     accept: function(sourceItemHandleScope, destSortableScope){
       return false;
     }
