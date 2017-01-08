@@ -182,7 +182,7 @@ angular.module('saan.controllers')
             $scope.textSpeech = $scope.letter;
             $scope.isSayingLetter = true;
             $scope.$apply();
-            if (!$scope.beforeLeave) {
+            if (!Ctrl5.beforeLeave) {
               Ctrl5.letterPlayer.play();
             }
           }, 500);
@@ -293,7 +293,7 @@ angular.module('saan.controllers')
       Ctrl5.showDashboard(true);
     });
     $scope.$on('$ionicView.beforeLeave', function() {
-      $scope.beforeLeave = true;
+      Ctrl5.beforeLeave = true;
       Util.saveLevel($scope.activityId, Ctrl5.level);
       Ctrl5.releasePlayer(Ctrl5.instructionsPlayer);
       Ctrl5.releasePlayer(Ctrl5.endPlayer);
