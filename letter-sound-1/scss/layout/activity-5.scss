@@ -42,9 +42,10 @@ $white: #ffffff;
 
   .talk-bubble {
     width: 30rem;
-    right: 13rem;
-    bottom: 1rem;
-    min-height: 15rem;
+    right: 15rem;
+    bottom: initial;
+    top: 3rem;
+
     &::after {
      border-color: #fff transparent transparent #fff;
      right: -1rem;
