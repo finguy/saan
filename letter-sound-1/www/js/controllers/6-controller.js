@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('6Ctrl', function($scope, $state, $log, $timeout, RandomWordSix,
-  Util, Score, ActividadesFinalizadasService, AssetsPath) {
+  Util, Score, ActividadesFinalizadasService, AssetsPath, AppSounds {
   $scope.activityId = 6; // Activity Id
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
   $scope.word = ""; // Letter to play in level
@@ -353,12 +353,12 @@ angular.module('saan.controllers')
       dragChecked = false;
     },
     itemMoved: function (eventObj) {
-     console.log('itemMoved');
       var item = eventObj.source.itemScope.modelValue;
       $scope.hasDraggedLetter[item.letter + "_" + item.index] = true;
       if ($scope.letters2.length != $scope.letters.length) {
         $scope.getNewPhonema();
       }
+      AppSounds.playTap();
       $scope.handleProgress(true,item.letter);
     }
   };

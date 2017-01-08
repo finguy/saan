@@ -1,7 +1,7 @@
 angular.module('saan.controllers')
 
 .controller('4Ctrl', function($scope, $state, $log, $timeout, RandomNumber,
-  Util, Animations, Score, ActividadesFinalizadasService, AssetsPath) {
+  Util, Animations, Score, ActividadesFinalizadasService, AssetsPath,AppSounds) {
 
   $scope.activityId = 4;
   $scope.assetsPath = AssetsPath.getImgs($scope.activityId);
@@ -291,6 +291,7 @@ angular.module('saan.controllers')
       var progressOk = $scope.draggedOk;
       $scope.draggedOk =  undefined;
       if (validDrag){
+        AppSounds.playTap();
         Ctrl4.handleProgress(progressOk);
       }
     },

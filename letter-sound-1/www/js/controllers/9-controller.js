@@ -210,8 +210,7 @@ angular.module('saan.controllers')
     );
   };
 
-  Ctrl9.success = function() {
-    AppSounds.playTap();
+  Ctrl9.success = function() {    
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     if (LAST_CHECK) {
@@ -295,6 +294,7 @@ angular.module('saan.controllers')
         eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         $scope.handleProgress(false);
       } else if (validDrag) {
+       AppSounds.playTap();
        $scope.handleProgress(true);
       }
     },

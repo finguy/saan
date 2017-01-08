@@ -235,7 +235,6 @@ angular.module('saan.controllers')
 
 
   Ctrl16.handleSuccess = function() {
-    AppSounds.playTap();
     var LAST_CHECK = $scope.draggedImgs.length === $scope.assets.length;
     if (LAST_CHECK) {
       Ctrl16.levelUp(); //Advance level
@@ -322,6 +321,7 @@ angular.module('saan.controllers')
         eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         Ctrl16.handleProgress(false);
       } else if (validDrag) {
+        AppSounds.playTap();
         Ctrl16.handleProgress(true);
       }
     },

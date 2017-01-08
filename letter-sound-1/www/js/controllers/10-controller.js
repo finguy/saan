@@ -319,7 +319,6 @@
       $scope.handleProgress = function(isWordOk) {
         $scope.isWordOk = isWordOk;
         if (isWordOk) {
-          AppSounds.playTap();
           Ctrl10.success();
         } else {
           Ctrl10.error();
@@ -349,6 +348,7 @@
           dragChecked = false;
         },
         itemMoved: function (eventObj) {
+          AppSounds.playTap();
           $scope.handleProgress(true);
         },
         accept: function(sourceItemHandleScope, destSortableScope){
