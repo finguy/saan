@@ -19,7 +19,7 @@
         {"question": "Which of these ingredients Golo needed?",
           "options": [
               {"id":1, "img": "assorted-objects/tomato-sticker.png"},
-              {"id":2, "img": "assorted-objects/banana-sticker.png"},
+              {"id":2, "img": "assorted-objects/apple-sticker.png"},
               {"id":3, "img": "assorted-objects/corn-sticker.png"},
               {"id":4, "img": "assorted-objects/cookie-sticker.png"}
 
