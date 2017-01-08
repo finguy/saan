@@ -299,6 +299,7 @@
             Ctrl10.levelUp();
             Ctrl10.showDashboard(false);
           } else {
+            ActividadesFinalizadasService.addMax($scope.activityId);
             Ctrl10.level = Ctrl10.initialLevel;
             $scope.speaking = true;
             $scope.showText = true;
@@ -374,7 +375,7 @@
       };
 
       $scope.readWord = function() {
-       if (!$scope.speaking) {         
+       if (!$scope.speaking) {
          Ctrl10.wordPlayer.play();
        }
       }

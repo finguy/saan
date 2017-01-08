@@ -227,6 +227,7 @@ angular.module('saan.controllers')
        } else if (Ctrl5.level <= Ctrl5.totalLevels) {
          Ctrl5.showDashboard(false);
        } else {
+         ActividadesFinalizadasService.addMax($scope.activityId);
          Ctrl5.level = Ctrl5.initialLevel;
          $scope.showText = true;
          $scope.textSpeech = $scope.endText;
@@ -236,7 +237,7 @@ angular.module('saan.controllers')
       },1500);
     };
 
-    Ctrl5.error = function() {      
+    Ctrl5.error = function() {
       $scope.checkingWord = false;
       Ctrl5.errorFeedback();
       Ctrl5.score = Score.update(-Ctrl5.substractScore, Ctrl5.score);

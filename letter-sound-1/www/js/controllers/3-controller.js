@@ -240,6 +240,7 @@ angular.module('saan.controllers')
      } else if (Ctrl3.level <= Ctrl3.totalLevels) {
        Ctrl3.showDashboard(false);
      } else {
+       ActividadesFinalizadasService.addMax($scope.activityId);
        Ctrl3.level = Ctrl3.initialLevel;
        $scope.textSpeech = $scope.endText;
        $scope.showText = true;

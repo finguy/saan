@@ -267,6 +267,7 @@ angular.module('saan.controllers')
             Ctrl16.showDashboard(false);
           }, 1000);
         } else {
+          ActividadesFinalizadasService.addMax($scope.activityId);
           Ctrl16.level = Ctrl16.initialLevel;
           $scope.speaking = true;
           $scope.showText = true;

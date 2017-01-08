@@ -215,6 +215,7 @@
           } else if (Ctrl12.level <= $scope.totalLevels) {
             Ctrl12.showDashboard(false);
           } else {
+            ActividadesFinalizadasService.addMax($scope.activityId);
             Ctrl12.level = Ctrl12.initialLevel;
             $scope.speaking = true;
             $scope.showText = true;

@@ -280,6 +280,7 @@ angular.module('saan.controllers')
              Ctrl6.levelUp();
              Ctrl6.showDashboard(false);
            } else {
+             ActividadesFinalizadasService.addMax($scope.activityId);
              Ctrl6.level = Ctrl6.initialLevel;
              $scope.textSpeech = $scope.endMessage;
              $scope.showText = true;
