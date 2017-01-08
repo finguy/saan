@@ -35,15 +35,16 @@ angular.module('saan.controllers')
         var readWordTimeout =  1000;
         //wait for UI to load
         $timeout(function() {
-
-          if (readInstructions) {
-            $scope.showText = true;
-            $scope.textSpeech = $scope.introText;
-            $scope.speaking = true;
-            Ctrl4.instructionsPlayer.play();
-          } else {
-            $scope.showText = false;
-            $scope.speaking = false;
+          if (!Ctrl4.beforeLeave) {
+            if (readInstructions) {
+              $scope.showText = true;
+              $scope.textSpeech = $scope.introText;
+              $scope.speaking = true;
+              Ctrl4.instructionsPlayer.play();
+            } else {
+              $scope.showText = false;
+              $scope.speaking = false;
+            }
           }
         }, readWordTimeout);
 
@@ -278,7 +279,9 @@ angular.module('saan.controllers')
      $scope.speaking = true;
      $scope.textSpeech = $scope.helpText;
      $scope.showText = true;
-     Ctrl4.tapInstructionsPlayer.play();
+     if (!Ctrl4.beforeLeave) {
+       Ctrl4.tapInstructionsPlayer.play();
+     }
    }
   }
 

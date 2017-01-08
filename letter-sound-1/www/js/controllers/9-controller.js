@@ -32,15 +32,17 @@ angular.module('saan.controllers')
       function success(data) {
         Ctrl9.setUpContextVariables(data);
         $timeout(function() {
-          if (readInstructions) {
-            $scope.speaking = true;
-            $scope.showText = true;
-            $scope.textSpeech = $scope.introText;
-            Ctrl9.instructionsPlayer.play();
-          } else {
-           $scope.speaking = false;
-           $scope.showText = false;
-          }
+         if (!Ctrl9.beforeLeave) {
+           if (readInstructions) {
+             $scope.speaking = true;
+             $scope.showText = true;
+             $scope.textSpeech = $scope.introText;
+             Ctrl9.instructionsPlayer.play();
+           } else {
+            $scope.speaking = false;
+            $scope.showText = false;
+           }
+         }
         }, 1000);
       },
       function error(error) {
@@ -91,7 +93,9 @@ angular.module('saan.controllers')
      $scope.speaking = true;
      $scope.showText = true;
      $scope.textSpeech = $scope.helpText;
-     Ctrl9.instructionsPlayerTap.play();
+     if (!Ctrl9.beforeLeave) {
+       Ctrl9.instructionsPlayerTap.play();
+     }
    }
   };
 
@@ -210,7 +214,7 @@ angular.module('saan.controllers')
     );
   };
 
-  Ctrl9.success = function() {    
+  Ctrl9.success = function() {
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     if (LAST_CHECK) {
@@ -317,6 +321,7 @@ angular.module('saan.controllers')
     Ctrl9.showDashboard(true);
   });
   $scope.$on('$ionicView.beforeLeave', function() {
+    Ctrl9.beforeLeave = true;
     Util.saveLevel($scope.activityId, Ctrl9.level);
     Ctrl9.releasePlayer(Ctrl9.instructionsPlayer);
     Ctrl9.releasePlayer(Ctrl9.instructionsPlayerTap);

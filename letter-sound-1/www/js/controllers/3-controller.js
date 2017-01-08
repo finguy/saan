@@ -43,14 +43,16 @@ angular.module('saan.controllers')
         var instructionsTimeout = 1000;
         Ctrl3.speaking = true;
         $timeout(function loadUI() {
-          if (readInstructions) {
-            $scope.textSpeech = $scope.introText;
-            $scope.showText = true;
-            Ctrl3.instructionsPlayer.play();
-          } else {
-            $scope.textSpeech = $scope.helpText;
-            $scope.showText = true;
-            Ctrl3.instructionsPlayer2.play();
+          if (!Ctrl3.beforeLeave) {
+            if (readInstructions) {
+              $scope.textSpeech = $scope.introText;
+              $scope.showText = true;
+              Ctrl3.instructionsPlayer.play();
+            } else {
+              $scope.textSpeech = $scope.helpText;
+              $scope.showText = true;
+              Ctrl3.instructionsPlayer2.play();
+            }
           }
 
       }, instructionsTimeout);

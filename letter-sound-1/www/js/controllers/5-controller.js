@@ -33,18 +33,20 @@ angular.module('saan.controllers')
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
          $timeout(function loadUI() {
-          Ctrl5.setUpContextVariables(data);
-          if (readInstructions) {
-            $scope.showText = true;
-            $scope.textSpeech = $scope.introText;
-            Ctrl5.instructionsPlayer.play();
-            Ctrl5.speaking = true;
-          } else {
-            $scope.isSayingLetter = true;
-            $scope.textSpeech = $scope.letter;
-            $scope.showText = true;
-            Ctrl5.letterPlayer.play();
-            Ctrl5.speaking = false;
+          if (!Ctrl5.beforeLeave) {
+            Ctrl5.setUpContextVariables(data);
+            if (readInstructions) {
+              $scope.showText = true;
+              $scope.textSpeech = $scope.introText;
+              Ctrl5.instructionsPlayer.play();
+              Ctrl5.speaking = true;
+            } else {
+              $scope.isSayingLetter = true;
+              $scope.textSpeech = $scope.letter;
+              $scope.showText = true;
+              Ctrl5.letterPlayer.play();
+              Ctrl5.speaking = false;
+            }
           }
          },1000);
         },

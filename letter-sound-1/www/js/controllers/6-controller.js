@@ -157,7 +157,9 @@ angular.module('saan.controllers')
         Ctrl6.instructionsPlayer.release();
         if (!Ctrl6.beforeLeave) {
          $timeout(function() {
-          Ctrl6.phonemaPlayer.play();
+          if (!Ctrl6.beforeLeave) {
+            Ctrl6.phonemaPlayer.play();
+          }
          },1000);
         }
         $scope.showText = false;
