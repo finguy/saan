@@ -9,15 +9,26 @@ angular.module('saan.services')
         return $http.get(src).then(
           function success(response) {
             data = response.data;
+            var init;
+            var tope;
+            if (level < data.finalizationLevel) {
+              init = 0;
+              tope = data.finalizationLevel -1;
+            } else {
+             init = data.finalizationLevel -1;
+             tope = 26;
+            }
             //Build levels, one level per letter
             var levels = []
             var totalLetters = [];
             for (var i = 0;  i < 26; i++) {
               levels[i] = [];
-              for (var k = 0; k < 26; k++) {
+              for (var k = init; k < tope; k++) {
                  levels[i].push(data.info[k]);
+                 if (i === 0) {
+                  totalLetters.push(data.info[k].letter.toLowerCase());
+                 }
               }
-              totalLetters.push(data.info[i].letter.toLowerCase());
             }
 
             var index;
@@ -30,7 +41,7 @@ angular.module('saan.services')
             //Pick word from level that hasn't been played in current session, starting in level position as it is one level per number
             if ( _.size(playedLetters) > 0 && _.size(playedLetters) < levels.length) {
               var lettersToPlay = _.difference(totalLetters,playedLetters);
-              var letter = Util.getRandomElemFromArray(lettersToPlay);
+              var letter = Util.getRandomElemFromArray(lettersToPlay);              
               for (var iter = 0; iter < levels[index].length; iter++) {
                      iterLetter = levels[index][iter];
                      if (iterLetter.letter.toLowerCase() === letter.toLowerCase())  {
