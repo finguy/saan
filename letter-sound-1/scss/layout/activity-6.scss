@@ -1,15 +1,13 @@
 .activity-6 {
-  background: url('../assets/6/background.png') no-repeat center center fixed;
+  background: url("../assets/6/background.png") no-repeat center center fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
-
   .images-list {
     float: left;
     max-height: 30rem;
     width: 50rem;
   }
-
   .ingredient-image {
     height: 12rem;
     width: 12rem;
@@ -17,15 +15,13 @@
     align-self: center;
     object-fit: contain;
   }
-
-  .letterContainer{
+  .letterContainer {
     display: flex;
     justify-content: center;
     margin-top: auto;
     margin-bottom: 10rem;
   }
-
-  .letters-list.as-sortable-item{
+  .letters-list.as-sortable-item {
     height: 10rem;
     width: 10rem;
     float: left;
@@ -33,7 +29,6 @@
     background: transparent;
     border: 0;
   }
-
   .lettersDragged {
     display: flex;
     width: 50rem;
@@ -41,32 +36,26 @@
     justify-content: center;
     margin-top: 3rem;
   }
-
- .dragged-letter {
+  .dragged-letter {
     height: 6rem;
     width: 6rem;
     background: transparent;
     border: 0;
   }
-
   .icon-phonema {
     padding: 5rem;
   }
-
   .dropzone {
-    background: url('../assets/6/magic-pot.png') no-repeat center / contain;
+    background: url("../assets/6/magic-pot.png") no-repeat center / contain;
     min-height: 50rem;
     border: 0;
     margin-bottom: 12rem;
     display: flex;
     flex-direction: column;
-
     .as-sortable-placeholder {
       display: none !important;
     }
   }
-
-
   .dragged-phonemas {
     height: 8rem;
     transform: rotate(3deg);
@@ -75,22 +64,18 @@
     margin-right: auto;
     display: block;
   }
-
   .as-sortable-placeholder {
     display: none !important;
   }
-
-  .character{
+  .character {
     bottom: 24rem;
     position: absolute;
     right: 0;
   }
-
   .talk-bubble {
     right: 16rem;
     bottom: 12rem;
     width: 30rem;
-
     &::after {
       border-color: white transparent transparent white;
       bottom: initial;

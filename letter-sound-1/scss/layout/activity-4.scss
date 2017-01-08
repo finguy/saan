@@ -1,52 +1,44 @@
-$darkBrown: #5E2B26;
-$lightbrow:#e7ddc4;
+$darkBrown: #5e2b26;
+$lightbrow: #e7ddc4;
 $blue: #0460ab;
-
 .activity4-content {
-  background-image: url('../assets/4/background.png');
+  background-image: url("../assets/4/background.png");
   background-repeat: no-repeat;
-
   .img-container {
-    background-image: url('../assets/4/assorted-objects/empty-box.png');
-    background-repeat:no-repeat;
+    background-image: url("../assets/4/assorted-objects/empty-box.png");
+    background-repeat: no-repeat;
     background-size: 25rem 25rem;
     min-height: 25rem;
     min-width: 25rem;
     margin: 3rem;
-   }
-
+  }
   .dashboard {
     display: flex;
     flex-direction: column;
-
     .number-container {
-      background-image: url('../assets/4/assorted-objects/paper.png');
+      background-image: url("../assets/4/assorted-objects/paper.png");
       background-size: cover;
       border: 0;
       height: 15rem;
       width: 30rem;
-      margin: 13% auto 5rem auto;
+      margin: 13% auto 5rem;
       display: flex;
       font-size: 10em;
       color: $blue;
       font-weight: bold;
       justify-content: center;
       align-items: center;
-
       .as-sortable-placeholder {
         display: none;
       }
     }
   }
-
   .col-container {
     display: flex;
     justify-content: center;
   }
-
-
   .number-container.as-sortable-dragging {
-    background-image: url('../assets/4/assorted-objects/paper.png');
+    background-image: url("../assets/4/assorted-objects/paper.png");
     background-size: cover;
     border: 0;
     height: 15rem;
@@ -58,36 +50,30 @@ $blue: #0460ab;
     color: $blue;
     font-weight: bold;
   }
-
   .as-sortable-item {
     background-color: transparent;
     border-color: transparent;
   }
-
   .as-sortable-placeholder {
     display: none !important;
   }
-
-  .character{
+  .character {
     bottom: 3rem;
     position: absolute;
     right: 1rem;
-
     img {
       height: 30rem;
       margin-left: auto;
     }
   }
-
   .talk-bubble {
     width: 30rem;
     right: 15rem;
     bottom: 6rem;
-
     &::after {
-     border-color: #fff transparent transparent #fff;
-     right: -1rem;
-     bottom: 2rem;
+      border-color: #fff transparent transparent #fff;
+      right: -1rem;
+      bottom: 2rem;
     }
   }
 }

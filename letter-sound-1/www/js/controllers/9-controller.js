@@ -32,17 +32,17 @@ angular.module('saan.controllers')
       function success(data) {
         Ctrl9.setUpContextVariables(data);
         $timeout(function() {
-         if (!Ctrl9.beforeLeave) {
-           if (readInstructions) {
-             $scope.speaking = true;
-             $scope.showText = true;
-             $scope.textSpeech = $scope.introText;
-             Ctrl9.instructionsPlayer.play();
-           } else {
-            $scope.speaking = false;
-            $scope.showText = false;
-           }
-         }
+          if (!Ctrl9.beforeLeave) {
+            if (readInstructions) {
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.introText;
+              Ctrl9.instructionsPlayer.play();
+            } else {
+              $scope.speaking = false;
+              $scope.showText = false;
+            }
+          }
         }, 1000);
       },
       function error(error) {
@@ -66,7 +66,7 @@ angular.module('saan.controllers')
   };
 
   Ctrl9.successFeedback = function() {
-   if (!$scope.speaking) {
+    if (!$scope.speaking) {
       var successFeedback = RandomWordsNine.getSuccessAudio();
       $scope.textSpeech = successFeedback.text;
       $scope.showText = true;
@@ -85,22 +85,22 @@ angular.module('saan.controllers')
       );
       $scope.speaking = true;
       successPlayer.play();
-     }
+    }
   };
 
   $scope.readInstructions = function() {
-   if (!$scope.speaking) {
-     $scope.speaking = true;
-     $scope.showText = true;
-     $scope.textSpeech = $scope.helpText;
-     if (!Ctrl9.beforeLeave) {
-       Ctrl9.instructionsPlayerTap.play();
-     }
-   }
+    if (!$scope.speaking) {
+      $scope.speaking = true;
+      $scope.showText = true;
+      $scope.textSpeech = $scope.helpText;
+      if (!Ctrl9.beforeLeave) {
+        Ctrl9.instructionsPlayerTap.play();
+      }
+    }
   };
 
   Ctrl9.errorFeedback = function() {
-   if (!$scope.speaking) {
+    if (!$scope.speaking) {
       var failureFeedback = RandomWordsNine.getFailureAudio();
       $scope.textSpeech = failureFeedback.text;
       $scope.showText = true;
@@ -218,37 +218,37 @@ angular.module('saan.controllers')
     $scope.draggedImgs.push("dummyValue");
     var LAST_CHECK = $scope.draggedImgs.length === $scope.totalWords;
     if (LAST_CHECK) {
-     Ctrl9.successFeedback();
-     $timeout(function() {
-      Ctrl9.levelUp();
-      if (!Ctrl9.finished) {
-        $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
-        Ctrl9.finished = Ctrl9.level >= (Ctrl9.finalizationLevel + 1 );
-        if (Ctrl9.finished) {
-          ActividadesFinalizadasService.add($scope.activityId);
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          Ctrl9.endPlayer.play();
-        } else if (Ctrl9.level <= Ctrl9.totalLevels) {
-          Ctrl9.showDashboard(false);
+      Ctrl9.successFeedback();
+      $timeout(function() {
+        Ctrl9.levelUp();
+        if (!Ctrl9.finished) {
+          $scope.score = Score.update($scope.addScore, $scope.activityId, Ctrl9.finished);
+          Ctrl9.finished = Ctrl9.level >= (Ctrl9.finalizationLevel + 1);
+          if (Ctrl9.finished) {
+            ActividadesFinalizadasService.add($scope.activityId);
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            Ctrl9.endPlayer.play();
+          } else if (Ctrl9.level <= Ctrl9.totalLevels) {
+            Ctrl9.showDashboard(false);
+          } else {
+            Ctrl9.level = Ctrl9.initialLevel;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            Ctrl9.endPlayer.play();
+          }
         } else {
-          Ctrl9.level = Ctrl9.initialLevel;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          Ctrl9.endPlayer.play();
+          if (Ctrl9.level <= Ctrl9.totalLevels) {
+            Ctrl9.showDashboard(false);
+          } else {
+            ActividadesFinalizadasService.addMax($scope.activityId);
+            Ctrl9.level = Ctrl9.initialLevel;
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            Ctrl9.endPlayer.play();
+          }
         }
-      } else {
-        if (Ctrl9.level <= Ctrl9.totalLevels) {
-          Ctrl9.showDashboard(false);
-        } else {
-          ActividadesFinalizadasService.addMax($scope.activityId);
-          Ctrl9.level = Ctrl9.initialLevel;
-          $scope.showText = true;
-          $scope.textSpeech = $scope.endText;
-          Ctrl9.endPlayer.play();
-        }
-      }
-     }, 2000);
+      }, 2000);
 
     }
   };
@@ -287,22 +287,22 @@ angular.module('saan.controllers')
     containment: '.activity9',
     containerPositioning: 'relative',
     dragEnd: function(eventObj) {
-     var validDrag =  typeof $scope.wordOk !== 'undefined' ;
-     var progressOk = $scope.wordOk;
-     $scope.wordOk =  undefined;
-      if (validDrag && !progressOk){
+      var validDrag = typeof $scope.wordOk !== 'undefined';
+      var progressOk = $scope.wordOk;
+      $scope.wordOk = undefined;
+      if (validDrag && !progressOk) {
         console.log("wrong!!");
         //Remove element from where it was added
         eventObj.dest.sortableScope.removeItem(eventObj.dest.index);
         //Add elemebt back again   Note:
-        eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue ); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
+        eventObj.source.itemScope.sortableScope.insertItem(eventObj.source.index, eventObj.source.itemScope.itemScope.modelValue); // uso itemScope.modelValue porque eventObj.source.itemScope.item es undefined
         $scope.handleProgress(false);
       } else if (validDrag) {
-       AppSounds.playTap();
-       $scope.handleProgress(true);
+        AppSounds.playTap();
+        $scope.handleProgress(true);
       }
     },
-    accept: function(sourceItemHandleScope, destSortableScope){
+    accept: function(sourceItemHandleScope, destSortableScope) {
       return false;
     }
   };
@@ -310,7 +310,7 @@ angular.module('saan.controllers')
   //Drop
   $scope.targetOptions = {
     containment: '.activity9',
-    accept: function(sourceItemHandleScope, destSortableScope){
+    accept: function(sourceItemHandleScope, destSortableScope) {
       $scope.wordOk = sourceItemHandleScope.modelValue.word == destSortableScope.modelValue[0];
       return $scope.wordOk;
     }

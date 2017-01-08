@@ -13,21 +13,21 @@ angular.module('saan.services')
             var tope;
             if (level < data.finalizationLevel) {
               init = 0;
-              tope = data.finalizationLevel -1;
+              tope = data.finalizationLevel - 1;
             } else {
-             init = data.finalizationLevel -1;
-             tope = 26;
+              init = data.finalizationLevel - 1;
+              tope = 26;
             }
             //Build levels, one level per letter
             var levels = []
             var totalLetters = [];
-            for (var i = 0;  i < 26; i++) {
+            for (var i = 0; i < 26; i++) {
               levels[i] = [];
               for (var k = init; k < tope; k++) {
-                 levels[i].push(data.info[k]);
-                 if (i === 0) {
+                levels[i].push(data.info[k]);
+                if (i === 0) {
                   totalLetters.push(data.info[k].letter.toLowerCase());
-                 }
+                }
               }
             }
 
@@ -39,18 +39,18 @@ angular.module('saan.services')
             }
 
             //Pick word from level that hasn't been played in current session, starting in level position as it is one level per number
-            if ( _.size(playedLetters) > 0 && _.size(playedLetters) < levels.length) {
-              var lettersToPlay = _.difference(totalLetters,playedLetters);
-              var letter = Util.getRandomElemFromArray(lettersToPlay);              
+            if (_.size(playedLetters) > 0 && _.size(playedLetters) < levels.length) {
+              var lettersToPlay = _.difference(totalLetters, playedLetters);
+              var letter = Util.getRandomElemFromArray(lettersToPlay);
               for (var iter = 0; iter < levels[index].length; iter++) {
-                     iterLetter = levels[index][iter];
-                     if (iterLetter.letter.toLowerCase() === letter.toLowerCase())  {
-                      break;
-                     }
+                iterLetter = levels[index][iter];
+                if (iterLetter.letter.toLowerCase() === letter.toLowerCase()) {
+                  break;
+                }
               }
             } else {
-             var key = Util.getRandomNumber(levels[index].length);
-             iterLetter = levels[index][key];
+              var key = Util.getRandomNumber(levels[index].length);
+              iterLetter = levels[index][key];
             }
 
             return {

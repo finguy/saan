@@ -32,23 +32,23 @@ angular.module('saan.controllers')
 
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
-         Ctrl5.setUpContextVariables(data);
-         $timeout(function loadUI() {
-          if (!Ctrl5.beforeLeave) {
-            if (readInstructions) {
-              $scope.showText = true;
-              $scope.textSpeech = $scope.introText;
-              Ctrl5.instructionsPlayer.play();
-              Ctrl5.speaking = true;
-            } else {
-              $scope.isSayingLetter = true;
-              $scope.textSpeech = $scope.letter;
-              $scope.showText = true;
-              Ctrl5.letterPlayer.play();
-              Ctrl5.speaking = false;
+          Ctrl5.setUpContextVariables(data);
+          $timeout(function loadUI() {
+            if (!Ctrl5.beforeLeave) {
+              if (readInstructions) {
+                $scope.showText = true;
+                $scope.textSpeech = $scope.introText;
+                Ctrl5.instructionsPlayer.play();
+                Ctrl5.speaking = true;
+              } else {
+                $scope.isSayingLetter = true;
+                $scope.textSpeech = $scope.letter;
+                $scope.showText = true;
+                Ctrl5.letterPlayer.play();
+                Ctrl5.speaking = false;
+              }
             }
-          }
-         },1000);
+          }, 1000);
         },
         function error(error) {
           $log.error(error);
@@ -212,31 +212,31 @@ angular.module('saan.controllers')
     Ctrl5.success = function() {
       Ctrl5.playedLetters.push($scope.letter.toLowerCase());
       Ctrl5.successFeedback();
-      $timeout(function(){
-       Ctrl5.levelUp();
-       if (!Ctrl5.finished) {
-         Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
-         Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
-         if (Ctrl5.finished) {
-           ActividadesFinalizadasService.add($scope.activityId);
-           $scope.showText = true;
-           $scope.textSpeech = $scope.endText;
-           Ctrl5.speaking = true;
-           Ctrl5.endPlayer.play();
-         } else {
-           Ctrl5.showDashboard(false);
-         }
-       } else if (Ctrl5.level <= Ctrl5.totalLevels) {
-         Ctrl5.showDashboard(false);
-       } else {
-         ActividadesFinalizadasService.addMax($scope.activityId);
-         Ctrl5.level = Ctrl5.initialLevel;
-         $scope.showText = true;
-         $scope.textSpeech = $scope.endText;
-         Ctrl5.speaking = true;
-         Ctrl5.endPlayer.play();
-       }
-      },1500);
+      $timeout(function() {
+        Ctrl5.levelUp();
+        if (!Ctrl5.finished) {
+          Ctrl5.score = Score.update(Ctrl5.addScore, $scope.activityId, Ctrl5.finished);
+          Ctrl5.finished = Ctrl5.level >= Ctrl5.finalizationLevel;
+          if (Ctrl5.finished) {
+            ActividadesFinalizadasService.add($scope.activityId);
+            $scope.showText = true;
+            $scope.textSpeech = $scope.endText;
+            Ctrl5.speaking = true;
+            Ctrl5.endPlayer.play();
+          } else {
+            Ctrl5.showDashboard(false);
+          }
+        } else if (Ctrl5.level <= Ctrl5.totalLevels) {
+          Ctrl5.showDashboard(false);
+        } else {
+          ActividadesFinalizadasService.addMax($scope.activityId);
+          Ctrl5.level = Ctrl5.initialLevel;
+          $scope.showText = true;
+          $scope.textSpeech = $scope.endText;
+          Ctrl5.speaking = true;
+          Ctrl5.endPlayer.play();
+        }
+      }, 1500);
     };
 
     Ctrl5.error = function() {

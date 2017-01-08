@@ -1,6 +1,6 @@
 angular.module('saan.controllers')
 
-.controller('3Ctrl', function($scope, $timeout,$log, $state, RandomLetterThree, TTSService,
+.controller('3Ctrl', function($scope, $timeout, $log, $state, RandomLetterThree, TTSService,
   Util, Score, ActividadesFinalizadasService, AssetsPath) {
   $scope.letters = [];
   $scope.activityProgress = 0;
@@ -55,8 +55,8 @@ angular.module('saan.controllers')
             }
           }
 
-      }, instructionsTimeout);
-     },
+        }, instructionsTimeout);
+      },
       function error(error) {
         $log.error(error);
       }
@@ -64,12 +64,12 @@ angular.module('saan.controllers')
   };
 
   $scope.readTapInstruction = function() {
-   if (!Ctrl3.speaking){
-     Ctrl3.speaking = true;
-     $scope.textSpeech = $scope.helpText;
-     $scope.showText = true;
-     Ctrl3.instructionsPlayer2.play();
-   }
+    if (!Ctrl3.speaking) {
+      Ctrl3.speaking = true;
+      $scope.textSpeech = $scope.helpText;
+      $scope.showText = true;
+      Ctrl3.instructionsPlayer2.play();
+    }
   };
 
   Ctrl3.setUpLevel = function() {
@@ -95,7 +95,7 @@ angular.module('saan.controllers')
     Ctrl3.totalLevels = data.totalLevels;
     Ctrl3.initialLevel = 1;
     Ctrl3.letter = letterJson.letter;
-    Ctrl3.letterTutorial = letterJson.letter.toUpperCase() +".mp3";
+    Ctrl3.letterTutorial = letterJson.letter.toUpperCase() + ".mp3";
     $scope.letters = [];
     $scope.letters = _.shuffle(letterJson.lettersToPlay);
     Ctrl3.dashboard = [Ctrl3.letter];
@@ -107,10 +107,10 @@ angular.module('saan.controllers')
           $scope.showText = false;
           if (!Ctrl3.beforeLeave) {
             $timeout(function() {
-             $scope.showText = true;
-             $scope.textSpeech = $scope.helpText;
-             Ctrl3.instructionsPlayer2.play();
-            },500);
+              $scope.showText = true;
+              $scope.textSpeech = $scope.helpText;
+              Ctrl3.instructionsPlayer2.play();
+            }, 500);
           }
         },
         function error(err) {
@@ -151,20 +151,20 @@ angular.module('saan.controllers')
     );
 
     if (!Ctrl3.finished) {
-    var endingFeedback = RandomLetterThree.getEndingAudio(0);
-    $scope.endText = endingFeedback.text;
+      var endingFeedback = RandomLetterThree.getEndingAudio(0);
+      $scope.endText = endingFeedback.text;
 
-    Ctrl3.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path ,
-      function success() {
-        Ctrl3.endPlayer.release();
-        $state.go('lobby');
-      },
-      function error(err) {
-        $log.error(err);
-        Ctrl3.endPlayer.release();
-      }
-    );
-   } else {
+      Ctrl3.endPlayer = new Media(AssetsPath.getEndingAudio($scope.activityId) + endingFeedback.path,
+        function success() {
+          Ctrl3.endPlayer.release();
+          $state.go('lobby');
+        },
+        function error(err) {
+          $log.error(err);
+          Ctrl3.endPlayer.release();
+        }
+      );
+    } else {
       endingFeedback = RandomLetterThree.getEndingAudio(1);
       $scope.endText = endingFeedback.text;
 
@@ -181,74 +181,74 @@ angular.module('saan.controllers')
     }
   };
 
-   //end players
-   //release em
+  //end players
+  //release em
   Ctrl3.successFeedback = function() {
-      var successFeedback = RandomLetterThree.getSuccessAudio();
-      $scope.textSpeech = successFeedback.text;
-      $scope.showText = true;
-      successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
-        function success() {
-          successPlayer.release();
-        },
-        function error(err) {
-          $log.error(err);
-          successPlayer.release();
-          $scope.checkingWord = false;
-        }
-      );
-      Ctrl3.speaking = true;
-      successPlayer.play();
+    var successFeedback = RandomLetterThree.getSuccessAudio();
+    $scope.textSpeech = successFeedback.text;
+    $scope.showText = true;
+    successPlayer = new Media(AssetsPath.getSuccessAudio($scope.activityId) + successFeedback.path,
+      function success() {
+        successPlayer.release();
+      },
+      function error(err) {
+        $log.error(err);
+        successPlayer.release();
+        $scope.checkingWord = false;
+      }
+    );
+    Ctrl3.speaking = true;
+    successPlayer.play();
   };
 
   Ctrl3.errorFeedback = function() {
-     var failureFeedback = RandomLetterThree.getFailureAudio();
-     $scope.textSpeech = failureFeedback.text;
-     $scope.showText = true;
-     failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-       function success() {
-         failurePlayer.release();
-         $scope.showText = false;
-         Ctrl3.speaking = false;
-         $scope.$apply();
-       },
-       function error(err) {
-         $log.error(err);
-         failurePlayer.release();
-         $scope.showText = false;
-         Ctrl3.speaking = false;
-       });
-     failurePlayer.play();
-     Ctrl3.speaking = true;
+    var failureFeedback = RandomLetterThree.getFailureAudio();
+    $scope.textSpeech = failureFeedback.text;
+    $scope.showText = true;
+    failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
+      function success() {
+        failurePlayer.release();
+        $scope.showText = false;
+        Ctrl3.speaking = false;
+        $scope.$apply();
+      },
+      function error(err) {
+        $log.error(err);
+        failurePlayer.release();
+        $scope.showText = false;
+        Ctrl3.speaking = false;
+      });
+    failurePlayer.play();
+    Ctrl3.speaking = true;
   };
 
   Ctrl3.success = function() {
     Ctrl3.playedLetters.push(Ctrl3.letter.toLowerCase());
     Ctrl3.successFeedback();
-    $timeout(function () {
-     Ctrl3.levelUp();
-     if (!Ctrl3.finished) {
-       Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
-       Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
-       if (Ctrl3.finished) {
-         ActividadesFinalizadasService.add($scope.activityId);
-         $scope.textSpeech = $scope.endText;
-         $scope.showText = true;
-         Ctrl3.speaking = true;
-         Ctrl3.endPlayer.play();
-       } else {
-         Ctrl3.showDashboard(false);
-       }
-     } else if (Ctrl3.level <= Ctrl3.totalLevels) {
-       Ctrl3.showDashboard(false);
-     } else {
-       ActividadesFinalizadasService.addMax($scope.activityId);
-       Ctrl3.level = Ctrl3.initialLevel;
-       $scope.textSpeech = $scope.endText;
-       $scope.showText = true;
-       Ctrl3.speaking = true;
-       Ctrl3.endPlayer.play();
-     }
+    $timeout(function() {
+      Ctrl3.levelUp();
+      if (!Ctrl3.finished) {
+        Ctrl3.score = Score.update(Ctrl3.addScore, $scope.activityId, Ctrl3.finished);
+        Ctrl3.finished = Ctrl3.level >= Ctrl3.finalizationLevel;
+        if (Ctrl3.finished) {
+          ActividadesFinalizadasService.add($scope.activityId);
+          $scope.textSpeech = $scope.endText;
+          $scope.showText = true;
+          Ctrl3.speaking = true;
+          Ctrl3.endPlayer.play();
+        } else {
+          Ctrl3.showDashboard(false);
+        }
+      } else if (Ctrl3.level <= Ctrl3.totalLevels) {
+        Ctrl3.showDashboard(false);
+      } else {
+        ActividadesFinalizadasService.addMax($scope.activityId);
+        Ctrl3.level = Ctrl3.initialLevel;
+        $scope.textSpeech = $scope.endText;
+        $scope.showText = true;
+        Ctrl3.speaking = true;
+        Ctrl3.endPlayer.play();
+      }
     }, 2000);
   };
 
@@ -281,11 +281,11 @@ angular.module('saan.controllers')
   };
 
   $scope.selectLetter = function(name) {
-   if (!Ctrl3.speaking) {
-     Ctrl3.speaking = true;
-     $scope.selectedObject = name;
-     $scope.checkLetter(name);
-   }
+    if (!Ctrl3.speaking) {
+      Ctrl3.speaking = true;
+      $scope.selectedObject = name;
+      $scope.checkLetter(name);
+    }
   };
 
   //*************** ACTIONS **************************/
@@ -293,7 +293,7 @@ angular.module('saan.controllers')
     Ctrl3.showDashboard(true);
   });
 
-  Ctrl3.releasePlayer = function (player) {
+  Ctrl3.releasePlayer = function(player) {
     if (player) {
       player.release();
     }
