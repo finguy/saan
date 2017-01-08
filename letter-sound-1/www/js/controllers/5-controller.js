@@ -32,9 +32,9 @@ angular.module('saan.controllers')
 
       RandomLetter.letter(Ctrl5.level, Ctrl5.playedLetters).then(
         function success(data) {
+         Ctrl5.setUpContextVariables(data);
          $timeout(function loadUI() {
           if (!Ctrl5.beforeLeave) {
-            Ctrl5.setUpContextVariables(data);
             if (readInstructions) {
               $scope.showText = true;
               $scope.textSpeech = $scope.introText;

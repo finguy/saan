@@ -57,8 +57,10 @@
               $scope.checkingWord = false;
             }
           );
-          $scope.speaking = true;
-          successPlayer.play();
+          if (!Ctrl12.beforeLeave) {
+            $scope.speaking = true;
+            successPlayer.play();
+          }
        }
       }
 
@@ -80,8 +82,10 @@
               $scope.showText = false;
               $scope.speaking = false;
             });
-          $scope.speaking = true;
-          failurePlayer.play();
+          if (!Ctrl12.beforeLeave) {
+            $scope.speaking = true;
+            failurePlayer.play();
+          }
        }
       }
 
@@ -93,7 +97,7 @@
           function success(data) {
             Ctrl12.setUpContextVariables(data);
             $timeout(function() {
-              if (readInstructions) {
+              if (readInstructions && !Ctrl12.beforeLeave) {
                 $scope.showText = true;
                 $scope.textSpeech = $scope.introText;
                 $scope.speaking = true;
@@ -205,10 +209,12 @@
             Ctrl12.finished = Ctrl12.level >= Ctrl12.finalizationLevel;
             if (Ctrl12.finished) {
               ActividadesFinalizadasService.add($scope.activityId);
-              $scope.speaking = true;
-              $scope.showText = true;
-              $scope.textSpeech = $scope.endText;
-              Ctrl12.endPlayer.play();
+              if (!Ctrl12.beforeLeave) {
+                $scope.speaking = true;
+                $scope.showText = true;
+                $scope.textSpeech = $scope.endText;
+                Ctrl12.endPlayer.play();
+              }
             } else {
               Ctrl12.showDashboard(false);
             }
@@ -217,10 +223,12 @@
           } else {
             ActividadesFinalizadasService.addMax($scope.activityId);
             Ctrl12.level = Ctrl12.initialLevel;
-            $scope.speaking = true;
-            $scope.showText = true;
-            $scope.textSpeech = $scope.endText;
-            Ctrl12.endPlayer.play();
+            if (!Ctrl12.beforeLeave) {
+              $scope.speaking = true;
+              $scope.showText = true;
+              $scope.textSpeech = $scope.endText;
+              Ctrl12.endPlayer.play();
+            }
           }
         }, 1500);
       };
@@ -268,7 +276,7 @@
       };
 
       $scope.tapInstruction = function() {
-       if (!$scope.speaking){
+       if (!$scope.speaking && !Ctrl12.beforeLeave){
          $scope.speaking = true;
          $scope.textSpeech = $scope.helpText;
          $scope.showText = true;
@@ -281,6 +289,7 @@
         Ctrl12.showDashboard(true);
       });
       $scope.$on('$ionicView.beforeLeave', function() {
+        Ctrl12.beforeLeave = true;
         Util.saveLevel($scope.activityId, Ctrl12.level);
         Ctrl12.releasePlayer(failurePlayer);
         Ctrl12.releasePlayer(successPlayer);
