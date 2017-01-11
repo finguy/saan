@@ -97,7 +97,7 @@
     "add": 1,
     "substract": 1
   },
-  "finalizationLevel": 3,
+  "finalizationLevel": 4,
   "successFeedback": [{
     "path": "Amazing.mp3",
     "text": "Amazing!"

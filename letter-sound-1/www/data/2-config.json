@@ -7,28 +7,35 @@
       "mode": 1,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 2
+      "stages": 3
     },
     {
       "number": 2,
       "mode": 1,
       "numberOfColors": 3,
       "patternLength": 6,
-      "stages": 2
+      "stages": 3
     },
     {
       "number": 3,
       "mode": 2,
       "numberOfColors": 2,
       "patternLength": 6,
-      "stages": 2
+      "stages": 3
     },
     {
       "number": 4,
+      "mode": 1,
+      "numberOfColors": 3,
+      "patternLength": 6,
+      "stages": 5
+    },
+    {
+      "number": 5,
       "mode": 2,
       "numberOfColors": 3,
       "patternLength": 6,
-      "stages": 4
+      "stages": 5
     }
   ],
   "instructions": {

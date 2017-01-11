@@ -3,9 +3,10 @@ angular.module('saan.controllers')
   $ionicScrollDelegate ){
 
   var SCROLL_OFFSET = 800;
+  var AVAILABLE_ACTIVITIES = "availableActivities"
 
   var chequearActividadesDisponibles = function(){
-    var actividadesDisponibles = [];
+    var actividadesDisponibles = JSON.parse($window.localStorage.getItem(AVAILABLE_ACTIVITIES)) || [];
     var actividadesFinalizadas = ActividadesFinalizadasService.get();
     var actividadesNoDisponibles = [];
     _.each(actividadesConfiguradas,function(key, actividadConfigurada){
@@ -28,6 +29,9 @@ angular.module('saan.controllers')
 
     $scope.actividadesNoDisponibles = actividadesNoDisponibles;
     $scope.actividadesDisponibles = actividadesDisponibles;
+
+    $window.localStorage.setItem(AVAILABLE_ACTIVITIES, JSON.stringify(actividadesDisponibles));
+    console.log($scope.actividadesDisponibles);
     console.log("lobby check");
   };
 

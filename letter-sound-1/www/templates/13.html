@@ -11,7 +11,7 @@
     <div class="cub">
       <talk-bubble ng-show="showNumber" text="number" text2="numberToWords(number)" ng-click="tapNumber()"
         class="text-center" ng-class="{'btn-position':!autoCheck}"></talk-bubble>
-      <div class="item-dropzone" data-ng-model="dropzone" as-sortable="sortableOptions" is-disabled="!autoCheck">
+      <div class="item-dropzone" data-ng-model="dropzone" as-sortable="sortableOptions" is-disabled="autoCheck">
         <img ng-repeat="item in dropzone track by $index" ng-src="{{imgPath}}cookie.png"
         class="sortable-cookie" as-sortable-item as-sortable-item-handle>
       </div>
