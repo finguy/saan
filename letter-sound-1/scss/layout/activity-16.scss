@@ -7,7 +7,7 @@
   }
   .letterAsset {
     height: 12rem;
-    margin-left: 3rem;
+    margin-left: 1rem;
     float: left;
   }
   .dropzone {
@@ -23,7 +23,6 @@
     .as-sortable-item {
       display: inline;
       margin-top: 0;
-      margin-left: 23%;
       width: 5%;
     }
     &:nth-child(1) {
@@ -33,7 +32,6 @@
       .as-sortable-item {
         margin-top: 4.4%;
         display: inline;
-        margin-left: 23%;
         width: 5%;
       }
       .letterNameBox {
