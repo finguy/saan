@@ -29,6 +29,7 @@
     var readInstructions;
     var mode;
     var dragChecked = false;
+    var leaving = false;
 
     $scope.$on('$ionicView.beforeEnter', function(){
       stageNumber = 1; //TODO: retrieve and load from local storage
@@ -38,6 +39,7 @@
     });
 
     $scope.$on('$ionicView.beforeLeave', function() {
+      leaving = true;
       Util.saveLevel($scope.activityId, level);
 
       if (!angular.isUndefined(instructionsPlayer))

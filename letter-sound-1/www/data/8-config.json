@@ -1,7 +1,7 @@
 {
   "cards": 4,
   "options": 1,
-  "minLevel": 1,
+  "minLevel":2,
   "levels": [
     {
       "number": 1,
@@ -14,7 +14,7 @@
       "numberTo": 6
     },
     {
-      "number": 2,
+      "number": 3,
       "numberFrom": 7,
       "numberTo": 10
     }
@@ -26,7 +26,7 @@
     },
     "tap": {
       "path": "tap_instruction.mp3",
-      "text": "..." 
+      "text": "..."
     }
   },
   "successFeedback": [

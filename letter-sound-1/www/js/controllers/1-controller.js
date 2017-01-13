@@ -77,9 +77,9 @@
 
           if (_.without(selectedLetters, undefined).length === stageData.text.split("").length) {
             Ctrl1.checkWord();
+          }else {
+            $scope.checkingLetter = false;
           }
-
-          $scope.checkingLetter = false;
         }
       };
 
@@ -118,6 +118,8 @@
       };
 
       Ctrl1.setActivity = function(){
+        $scope.checkingLetter = false;
+        $scope.checkingWord = false;
         Ctrl1.setStage(stageNumber);
         selectedLetters = [];
         stageData.text = stageData.text.toLowerCase();
@@ -187,10 +189,10 @@
         $timeout(function(){
           if (builtWord.toLowerCase() === stageData.text.toLowerCase()) {
             $scope.playWordAudio();
-            $timeout(function(){Ctrl1.success();}, 1000);
+            $timeout(function(){Ctrl1.success();}, 1500);
           }
           else {
-            Ctrl1.failure();
+            $timeout(function(){Ctrl1.failure();}, 500);
           }
 
         }, 1000);
@@ -227,7 +229,7 @@
             else {
               Ctrl1.setActivity();
             }
-            $scope.checkingWord = false;
+            // $scope.checkingWord = false;
             $scope.$apply();
           },
           function(err){
@@ -235,6 +237,7 @@
             successPlayer.release();
             $scope.showText = false;
             $scope.checkingWord = false;
+            $scope.checkingLetter = false;
             $scope.$apply();
           }
         );
@@ -248,8 +251,21 @@
         var failureFeedback = WordBuilding.getFailureAudio();
 
         failurePlayer = new Media(AssetsPath.getFailureAudio($scope.activityId) + failureFeedback.path,
-          function(){ failurePlayer.release(); $scope.showText = false; $scope.checkingWord = false; $scope.$apply();},
-          function(err){ $log.error(err); failurePlayer.release(); $scope.showText = false; $scope.checkingWord = false; $scope.$apply();}
+          function(){
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+            $scope.checkingLetter = false;
+            $scope.$apply();
+          },
+          function(err){
+            $log.error(err);
+            failurePlayer.release();
+            $scope.showText = false;
+            $scope.checkingWord = false;
+            $scope.checkingLetter = false;
+            $scope.$apply();
+          }
         );
 
         $scope.textSpeech = failureFeedback.text;
